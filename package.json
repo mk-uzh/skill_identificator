@@ -7,7 +7,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node scripts/seed-fake-session.mjs",
+    "ingest": "tsx ingest/cli.ts --mode demo",
+    "ingest:github": "tsx ingest/cli.ts --mode github",
+    "infer": "tsx infer/cli.ts",
+    "pipeline": "npm run ingest && npm run infer"
   },
   "dependencies": {
     "next": "14.2.15",
@@ -18,6 +23,7 @@
     "@types/node": "20.14.10",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
+    "tsx": "4.19.2",
     "typescript": "5.5.4"
   }
 }

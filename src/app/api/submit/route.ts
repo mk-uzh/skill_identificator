@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
-import { updateSession } from "@/lib/store";
-import { buildSuggestions } from "@/lib/suggestions";
+import type { CellInteractionRow } from "@/lib/interaction-log";
+import { appendInteractions, readSession, updateSession } from "@/lib/store";
+import {
+  assessmentsToMatrix,
+  buildSuggestionsFromAssessments,
+} from "@/lib/suggestions";
 import type { AiSuggestion, Matrix, SuggestionOutcome, SurveyAnswers } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -10,16 +14,19 @@ interface SubmitBody {
   task?: 1 | 2;
   matrix?: Matrix;
   durationMs?: number;
+  startedAt?: string;
   suggestions?: AiSuggestion[];
   outcomes?: SuggestionOutcome[];
+  interactions?: CellInteractionRow[];
   survey?: SurveyAnswers;
+  /** Allow re-running Task 1 before Task 2 is finished (recalculates suggestions). */
+  recalculate?: boolean;
 }
 
 /**
  * Stores the result of a task.
- * After task 1 the AI suggestions for task 2 are additionally computed and
- * returned – deliberately on the server so that the suggestion logic is not
- * inspectable in the browser.
+ * Task 1 may be re-submitted while Task 2 is not finished — clears Task 2 and recalculates.
+ * Task 2 requires Task 1 and locks once submitted.
  */
 export async function POST(request: Request) {
   try {
@@ -28,7 +35,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Session ID missing" }, { status: 400 });
     }
 
-    // final questionnaire
+    const session = await readSession(body.sessionId);
+    if (!session) {
+      return NextResponse.json({ error: "Session not found" }, { status: 404 });
+    }
+
     if (body.survey) {
       await updateSession(body.sessionId, { survey: body.survey });
       return NextResponse.json({ ok: true });
@@ -39,24 +50,68 @@ export async function POST(request: Request) {
     }
 
     const submittedAt = new Date().toISOString();
+    const startedAt = body.startedAt ?? submittedAt;
 
     if (body.task === 1) {
+      if (session.task2) {
+        return NextResponse.json(
+          { error: "Task 1 is locked after Task 2 was submitted" },
+          { status: 409 },
+        );
+      }
+
+      // Re-submit / back-and-forward: replace Task 1 and clear any partial Task 2.
       await updateSession(body.sessionId, {
-        task1: { matrix: body.matrix, submittedAt, durationMs: body.durationMs ?? 0 },
+        task1: {
+          matrix: body.matrix,
+          startedAt,
+          submittedAt,
+          durationMs: body.durationMs ?? 0,
+        },
+        task2: undefined,
       });
-      const suggestions = buildSuggestions(body.matrix);
-      return NextResponse.json({ ok: true, suggestions });
+
+      if (body.interactions?.length) {
+        await appendInteractions(body.sessionId, body.interactions);
+      }
+
+      // Suggestions from assessments.json — synchronous, no heavy compute.
+      const suggestions = buildSuggestionsFromAssessments();
+      const prefill = assessmentsToMatrix();
+      return NextResponse.json({
+        ok: true,
+        suggestions,
+        prefill,
+        recalculated: Boolean(session.task1),
+      });
+    }
+
+    // Task 2
+    if (!session.task1) {
+      return NextResponse.json(
+        { error: "Task 2 is unreachable until Task 1 is submitted" },
+        { status: 403 },
+      );
+    }
+    if (session.task2) {
+      return NextResponse.json({ error: "Task 2 is locked" }, { status: 409 });
     }
 
     await updateSession(body.sessionId, {
       task2: {
         matrix: body.matrix,
+        startedAt,
         submittedAt,
         durationMs: body.durationMs ?? 0,
         suggestions: body.suggestions ?? [],
         outcomes: body.outcomes ?? [],
       },
     });
+
+    if (body.interactions?.length) {
+      await appendInteractions(body.sessionId, body.interactions);
+    }
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("submit route", error);

@@ -1,0 +1,722 @@
+{
+  "taxonomy_version": "1.0",
+  "organization_id": "demo-org",
+  "computed_at": "2025-12-01T10:00:00.000Z",
+  "config_hash": "325ca0bfb9bc7a2c",
+  "assessments": [
+    {
+      "id": "assess-devA-backend",
+      "developer_id": "devA",
+      "category_id": "backend",
+      "level": "proficient",
+      "confidence": 0.9,
+      "rationale": "Works independently in Backend, supported by commit, pull_request and review activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Review: add idempotency keys to billing endpoints",
+          "timestamp": "2025-09-28T15:40:00.000Z",
+          "url": "https://github.com/example-org/service-api/pull/418"
+        },
+        {
+          "kind": "pull_request",
+          "title": "blue/green rollout for payment-service",
+          "timestamp": "2025-10-21T16:30:00.000Z",
+          "url": "https://github.com/example-org/infra/pull/92"
+        },
+        {
+          "kind": "commit",
+          "title": "fix(api): tighten rate limiter in service-api",
+          "timestamp": "2025-10-14T09:22:00.000Z",
+          "url": "https://github.com/example-org/service-api/commit/a1b2c3d4"
+        }
+      ],
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-devA-data",
+      "developer_id": "devA",
+      "category_id": "data",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Data within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Data artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-DATA"
+        }
+      ]
+    },
+    {
+      "id": "assess-devA-devops",
+      "developer_id": "devA",
+      "category_id": "devops",
+      "level": "proficient",
+      "confidence": 0.9,
+      "rationale": "Works independently in DevOps, supported by commit, issue and pull request activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "blue/green rollout for payment-service",
+          "timestamp": "2025-10-21T16:30:00.000Z",
+          "url": "https://github.com/example-org/infra/pull/92"
+        },
+        {
+          "kind": "issue",
+          "title": "Kubernetes Basics internal training",
+          "timestamp": "2025-07-18T13:00:00.000Z",
+          "url": "https://jira.example.org/browse/OPS-301"
+        },
+        {
+          "kind": "commit",
+          "title": "ci: migrate deploy jobs to Kubernetes runners",
+          "timestamp": "2025-11-02T08:15:00.000Z",
+          "url": "https://github.com/example-org/infra/commit/e7f8a9b0"
+        }
+      ]
+    },
+    {
+      "id": "assess-devA-frontend",
+      "developer_id": "devA",
+      "category_id": "frontend",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Frontend within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Frontend artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-FRONTEND"
+        }
+      ]
+    },
+    {
+      "id": "assess-devA-security",
+      "developer_id": "devA",
+      "category_id": "security",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Security within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Security artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-SECURITY"
+        }
+      ]
+    },
+    {
+      "id": "assess-devA-testing",
+      "developer_id": "devA",
+      "category_id": "testing",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Testing within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Testing artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-TESTING"
+        }
+      ]
+    },
+    {
+      "id": "assess-devB-backend",
+      "developer_id": "devB",
+      "category_id": "backend",
+      "level": "proficient",
+      "confidence": 0.93,
+      "rationale": "Works independently in Backend, supported by commit, pull_request and review activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Security review: partner OAuth integration",
+          "timestamp": "2025-11-08T09:50:00.000Z",
+          "url": "https://github.com/example-org/service-api/pull/455"
+        },
+        {
+          "kind": "pull_request",
+          "title": "scoped API tokens for partner integrations",
+          "timestamp": "2025-09-16T17:05:00.000Z",
+          "url": "https://github.com/example-org/auth-service/pull/210"
+        },
+        {
+          "kind": "commit",
+          "title": "feat(auth): rotate JWT signing keys without downtime",
+          "timestamp": "2025-10-05T12:18:00.000Z",
+          "url": "https://github.com/example-org/auth-service/commit/b4d5e6f7"
+        }
+      ],
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-devB-data",
+      "developer_id": "devB",
+      "category_id": "data",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Data within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Data artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-DATA"
+        }
+      ]
+    },
+    {
+      "id": "assess-devB-devops",
+      "developer_id": "devB",
+      "category_id": "devops",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in DevOps within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No DevOps artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-DEVOPS"
+        }
+      ]
+    },
+    {
+      "id": "assess-devB-frontend",
+      "developer_id": "devB",
+      "category_id": "frontend",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Frontend within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Frontend artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-FRONTEND"
+        }
+      ]
+    },
+    {
+      "id": "assess-devB-security",
+      "developer_id": "devB",
+      "category_id": "security",
+      "level": "proficient",
+      "confidence": 0.93,
+      "rationale": "Works independently in Security, supported by commit, issue, pull_request and review activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Security review: partner OAuth integration",
+          "timestamp": "2025-11-08T09:50:00.000Z",
+          "url": "https://github.com/example-org/service-api/pull/455"
+        },
+        {
+          "kind": "pull_request",
+          "title": "scoped API tokens for partner integrations",
+          "timestamp": "2025-09-16T17:05:00.000Z",
+          "url": "https://github.com/example-org/auth-service/pull/210"
+        },
+        {
+          "kind": "issue",
+          "title": "threat model for payment callbacks",
+          "timestamp": "2025-10-19T14:10:00.000Z",
+          "url": "https://jira.example.org/browse/SEC-140"
+        }
+      ]
+    },
+    {
+      "id": "assess-devB-testing",
+      "developer_id": "devB",
+      "category_id": "testing",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Testing within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Testing artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-TESTING"
+        }
+      ]
+    },
+    {
+      "id": "assess-devC-backend",
+      "developer_id": "devC",
+      "category_id": "backend",
+      "level": "basic",
+      "confidence": 0.69,
+      "rationale": "Has worked in Backend under guidance, with commit activity in the observation window.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix(api): expose export status endpoint for ETL",
+          "timestamp": "2025-08-06T15:12:00.000Z",
+          "url": "https://github.com/example-org/service-api/commit/be11ac00"
+        }
+      ]
+    },
+    {
+      "id": "assess-devC-data",
+      "developer_id": "devC",
+      "category_id": "data",
+      "level": "proficient",
+      "confidence": 0.9,
+      "rationale": "Works independently in Data, supported by commit, issue and pull request activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "backfill historical FX rates",
+          "timestamp": "2025-08-20T09:15:00.000Z",
+          "url": "https://github.com/example-org/etl-pipelines/pull/71"
+        },
+        {
+          "kind": "issue",
+          "title": "redesign weekly revenue mart",
+          "timestamp": "2025-10-02T13:40:00.000Z",
+          "url": "https://jira.example.org/browse/DATA-201"
+        },
+        {
+          "kind": "commit",
+          "title": "feat(etl): incremental load for customer_dim",
+          "timestamp": "2025-11-11T10:00:00.000Z",
+          "url": "https://github.com/example-org/etl-pipelines/commit/data99ee"
+        }
+      ]
+    },
+    {
+      "id": "assess-devC-devops",
+      "developer_id": "devC",
+      "category_id": "devops",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in DevOps within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No DevOps artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-DEVOPS"
+        }
+      ]
+    },
+    {
+      "id": "assess-devC-frontend",
+      "developer_id": "devC",
+      "category_id": "frontend",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Frontend within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Frontend artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-FRONTEND"
+        }
+      ]
+    },
+    {
+      "id": "assess-devC-security",
+      "developer_id": "devC",
+      "category_id": "security",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Security within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Security artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-SECURITY"
+        }
+      ]
+    },
+    {
+      "id": "assess-devC-testing",
+      "developer_id": "devC",
+      "category_id": "testing",
+      "level": "proficient",
+      "confidence": 0.78,
+      "rationale": "Works independently in Testing, supported by commit activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "test(etl): assert late-arriving invoice rows",
+          "timestamp": "2025-10-28T11:05:00.000Z",
+          "url": "https://github.com/example-org/etl-pipelines/commit/te57cafe"
+        }
+      ],
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-devD-backend",
+      "developer_id": "devD",
+      "category_id": "backend",
+      "level": "proficient",
+      "confidence": 0.94,
+      "rationale": "Works independently in Backend, supported by commit, issue and review activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Architecture review: event-driven order pipeline",
+          "timestamp": "2025-11-05T16:00:00.000Z",
+          "url": "https://github.com/example-org/service-api/pull/480"
+        },
+        {
+          "kind": "review",
+          "title": "Review: harden webhook signature verification",
+          "timestamp": "2025-10-30T12:50:00.000Z",
+          "url": "https://github.com/example-org/service-api/pull/471"
+        },
+        {
+          "kind": "issue",
+          "title": "privilege model for admin APIs",
+          "timestamp": "2025-09-18T10:15:00.000Z",
+          "url": "https://jira.example.org/browse/SEC-133"
+        }
+      ]
+    },
+    {
+      "id": "assess-devD-data",
+      "developer_id": "devD",
+      "category_id": "data",
+      "level": "proficient",
+      "confidence": 0.81,
+      "rationale": "Works independently in Data, supported by review activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Architecture review: event-driven order pipeline",
+          "timestamp": "2025-11-05T16:00:00.000Z",
+          "url": "https://github.com/example-org/service-api/pull/480"
+        }
+      ]
+    },
+    {
+      "id": "assess-devD-devops",
+      "developer_id": "devD",
+      "category_id": "devops",
+      "level": "proficient",
+      "confidence": 0.9,
+      "rationale": "Works independently in DevOps, supported by commit and review activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Architecture review: event-driven order pipeline",
+          "timestamp": "2025-11-05T16:00:00.000Z",
+          "url": "https://github.com/example-org/service-api/pull/480"
+        },
+        {
+          "kind": "review",
+          "title": "Review: Terraform modules for shared networking",
+          "timestamp": "2025-07-22T11:35:00.000Z",
+          "url": "https://github.com/example-org/infra/pull/77"
+        },
+        {
+          "kind": "commit",
+          "title": "refactor(api): extract pricing domain module",
+          "timestamp": "2025-09-25T10:30:00.000Z",
+          "url": "https://github.com/example-org/service-api/commit/arch7d01"
+        }
+      ]
+    },
+    {
+      "id": "assess-devD-frontend",
+      "developer_id": "devD",
+      "category_id": "frontend",
+      "level": "basic",
+      "confidence": 0.7,
+      "rationale": "Has worked in Frontend under guidance, with pull request activity in the observation window.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "shared error-boundary contract for web-client",
+          "timestamp": "2025-08-14T14:45:00.000Z",
+          "url": "https://github.com/example-org/web-client/pull/312"
+        }
+      ]
+    },
+    {
+      "id": "assess-devD-security",
+      "developer_id": "devD",
+      "category_id": "security",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "Evidence in Security is too thin to support a higher level.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "privilege model for admin APIs",
+          "timestamp": "2025-09-18T10:15:00.000Z",
+          "url": "https://jira.example.org/browse/SEC-133"
+        }
+      ],
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-devD-testing",
+      "developer_id": "devD",
+      "category_id": "testing",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Testing within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Testing artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-TESTING"
+        }
+      ]
+    },
+    {
+      "id": "assess-devE-backend",
+      "developer_id": "devE",
+      "category_id": "backend",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Backend within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Backend artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-BACKEND"
+        }
+      ]
+    },
+    {
+      "id": "assess-devE-data",
+      "developer_id": "devE",
+      "category_id": "data",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Data within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Data artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-DATA"
+        }
+      ],
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-devE-devops",
+      "developer_id": "devE",
+      "category_id": "devops",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in DevOps within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No DevOps artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-DEVOPS"
+        }
+      ]
+    },
+    {
+      "id": "assess-devE-frontend",
+      "developer_id": "devE",
+      "category_id": "frontend",
+      "level": "proficient",
+      "confidence": 0.89,
+      "rationale": "Works independently in Frontend, supported by commit, issue and pull request activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "design-token sync with Figma",
+          "timestamp": "2025-10-16T16:10:00.000Z",
+          "url": "https://github.com/example-org/ui-components/pull/188"
+        },
+        {
+          "kind": "issue",
+          "title": "accessibility audit remediation",
+          "timestamp": "2025-08-25T11:55:00.000Z",
+          "url": "https://jira.example.org/browse/UI-101"
+        },
+        {
+          "kind": "commit",
+          "title": "feat(ui): accessible combobox for filter bars",
+          "timestamp": "2025-11-03T09:40:00.000Z",
+          "url": "https://github.com/example-org/ui-components/commit/fe0a11bb"
+        }
+      ]
+    },
+    {
+      "id": "assess-devE-security",
+      "developer_id": "devE",
+      "category_id": "security",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Security within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Security artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-SECURITY"
+        }
+      ]
+    },
+    {
+      "id": "assess-devE-testing",
+      "developer_id": "devE",
+      "category_id": "testing",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Testing within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Testing artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-TESTING"
+        }
+      ]
+    },
+    {
+      "id": "assess-devF-backend",
+      "developer_id": "devF",
+      "category_id": "backend",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Backend within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Backend artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-BACKEND"
+        }
+      ]
+    },
+    {
+      "id": "assess-devF-data",
+      "developer_id": "devF",
+      "category_id": "data",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Data within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Data artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-DATA"
+        }
+      ]
+    },
+    {
+      "id": "assess-devF-devops",
+      "developer_id": "devF",
+      "category_id": "devops",
+      "level": "proficient",
+      "confidence": 0.78,
+      "rationale": "Works independently in DevOps, supported by commit activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "ci(tests): retry flaky Playwright jobs twice",
+          "timestamp": "2025-10-11T08:55:00.000Z",
+          "url": "https://github.com/example-org/web-client/commit/ci7e57aa"
+        }
+      ],
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-devF-frontend",
+      "developer_id": "devF",
+      "category_id": "frontend",
+      "level": "basic",
+      "confidence": 0.73,
+      "rationale": "Has worked in Frontend under guidance, with commit activity in the observation window.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "feat(web): empty-state for notification inbox",
+          "timestamp": "2025-10-23T14:20:00.000Z",
+          "url": "https://github.com/example-org/web-client/commit/featur01"
+        }
+      ]
+    },
+    {
+      "id": "assess-devF-security",
+      "developer_id": "devF",
+      "category_id": "security",
+      "level": "none",
+      "confidence": 0.72,
+      "rationale": "No observable contribution in Security within the observation window.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "No Security artifacts in observation window",
+          "timestamp": "2025-12-01T00:00:00.000Z",
+          "url": "https://jira.example.org/browse/COV-SECURITY"
+        }
+      ]
+    },
+    {
+      "id": "assess-devF-testing",
+      "developer_id": "devF",
+      "category_id": "testing",
+      "level": "proficient",
+      "confidence": 0.93,
+      "rationale": "Works independently in Testing, supported by commit, issue and pull request activity aligned to this discipline.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "stabilise login fixture across browsers",
+          "timestamp": "2025-10-01T09:05:00.000Z",
+          "url": "https://github.com/example-org/tests/pull/18"
+        },
+        {
+          "kind": "issue",
+          "title": "expand regression pack for release 2025.10",
+          "timestamp": "2025-09-20T10:30:00.000Z",
+          "url": "https://jira.example.org/browse/QA-44"
+        },
+        {
+          "kind": "commit",
+          "title": "test(e2e): cover checkout retry path",
+          "timestamp": "2025-11-06T13:15:00.000Z",
+          "url": "https://github.com/example-org/tests/commit/e2e88f00"
+        }
+      ]
+    }
+  ]
+}

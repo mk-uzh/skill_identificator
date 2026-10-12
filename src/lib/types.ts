@@ -39,6 +39,18 @@ export interface Category {
 /** devId -> categoryId -> level (null = not rated yet) */
 export type Matrix = Record<string, Record<string, SkillLevel | null>>;
 
+export interface SuggestionEvidence {
+  kind: "commit" | "pull_request" | "review" | "issue";
+  title: string;
+  timestamp: string;
+  url: string;
+}
+
+export interface SuggestionSignal {
+  kind: string;
+  label: string;
+}
+
 export interface AiSuggestion {
   devId: string;
   categoryId: string;
@@ -50,6 +62,10 @@ export interface AiSuggestion {
   confidence: number;
   /** Short rationale shown by the system. */
   rationale: string;
+  /** Concrete artifacts behind the suggestion (M1 contract). */
+  evidence: SuggestionEvidence[];
+  /** Signals that contributed to the assessment (shown in evidence popover). */
+  signals: SuggestionSignal[];
   /**
    * For analysis only, NOT shown to the participant: is this suggestion
    * correct or deliberately wrong according to the study design?
@@ -57,7 +73,12 @@ export interface AiSuggestion {
   veracity: "correct" | "incorrect";
 }
 
-export type SuggestionDecision = "accepted" | "dismissed" | "modified" | "open";
+/** UI state for a Task-2 cell decision (maps to §6 interaction_type on submit). */
+export type SuggestionDecision =
+  | "accepted_unchanged"
+  | "adjusted"
+  | "rejected"
+  | "open";
 
 export interface SuggestionOutcome {
   devId: string;
@@ -83,6 +104,8 @@ export type EventType =
   | "suggestion_accept"
   | "suggestion_dismiss"
   | "suggestion_modify"
+  | "evidence_open"
+  | "evidence_close"
   | "rationale_open"
   | "rationale_close"
   | "profile_open"
@@ -108,28 +131,45 @@ export interface StudyEvent {
   meta?: Record<string, unknown>;
 }
 
+export type VisibilityPreference =
+  | "lead_only"
+  | "team_visible"
+  | "self_only_plus_lead"
+  | null;
+
 export interface SurveyAnswers {
   trustInSystem: number | null;
   confidenceTask1: number | null;
   confidenceTask2: number | null;
   perceivedUsefulness: number | null;
+  /** Which visibility regime the participant would choose in their org (DP6). */
+  visibilityPreference: VisibilityPreference;
+  /** Free-text rationale for the visibility choice. */
+  visibilityReason: string;
   comment: string;
 }
 
 export interface StudySession {
   sessionId: string;
+  /** Pseudonymous participant id (participant code). */
   participantCode: string;
   condition: string;
   createdAt: string;
   userAgent: string;
   consent: boolean;
+  /** Taxonomy / inference config hash from assessments.json */
+  config_hash?: string;
+  /** Snapshot hash (demo: same as assessments config until real ingest). */
+  snapshot_hash?: string;
   task1?: {
     matrix: Matrix;
+    startedAt: string;
     submittedAt: string;
     durationMs: number;
   };
   task2?: {
     matrix: Matrix;
+    startedAt: string;
     submittedAt: string;
     durationMs: number;
     suggestions: AiSuggestion[];

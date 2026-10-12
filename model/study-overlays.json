@@ -1,0 +1,11 @@
+{
+  "_comment": "Optional thesis overlays merged onto inferred assessments. Does not change levels.",
+  "overlays": [
+    { "developer_id": "devA", "category_id": "backend", "direction": "raise", "delta": 1, "veracity": "incorrect" },
+    { "developer_id": "devB", "category_id": "backend", "direction": "lower", "delta": 1, "veracity": "correct" },
+    { "developer_id": "devC", "category_id": "testing", "direction": "raise", "delta": 1, "veracity": "incorrect" },
+    { "developer_id": "devE", "category_id": "data", "direction": "lower", "delta": 1, "veracity": "correct" },
+    { "developer_id": "devF", "category_id": "devops", "direction": "raise", "delta": 1, "veracity": "incorrect" },
+    { "developer_id": "devD", "category_id": "security", "direction": "raise", "delta": 1, "veracity": "correct" }
+  ]
+}

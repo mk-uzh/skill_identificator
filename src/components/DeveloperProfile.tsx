@@ -6,9 +6,12 @@ import type { Developer } from "@/lib/types";
 export function DeveloperProfile({
   developer,
   onClose,
+  showEvidence = true,
 }: {
   developer: Developer;
   onClose: () => void;
+  /** Task 1: no evidence anywhere on the screen (spec §7). */
+  showEvidence?: boolean;
 }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -32,12 +35,16 @@ export function DeveloperProfile({
           {developer.role} · {developer.tenure}
         </p>
         <p style={{ marginTop: 12 }}>{developer.profile}</p>
-        <strong className="small">Available evidence</strong>
-        <ul>
-          {developer.evidence.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
+        {showEvidence && (
+          <>
+            <strong className="small">Available evidence</strong>
+            <ul>
+              {developer.evidence.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </>
+        )}
         <div className="actions" style={{ justifyContent: "flex-end" }}>
           <button type="button" className="btn btn--ghost" onClick={onClose}>
             Close

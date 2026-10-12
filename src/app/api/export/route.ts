@@ -1,33 +1,47 @@
 import { NextResponse } from "next/server";
-import { listSessions, readEvents } from "@/lib/store";
+import {
+  INTERACTION_CSV_HEADERS,
+  type CellInteractionRow,
+} from "@/lib/interaction-log";
+import { listSessions, readEvents, readInteractions } from "@/lib/store";
 import { SKILL_LEVEL_VALUE } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 function csvEscape(value: unknown): string {
   if (value === null || value === undefined) return "";
+  if (typeof value === "boolean") return value ? "1" : "0";
   const s = String(value);
   return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-function toCsv(rows: Record<string, unknown>[]): string {
-  if (rows.length === 0) return "";
-  const headers = Object.keys(rows[0]);
-  const lines = [headers.join(",")];
+function toCsv(rows: Record<string, unknown>[], headers?: string[]): string {
+  if (rows.length === 0 && !headers) return "";
+  const cols = headers ?? (rows[0] ? Object.keys(rows[0]) : []);
+  const lines = [cols.join(",")];
   for (const row of rows) {
-    lines.push(headers.map((h) => csvEscape(row[h])).join(","));
+    lines.push(cols.map((h) => csvEscape(row[h])).join(","));
   }
   return lines.join("\n");
+}
+
+function interactionToRecord(row: CellInteractionRow): Record<string, unknown> {
+  const record: Record<string, unknown> = {};
+  for (const key of INTERACTION_CSV_HEADERS) {
+    record[key] = row[key];
+  }
+  return record;
 }
 
 /**
  * Data export for the analysis.
  *
- *   /api/export?token=...&type=ratings      -> long format: one row per cell and task
- *   /api/export?token=...&type=suggestions  -> one row per AI suggestion incl. decision
- *   /api/export?token=...&type=sessions     -> overview incl. questionnaire
- *   /api/export?token=...&type=events       -> complete interaction log
- *   /api/export?token=...&type=raw          -> everything as JSON
+ *   /api/export?token=...&type=interactions  -> section-6 cell log (primary)
+ *   /api/export?token=...&type=ratings       -> long format: one row per cell and task
+ *   /api/export?token=...&type=suggestions   -> one row per AI suggestion incl. decision
+ *   /api/export?token=...&type=sessions      -> overview incl. questionnaire + hashes
+ *   /api/export?token=...&type=events        -> fine-grained UI event log
+ *   /api/export?token=...&type=raw           -> everything as JSON
  */
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -38,34 +52,53 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Not authorised" }, { status: 401 });
   }
 
-  const type = url.searchParams.get("type") ?? "ratings";
+  const type = url.searchParams.get("type") ?? "interactions";
   const sessions = await listSessions();
 
   if (type === "raw") {
-    const withEvents = await Promise.all(
-      sessions.map(async (s) => ({ ...s, events: await readEvents(s.sessionId) })),
+    const withExtras = await Promise.all(
+      sessions.map(async (s) => ({
+        ...s,
+        events: await readEvents(s.sessionId),
+        interactions: await readInteractions(s.sessionId),
+      })),
     );
-    return NextResponse.json(withEvents);
+    return NextResponse.json(withExtras);
+  }
+
+  if (type === "interactions") {
+    const rows: Record<string, unknown>[] = [];
+    for (const s of sessions) {
+      for (const row of await readInteractions(s.sessionId)) {
+        rows.push(interactionToRecord(row));
+      }
+    }
+    return csvResponse(
+      toCsv(rows, [...INTERACTION_CSV_HEADERS]),
+      "interactions.csv",
+    );
   }
 
   if (type === "sessions") {
     const rows = sessions.map((s) => ({
-      sessionId: s.sessionId,
-      participantCode: s.participantCode,
+      session_id: s.sessionId,
+      participant_id: s.participantCode,
       condition: s.condition,
-      createdAt: s.createdAt,
-      task1SubmittedAt: s.task1?.submittedAt ?? "",
-      task1DurationMs: s.task1?.durationMs ?? "",
-      task2SubmittedAt: s.task2?.submittedAt ?? "",
-      task2DurationMs: s.task2?.durationMs ?? "",
-      suggestionsShown: s.task2?.outcomes.length ?? "",
-      suggestionsAccepted: s.task2?.outcomes.filter((o) => o.decision === "accepted").length ?? "",
-      suggestionsDismissed: s.task2?.outcomes.filter((o) => o.decision === "dismissed").length ?? "",
-      suggestionsModified: s.task2?.outcomes.filter((o) => o.decision === "modified").length ?? "",
+      created_at: s.createdAt,
+      config_hash: s.config_hash ?? "",
+      snapshot_hash: s.snapshot_hash ?? "",
+      task1_started_at: s.task1?.startedAt ?? "",
+      task1_submitted_at: s.task1?.submittedAt ?? "",
+      task1_duration_ms: s.task1?.durationMs ?? "",
+      task2_started_at: s.task2?.startedAt ?? "",
+      task2_submitted_at: s.task2?.submittedAt ?? "",
+      task2_duration_ms: s.task2?.durationMs ?? "",
       trustInSystem: s.survey?.trustInSystem ?? "",
       confidenceTask1: s.survey?.confidenceTask1 ?? "",
       confidenceTask2: s.survey?.confidenceTask2 ?? "",
       perceivedUsefulness: s.survey?.perceivedUsefulness ?? "",
+      visibilityPreference: s.survey?.visibilityPreference ?? "",
+      visibilityReason: s.survey?.visibilityReason ?? "",
       comment: s.survey?.comment ?? "",
     }));
     return csvResponse(toCsv(rows), "sessions.csv");
@@ -74,18 +107,18 @@ export async function GET(request: Request) {
   if (type === "suggestions") {
     const rows = sessions.flatMap((s) =>
       (s.task2?.outcomes ?? []).map((o) => ({
-        sessionId: s.sessionId,
-        participantCode: s.participantCode,
-        devId: o.devId,
-        categoryId: o.categoryId,
-        suggested: o.suggested,
+        session_id: s.sessionId,
+        participant_id: s.participantCode,
+        developer_id: o.devId,
+        category_id: o.categoryId,
+        suggested_level: o.suggested,
         veracity: o.veracity,
-        initialValue: o.initialValue ?? "",
-        finalValue: o.finalValue ?? "",
-        followedSuggestion: o.finalValue === o.suggested ? 1 : 0,
-        decision: o.decision,
-        timeToDecisionMs: o.timeToDecisionMs ?? "",
-        changeCount: o.changeCount,
+        task1_value: o.initialValue ?? "",
+        final_value: o.finalValue ?? "",
+        followed_suggestion: o.finalValue === o.suggested ? 1 : 0,
+        interaction_type: o.decision,
+        time_to_decision_ms: o.timeToDecisionMs ?? "",
+        change_count: o.changeCount,
       })),
     );
     return csvResponse(toCsv(rows), "suggestions.csv");
@@ -96,14 +129,14 @@ export async function GET(request: Request) {
     for (const s of sessions) {
       for (const e of await readEvents(s.sessionId)) {
         rows.push({
-          sessionId: e.sessionId,
-          participantCode: s.participantCode,
+          session_id: e.sessionId,
+          participant_id: s.participantCode,
           ts: e.ts,
-          tMs: e.tMs,
+          t_ms: e.tMs,
           task: e.task,
           type: e.type,
-          devId: e.devId ?? "",
-          categoryId: e.categoryId ?? "",
+          developer_id: e.devId ?? "",
+          category_id: e.categoryId ?? "",
           from: e.from ?? "",
           to: e.to ?? "",
           suggested: e.suggested ?? "",
@@ -113,7 +146,7 @@ export async function GET(request: Request) {
     return csvResponse(toCsv(rows), "events.csv");
   }
 
-  // default: ratings in long format
+  // ratings in long format
   const rows: Record<string, unknown>[] = [];
   for (const s of sessions) {
     for (const task of [1, 2] as const) {
@@ -122,13 +155,13 @@ export async function GET(request: Request) {
       for (const [devId, byCategory] of Object.entries(data.matrix)) {
         for (const [categoryId, level] of Object.entries(byCategory)) {
           rows.push({
-            sessionId: s.sessionId,
-            participantCode: s.participantCode,
+            session_id: s.sessionId,
+            participant_id: s.participantCode,
             task,
-            devId,
-            categoryId,
+            developer_id: devId,
+            category_id: categoryId,
             level: level ?? "",
-            levelValue: level ? SKILL_LEVEL_VALUE[level] : "",
+            level_value: level ? SKILL_LEVEL_VALUE[level] : "",
           });
         }
       }
@@ -138,7 +171,7 @@ export async function GET(request: Request) {
 }
 
 function csvResponse(csv: string, filename: string): Response {
-  return new Response("﻿" + csv, {
+  return new Response("\uFEFF" + csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition": `attachment; filename="${filename}"`,

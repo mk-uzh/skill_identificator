@@ -6,6 +6,8 @@ suggestions, including a complete interaction log).
 
 Stack: Next.js 14 (App Router) · React 18 · TypeScript · file-based persistence.
 
+Design-principle checklist: [`docs/DESIGN_PRINCIPLES.md`](docs/DESIGN_PRINCIPLES.md) (Spec §10).
+
 ---
 
 ## Quick start
@@ -38,8 +40,10 @@ assessment should be based on.
 
 ```
 data/
-  sessions/<sessionId>.json   results: task 1, task 2, suggestions, decisions, questionnaire
-  events/<sessionId>.jsonl    complete interaction log, one line per event
+  assessments.json                 M1 contract: levels, confidence, rationale, evidence
+  sessions/<sessionId>.json        results: task 1, task 2, suggestions, questionnaire
+  events/<sessionId>.jsonl         fine-grained UI events
+  interactions/<sessionId>.jsonl   section-6 cell log (append only)
 ```
 
 The directory is excluded in `.gitignore`. A different path can be set via
@@ -61,13 +65,45 @@ flushed via `sendBeacon` when the tab is closed.
 
 ---
 
+## Ingest + inference (M4 / M5)
+
+Offline pipeline (no UI changes — writes `data/assessments.json` in the M1 schema):
+
+```bash
+npm run ingest    # pseudonymised snapshot → data/snapshots/demo-org/
+npm run infer     # headless scoring → data/assessments.json
+# or: npm run pipeline
+```
+
+Optional live GitHub read (read-only; requires network, optional `GITHUB_TOKEN`):
+
+```bash
+npm run ingest:github -- --repo owner/name
+npm run infer
+```
+
+Scoring rules (binding): no volume-as-ability, no lead-time-as-effort; every cell has confidence, evidence, rationale.
+
+## Seed a fake session (test the §6 export)
+
+```bash
+npm run seed
+```
+
+Then download the section-6 interaction CSV:
+
+```
+GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=interactions
+```
+
 ## Export for the analysis
 
 ```
+GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=interactions  # section 6 cell log (primary)
 GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=ratings       # one row per cell and task
-GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=suggestions   # one row per suggestion incl. decision
-GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=sessions      # overview incl. questionnaire
-GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=events        # complete log
+GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=suggestions   # one row per AI suggestion incl. decision
+GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=sessions      # overview incl. questionnaire + hashes
+GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=events        # fine-grained UI event log
 GET /api/export?token=<STUDY_ADMIN_TOKEN>&type=raw           # everything as JSON
 ```
 

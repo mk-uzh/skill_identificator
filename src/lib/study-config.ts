@@ -6,6 +6,7 @@
 // the code does not need to be touched.
 // ---------------------------------------------------------------------------
 
+import { getScriptedAssessments, type EvidenceItem } from "./assessments";
 import type { Category, Developer, SkillLevel } from "./types";
 
 export const STUDY_TITLE = "DevSkill – Team Skill Matrix Study";
@@ -109,13 +110,9 @@ export const DEVELOPERS: Developer[] = [
 // ---------------------------------------------------------------------------
 // AI suggestions
 //
-// For an experimental study the suggestions must be controllable. They are
-// therefore NOT random but defined as a fixed script: for each cell it is
-// specified in which direction the system deviates and whether the suggestion
-// is correct ("correct") or deliberately wrong ("incorrect") by design. This
-// distinction is what makes the later analysis of automation bias possible.
-//
-// Order and count match the mockup (6 suggestions).
+// Controllable study script lives in data/assessments.json (fields study.*,
+// plus confidence / rationale / evidence). Loaded and schema-validated on
+// module load — malformed files fail loudly.
 // ---------------------------------------------------------------------------
 
 export interface ScriptedSuggestion {
@@ -126,65 +123,36 @@ export interface ScriptedSuggestion {
   delta: number;
   confidence: number;
   rationale: string;
+  evidence: EvidenceItem[];
+  /** Absolute inferred level from the assessments contract (M1). */
+  level: SkillLevel;
   veracity: "correct" | "incorrect";
 }
 
-export const SCRIPTED_SUGGESTIONS: ScriptedSuggestion[] = [
-  {
-    devId: "devA",
-    categoryId: "backend",
-    direction: "raise",
-    delta: 1,
-    confidence: 0.86,
-    rationale: "Regular contributions to service-api/ and reviews of backend merge requests.",
-    veracity: "incorrect",
-  },
-  {
-    devId: "devB",
-    categoryId: "backend",
-    direction: "lower",
-    delta: 1,
-    confidence: 0.74,
-    rationale: "Contributions concentrate on auth-service/, little breadth in domain logic.",
-    veracity: "correct",
-  },
-  {
-    devId: "devC",
-    categoryId: "testing",
-    direction: "raise",
-    delta: 1,
-    confidence: 0.68,
-    rationale: "Test files in own modules were extended over the last months.",
-    veracity: "incorrect",
-  },
-  {
-    devId: "devE",
-    categoryId: "data",
-    direction: "lower",
-    delta: 1,
-    confidence: 0.81,
-    rationale: "Data-related contributions are limited to visualisation components.",
-    veracity: "correct",
-  },
-  {
-    devId: "devF",
-    categoryId: "devops",
-    direction: "raise",
-    delta: 1,
-    confidence: 0.63,
-    rationale: "Configuration files of the test pipeline were adjusted several times.",
-    veracity: "incorrect",
-  },
-  {
-    devId: "devD",
-    categoryId: "security",
-    direction: "raise",
-    delta: 1,
-    confidence: 0.79,
-    rationale: "Reviews security-relevant merge requests in the core product.",
-    veracity: "correct",
-  },
-];
+function loadScriptedSuggestions(): ScriptedSuggestion[] {
+  return getScriptedAssessments().map((assessment) => {
+    const study = assessment.study;
+    if (!study) {
+      throw new Error(
+        `[study-config] assessment ${assessment.id} is missing study metadata`,
+      );
+    }
+    return {
+      devId: assessment.developer_id,
+      categoryId: assessment.category_id,
+      direction: study.direction,
+      delta: study.delta,
+      confidence: assessment.confidence,
+      rationale: assessment.rationale,
+      evidence: assessment.evidence,
+      level: assessment.level,
+      veracity: study.veracity,
+    };
+  });
+}
+
+/** Lazily validated against data/assessments.json. */
+export const SCRIPTED_SUGGESTIONS: ScriptedSuggestion[] = loadScriptedSuggestions();
 
 /**
  * If a cell is left empty in task 1, this value is used as the starting point

@@ -1,5 +1,5 @@
 import { CATEGORIES, DEVELOPERS } from "./study-config";
-import type { Matrix, SkillLevel } from "./types";
+import { SKILL_LEVELS, type Matrix, type SkillLevel } from "./types";
 
 export function emptyMatrix(): Matrix {
   const matrix: Matrix = {};
@@ -7,6 +7,19 @@ export function emptyMatrix(): Matrix {
     matrix[developer.id] = {};
     for (const category of CATEGORIES) {
       matrix[developer.id][category.id] = null;
+    }
+  }
+  return matrix;
+}
+
+/** Fills every cell with a random skill level (for local testing). */
+export function randomMatrix(): Matrix {
+  const matrix: Matrix = {};
+  for (const developer of DEVELOPERS) {
+    matrix[developer.id] = {};
+    for (const category of CATEGORIES) {
+      const index = Math.floor(Math.random() * SKILL_LEVELS.length);
+      matrix[developer.id][category.id] = SKILL_LEVELS[index];
     }
   }
   return matrix;

@@ -47,14 +47,13 @@ export default function IntroPage() {
         <h2>Procedure</h2>
         <p className="small">
           You will assess the competences of {DEVELOPERS.length} fictitious team members across{" "}
-          {CATEGORIES.length} categories. In <strong>Task 1</strong> you do this without support. In{" "}
-          <strong>Task 2</strong> you see the same matrix again – your own ratings are pre-filled,
-          and wherever the system&apos;s assessment differs you are shown a suggestion. You are free
-          to accept, adjust or dismiss it.
+          {CATEGORIES.length} categories. In <strong>Task 1</strong> you fill an empty matrix without
+          support. In <strong>Task 2</strong> the matrix is pre-filled with system suggestions; each
+          cell shows confidence and your Task&nbsp;1 value. You can accept, adjust or reject each
+          suggestion and inspect evidence.
         </p>
         <p className="small muted">
-          Clicking a person&apos;s name opens a short profile with the available evidence. There is
-          no objectively correct solution – we are interested in how you proceed.
+          There is no objectively correct solution – we are interested in how you proceed.
         </p>
 
         <h2>Data protection</h2>

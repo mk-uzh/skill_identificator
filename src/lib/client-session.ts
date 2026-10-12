@@ -10,6 +10,7 @@ const KEY_SESSION = "devskill.sessionId";
 const KEY_CODE = "devskill.participantCode";
 const KEY_TASK1 = "devskill.task1Matrix";
 const KEY_SUGGESTIONS = "devskill.suggestions";
+const KEY_PREFILL = "devskill.prefill";
 
 function read<T>(key: string): T | null {
   if (typeof window === "undefined") return null;
@@ -39,9 +40,11 @@ export const clientSession = {
   setTask1: (matrix: Matrix) => write(KEY_TASK1, matrix),
   getSuggestions: () => read<AiSuggestion[]>(KEY_SUGGESTIONS),
   setSuggestions: (s: AiSuggestion[]) => write(KEY_SUGGESTIONS, s),
+  getPrefill: () => read<Matrix>(KEY_PREFILL),
+  setPrefill: (m: Matrix) => write(KEY_PREFILL, m),
   clear: () => {
     if (typeof window === "undefined") return;
-    [KEY_SESSION, KEY_CODE, KEY_TASK1, KEY_SUGGESTIONS].forEach((k) =>
+    [KEY_SESSION, KEY_CODE, KEY_TASK1, KEY_SUGGESTIONS, KEY_PREFILL].forEach((k) =>
       window.sessionStorage.removeItem(k),
     );
   },

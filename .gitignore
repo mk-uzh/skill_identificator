@@ -9,5 +9,12 @@ next-env.d.ts
 # do NOT commit study data to the repo (data protection / ethics)
 data/sessions/*
 data/events/*
+data/interactions/*
 !data/sessions/.gitkeep
 !data/events/.gitkeep
+!data/interactions/.gitkeep
+# assessments.json is the M1 contract — keep it versioned
+!data/assessments.json
+# partner identity mappings must never be committed
+data/snapshots/**/mapping.partner.json
+data/snapshots/**/mapping.secrets.json

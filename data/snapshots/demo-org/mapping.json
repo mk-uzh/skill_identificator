@@ -1,0 +1,53 @@
+{
+  "org_id": "demo-org",
+  "entries": [
+    {
+      "display_label": "Dev A",
+      "developer_id": "devA",
+      "github_login": "alice-ops",
+      "jira_account": null,
+      "github_login_hash": "4bab082b7cbe9c38",
+      "jira_account_hash": null
+    },
+    {
+      "display_label": "Dev B",
+      "developer_id": "devB",
+      "github_login": "bob-sec",
+      "jira_account": null,
+      "github_login_hash": "1dc8eb7848ae98d7",
+      "jira_account_hash": null
+    },
+    {
+      "display_label": "Dev C",
+      "developer_id": "devC",
+      "github_login": "carol-data",
+      "jira_account": null,
+      "github_login_hash": "27903a53505d9679",
+      "jira_account_hash": null
+    },
+    {
+      "display_label": "Dev D",
+      "developer_id": "devD",
+      "github_login": "dave-lead",
+      "jira_account": null,
+      "github_login_hash": "8c53ab538df64432",
+      "jira_account_hash": null
+    },
+    {
+      "display_label": "Dev E",
+      "developer_id": "devE",
+      "github_login": "erin-ui",
+      "jira_account": null,
+      "github_login_hash": "877250cd990fe7d1",
+      "jira_account_hash": null
+    },
+    {
+      "display_label": "Dev F",
+      "developer_id": "devF",
+      "github_login": "frank-qa",
+      "jira_account": null,
+      "github_login_hash": "95c0acc9073dbd89",
+      "jira_account_hash": null
+    }
+  ]
+}

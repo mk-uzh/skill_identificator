@@ -1,54 +1,41 @@
-import {
-  FALLBACK_BASELINE,
-  SCRIPTED_SUGGESTIONS,
-  type ScriptedSuggestion,
-} from "./study-config";
-import {
-  SKILL_LEVELS,
-  SKILL_LEVEL_VALUE,
-  type AiSuggestion,
-  type Matrix,
-  type SkillLevel,
-} from "./types";
-
-function shiftLevel(level: SkillLevel, delta: number): SkillLevel {
-  const index = SKILL_LEVEL_VALUE[level] + delta;
-  const clamped = Math.max(0, Math.min(SKILL_LEVELS.length - 1, index));
-  return SKILL_LEVELS[clamped];
-}
+import { getAssessments } from "./assessments";
+import { emptyMatrix } from "./matrix";
+import { signalsFromEvidence } from "./org-config";
+import type { AiSuggestion, Matrix, SkillLevel } from "./types";
 
 /**
- * Builds the suggestions for task 2 based on the task 1 matrix.
- *
- * The script in study-config.ts defines cell, direction and distance. The
- * concrete target value depends on the participant's input so that the
- * suggestion always deviates visibly from their own rating. Suggestions that
- * would no longer produce a deviation at the edge of the scale (e.g. "raise"
- * on an already assigned "expert") are mirrored, so every participant sees the
- * same number of suggestions.
+ * Builds Task-2 suggestions from data/assessments.json (absolute levels).
+ * One suggestion per developer × display category.
  */
-export function buildSuggestions(task1: Matrix): AiSuggestion[] {
-  return SCRIPTED_SUGGESTIONS.map((script: ScriptedSuggestion) => {
-    const baseline = task1[script.devId]?.[script.categoryId] ?? FALLBACK_BASELINE;
+export function buildSuggestionsFromAssessments(): AiSuggestion[] {
+  return getAssessments().assessments.map((assessment) => ({
+    devId: assessment.developer_id,
+    categoryId: assessment.category_id,
+    suggested: assessment.level,
+    direction: assessment.study?.direction ?? "raise",
+    confidence: assessment.confidence,
+    rationale: assessment.rationale,
+    evidence: assessment.evidence,
+    signals: signalsFromEvidence(assessment.evidence),
+    veracity: assessment.study?.veracity ?? "correct",
+  }));
+}
 
-    let direction = script.direction;
-    let suggested = shiftLevel(baseline, direction === "raise" ? script.delta : -script.delta);
-
-    if (suggested === baseline) {
-      direction = direction === "raise" ? "lower" : "raise";
-      suggested = shiftLevel(baseline, direction === "raise" ? script.delta : -script.delta);
+/** Prefill matrix for Task 2 — every cell set to the inferred level from the file. */
+export function assessmentsToMatrix(): Matrix {
+  const matrix = emptyMatrix();
+  for (const assessment of getAssessments().assessments) {
+    if (!matrix[assessment.developer_id]) {
+      matrix[assessment.developer_id] = {};
     }
+    matrix[assessment.developer_id][assessment.category_id] = assessment.level as SkillLevel;
+  }
+  return matrix;
+}
 
-    return {
-      devId: script.devId,
-      categoryId: script.categoryId,
-      suggested,
-      direction,
-      confidence: script.confidence,
-      rationale: script.rationale,
-      veracity: script.veracity,
-    };
-  });
+/** @deprecated Prefer buildSuggestionsFromAssessments — kept for call-site clarity. */
+export function buildSuggestions(_task1: Matrix): AiSuggestion[] {
+  return buildSuggestionsFromAssessments();
 }
 
 export function suggestionKey(devId: string, categoryId: string): string {
