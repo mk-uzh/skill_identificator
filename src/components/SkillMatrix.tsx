@@ -23,7 +23,6 @@ export interface SkillMatrixProps {
   task1Matrix?: Matrix;
   decisions?: Record<string, SuggestionDecision>;
   onAccept?: (suggestion: AiSuggestion) => void;
-  onAdjust?: (suggestion: AiSuggestion) => void;
   onReject?: (suggestion: AiSuggestion) => void;
   openEvidence?: string | null;
   onToggleEvidence?: (suggestion: AiSuggestion) => void;
@@ -45,7 +44,6 @@ export function SkillMatrix({
   task1Matrix,
   decisions,
   onAccept,
-  onAdjust,
   onReject,
   openEvidence,
   onToggleEvidence,
@@ -138,21 +136,13 @@ export function SkillMatrix({
 
                       {isTask2 && suggestion && differs && (
                         <DiffCell
-                          developerLabel={developer.label}
-                          categoryLabel={category.label}
-                          value={value}
                           task1Value={task1Value}
                           suggestion={suggestion}
                           decision={decision}
                           alignPopoverRight={alignPopoverRight}
                           openEvidence={openEvidence === key}
                           correctionNote={correctionNotes?.[key] ?? ""}
-                          onCellOpen={() => onCellOpen?.(developer.id, category.id)}
-                          onCellChange={(next) =>
-                            onCellChange(developer.id, category.id, next)
-                          }
                           onAccept={() => onAccept?.(suggestion)}
-                          onAdjust={() => onAdjust?.(suggestion)}
                           onReject={() => onReject?.(suggestion)}
                           onToggleEvidence={() => onToggleEvidence?.(suggestion)}
                           onCorrectionNoteChange={(note) =>
@@ -197,110 +187,72 @@ export function SkillMatrix({
 }
 
 function DiffCell({
-  developerLabel,
-  categoryLabel,
-  value,
   task1Value,
   suggestion,
   decision,
   alignPopoverRight,
   openEvidence,
   correctionNote,
-  onCellOpen,
-  onCellChange,
   onAccept,
-  onAdjust,
   onReject,
   onToggleEvidence,
   onCorrectionNoteChange,
 }: {
-  developerLabel: string;
-  categoryLabel: string;
-  value: SkillLevel | null;
   task1Value: SkillLevel | null;
   suggestion: AiSuggestion;
   decision: SuggestionDecision;
   alignPopoverRight: boolean;
   openEvidence: boolean;
   correctionNote: string;
-  onCellOpen: () => void;
-  onCellChange: (next: SkillLevel | null) => void;
   onAccept: () => void;
-  onAdjust: () => void;
   onReject: () => void;
   onToggleEvidence: () => void;
   onCorrectionNoteChange: (note: string) => void;
 }) {
+  const you = task1Value ? SKILL_LEVEL_LABELS[task1Value] : "—";
+  const system = SKILL_LEVEL_LABELS[suggestion.suggested];
+  const conf = Math.round(suggestion.confidence * 100);
+
   return (
-    <>
-      <div className="diff-compare" title="Your Task 1 rating vs system suggestion">
-        <span className="diff-compare__from">
-          You: <strong>{task1Value ? SKILL_LEVEL_LABELS[task1Value] : "—"}</strong>
-        </span>
-        <span className="diff-compare__arrow" aria-hidden="true">
-          →
-        </span>
-        <span className="diff-compare__to">
-          System: <strong>{SKILL_LEVEL_LABELS[suggestion.suggested]}</strong>
-          <span className="cell-meta__conf">
-            {" "}
-            {Math.round(suggestion.confidence * 100)}%
+    <div className="diff-cell">
+      <div className="diff-cell__top">
+        <div className="diff-compare" title="You (Task 1) → system suggestion">
+          <strong>{you}</strong>
+          <span className="diff-compare__arrow" aria-hidden="true">
+            →
           </span>
-        </span>
+          <strong className="diff-compare__to">{system}</strong>
+          <span className="cell-meta__conf">{conf}%</span>
+        </div>
+        <InfoIcon
+          suggestion={suggestion}
+          open={openEvidence}
+          alignRight={alignPopoverRight}
+          correctionNote={correctionNote}
+          onToggle={onToggleEvidence}
+          onCorrectionNoteChange={onCorrectionNoteChange}
+        />
       </div>
 
-      {(decision === "open" || decision === "adjusted") && (
-        <select
-          value={value ?? ""}
-          aria-label={`${developerLabel}, ${categoryLabel}, current`}
-          disabled={decision === "open"}
-          onFocus={onCellOpen}
-          onChange={(e) =>
-            onCellChange(e.target.value === "" ? null : (e.target.value as SkillLevel))
-          }
-        >
-          {decision === "adjusted" && <option value="">cleared</option>}
-          {SKILL_LEVELS.map((level) => (
-            <option key={level} value={level}>
-              {SKILL_LEVEL_LABELS[level]}
-            </option>
-          ))}
-        </select>
-      )}
-
       {decision === "accepted_unchanged" && (
-        <div className="badge-resolved">
-          Accepted: {SKILL_LEVEL_LABELS[suggestion.suggested]}
-        </div>
+        <div className="badge-resolved">Accepted: {system}</div>
       )}
-      {decision === "rejected" && <div className="badge-resolved">Rejected (cleared)</div>}
-      {decision === "adjusted" && value && (
-        <div className="badge-resolved">Adjusted to {SKILL_LEVEL_LABELS[value]}</div>
+      {decision === "rejected" && (
+        <div className="badge-resolved">Kept Task 1: {you}</div>
       )}
+      {decision === "adjusted" && <div className="badge-resolved">Changed</div>}
 
       {decision === "open" && (
-        <div className="suggestion__actions">
+        <div className="suggestion__actions suggestion__actions--row">
           <button type="button" className="chip chip--primary" onClick={onAccept}>
             Accept
-          </button>
-          <button type="button" className="chip" onClick={onAdjust}>
-            Adjust
           </button>
           <button type="button" className="chip" onClick={onReject}>
             Reject
           </button>
         </div>
       )}
-
-      <EvidenceBlock
-        suggestion={suggestion}
-        open={openEvidence}
-        alignRight={alignPopoverRight}
-        correctionNote={correctionNote}
-        onToggle={onToggleEvidence}
-        onCorrectionNoteChange={onCorrectionNoteChange}
-      />
-    </>
+    </div>
   );
 }
 
@@ -363,21 +315,24 @@ function SameCell({
               </option>
             ))}
           </select>
-          <EvidenceBlock
-            suggestion={suggestion}
-            open={openEvidence}
-            alignRight={alignPopoverRight}
-            correctionNote={correctionNote}
-            onToggle={onToggleEvidence}
-            onCorrectionNoteChange={onCorrectionNoteChange}
-          />
+          <div className="same-cell-panel__info">
+            <InfoIcon
+              suggestion={suggestion}
+              open={openEvidence}
+              alignRight={alignPopoverRight}
+              correctionNote={correctionNote}
+              onToggle={onToggleEvidence}
+              onCorrectionNoteChange={onCorrectionNoteChange}
+            />
+          </div>
         </div>
       )}
     </>
   );
 }
 
-function EvidenceBlock({
+/** Top-right info icon: hover shows rationale; click pins full evidence. */
+function InfoIcon({
   suggestion,
   open,
   alignRight,
@@ -393,54 +348,44 @@ function EvidenceBlock({
   onCorrectionNoteChange: (note: string) => void;
 }) {
   return (
-    <div className="suggestion" style={{ marginTop: 6 }}>
+    <div className={"info-tip" + (alignRight ? " info-tip--right" : "")}>
       <button
         type="button"
-        className="suggestion__head suggestion__head--evidence"
+        className="info-tip__btn"
+        aria-label="Rationale and evidence"
         aria-expanded={open}
         onClick={onToggle}
-        title="Show evidence"
       >
-        <span>Evidence &amp; rationale</span>
-        <span className="suggestion__info">ⓘ</span>
+        i
       </button>
-
-      {open && (
-        <div
-          className={
-            "suggestion__pop suggestion__pop--wide" +
-            (alignRight ? " suggestion__pop--right" : "")
-          }
-        >
-          <p className="evidence-rationale">{suggestion.rationale}</p>
-
-          {(suggestion.signals?.length ?? 0) > 0 && (
-            <>
-              <strong className="small">Signals that contributed</strong>
-              <ul className="evidence-list">
-                {(suggestion.signals ?? []).map((signal) => (
-                  <li key={signal.kind}>
-                    <span className="evidence-list__kind">{signal.kind}</span> {signal.label}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-
-          <strong className="small" style={{ display: "block", marginTop: 8 }}>
-            Evidence (working links)
-          </strong>
-          <ul className="evidence-list">
-            {suggestion.evidence.map((item) => (
-              <li key={item.url}>
-                <span className="evidence-list__kind">{item.kind}</span>{" "}
-                <a href={item.url} target="_blank" rel="noreferrer">
-                  {item.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-
+      <div className={"info-tip__hover" + (open ? " info-tip__hover--pinned" : "")}>
+        <p className="evidence-rationale">{suggestion.rationale}</p>
+        {(suggestion.signals?.length ?? 0) > 0 && (
+          <>
+            <strong className="small">Signals</strong>
+            <ul className="evidence-list">
+              {(suggestion.signals ?? []).map((signal) => (
+                <li key={signal.kind}>
+                  <span className="evidence-list__kind">{signal.kind}</span> {signal.label}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        <strong className="small" style={{ display: "block", marginTop: 8 }}>
+          Evidence
+        </strong>
+        <ul className="evidence-list">
+          {suggestion.evidence.map((item) => (
+            <li key={item.url}>
+              <span className="evidence-list__kind">{item.kind}</span>{" "}
+              <a href={item.url} target="_blank" rel="noreferrer">
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+        {open && (
           <label className="correction-note">
             <span className="small">Correction note (optional)</span>
             <textarea
@@ -450,8 +395,8 @@ function EvidenceBlock({
               onChange={(e) => onCorrectionNoteChange(e.target.value)}
             />
           </label>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

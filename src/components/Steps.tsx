@@ -1,6 +1,6 @@
-const STEP_LABELS = ["Introduction", "Task 1", "Task 2", "Wrap-up"];
+const STEP_LABELS = ["Introduction", "Task 1", "Task 2", "Overview", "Wrap-up"];
 
-export function Steps({ current }: { current: 0 | 1 | 2 | 3 }) {
+export function Steps({ current }: { current: 0 | 1 | 2 | 3 | 4 }) {
   return (
     <nav className="steps" aria-label="Progress">
       {STEP_LABELS.map((label, i) => (

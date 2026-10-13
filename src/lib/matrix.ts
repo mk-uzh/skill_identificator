@@ -57,3 +57,22 @@ export const TOTAL_CELLS = DEVELOPERS.length * CATEGORIES.length;
 export function isComplete(matrix: Matrix): boolean {
   return countFilled(matrix) === TOTAL_CELLS;
 }
+
+/**
+ * Fills null cells from a baseline matrix (e.g. Task 1 after Reject).
+ * Ensures every developer × category has a concrete skill level.
+ */
+export function coalesceMatrix(primary: Matrix, baseline: Matrix): Matrix {
+  const next = cloneMatrix(primary);
+  for (const developer of DEVELOPERS) {
+    if (!next[developer.id]) next[developer.id] = {};
+    for (const category of CATEGORIES) {
+      const value = next[developer.id][category.id];
+      if (value == null) {
+        next[developer.id][category.id] =
+          baseline[developer.id]?.[category.id] ?? null;
+      }
+    }
+  }
+  return next;
+}

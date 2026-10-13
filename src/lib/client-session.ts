@@ -9,6 +9,7 @@ import type { AiSuggestion, Matrix } from "./types";
 const KEY_SESSION = "devskill.sessionId";
 const KEY_CODE = "devskill.participantCode";
 const KEY_TASK1 = "devskill.task1Matrix";
+const KEY_TASK2 = "devskill.task2Matrix";
 const KEY_SUGGESTIONS = "devskill.suggestions";
 const KEY_PREFILL = "devskill.prefill";
 
@@ -38,14 +39,16 @@ export const clientSession = {
   setParticipantCode: (code: string) => write(KEY_CODE, code),
   getTask1: () => read<Matrix>(KEY_TASK1),
   setTask1: (matrix: Matrix) => write(KEY_TASK1, matrix),
+  getTask2: () => read<Matrix>(KEY_TASK2),
+  setTask2: (matrix: Matrix) => write(KEY_TASK2, matrix),
   getSuggestions: () => read<AiSuggestion[]>(KEY_SUGGESTIONS),
   setSuggestions: (s: AiSuggestion[]) => write(KEY_SUGGESTIONS, s),
   getPrefill: () => read<Matrix>(KEY_PREFILL),
   setPrefill: (m: Matrix) => write(KEY_PREFILL, m),
   clear: () => {
     if (typeof window === "undefined") return;
-    [KEY_SESSION, KEY_CODE, KEY_TASK1, KEY_SUGGESTIONS, KEY_PREFILL].forEach((k) =>
-      window.sessionStorage.removeItem(k),
+    [KEY_SESSION, KEY_CODE, KEY_TASK1, KEY_TASK2, KEY_SUGGESTIONS, KEY_PREFILL].forEach(
+      (k) => window.sessionStorage.removeItem(k),
     );
   },
 };

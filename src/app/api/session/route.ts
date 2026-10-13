@@ -63,6 +63,8 @@ export async function GET(request: Request) {
     participantCode: session.participantCode,
     task1Submitted: Boolean(session.task1),
     task2Submitted: Boolean(session.task2),
+    task1Matrix: session.task1?.matrix ?? null,
+    task2Matrix: session.task2?.matrix ?? null,
     config_hash: session.config_hash ?? null,
     snapshot_hash: session.snapshot_hash ?? null,
   });

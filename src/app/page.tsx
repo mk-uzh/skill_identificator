@@ -45,6 +45,40 @@ export default function IntroPage() {
         </p>
 
         <h2>Procedure</h2>
+        <ol className="study-flow" aria-label="Study flow">
+          <li className="study-flow__step">
+            <span className="study-flow__label">Intro</span>
+            <span className="study-flow__desc">Consent &amp; briefing</span>
+          </li>
+          <li className="study-flow__step" aria-hidden="true">
+            <span className="study-flow__arrow">→</span>
+          </li>
+          <li className="study-flow__step">
+            <span className="study-flow__label">Task 1</span>
+            <span className="study-flow__desc">Self-assessment</span>
+          </li>
+          <li className="study-flow__step" aria-hidden="true">
+            <span className="study-flow__arrow">→</span>
+          </li>
+          <li className="study-flow__step">
+            <span className="study-flow__label">Task 2</span>
+            <span className="study-flow__desc">With system support</span>
+          </li>
+          <li className="study-flow__step" aria-hidden="true">
+            <span className="study-flow__arrow">→</span>
+          </li>
+          <li className="study-flow__step">
+            <span className="study-flow__label">Overview</span>
+            <span className="study-flow__desc">Compare T1 vs T2</span>
+          </li>
+          <li className="study-flow__step" aria-hidden="true">
+            <span className="study-flow__arrow">→</span>
+          </li>
+          <li className="study-flow__step">
+            <span className="study-flow__label">Wrap-up</span>
+            <span className="study-flow__desc">Short questionnaire</span>
+          </li>
+        </ol>
         <p className="small">
           You will assess the competences of {DEVELOPERS.length} fictitious team members across{" "}
           {CATEGORIES.length} categories. In <strong>Task 1</strong> you fill an empty matrix without

@@ -12,11 +12,10 @@ import { CellTracker } from "@/lib/cell-tracker";
 import { clientSession } from "@/lib/client-session";
 import { nowIsoMs } from "@/lib/interaction-log";
 import { logger } from "@/lib/logger";
-import { cloneMatrix, emptyMatrix, setCell } from "@/lib/matrix";
+import { cloneMatrix, coalesceMatrix, emptyMatrix, setCell } from "@/lib/matrix";
 import { DEVELOPERS } from "@/lib/study-config";
 import { indexSuggestions, suggestionKey } from "@/lib/suggestions";
 import {
-  SKILL_LEVELS,
   type AiSuggestion,
   type Matrix,
   type SkillLevel,
@@ -66,7 +65,7 @@ export default function Task2Page() {
           return;
         }
         if (status.task2Submitted) {
-          router.replace("/done");
+          router.replace("/summary");
           return;
         }
       } catch {
@@ -163,28 +162,18 @@ export default function Task2Page() {
     markDecided(key, "accepted_unchanged");
   }
 
-  function handleAdjust(suggestion: AiSuggestion) {
-    const key = suggestionKey(suggestion.devId, suggestion.categoryId);
-    tracker.current.open(suggestion.devId, suggestion.categoryId);
-    tracker.current.setExplicitType(suggestion.devId, suggestion.categoryId, "adjusted");
-    logger.log("suggestion_modify", {
-      devId: suggestion.devId,
-      categoryId: suggestion.categoryId,
-      suggested: suggestion.suggested,
-      meta: { action: "adjust_start" },
-    });
-    markDecided(key, "adjusted");
-  }
-
   function handleReject(suggestion: AiSuggestion) {
     const key = suggestionKey(suggestion.devId, suggestion.categoryId);
+    const kept = task1Matrix[suggestion.devId]?.[suggestion.categoryId] ?? null;
     tracker.current.open(suggestion.devId, suggestion.categoryId);
     tracker.current.change(suggestion.devId, suggestion.categoryId);
     tracker.current.setExplicitType(suggestion.devId, suggestion.categoryId, "rejected");
-    setMatrix((current) => setCell(current, suggestion.devId, suggestion.categoryId, null));
+    // Reject keeps the Task 1 rating — every cell stays filled.
+    setMatrix((current) => setCell(current, suggestion.devId, suggestion.categoryId, kept));
     logger.log("suggestion_dismiss", {
       devId: suggestion.devId,
       categoryId: suggestion.categoryId,
+      to: kept,
       suggested: suggestion.suggested,
     });
     markDecided(key, "rejected");
@@ -194,10 +183,11 @@ export default function Task2Page() {
     const key = suggestionKey(devId, categoryId);
     tracker.current.change(devId, categoryId);
     const suggestion = suggestionMap.get(key);
+    const kept = next ?? task1Matrix[devId]?.[categoryId] ?? null;
     const type =
       next === null
         ? "rejected"
-        : suggestion && next === suggestion.suggested
+        : suggestion && kept === suggestion.suggested
           ? "accepted_unchanged"
           : "adjusted";
     tracker.current.setExplicitType(devId, categoryId, type);
@@ -206,10 +196,10 @@ export default function Task2Page() {
         devId,
         categoryId,
         from: current[devId]?.[categoryId] ?? null,
-        to: next,
+        to: kept,
         suggested: suggestion?.suggested,
       });
-      return setCell(current, devId, categoryId, next);
+      return setCell(current, devId, categoryId, kept);
     });
     markDecided(key, type);
   }
@@ -246,7 +236,7 @@ export default function Task2Page() {
     }
   }
 
-  /** Demo helper: accept / adjust / reject differing cells in rotation. */
+  /** Demo helper: accept / reject differing cells in rotation. */
   function fillDefault() {
     let i = 0;
     setMatrix((current) => {
@@ -259,12 +249,12 @@ export default function Task2Page() {
         const differs = t1 != null && t1 !== suggestion.suggested;
         if (!differs) continue;
 
-        const mode = i % 3;
+        const accept = i % 2 === 0;
         i += 1;
         tracker.current.open(suggestion.devId, suggestion.categoryId);
         tracker.current.change(suggestion.devId, suggestion.categoryId);
 
-        if (mode === 0) {
+        if (accept) {
           next = setCell(next, suggestion.devId, suggestion.categoryId, suggestion.suggested);
           tracker.current.setExplicitType(
             suggestion.devId,
@@ -272,14 +262,8 @@ export default function Task2Page() {
             "accepted_unchanged",
           );
           nextDecisions[key] = "accepted_unchanged";
-        } else if (mode === 1) {
-          const idx = SKILL_LEVELS.indexOf(suggestion.suggested);
-          const alt = SKILL_LEVELS[(idx + 1) % SKILL_LEVELS.length];
-          next = setCell(next, suggestion.devId, suggestion.categoryId, alt);
-          tracker.current.setExplicitType(suggestion.devId, suggestion.categoryId, "adjusted");
-          nextDecisions[key] = "adjusted";
         } else {
-          next = setCell(next, suggestion.devId, suggestion.categoryId, null);
+          next = setCell(next, suggestion.devId, suggestion.categoryId, t1);
           tracker.current.setExplicitType(suggestion.devId, suggestion.categoryId, "rejected");
           nextDecisions[key] = "rejected";
         }
@@ -317,11 +301,15 @@ export default function Task2Page() {
     const durationMs = logger.elapsed();
     const committedAt = nowIsoMs();
 
+    // Every cell must stay filled: null (Reject / cleared) falls back to Task 1.
+    const finalMatrix = coalesceMatrix(matrix, task1Matrix);
+
     const finalDecisions = { ...decisions };
     for (const suggestion of suggestions) {
       const key = suggestionKey(suggestion.devId, suggestion.categoryId);
       if (finalDecisions[key] === "open") {
-        const value = matrix[suggestion.devId]?.[suggestion.categoryId] ?? null;
+        const value = finalMatrix[suggestion.devId]?.[suggestion.categoryId] ?? null;
+        const t1 = task1Matrix[suggestion.devId]?.[suggestion.categoryId] ?? null;
         if (value === suggestion.suggested) {
           finalDecisions[key] = "accepted_unchanged";
           tracker.current.setExplicitType(
@@ -329,7 +317,7 @@ export default function Task2Page() {
             suggestion.categoryId,
             "accepted_unchanged",
           );
-        } else if (value === null) {
+        } else if (value === t1) {
           finalDecisions[key] = "rejected";
           tracker.current.setExplicitType(suggestion.devId, suggestion.categoryId, "rejected");
         } else {
@@ -340,11 +328,12 @@ export default function Task2Page() {
       }
     }
     setDecisions(finalDecisions);
+    setMatrix(finalMatrix);
 
     const interactions = tracker.current.buildTask2Rows({
       sessionId,
       participantId: participantId || "unknown",
-      matrix,
+      matrix: finalMatrix,
       task1: task1Matrix,
       suggestions: suggestionMap,
       committedAt,
@@ -360,17 +349,18 @@ export default function Task2Page() {
         body: JSON.stringify({
           sessionId,
           task: 2,
-          matrix,
+          matrix: finalMatrix,
           durationMs,
           startedAt: startedAt.current,
           suggestions,
-          outcomes: buildOutcomes(matrix),
+          outcomes: buildOutcomes(finalMatrix),
           interactions,
         }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Saving failed");
-      router.push("/done");
+      clientSession.setTask2(finalMatrix);
+      router.push("/summary");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Saving failed");
       setBusy(false);
@@ -399,10 +389,8 @@ export default function Task2Page() {
             Default
           </button>
         </div>
-        <p className="lede">
-          Cells where your Task&nbsp;1 rating differs from the system show You → System with Accept /
-          Adjust / Reject. Matching cells stay compact — click one to edit, open evidence or add a
-          note.
+        <p className="lede lede--full">
+          Differing cells show you → system (e.g. none → basic 90%) with Accept or Reject. Matching cells stay compact — click one to edit, open evidence or add a note.
         </p>
         <p className="small muted" style={{ marginTop: -12, marginBottom: 16 }}>
           {diffCount} differing cell{diffCount === 1 ? "" : "s"} highlighted · {openCount} still open
@@ -426,7 +414,6 @@ export default function Task2Page() {
           suggestions={suggestionMap}
           decisions={decisions}
           onAccept={handleAccept}
-          onAdjust={handleAdjust}
           onReject={handleReject}
           openEvidence={openEvidence}
           onToggleEvidence={handleToggleEvidence}
