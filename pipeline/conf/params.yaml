@@ -1,0 +1,33 @@
+# Parameters for every pipeline step. Single source of truth.
+project:
+  name: sakai
+  jira_base: "https://sakaiproject.atlassian.net"
+  jira_project_key: SAK
+  github_owner: sakaiproject
+  github_repo: sakai
+  repo_url: "https://github.com/sakaiproject/sakai.git"
+  repo_path: "../../_clones/sakai"      # local clone, relative to pipeline/
+
+window:
+  start: "2025-01-01"
+  end: "2026-10-01"
+
+scope:
+  min_commits: 10          # threshold for in_scope; stored as a flag, nothing is deleted
+  exclude_bots: true
+  bot_patterns: ["dependabot", "[bot]", "renovate", "github-actions"]
+
+paths:
+  bronze_dir: "data/bronze"
+  sqlite_bronze: "data/bronze/bronze.sqlite"
+  sqlite_silver: "data/silver/silver.sqlite"
+  sqlite_gold: "data/gold/gold.sqlite"
+
+github:
+  # Token optional but strongly recommended: 60 requests/hour without, 5000 with.
+  token_env: GITHUB_TOKEN
+  pulls_state: all
+
+jira:
+  page_size: 100
+  pause_seconds: 0.3
