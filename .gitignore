@@ -18,3 +18,15 @@ data/interactions/*
 # partner identity mappings must never be committed
 data/snapshots/**/mapping.partner.json
 data/snapshots/**/mapping.secrets.json
+
+# --- Pipeline: Rohdaten und Identitaeten bleiben lokal ---
+pipeline/data/
+_clones/
+__pycache__/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.salt
+
+# PyCharm
+.idea/
