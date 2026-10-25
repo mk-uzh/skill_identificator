@@ -38,7 +38,7 @@ def existing_ids(con: sqlite3.Connection, table: str, col: str) -> set:
 
 
 def log_fetch(con: sqlite3.Connection, source: str, params: dict, n_items: int) -> None:
-    upsert(con, "brz_fetch_log", {
+    upsert(con, "tbl_brz_fetch_log", {
         "source": source, "fetched_at": now(),
         "params": json.dumps(params, ensure_ascii=False), "n_items": n_items})
     con.commit()

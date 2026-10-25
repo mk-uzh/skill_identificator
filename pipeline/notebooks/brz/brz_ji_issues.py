@@ -7,7 +7,9 @@
 # %%
 import sys, json
 from pathlib import Path
-sys.path.insert(0, str(Path.cwd().parent / "src"))
+ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents]
+            if (p / "src" / "devskill").exists())
+sys.path.insert(0, str(ROOT / "src"))
 from devskill.config import Config
 from devskill import db
 from devskill.jira_ingest import Jira
@@ -19,8 +21,8 @@ print(cfg, "|", cfg.project["jira_base"], pkey)
 
 # %%
 con = db.connect(cfg.path("sqlite_bronze"))
-db.run_script(con, Path.cwd().parent / "sql" / "00_bronze.sql")
-known = db.existing_ids(con, "brz_ji_issue", "issue_key")
+db.run_script(con, ROOT / "sql" / "00_bronze.sql")
+known = db.existing_ids(con, "tbl_brz_ji_issue", "issue_key")
 print("already loaded:", len(known))
 
 # %%
@@ -32,7 +34,7 @@ print(f"{len(keys)} issues created inside the window")
 # referenced by commits and add whatever the window missed.
 import re
 referenced = set()
-for (subject,) in con.execute("SELECT subject FROM brz_gh_commit"):
+for (subject,) in con.execute("SELECT subject FROM tbl_brz_gh_commit"):
     m = re.search(rf"{pkey}-\d+", subject or "")
     if m:
         referenced.add(m.group(0))
@@ -50,14 +52,14 @@ for i, k in enumerate(keys, 1):
     if not d:
         continue
     f = d.get("fields", {})
-    db.upsert(con, "brz_ji_issue", {
+    db.upsert(con, "tbl_brz_ji_issue", {
         "issue_key": d.get("key", k), "fetched_at": db.now(),
         "created_at": (f.get("created") or "")[:19],
         "updated_at": (f.get("updated") or "")[:19],
         "payload": json.dumps(d, ensure_ascii=False)})
     n_i += 1
     for c in (f.get("comment") or {}).get("comments", []) or []:
-        db.upsert(con, "brz_ji_comment", {
+        db.upsert(con, "tbl_brz_ji_comment", {
             "comment_id": f"{k}:{c.get('id')}", "issue_key": k,
             "fetched_at": db.now(), "payload": json.dumps(c, ensure_ascii=False)})
         n_c += 1
@@ -67,7 +69,7 @@ for i, k in enumerate(keys, 1):
 con.commit()
 db.log_fetch(con, "jira_issues", {"window": cfg.window, "project": pkey}, n_i)
 print(f"new: {n_i} issues, {n_c} comments")
-print("totals:", db.count(con, "brz_ji_issue"), db.count(con, "brz_ji_comment"))
+print("totals:", db.count(con, "tbl_brz_ji_issue"), db.count(con, "tbl_brz_ji_comment"))
 
 # %% [markdown]
 # ## Quick check: which fields are actually populated?
@@ -75,7 +77,7 @@ print("totals:", db.count(con, "brz_ji_issue"), db.count(con, "brz_ji_comment"))
 # %%
 import collections
 filled = collections.Counter()
-for (p,) in con.execute("SELECT payload FROM brz_ji_issue LIMIT 300"):
+for (p,) in con.execute("SELECT payload FROM tbl_brz_ji_issue LIMIT 300"):
     for k, v in json.loads(p).get("fields", {}).items():
         if v not in (None, [], "", {}):
             filled[k] += 1

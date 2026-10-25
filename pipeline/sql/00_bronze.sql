@@ -1,7 +1,7 @@
 -- Bronze: raw data, unchanged. No cleaning, no renaming.
 -- payload holds the complete response of the source as JSON text.
 
-CREATE TABLE IF NOT EXISTS brz_fetch_log (
+CREATE TABLE IF NOT EXISTS tbl_brz_fetch_log (
   log_id      INTEGER PRIMARY KEY AUTOINCREMENT,
   source      TEXT NOT NULL,
   fetched_at  TEXT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS brz_fetch_log (
 );
 
 -- --- GitHub / Git ---------------------------------------------------------
-CREATE TABLE IF NOT EXISTS brz_gh_commit (
+CREATE TABLE IF NOT EXISTS tbl_brz_gh_commit (
   sha           TEXT PRIMARY KEY,
   fetched_at    TEXT NOT NULL,
   authored_at   TEXT,
@@ -19,9 +19,9 @@ CREATE TABLE IF NOT EXISTS brz_gh_commit (
   subject       TEXT,
   payload       TEXT NOT NULL      -- full commit incl. body, trailers, files
 );
-CREATE INDEX IF NOT EXISTS ix_brz_commit_date ON brz_gh_commit(authored_at);
+CREATE INDEX IF NOT EXISTS ix_tbl_brz_commit_date ON tbl_brz_gh_commit(authored_at);
 
-CREATE TABLE IF NOT EXISTS brz_gh_pull (
+CREATE TABLE IF NOT EXISTS tbl_brz_gh_pull (
   pr_number   INTEGER PRIMARY KEY,
   fetched_at  TEXT NOT NULL,
   state       TEXT,
@@ -29,41 +29,41 @@ CREATE TABLE IF NOT EXISTS brz_gh_pull (
   payload     TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS brz_gh_review (
+CREATE TABLE IF NOT EXISTS tbl_brz_gh_review (
   review_id   INTEGER PRIMARY KEY,
   pr_number   INTEGER NOT NULL,
   fetched_at  TEXT NOT NULL,
   payload     TEXT NOT NULL
 );
-CREATE INDEX IF NOT EXISTS ix_brz_review_pr ON brz_gh_review(pr_number);
+CREATE INDEX IF NOT EXISTS ix_tbl_brz_review_pr ON tbl_brz_gh_review(pr_number);
 
-CREATE TABLE IF NOT EXISTS brz_gh_review_comment (
+CREATE TABLE IF NOT EXISTS tbl_brz_gh_review_comment (
   comment_id  INTEGER PRIMARY KEY,
   pr_number   INTEGER NOT NULL,
   fetched_at  TEXT NOT NULL,
   payload     TEXT NOT NULL
 );
-CREATE INDEX IF NOT EXISTS ix_brz_rcomment_pr ON brz_gh_review_comment(pr_number);
+CREATE INDEX IF NOT EXISTS ix_tbl_brz_rcomment_pr ON tbl_brz_gh_review_comment(pr_number);
 
 -- --- Jira -----------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS brz_ji_issue (
+CREATE TABLE IF NOT EXISTS tbl_brz_ji_issue (
   issue_key   TEXT PRIMARY KEY,
   fetched_at  TEXT NOT NULL,
   created_at  TEXT,
   updated_at  TEXT,
   payload     TEXT NOT NULL      -- fields=*all incl. comments and changelog
 );
-CREATE INDEX IF NOT EXISTS ix_brz_issue_created ON brz_ji_issue(created_at);
+CREATE INDEX IF NOT EXISTS ix_tbl_brz_issue_created ON tbl_brz_ji_issue(created_at);
 
-CREATE TABLE IF NOT EXISTS brz_ji_comment (
+CREATE TABLE IF NOT EXISTS tbl_brz_ji_comment (
   comment_id  TEXT PRIMARY KEY,
   issue_key   TEXT NOT NULL,
   fetched_at  TEXT NOT NULL,
   payload     TEXT NOT NULL
 );
-CREATE INDEX IF NOT EXISTS ix_brz_jcomment_issue ON brz_ji_comment(issue_key);
+CREATE INDEX IF NOT EXISTS ix_tbl_brz_jcomment_issue ON tbl_brz_ji_comment(issue_key);
 
-CREATE TABLE IF NOT EXISTS brz_gh_commit_patch (
+CREATE TABLE IF NOT EXISTS tbl_brz_gh_commit_patch (
   sha          TEXT NOT NULL,
   file_path    TEXT NOT NULL,
   fetched_at   TEXT NOT NULL,
@@ -73,4 +73,4 @@ CREATE TABLE IF NOT EXISTS brz_gh_commit_patch (
   added_lines  TEXT,              -- added lines only, capped per file
   PRIMARY KEY (sha, file_path)
 );
-CREATE INDEX IF NOT EXISTS ix_brz_patch_sha ON brz_gh_commit_patch(sha);
+CREATE INDEX IF NOT EXISTS ix_tbl_brz_patch_sha ON tbl_brz_gh_commit_patch(sha);

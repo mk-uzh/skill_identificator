@@ -8,7 +8,9 @@
 # %%
 import sys, json, os
 from pathlib import Path
-sys.path.insert(0, str(Path.cwd().parent / "src"))
+ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents]
+            if (p / "src" / "devskill").exists())
+sys.path.insert(0, str(ROOT / "src"))
 from devskill.config import Config
 from devskill import db
 from devskill.github_ingest import GitHub
@@ -25,8 +27,8 @@ print(cfg, "| token present:", bool(cfg.github_token))
 
 # %%
 con = db.connect(cfg.path("sqlite_bronze"))
-db.run_script(con, Path.cwd().parent / "sql" / "00_bronze.sql")
-known = db.existing_ids(con, "brz_gh_pull", "pr_number")
+db.run_script(con, ROOT / "sql" / "00_bronze.sql")
+known = db.existing_ids(con, "tbl_brz_gh_pull", "pr_number")
 print("already loaded:", len(known))
 
 # %%
@@ -43,19 +45,19 @@ for pr in gh.pulls(owner, repo, cfg.github.get("pulls_state", "all")):
     if num in known:
         continue
 
-    db.upsert(con, "brz_gh_pull", {
+    db.upsert(con, "tbl_brz_gh_pull", {
         "pr_number": num, "fetched_at": db.now(), "state": pr.get("state"),
         "merged_at": pr.get("merged_at"), "payload": json.dumps(pr, ensure_ascii=False)})
     n_pr += 1
 
     for rv in gh.reviews(owner, repo, num):
-        db.upsert(con, "brz_gh_review", {
+        db.upsert(con, "tbl_brz_gh_review", {
             "review_id": rv["id"], "pr_number": num, "fetched_at": db.now(),
             "payload": json.dumps(rv, ensure_ascii=False)})
         n_rev += 1
 
     for rc in gh.review_comments(owner, repo, num):
-        db.upsert(con, "brz_gh_review_comment", {
+        db.upsert(con, "tbl_brz_gh_review_comment", {
             "comment_id": rc["id"], "pr_number": num, "fetched_at": db.now(),
             "payload": json.dumps(rc, ensure_ascii=False)})
         n_com += 1
@@ -66,6 +68,6 @@ for pr in gh.pulls(owner, repo, cfg.github.get("pulls_state", "all")):
 con.commit()
 db.log_fetch(con, "github_pulls", {"window": cfg.window}, n_pr)
 print(f"new: {n_pr} pull requests, {n_rev} reviews, {n_com} review comments")
-print("totals:", db.count(con, "brz_gh_pull"), db.count(con, "brz_gh_review"),
-      db.count(con, "brz_gh_review_comment"))
+print("totals:", db.count(con, "tbl_brz_gh_pull"), db.count(con, "tbl_brz_gh_review"),
+      db.count(con, "tbl_brz_gh_review_comment"))
 con.close()
