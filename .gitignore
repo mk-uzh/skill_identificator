@@ -21,7 +21,6 @@ study-data/snapshots/**/mapping.secrets.json
 
 # --- Pipeline: Rohdaten und Identitaeten bleiben lokal ---
 pipeline/data/
-_clones/
 __pycache__/
 *.sqlite
 *.sqlite-shm

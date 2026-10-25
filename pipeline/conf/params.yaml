@@ -6,7 +6,7 @@ project:
   github_owner: sakaiproject
   github_repo: sakai
   repo_url: "https://github.com/sakaiproject/sakai.git"
-  repo_path: "../_clones/sakai"      # local clone, relative to pipeline/
+  repo_path: "data/clones/sakai"      # local clone, relative to pipeline/
   # Clone carries file contents from this date on, so patches can be read.
   # Set it before window.start; boundary commits then fall outside the window.
   shallow_since: "2024-11-01"
