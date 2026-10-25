@@ -5,7 +5,7 @@
 // This module loads and validates it; malformed files fail loudly.
 // ---------------------------------------------------------------------------
 
-import rawAssessments from "../study-data/assessments.json";
+import rawAssessments from "../../study-data/assessments.json";
 import { SKILL_LEVELS, type SkillLevel } from "./types";
 
 const EVIDENCE_KINDS = ["commit", "pull_request", "review", "issue"] as const;
