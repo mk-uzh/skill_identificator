@@ -25,7 +25,21 @@ print("already loaded:", len(known))
 
 # %%
 keys = list(ji.issue_keys(pkey, cfg.window["start"], cfg.window["end"]))
-print(f"{len(keys)} issues found in the window")
+print(f"{len(keys)} issues created inside the window")
+
+# Commits in the window often reference older issues: a bug reported in 2023 may
+# be fixed in 2025. Those issues are needed for the join, so collect the keys
+# referenced by commits and add whatever the window missed.
+import re
+referenced = set()
+for (subject,) in con.execute("SELECT subject FROM brz_gh_commit"):
+    m = re.search(rf"{pkey}-\d+", subject or "")
+    if m:
+        referenced.add(m.group(0))
+extra = sorted(referenced - set(keys))
+print(f"{len(referenced)} issues referenced by commits, "
+      f"{len(extra)} of them outside the window and added")
+keys = keys + extra
 
 # %%
 n_i = n_c = 0
