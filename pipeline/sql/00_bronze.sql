@@ -62,3 +62,15 @@ CREATE TABLE IF NOT EXISTS brz_ji_comment (
   payload     TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS ix_brz_jcomment_issue ON brz_ji_comment(issue_key);
+
+CREATE TABLE IF NOT EXISTS brz_gh_commit_patch (
+  sha          TEXT NOT NULL,
+  file_path    TEXT NOT NULL,
+  fetched_at   TEXT NOT NULL,
+  n_added      INTEGER,
+  n_removed    INTEGER,
+  is_truncated INTEGER,
+  added_lines  TEXT,              -- added lines only, capped per file
+  PRIMARY KEY (sha, file_path)
+);
+CREATE INDEX IF NOT EXISTS ix_brz_patch_sha ON brz_gh_commit_patch(sha);
