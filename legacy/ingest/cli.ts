@@ -9,7 +9,7 @@
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { Artifact, Snapshot } from "../model/types";
+import type { Artifact, Snapshot } from "../../model/types";
 import { buildDemoSnapshot } from "./demo-snapshot";
 import { fetchRepoCommits, fetchRepoPulls } from "./github";
 import { hashObject } from "./hash";

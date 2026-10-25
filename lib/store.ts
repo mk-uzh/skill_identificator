@@ -13,7 +13,7 @@ import type { StudyEvent, StudySession } from "./types";
 
 const DATA_DIR = process.env.STUDY_DATA_DIR
   ? path.resolve(process.env.STUDY_DATA_DIR)
-  : path.join(process.cwd(), "data");
+  : path.join(process.cwd(), "study-data");
 
 const SESSIONS_DIR = path.join(DATA_DIR, "sessions");
 const EVENTS_DIR = path.join(DATA_DIR, "events");

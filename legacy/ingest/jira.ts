@@ -64,5 +64,5 @@ export async function fetchJiraIssues(jql: string): Promise<JiraIssueFixture[]> 
 }
 
 export function defaultJiraFixturePath(root: string): string {
-  return path.join(root, "data", "snapshots", "demo-org", "jira-fixture.json");
+  return path.join(root, "tests", "fixtures", "demo-org", "jira-fixture.json");
 }

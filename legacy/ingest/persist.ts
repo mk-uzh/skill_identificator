@@ -1,11 +1,11 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import type { Snapshot } from "../model/types";
+import type { Snapshot } from "../../model/types";
 import type { IdentityMapping } from "./pseudonymise";
 import { redactMappingForExport } from "./pseudonymise";
 
 export function snapshotDir(root: string, orgId: string): string {
-  return path.join(root, "data", "snapshots", orgId);
+  return path.join(root, "tests", "fixtures", orgId);
 }
 
 export async function writeSnapshotBundle(

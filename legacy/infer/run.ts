@@ -6,7 +6,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { hashObject } from "../ingest/hash";
-import type { Artifact, Snapshot, TaxonomyConfig } from "../model/types";
+import type { Artifact, Snapshot, TaxonomyConfig } from "../../model/types";
 import { artifactsFor } from "./map";
 import { generateRationale } from "./rationale";
 import { scoreSignals, type SkillLevel } from "./score";
@@ -61,7 +61,7 @@ export async function runInference(opts: {
   const taxonomyPath = opts.taxonomyPath ?? path.join(opts.root, "model", "taxonomy.json");
   const snapshotPath =
     opts.snapshotPath ??
-    path.join(opts.root, "data", "snapshots", opts.orgId, "snapshot.json");
+    path.join(opts.root, "tests", "fixtures", opts.orgId, "snapshot.json");
   const overlaysPath =
     opts.overlaysPath ?? path.join(opts.root, "model", "study-overlays.json");
   const outPath = opts.outPath ?? path.join(opts.root, "data", "assessments.json");

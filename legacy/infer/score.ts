@@ -5,7 +5,7 @@
  * - every assessment carries confidence + evidence
  */
 
-import type { Artifact } from "../model/types";
+import type { Artifact } from "../../model/types";
 import type { ExtractedSignals } from "./signals";
 
 export type SkillLevel = "none" | "basic" | "proficient" | "expert";

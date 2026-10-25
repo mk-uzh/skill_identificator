@@ -1,4 +1,4 @@
-import type { Artifact, TaxonomyCategory, TaxonomyConfig } from "../model/types";
+import type { Artifact, TaxonomyCategory, TaxonomyConfig } from "../../model/types";
 
 export function loadTaxonomy(raw: TaxonomyConfig): TaxonomyConfig {
   return raw;

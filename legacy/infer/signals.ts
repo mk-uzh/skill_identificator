@@ -4,7 +4,7 @@
  * Lead time is never used.
  */
 
-import type { Artifact, TaxonomyCategory } from "../model/types";
+import type { Artifact, TaxonomyCategory } from "../../model/types";
 import { artifactsFor } from "./map";
 
 export interface ExtractedSignals {

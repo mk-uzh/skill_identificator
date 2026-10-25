@@ -1,4 +1,4 @@
-import type { TaxonomyCategory } from "../model/types";
+import type { TaxonomyCategory } from "../../model/types";
 import type { ScoredAssessment } from "./score";
 import type { ExtractedSignals } from "./signals";
 

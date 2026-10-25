@@ -1,11 +1,11 @@
 // ---------------------------------------------------------------------------
 // Assessments contract (M1)
 //
-// data/assessments.json is the single interface between inference and UI.
+// study-data/assessments.json is the single interface between inference and UI.
 // This module loads and validates it; malformed files fail loudly.
 // ---------------------------------------------------------------------------
 
-import rawAssessments from "../../data/assessments.json";
+import rawAssessments from "../study-data/assessments.json";
 import { SKILL_LEVELS, type SkillLevel } from "./types";
 
 const EVIDENCE_KINDS = ["commit", "pull_request", "review", "issue"] as const;
@@ -205,7 +205,7 @@ export function validateAssessmentsFile(raw: unknown): AssessmentsFile {
   };
 }
 
-/** Loads and validates data/assessments.json. Fails loudly on any schema violation. */
+/** Loads and validates study-data/assessments.json. Fails loudly on any schema violation. */
 export function loadAssessments(): AssessmentsFile {
   return validateAssessmentsFile(rawAssessments);
 }

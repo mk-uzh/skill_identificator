@@ -3,7 +3,7 @@
  * Used so `infer/` runs fully offline with no network.
  */
 
-import type { Artifact, Snapshot } from "../model/types";
+import type { Artifact, Snapshot } from "../../model/types";
 import { hashObject } from "./hash";
 import { buildIdentityMapping, mappingToDevelopers } from "./pseudonymise";
 

@@ -7,17 +7,17 @@ out
 next-env.d.ts
 
 # do NOT commit study data to the repo (data protection / ethics)
-data/sessions/*
-data/events/*
-data/interactions/*
-!data/sessions/.gitkeep
-!data/events/.gitkeep
-!data/interactions/.gitkeep
+study-data/sessions/*
+study-data/events/*
+study-data/interactions/*
+!study-data/sessions/.gitkeep
+!study-data/events/.gitkeep
+!study-data/interactions/.gitkeep
 # assessments.json is the M1 contract — keep it versioned
-!data/assessments.json
+!study-data/assessments.json
 # partner identity mappings must never be committed
-data/snapshots/**/mapping.partner.json
-data/snapshots/**/mapping.secrets.json
+study-data/snapshots/**/mapping.partner.json
+study-data/snapshots/**/mapping.secrets.json
 
 # --- Pipeline: Rohdaten und Identitaeten bleiben lokal ---
 pipeline/data/

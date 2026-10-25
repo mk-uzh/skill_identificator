@@ -8,10 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "node scripts/seed-fake-session.mjs",
-    "ingest": "tsx ingest/cli.ts --mode demo",
-    "ingest:github": "tsx ingest/cli.ts --mode github",
-    "infer": "tsx infer/cli.ts",
+    "seed": "node tests/seed-fake-session.mjs",
+    "ingest": "tsx legacy/ingest/cli.ts --mode demo",
+    "ingest:github": "tsx legacy/ingest/cli.ts --mode github",
+    "infer": "tsx legacy/infer/cli.ts",
     "pipeline": "npm run ingest && npm run infer"
   },
   "dependencies": {

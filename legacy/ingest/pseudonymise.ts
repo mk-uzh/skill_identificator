@@ -1,4 +1,4 @@
-import type { Developer } from "../model/types";
+import type { Developer } from "../../model/types";
 import { shortHash } from "./hash";
 
 export interface IdentityMapping {
