@@ -18,6 +18,15 @@
   --level-basic: #dcecc4;
   --level-proficient: #a8ce6e;
   --level-expert: #7cb02c;
+
+  /* five-level scale: lightness rises with the level, "not observable"
+     is outside the scale and therefore not part of the ramp */
+  --l1: #f1f2ef;
+  --l2: #e4efd2;
+  --l3: #c5e1a5;
+  --l4: #9ccc55;
+  --l5: #7cb02c;
+  --l-na: #fafbf9;
 }
 
 * {
@@ -566,6 +575,23 @@ h2 {
 .steps__item--done {
   background: var(--green-100);
   color: var(--green-900);
+}
+
+/* Position inside the assessment, e.g. "Person 3 of 6 - with the system". */
+.steps__detail {
+  margin-left: auto;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--grey-100);
+  color: var(--grey-600);
+}
+
+/* Context panel inside a card: the person being rated. */
+.card--nested {
+  box-shadow: none;
+  background: var(--grey-050, #f4f5f3);
+  padding: 16px 18px;
+  margin: 4px 0 18px;
 }
 
 /* ---------- Matrix ---------- */
@@ -1170,4 +1196,542 @@ textarea:focus {
 
 .modal li {
   margin-bottom: 4px;
+}
+
+
+/* ===================================================================== */
+/* One-person screens                                                     */
+/* ===================================================================== */
+
+/* Rating step: person across the top, records left, competences right,
+   level guide in a column of its own so the scale sits beside the buttons
+   that use it. */
+.t1 {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+.t1 > .span2 {
+  grid-column: 1 / span 2;
+}
+
+.t1 > .rail {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  position: sticky;
+  top: 20px;
+}
+
+/* Comparison step: reasoning left, decision in a sticky column. */
+.layout {
+  display: grid;
+  grid-template-columns: 1.6fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+.half {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.side {
+  position: sticky;
+  top: 20px;
+}
+
+@media (max-width: 1180px) {
+  .t1,
+  .layout,
+  .half {
+    grid-template-columns: 1fr;
+  }
+  .t1 > .span2,
+  .t1 > .rail {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .t1 > .rail,
+  .side {
+    position: static;
+  }
+}
+
+/* ---------- level buttons ---------- */
+
+.lvgroup {
+  display: inline-flex;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.lv {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 30px;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.lv--static {
+  cursor: default;
+}
+
+.lv--big {
+  width: 48px;
+  height: 38px;
+  font-size: 17px;
+}
+
+.lv--l1 { background: var(--l1); }
+.lv--l2 { background: var(--l2); }
+.lv--l3 { background: var(--l3); }
+.lv--l4 { background: var(--l4); }
+.lv--l5 { background: var(--l5); color: var(--white); }
+
+/* Outside the scale on purpose: dashed, uncoloured, wider. */
+.lv--na {
+  width: 46px;
+  background: var(--l-na);
+  border: 2px dashed var(--grey-300);
+  color: var(--grey-600);
+  font-size: 12px;
+}
+
+.lv--on {
+  border-color: var(--green-900);
+}
+
+.lv:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- competence list ---------- */
+
+.complist__group {
+  background: var(--grey-050);
+  color: var(--grey-600);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 7px 10px;
+  margin-top: 10px;
+}
+
+.complist__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px;
+  border-bottom: 1px solid var(--grey-100);
+  cursor: pointer;
+}
+
+.complist__row:hover {
+  background: var(--grey-050);
+}
+
+.complist__row--sel {
+  background: var(--green-100);
+}
+
+.complist__name {
+  min-width: 0;
+}
+
+/* ---------- evidence ---------- */
+
+.ev {
+  background: var(--grey-050);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.ev ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.ev li {
+  margin-bottom: 6px;
+}
+
+/* ---------- fold-outs ---------- */
+
+.foldrow {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+  margin: 14px 0 18px;
+}
+
+.foldrow > .guide {
+  flex: 1 1 320px;
+}
+
+.guide {
+  border-top: 1px solid var(--grey-100);
+  padding: 9px 0 2px;
+}
+
+.guide > summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green-900);
+  list-style: none;
+}
+
+.guide > summary::-webkit-details-marker {
+  display: none;
+}
+
+.guide > summary::before {
+  content: "\25B8";
+  color: var(--grey-600);
+  margin-right: 7px;
+}
+
+.guide[open] > summary::before {
+  content: "\25BE";
+}
+
+.guide__body {
+  padding: 8px 0 10px 18px;
+}
+
+.lvtab {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.lvtab td {
+  padding: 7px 10px 7px 0;
+  border-bottom: 1px solid var(--grey-100);
+  vertical-align: top;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ---------- panels ---------- */
+
+.panel {
+  border: 1px solid var(--grey-100);
+  border-radius: var(--radius);
+  background: var(--white);
+  padding: 16px 18px;
+}
+
+.panel--system {
+  border: 2px solid var(--green-500);
+  background: #fbfdf7;
+}
+
+.panel__level {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0 0;
+}
+
+.person__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  display: inline-block;
+  padding: 3px 11px;
+  border-radius: 999px;
+  background: var(--grey-050);
+  border: 1px solid var(--grey-100);
+  color: var(--grey-600);
+  font-size: 13px;
+}
+
+.sug {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px;
+  border: 1px solid var(--green-300);
+  border-radius: var(--radius);
+  font-size: 13px;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--grey-300);
+}
+
+.dot--hi { background: var(--green-700); }
+.dot--mid { background: #c99a2e; }
+.dot--low { background: #b4544c; }
+
+.btn--wide {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.btn--on {
+  border-color: var(--green-500);
+  background: var(--green-100);
+  color: var(--green-900);
+}
+
+
+/* Level swatches for the legend and the matrix, five-level scale.
+   The old four-name classes stay so that nothing silently loses its colour
+   if an older session document is opened. */
+.cell--l1 { background: var(--l1); }
+.cell--l2 { background: var(--l2); }
+.cell--l3 { background: var(--l3); }
+.cell--l4 { background: var(--l4); }
+.cell--l5 { background: var(--l5); color: var(--white); }
+.cell--not_observable {
+  background: var(--l-na);
+  border: 1px dashed var(--grey-300);
+  color: var(--grey-600);
+}
+.cell.cell--same.cell--l1,
+.cell.cell--same.cell--l2,
+.cell.cell--same.cell--l3,
+.cell.cell--same.cell--l4,
+.cell.cell--same.cell--l5,
+.cell.cell--same.cell--not_observable {
+  background: var(--grey-050);
+}
+
+
+/* ---------- overview matrix (competences down, people across) ---------- */
+
+.ovwrap {
+  overflow-x: auto;
+  margin: 8px 0 4px;
+}
+
+.ovmatrix {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ovmatrix th {
+  text-align: center;
+  font-size: 13px;
+  color: var(--grey-600);
+  padding: 8px;
+  border-bottom: 1px solid var(--grey-300);
+  white-space: nowrap;
+}
+
+.ovmatrix td {
+  padding: 5px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--grey-100);
+}
+
+.ovmatrix__rowhead {
+  text-align: left !important;
+  min-width: 230px;
+}
+
+.ovmatrix__group td {
+  background: var(--grey-050);
+  color: var(--grey-600);
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+
+/* ---------- summary ---------- */
+
+.tab {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 14px;
+  background: var(--grey-050);
+  border: 1px solid var(--grey-100);
+  font-size: 13px;
+  cursor: pointer;
+  margin: 0 6px 6px 0;
+}
+
+.tab--on {
+  background: var(--green-100);
+  border-color: var(--green-500);
+  color: var(--green-900);
+  font-weight: 600;
+}
+
+.cols2 {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 26px;
+  align-items: start;
+}
+
+@media (max-width: 1180px) {
+  .cols2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.n {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ok { color: var(--green-900); }
+.warn { color: #9a6b16; }
+.bad { color: #a8403a; }
+
+.btn--sm {
+  padding: 5px 12px;
+  font-size: 13px;
+}
+
+
+/* Notice that a run was cut short with the prototype shortcut. */
+.banner {
+  background: #fdf6e3;
+  border-left: 4px solid #c99a2e;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 18px;
+}
+
+
+/* =====================================================================
+   Study screens: typography and tables taken from the design draft.
+
+   The app never had general table rules — only the scoped .matrix of the
+   old view — so every table added for these screens fell back to browser
+   defaults: centred headers, no padding, no rules. That is what made the
+   layout look misaligned next to the HTML draft. .matrix is excluded so
+   the legacy developer view keeps its own geometry.
+   ===================================================================== */
+
+.page {
+  max-width: 1560px;
+  padding: 28px 34px 90px;
+}
+.page--narrow { max-width: 760px; }
+.page--wide { max-width: 1560px; }
+
+.page h1 { font-size: 22px; margin: 0 0 12px; }
+.page h2 { font-size: 17px; margin: 0 0 12px; }
+.page h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--grey-600);
+  margin: 0 0 10px;
+}
+.page p { margin: 0 0 14px; }
+.page .card { padding: 26px 30px; margin-bottom: 20px; }
+.page .card .card { margin-bottom: 0; }
+
+table:not(.matrix) {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 15px;
+}
+table:not(.matrix) th {
+  text-align: left;
+  font-size: 13px;
+  color: var(--grey-600);
+  font-weight: 600;
+  padding: 8px;
+  border-bottom: 1px solid var(--grey-300);
+}
+table:not(.matrix) td {
+  padding: 9px 8px;
+  border-bottom: 1px solid var(--grey-100);
+  vertical-align: top;
+}
+
+/* Overrides that must survive the general rules above (same specificity,
+   declared later). */
+table.lvtab td { padding: 7px 6px; }
+table.lvtab td:first-child { width: 52px; }
+
+table.ovmatrix th,
+table.ovmatrix td { text-align: center; padding: 5px 8px; }
+table.ovmatrix th:first-child,
+table.ovmatrix td:first-child { text-align: left; }
+table.ovmatrix th { white-space: nowrap; }
+table.ovmatrix .ovmatrix__group td {
+  background: var(--grey-050);
+  color: var(--grey-600);
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+table.sm,
+table.sm th,
+table.sm td { font-size: 13px; }
+table.sm td { border-bottom: 1px solid var(--grey-100); }
+
+/* The number columns of the summary stay right aligned. */
+table:not(.matrix) td.n,
+table:not(.matrix) th.n { text-align: right; font-variant-numeric: tabular-nums; }
+
+
+/* Footnote under a card: set off by a rule, as in the design draft. */
+.src {
+  font-size: 13px;
+  color: var(--grey-600);
+  border-top: 1px solid var(--grey-100);
+  margin-top: 16px;
+  padding-top: 12px;
+}
+
+
+/* Evidence links read as text, not as a wall of underlines. */
+.ev a {
+  color: var(--green-900);
+  text-decoration: none;
+  border-bottom: 1px solid var(--green-300);
+}
+.ev a:hover { border-bottom-color: var(--green-700); }
+
+
+/* DP5 notice, as the green block from the design draft rather than a line of
+   small centred text. */
+.page .study-banner {
+  background: var(--green-100);
+  border-left: 4px solid var(--green-700);
+  border-bottom: 0;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  margin: 0 0 18px;
+  font-size: 15px;
+  color: var(--ink);
+  text-align: left;
 }
