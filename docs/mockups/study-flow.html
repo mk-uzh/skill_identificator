@@ -1,0 +1,557 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DevSkill, study flow prototype</title>
+<style>
+:root{--green-900:#33691e;--green-700:#5a9e28;--green-500:#8bc34a;--green-300:#c5e1a5;
+--green-100:#e8f4d9;--grey-050:#f4f5f3;--grey-100:#e8eae5;--grey-300:#c9ccc4;--grey-600:#6b6f66;
+--ink:#23271f;--white:#fff;--radius:6px;--shadow:0 1px 3px rgba(0,0,0,.08);
+--l1:#f1f2ef;--l2:#e4efd2;--l3:#c5e1a5;--l4:#9ccc55;--l5:#7cb02c;--na:#fafbf9}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.7 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--grey-050)}
+.top{background:var(--white);border-bottom:1px solid var(--grey-100);padding:12px 34px;
+display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:5;flex-wrap:wrap}
+.top b{color:var(--green-900)}
+.steps{display:flex;gap:6px;margin-left:auto;font-size:13px;color:var(--grey-600);flex-wrap:wrap}
+.steps span{padding:3px 11px;border-radius:12px;background:var(--grey-050);cursor:pointer}
+.steps span:hover{background:var(--grey-100)}
+.steps span.on{background:var(--green-100);color:var(--green-900);font-weight:600}
+.wrap{max-width:1560px;margin:0 auto;padding:28px 34px 90px}
+.card{background:var(--white);border:1px solid var(--grey-100);border-radius:var(--radius);
+box-shadow:var(--shadow);padding:26px 30px;margin-bottom:20px}
+h1{font-size:22px;margin:0 0 12px}h2{font-size:17px;margin:0 0 12px}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--grey-600);margin:0 0 10px}
+p{margin:0 0 14px}
+.banner{background:var(--green-100);border-left:4px solid var(--green-700);padding:12px 18px;
+border-radius:var(--radius);font-size:15px;margin-bottom:18px}
+.btn{display:inline-block;padding:9px 18px;border-radius:var(--radius);border:1px solid var(--grey-300);
+background:var(--white);font:inherit;font-size:15px;cursor:pointer;margin:0 8px 8px 0}
+.btn.p{background:var(--green-700);border-color:var(--green-700);color:#fff}
+.btn.sm{padding:5px 12px;font-size:13px}
+.btn.on{background:var(--green-100);border-color:var(--green-500);color:var(--green-900);font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{text-align:left;font-size:13px;color:var(--grey-600);font-weight:600;padding:8px;border-bottom:1px solid var(--grey-300)}
+td{padding:9px 8px;border-bottom:1px solid var(--grey-100);vertical-align:top}
+.lv{display:inline-flex;align-items:center;justify-content:center;width:38px;height:30px;border-radius:5px;
+font-size:13px;font-weight:600;cursor:pointer;border:2px solid transparent;margin-right:3px}
+.lv1{background:var(--l1)}.lv2{background:var(--l2)}.lv3{background:var(--l3)}
+.lv4{background:var(--l4)}.lv5{background:var(--l5);color:#fff}
+.lvna{background:var(--na);border:2px dashed var(--grey-300);color:var(--grey-600);width:46px;font-size:13px}
+.lv.sel{border-color:var(--green-900);box-shadow:0 0 0 2px var(--green-100)}
+.lv:hover{border-color:var(--green-700)}.lv.ro{cursor:default}.lv.ro:hover{border-color:transparent}
+.ev{background:var(--grey-050);border-radius:var(--radius);padding:18px 20px;font-size:15px}
+.ev ul{margin:8px 0 0;padding-left:18px}.ev li{margin:7px 0}
+blockquote{margin:12px 0 0;padding:12px 16px;background:var(--white);border-left:3px solid var(--green-300);font-size:15px}
+cite{display:block;margin-top:6px;font-style:normal;font-size:13px;color:var(--grey-600)}
+.layout{display:grid;grid-template-columns:1.7fr 330px;gap:28px;align-items:start}
+.layout3{display:grid;grid-template-columns:1fr 1.12fr;gap:26px;align-items:start}
+.cols2{display:grid;grid-template-columns:1.05fr .95fr;gap:26px}
+.half{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:1180px){.layout,.layout3,.cols2,.half{grid-template-columns:1fr}}
+.side{position:sticky;top:76px}
+.t1{display:grid;grid-template-columns:1fr 1.2fr 300px;gap:24px;align-items:start}
+.t1>.span2{grid-column:1 / span 2}
+.t1>.rail{grid-column:3;grid-row:1 / span 2;position:sticky;top:76px}
+@media(max-width:1180px){.t1{grid-template-columns:1fr}.t1>.span2{grid-column:auto}.t1>.rail{grid-column:auto;grid-row:auto;position:static}}
+.grouphdr td{background:var(--grey-050);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--grey-600);padding:7px 8px}
+.esco{font-size:13px;color:var(--grey-600);font-style:italic}
+details{border-top:1px solid var(--grey-100);padding:9px 0 2px}
+details summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--green-900);
+list-style:none;display:flex;align-items:center;gap:7px}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"\25B8";color:var(--grey-600);font-size:11px}
+details[open] summary:before{content:"\25BE"}
+details .body{padding:8px 0 10px 18px}
+.foldrow{display:flex;gap:26px;flex-wrap:wrap}.foldrow>details{flex:1;min-width:280px}
+.panel{border:1px solid var(--grey-100);border-radius:var(--radius);background:var(--white);
+padding:16px 18px;margin-bottom:16px}
+.panel h3{margin-bottom:8px}
+.dim{color:var(--grey-600)}.sm{font-size:13px}
+.tech{display:inline-block;padding:3px 9px;border-radius:12px;background:var(--grey-050);
+border:1px solid var(--grey-100);font-size:13px;margin:3px 4px 3px 0}
+.tech .m{color:var(--grey-600);font-size:13px}.tech.cold{opacity:.45}
+.sug{display:inline-flex;align-items:center;gap:8px;background:var(--green-100);
+border:1px solid var(--green-300);border-radius:var(--radius);padding:5px 11px;font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green-700)}
+.dot.mid{background:#c99a2e}.dot.low{background:#b4544c}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+.pill{font-size:13px;padding:2px 10px;border-radius:10px;background:var(--grey-050);
+border:1px solid var(--grey-100);color:var(--grey-600)}
+.src{font-size:13px;color:var(--grey-600);border-top:1px solid var(--grey-100);margin-top:16px;padding-top:12px}
+.screen{display:none}.screen.on{display:block}
+.matrix td,.matrix th{text-align:center}.matrix td:first-child,.matrix th:first-child{text-align:left}
+.ok{color:var(--green-900)}.warn{color:#9a6b16}.bad{color:#a8403a}
+.lvtab td{padding:7px 6px}.lvtab td:first-child{width:52px}
+.comp{cursor:pointer}.comp:hover{background:var(--grey-050)}.row-sel{background:var(--green-100)}
+textarea{width:100%;border:1px solid var(--grey-300);border-radius:var(--radius);padding:8px 10px;
+font:inherit;font-size:15px;resize:vertical;min-height:58px}
+.tab{display:inline-block;padding:5px 12px;border-radius:14px;background:var(--grey-050);
+border:1px solid var(--grey-100);font-size:13px;cursor:pointer;margin:0 6px 6px 0}
+.tab.on{background:var(--green-100);border-color:var(--green-500);color:var(--green-900);font-weight:600}
+.ai{display:inline-block;font-size:13px;padding:1px 8px;border-radius:9px;background:#eef2f6;
+border:1px solid #d8e1e8;color:#4a5b68;margin-left:6px}
+</style></head><body>
+
+<div class="top"><b>DevSkill</b> <span class="dim sm">Team skill assessment study</span>
+<div class="steps">
+<span id="s0" class="on" onclick="go(0)">Introduction</span><span id="s1" onclick="go(1)">Task 1</span>
+<span id="s2" onclick="go(2)">Overview</span><span id="s3" onclick="go(3)">Task 2</span>
+<span id="s4" onclick="go(4)">Summary</span><span id="s5" onclick="go(5)">Questions</span></div></div>
+
+<!-- ============================== INTRO ============================== -->
+<div class="screen on" id="scr0"><div class="wrap">
+
+<div class="card">
+<h1>The project you will be looking at</h1>
+<p>A learning platform that universities run for their courses: assignments, quizzes, marking,
+grades. Hundreds of people have worked on it, and everything they did is public. You do not need to
+know the software, and nothing you are asked is technical.</p>
+</div>
+
+<div class="card">
+<h2>What you will be doing</h2>
+<p>You will look at six of these developers and estimate, per competence, how far the records show
+they have worked in that area.</p>
+<table>
+<tr><th style="width:150px">Step</th><th>What happens</th></tr>
+<tr><td><b>Task 1</b></td><td>Six developers, one after another. For each one you read a short account
+of what the person actually did, and you set a level per competence, on your own.</td></tr>
+<tr><td><b>Overview</b></td><td>Everything you entered, side by side. You can still correct it.</td></tr>
+<tr><td><b>Task 2</b></td><td>The same six people again, this time with a suggested level and its
+reasoning. You accept it, adjust it or keep your own answer.</td></tr>
+<tr><td><b>Summary</b></td><td>What changed, which role the evidence matches, and four short questions.</td></tr>
+</table>
+<p class="src">About 25 minutes. You can return to any step using the links at the top right.
+Nothing is stored under your name.</p>
+</div>
+
+<div class="card">
+<h2>The five levels</h2>
+<p>You judge what the records show about one competence, not the person. Each level assumes the one
+below it.</p>
+<table class="lvtab">
+<tr><th>Level</th><th style="width:26%">In short</th><th>What that looks like in the records</th></tr>
+<tr><td><span class="lv lv1 ro">1</span></td><td><b>Has touched it</b></td>
+<td>Small edits inside something that already existed. The approach was set by someone else.</td></tr>
+<tr><td><span class="lv lv2 ro">2</span></td><td><b>Works in it reliably</b></td>
+<td>Works reliably on ordinary tasks, accepted without rework.</td></tr>
+<tr><td><span class="lv lv3 ro">3</span></td><td><b>Solves real problems</b></td>
+<td>Finds the cause of a difficult fault, changes the existing structure instead of working around it,
+and explains the reasoning.</td></tr>
+<tr><td><span class="lv lv4 ro">4</span></td><td><b>Shapes the area</b></td>
+<td>Builds things other people then rely on, changes several parts of the software together, and
+regularly inspects other people's work here.</td></tr>
+<tr><td><span class="lv lv5 ro">5</span></td><td><b>Is the reference</b></td>
+<td>The person others turn to in this area. Sets the approach the project follows and corrects the
+direction of other people's work.</td></tr>
+<tr><td><span class="lv lvna ro">n/o</span></td><td><b>Not observable</b></td>
+<td>These records show nothing about this competence. Use it freely, it is information rather than a
+gap in your judgement.</td></tr>
+</table>
+<p class="src">The scale follows the European e-Competence Framework, EN 16234-1.</p>
+</div>
+
+<div class="card">
+<h2>Where the information comes from</h2>
+<div class="half">
+<div class="panel">
+<h3>GitHub, the code</h3>
+<table class="sm">
+<tr><td style="width:40%"><b>Changes</b></td><td>Every edit, with the note the author wrote about
+it</td></tr>
+<tr><td><b>The edited code</b></td><td>The lines added or removed: the work itself, not only its
+description</td></tr>
+<tr><td><b>Proposals</b></td><td>A set of changes offered for acceptance into the project</td></tr>
+<tr><td><b>Inspections</b></td><td>Others read a proposal and either approve it or ask for
+rework</td></tr>
+</table>
+</div>
+<div class="panel">
+<h3>Jira, the tasks</h3>
+<table class="sm">
+<tr><td style="width:40%"><b>Tasks</b></td><td>Fault reports, improvement requests, new features,
+each described</td></tr>
+<tr><td><b>Area</b></td><td>Which part of the platform it belongs to, quizzes or grading say</td></tr>
+<tr><td><b>Discussion</b></td><td>What people wrote while working on it, and how a fault was
+diagnosed</td></tr>
+<tr><td><b>Outcome</b></td><td>Whether it was fixed, rejected or turned out not to be a fault</td></tr>
+</table>
+</div>
+</div>
+<p style="margin-top:16px"><button class="btn p" onclick="go(1)">Start Task 1</button></p>
+</div>
+</div></div>
+
+<!-- ============================== TASK 1 ============================== -->
+<div class="screen" id="scr1"><div class="wrap">
+<div class="banner">This profile is not used for performance review, remuneration or promotion.
+The decision rests with you.</div>
+
+<div class="t1">
+<div class="card span2">
+<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px">
+<h2 style="margin:0">DEV-07 <span class="dim sm" style="font-weight:400">, person 3 of 6</span></h2>
+<span style="margin-left:auto"><span class="pill" style="margin-right:10px">active January 2025 to October 2026</span>
+<button class="btn sm" onclick="go(0)">Back</button>
+<button class="btn sm p" onclick="go(2)">Next person</button></span></div>
+<p style="margin-top:12px">Worked almost entirely on two parts of the platform: the tool teachers
+use to build quizzes, and the gradebook where marks are recorded. Both the screens and the logic
+behind them.</p>
+<div class="foldrow" style="margin-top:14px">
+<details><summary>What is covered</summary><div class="body">
+<p class="sm" style="margin:0 0 8px"><b>Sources</b><br>GitHub changes, code, proposals and inspections.
+Jira tasks, areas and discussions.</p>
+<p class="sm" style="margin:0 0 8px"><b>Period</b><br>1 January 2025 to 1 October 2026</p>
+<p class="sm" style="margin:0"><b>Not covered</b><br>Collaboration and mentoring, work outside this
+project, time spent. No counts of output are shown as ability.</p></div></details>
+<details><summary>Who can see this</summary><div class="body">
+<p class="sm" style="margin:0 0 8px">In this study the setting is fixed to <b>team lead only</b>, so
+that every participant sees the same thing.</p>
+<p class="sm dim" style="margin:0">In real use an organisation chooses between three settings before
+the system is switched on: visible to the team lead only, visible to the whole team, or visible to
+the developer and their lead. Whichever is chosen is stated on every screen, and the profile never
+goes to a personnel system.</p></div></details>
+</div>
+</div>
+
+<div class="card rail">
+<details open><summary>Level guide</summary><div class="body"><table class="lvtab sm">
+<tr><td><span class="lv lv1 ro">1</span></td><td>Has touched it, approach set by others</td></tr>
+<tr><td><span class="lv lv2 ro">2</span></td><td>Works reliably, accepted without rework</td></tr>
+<tr><td><span class="lv lv3 ro">3</span></td><td>Finds causes, changes the structure</td></tr>
+<tr><td><span class="lv lv4 ro">4</span></td><td>Builds what others rely on, inspects their work</td></tr>
+<tr><td><span class="lv lv5 ro">5</span></td><td>The reference, sets the approach</td></tr>
+<tr><td><span class="lv lvna ro">n/o</span></td><td>Records show nothing about it</td></tr>
+</table></div></details>
+</div>
+
+<div class="card">
+<h3>What the records show</h3>
+<p class="dim sm" style="margin:-4px 0 14px">Selected competence: <b>develop automated software tests</b></p>
+<div class="ev">
+<p style="margin:0 0 10px"><b>A typical piece of this person's work.</b> A teacher reported that
+publishing a quiz failed with an error whenever a marking scheme was attached to it. DEV-07 traced
+the problem back to a change somebody else had made months earlier, explained in the task discussion
+why that change collided with the way a quiz is locked while it is being published, removed the part
+that caused it, and added a test that reproduces the whole situation so that it cannot come back
+unnoticed. Work of this shape, finding the cause rather than covering the symptom, appears
+repeatedly across the two years.</p>
+<ul>
+<li>18 of 148 changes touched tests; in 11 the tests were new, covering behaviour nobody had
+checked before.</li>
+<li>Wrote the test for a new calendar search: it opens the page, types a term, checks the right
+entries appear. <span class="ai">AI assistance declared</span></li>
+<li>Checked the test code of seven other people, asking twice for rework.</li>
+<li>None of their own test changes were sent back.</li>
+</ul>
+</div>
+<p class="dim sm" style="margin:16px 0 0">10 of 10 competences rated.</p>
+</div>
+
+<div class="card">
+<h3>Set a level for each competence</h3>
+<p class="dim sm" style="margin:-4px 0 10px">Select a competence to read its evidence on the left.</p>
+<table>
+<tr class="grouphdr"><td colspan="2">Testing and quality assurance</td></tr>
+<tr class="comp row-sel" onclick="selectRow(this)"><td style="width:54%"><b>develop automated software tests</b><div class="dim sm">Writing small programs that check the software after a change</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2" onclick="pick(this)">2</span><span class="lv lv3" onclick="pick(this)">3</span><span class="lv lv4 sel" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>ICT debugging tools</b><div class="dim sm">Using the tools that help locate a fault</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2" onclick="pick(this)">2</span><span class="lv lv3 sel" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+<tr class="grouphdr"><td colspan="2">Backend development</td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>debug software</b><div class="dim sm">Working out why something broke, not just hiding the symptom</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2" onclick="pick(this)">2</span><span class="lv lv3 sel" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>use software design patterns</b><div class="dim sm">Building in shapes other developers recognise and can extend</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2 sel" onclick="pick(this)">2</span><span class="lv lv3" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>use concurrent programming</b><div class="dim sm">Making sure two people acting at once do not corrupt each other&#39;s work</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2" onclick="pick(this)">2</span><span class="lv lv3" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna sel" onclick="pick(this)">n/o</span></td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>integrate system components</b><div class="dim sm">Joining separate parts of the software so they work together</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2" onclick="pick(this)">2</span><span class="lv lv3 sel" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+<tr class="grouphdr"><td colspan="2">Frontend development</td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>design user interface</b><div class="dim sm">The visible part: buttons, forms, tables</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2" onclick="pick(this)">2</span><span class="lv lv3 sel" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>JavaScript</b><div class="dim sm">The language the browser part is written in</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2" onclick="pick(this)">2</span><span class="lv lv3 sel" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+<tr class="grouphdr"><td colspan="2">Data and persistence</td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>migrate existing data</b><div class="dim sm">Changing how information is stored without losing any of it</div></td><td style="white-space:nowrap"><span class="lv lv1 sel" onclick="pick(this)">1</span><span class="lv lv2" onclick="pick(this)">2</span><span class="lv lv3" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+<tr class="grouphdr"><td colspan="2">Architecture and design</td></tr>
+<tr class="comp" onclick="selectRow(this)"><td style="width:54%"><b>object-oriented modelling</b><div class="dim sm">Deciding how the parts of the software are cut and named</div></td><td style="white-space:nowrap"><span class="lv lv1" onclick="pick(this)">1</span><span class="lv lv2 sel" onclick="pick(this)">2</span><span class="lv lv3" onclick="pick(this)">3</span><span class="lv lv4" onclick="pick(this)">4</span><span class="lv lv5" onclick="pick(this)">5</span><span class="lv lvna" onclick="pick(this)">n/o</span></td></tr>
+</table>
+</div>
+</div>
+</div></div>
+<div class="screen" id="scr2"><div class="wrap">
+<div class="card">
+<h1>Your assessment so far</h1>
+<table class="matrix">
+<tr><th style="text-align:left">Competence</th><th>DEV-01</th><th>DEV-02</th><th>DEV-04</th>
+<th>DEV-06</th><th>DEV-07</th><th>DEV-09</th></tr>
+<tr><td>develop automated software tests</td>
+<td><span class="lv lv3">3</span></td><td><span class="lv lv1">1</span></td><td><span class="lv lv4">4</span></td>
+<td><span class="lv lv2">2</span></td><td><span class="lv lv4">4</span></td><td><span class="lv lv2">2</span></td></tr>
+<tr><td>debug software</td>
+<td><span class="lv lv4">4</span></td><td><span class="lv lv3">3</span></td><td><span class="lv lv3">3</span></td>
+<td><span class="lv lv3">3</span></td><td><span class="lv lv3">3</span></td><td><span class="lv lv2">2</span></td></tr>
+<tr><td>use software design patterns</td>
+<td><span class="lv lv3">3</span></td><td><span class="lv lv1">1</span></td><td><span class="lv lv3">3</span></td>
+<td><span class="lv lv3">3</span></td><td><span class="lv lv2">2</span></td><td><span class="lv lvna">n/o</span></td></tr>
+<tr><td>design user interface</td>
+<td><span class="lv lv5">5</span></td><td><span class="lv lv2">2</span></td><td><span class="lv lv1">1</span></td>
+<td><span class="lv lvna">n/o</span></td><td><span class="lv lv3">3</span></td><td><span class="lv lv2">2</span></td></tr>
+<tr><td>migrate existing data</td>
+<td><span class="lv lv2">2</span></td><td><span class="lv lvna">n/o</span></td><td><span class="lv lv4">4</span></td>
+<td><span class="lv lv1">1</span></td><td><span class="lv lv1">1</span></td><td><span class="lv lvna">n/o</span></td></tr>
+<tr><td>use concurrent programming</td>
+<td><span class="lv lv3">3</span></td><td><span class="lv lvna">n/o</span></td><td><span class="lv lv2">2</span></td>
+<td><span class="lv lv4">4</span></td><td><span class="lv lvna">n/o</span></td><td><span class="lv lvna">n/o</span></td></tr>
+</table>
+<p style="margin:16px 0 0"><button class="btn" onclick="go(1)">Back to the last person</button>
+<button class="btn p" onclick="go(3)">Continue to Task 2</button></p>
+</div>
+</div></div>
+
+<!-- ============================== TASK 2 ============================== -->
+<div class="screen" id="scr3"><div class="wrap">
+<div class="banner">Task 2. The system proposes a level and explains its reasoning. The final answer
+is yours.</div>
+
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px">
+<h2 style="margin:0">DEV-07, use software design patterns</h2>
+<span><span class="pill" style="margin-right:10px">competence 4 of 10, person 3 of 6</span>
+<button class="btn sm" onclick="go(2)">Back</button>
+<button class="btn sm p">Next competence</button></span></div>
+<div class="foldrow" style="margin-top:12px">
+<details><summary>Level guide</summary><div class="body">
+<table class="lvtab sm" style="max-width:420px">
+<tr><td><span class="lv lv1 ro">1</span></td><td>Has touched it, approach set by others</td></tr>
+<tr><td><span class="lv lv2 ro">2</span></td><td>Works reliably, accepted without rework</td></tr>
+<tr><td><span class="lv lv3 ro">3</span></td><td>Finds causes, changes the structure</td></tr>
+<tr><td><span class="lv lv4 ro">4</span></td><td>Builds what others rely on, inspects their work</td></tr>
+<tr><td><span class="lv lv5 ro">5</span></td><td>The reference, sets the approach</td></tr>
+<tr><td><span class="lv lvna ro">n/o</span></td><td>Records show nothing about it</td></tr>
+</table></div></details>
+<details><summary>What confidence means</summary><div class="body">
+<table class="sm" style="max-width:440px">
+<tr><td style="width:88px"><span class="sug"><span class="dot"></span>80&ndash;100 %</span></td>
+<td>Several records point the same way, and none point against it</td></tr>
+<tr><td><span class="sug"><span class="dot mid"></span>60&ndash;79 %</span></td>
+<td>The records point one way, but there are few of them</td></tr>
+<tr><td><span class="sug"><span class="dot low"></span>under 60 %</span></td>
+<td>Thin or conflicting evidence. Read it as a question, not a suggestion</td></tr>
+</table>
+<p class="sm dim" style="margin:10px 0 0">The figure says how certain the system is about its own
+reading of the records. It says nothing about how good the person is.</p>
+</div></details>
+</div>
+
+<div class="layout" style="margin-top:18px">
+<div>
+<div class="half">
+<div class="panel">
+<h3>Your answer in Task 1</h3>
+<p style="margin:6px 0 10px"><span class="lv lv2 ro" style="width:52px;height:40px;font-size:17px">2</span>
+<b style="margin-left:10px;font-size:15px">Works in it reliably</b></p>
+</div>
+<div class="panel" style="border:2px solid var(--green-500);background:#fbfdf7">
+<h3 style="color:var(--green-900)">What the system proposes</h3>
+<p style="margin:6px 0 10px"><span class="lv lv3 ro" style="width:52px;height:40px;font-size:17px">3</span>
+<b style="margin-left:10px;font-size:15px">Solves real problems</b>
+<span class="sug" style="margin-left:10px"><span class="dot mid"></span>confidence 68 %</span></p>
+</div>
+</div>
+
+<div class="ev" style="margin-top:18px">
+<p style="margin:0 0 8px"><b>Why the system proposes a higher level</b></p>
+<ul>
+<li>Introduced a reusable structure in the marking area that three other parts now use.</li>
+<li>Altered existing interfaces in four changes rather than adding parallel ones, so other people's
+code had to follow.</li>
+<li>Explained in the task discussion why the previous solution could not hold.</li>
+</ul>
+<blockquote>Very likely a regression from an earlier change. That change forced a version increment
+whenever a marking scheme is linked, which collides with the locking used when a quiz is published.
+<cite>DEV-07, in the discussion of the fault report</cite></blockquote>
+<p style="margin:12px 0 0"><b>Against level 4:</b> no structures spanning several areas, no
+architectural discussions.</p>
+</div>
+</div>
+
+<div class="side">
+<div class="panel" style="border-color:var(--green-500)">
+<h3>Your decision</h3>
+<p style="margin:0"><button class="btn p" style="width:100%">Accept, set to 3</button>
+<button class="btn" style="width:100%">Adjust, pick another level</button>
+<button class="btn" style="width:100%;margin-bottom:0">Keep my answer, stay at 2</button></p>
+<p class="sm" style="margin:14px 0 6px"><b>Why, optional</b></p>
+<textarea placeholder="If you disagree, write briefly why. This is recorded with your answer."></textarea>
+</div>
+</div>
+</div>
+
+<p style="margin:18px 0 0"><button class="btn" onclick="go(4)">Skip to summary, prototype only</button></p>
+</div>
+</div></div>
+
+<!-- ============================== SUMMARY ============================== -->
+<div class="screen" id="scr4"><div class="wrap">
+<div class="card">
+<h1>Summary</h1>
+<p style="margin:0">
+<span class="tab" onclick="tab(this,'all')">All six people</span>
+<span class="tab" onclick="tab(this,'one')">DEV-01</span>
+<span class="tab" onclick="tab(this,'one')">DEV-02</span>
+<span class="tab" onclick="tab(this,'one')">DEV-04</span>
+<span class="tab" onclick="tab(this,'one')">DEV-06</span>
+<span class="tab on" onclick="tab(this,'one')">DEV-07</span>
+<span class="tab" onclick="tab(this,'one')">DEV-09</span></p>
+</div>
+
+<div id="sumOne">
+<div class="card">
+<h2>DEV-07</h2>
+<div class="cols2">
+<div>
+<h3>What changed</h3>
+<table>
+<tr><th style="text-align:left">Competence</th><th class="n">Task 1</th><th class="n">Proposed</th>
+<th class="n">Task 2</th><th>Decision</th></tr>
+<tr><td>develop automated software tests</td><td class="n">4</td><td class="n">3</td><td class="n">4</td><td class="bad">rejected</td></tr>
+<tr><td>debug software</td><td class="n">3</td><td class="n">3</td><td class="n">3</td><td class="ok">confirmed</td></tr>
+<tr><td>use software design patterns</td><td class="n">2</td><td class="n">3</td><td class="n">3</td><td class="ok">accepted</td></tr>
+<tr><td>design user interface</td><td class="n">3</td><td class="n">3</td><td class="n">3</td><td class="ok">confirmed</td></tr>
+<tr><td>migrate existing data</td><td class="n">1</td><td class="n">3</td><td class="n">2</td><td class="warn">adjusted</td></tr>
+<tr><td>use concurrent programming</td><td class="n">n/o</td><td class="n">2</td><td class="n">2</td><td class="ok">accepted</td></tr>
+</table>
+<p style="margin-top:12px"><button class="btn sm on" onclick="rad(this,'both')">Both</button>
+<button class="btn sm" onclick="rad(this,'before')">Before only</button>
+<button class="btn sm" onclick="rad(this,'after')">After only</button></p>
+</div>
+<div style="text-align:center">
+<h3 style="text-align:left">Profile</h3>
+<svg viewBox="-50 -8 430 312" width="400" height="290">
+<g transform="translate(165,148)">
+<polygon points="0,-110 95,-55 95,55 0,110 -95,55 -95,-55" fill="none" stroke="#e8eae5"/>
+<polygon points="0,-82 71,-41 71,41 0,82 -71,41 -71,-41" fill="none" stroke="#f1f2ef"/>
+<polygon points="0,-55 48,-27 48,27 0,55 -48,27 -48,-27" fill="none" stroke="#f1f2ef"/>
+<polygon points="0,-27 24,-14 24,14 0,27 -24,14 -24,-14" fill="none" stroke="#f1f2ef"/>
+<polygon id="radBefore" points="0,-88 48,-27 24,14 0,27 -48,27 -48,-27"
+ fill="rgba(107,111,102,.18)" stroke="#6b6f66" stroke-width="2" stroke-dasharray="4 3"/>
+<polygon id="radAfter" points="0,-88 71,-41 48,27 0,55 -48,27 -48,-27"
+ fill="rgba(124,176,44,.25)" stroke="#5a9e28" stroke-width="2"/>
+<text x="0" y="-122" text-anchor="middle" font-size="13" fill="#6b6f66">Automated tests</text>
+<text x="104" y="-58" font-size="13" fill="#6b6f66">Debugging</text>
+<text x="104" y="64" font-size="13" fill="#6b6f66">Design patterns</text>
+<text x="0" y="128" text-anchor="middle" font-size="13" fill="#6b6f66">User interface</text>
+<text x="-104" y="64" text-anchor="end" font-size="13" fill="#6b6f66">Data migration</text>
+<text x="-104" y="-58" text-anchor="end" font-size="13" fill="#6b6f66">Concurrency</text>
+</g></svg>
+<p class="sm dim" style="margin:0">Dashed grey, your assessment in Task 1. Solid green, after Task 2.</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Which role does the evidence for DEV-07 match</h2>
+<p class="sm">ESCO, the European classification of occupations, lists the competences it considers
+essential for each occupation. Your final assessment is compared against those lists. The result
+says what the records demonstrate, not what the person is capable of.</p>
+<table>
+<tr><th style="text-align:left;width:22%">Occupation</th><th style="width:22%">Demonstrated</th>
+<th>Nothing in the records about</th></tr>
+<tr><td><b>software developer</b><div class="sm dim">closest match</div></td>
+<td><b>18 of 23</b> essential competences</td>
+<td class="dim sm">interpreting requirements, writing technical documentation, running a project</td></tr>
+<tr><td>software tester</td><td>11 of 20</td>
+<td class="dim sm">performance testing, planning a test approach</td></tr>
+<tr><td>ICT application developer</td><td>13 of 20</td>
+<td class="dim sm">security legislation, identifying customer requirements</td></tr>
+</table>
+<h3 style="margin-top:22px">What this suggests for future work</h3>
+<table>
+<tr><td style="width:34%"><b>Ready to take on</b></td><td>Work in grading and assessment that needs
+fault diagnosis and solid testing, including reviewing other people's work there.</td></tr>
+<tr><td><b>Would grow into</b></td><td>Designing how a whole area is tested, rather than writing
+individual tests. The records show the skill but not yet the scope.</td></tr>
+<tr><td><b>Needs a conversation first</b></td><td>Requirements work, documentation and project
+coordination. The records say nothing about these, which is not the same as saying they are absent.</td></tr>
+</table>
+<p class="src">The gaps sit where this kind of record is blind: requirements, documentation,
+project work. Those belong in a conversation, not in a conclusion drawn from their absence.</p>
+</div>
+</div>
+
+<div id="sumAll" style="display:none">
+<div class="card">
+<h2>All six people</h2>
+<div class="half">
+<table>
+<tr><td>Suggestions accepted</td><td class="n"><b>18</b> of 36</td></tr>
+<tr><td>Adjusted</td><td class="n">7</td></tr>
+<tr><td>Rejected</td><td class="n">5</td></tr>
+<tr><td>Already in agreement before the suggestion</td><td class="n">6</td></tr>
+</table>
+<table>
+<tr><td>Cells left as not observable, now filled</td><td class="n">6</td></tr>
+<tr><td>Rejections where the system was unsure itself</td><td class="n">4 of 5</td></tr>
+<tr><td>Average change in level</td><td class="n">+0.4</td></tr>
+</table>
+</div>
+<h3 style="margin-top:22px">Closest role per person</h3>
+<table>
+<tr><th style="text-align:left">Person</th><th>Closest occupation</th><th>Demonstrated</th><th>Main gap</th></tr>
+<tr><td><b>DEV-01</b></td><td>software developer</td><td>21 of 23</td><td class="dim sm">project management</td></tr>
+<tr><td><b>DEV-02</b></td><td>software tester</td><td>12 of 20</td><td class="dim sm">test planning</td></tr>
+<tr><td><b>DEV-04</b></td><td>ICT system administrator</td><td>15 of 21</td><td class="dim sm">security legislation</td></tr>
+<tr><td><b>DEV-06</b></td><td>software developer</td><td>16 of 23</td><td class="dim sm">user interface work</td></tr>
+<tr><td><b>DEV-07</b></td><td>software developer</td><td>18 of 23</td><td class="dim sm">requirements, documentation</td></tr>
+<tr><td><b>DEV-09</b></td><td>software developer</td><td>11 of 23</td><td class="dim sm">several areas not yet visible</td></tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h2>Four short questions</h2>
+<p><button class="btn p" onclick="go(5)">Go to the questions</button></p>
+</div>
+</div></div>
+
+<!-- ============================== QUESTIONS ============================== -->
+<div class="screen" id="scr5"><div class="wrap">
+<div class="card">
+<h1>Four short questions</h1>
+<p>Please answer on a scale from 1, not at all, to 7, very much.</p>
+<table>
+<tr><th style="width:52%">Question</th><th>Your answer</th></tr>
+<tr><td>How confident were you in your assessment in Task 1?</td><td><span style="white-space:nowrap"><label style="margin-right:9px;font-size:13px"><input type="radio" name="q1"> 1</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q1"> 2</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q1"> 3</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q1"> 4</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q1"> 5</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q1"> 6</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q1"> 7</label></span></td></tr>
+<tr><td>How confident were you in your assessment in Task 2?</td><td><span style="white-space:nowrap"><label style="margin-right:9px;font-size:13px"><input type="radio" name="q2"> 1</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q2"> 2</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q2"> 3</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q2"> 4</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q2"> 5</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q2"> 6</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q2"> 7</label></span></td></tr>
+<tr><td>How much did you trust the system&#39;s suggestions?</td><td><span style="white-space:nowrap"><label style="margin-right:9px;font-size:13px"><input type="radio" name="q3"> 1</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q3"> 2</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q3"> 3</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q3"> 4</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q3"> 5</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q3"> 6</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q3"> 7</label></span></td></tr>
+<tr><td>How helpful did you find the support provided by the system?</td><td><span style="white-space:nowrap"><label style="margin-right:9px;font-size:13px"><input type="radio" name="q4"> 1</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q4"> 2</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q4"> 3</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q4"> 4</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q4"> 5</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q4"> 6</label><label style="margin-right:9px;font-size:13px"><input type="radio" name="q4"> 7</label></span></td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>One more thing</h2>
+<p>If such a profile existed in your own organisation, who should be able to see it?</p>
+<p style="margin:0">
+<label style="display:block;margin:6px 0"><input type="radio" name="vis"> The team lead only</label>
+<label style="display:block;margin:6px 0"><input type="radio" name="vis"> The developer and their lead</label>
+<label style="display:block;margin:6px 0"><input type="radio" name="vis"> The whole team</label>
+<label style="display:block;margin:6px 0"><input type="radio" name="vis"> Nobody, I would not use it</label></p>
+<p class="sm" style="margin:16px 0 6px"><b>Anything else, optional</b></p>
+<textarea placeholder="Anything that struck you while working through this."></textarea>
+<p style="margin:16px 0 0"><button class="btn p">Submit and finish</button>
+<button class="btn" onclick="go(4)">Back to the summary</button></p>
+</div>
+</div></div>
+
+<script>
+function go(n){for(var i=0;i<6;i++){
+document.getElementById('scr'+i).classList.toggle('on',i===n);
+document.getElementById('s'+i).classList.toggle('on',i===n);}
+window.scrollTo(0,0);}
+function pick(el){event.stopPropagation();var p=el.parentNode.querySelectorAll('.lv');
+for(var i=0;i<p.length;i++)p[i].classList.remove('sel');el.classList.add('sel');
+selectRow(el.closest('tr'));}
+function selectRow(tr){var all=tr.parentNode.querySelectorAll('tr.comp');
+for(var j=0;j<all.length;j++)all[j].classList.remove('row-sel');tr.classList.add('row-sel');}
+function rad(btn,w){var bs=btn.parentNode.querySelectorAll('.btn');
+for(var i=0;i<bs.length;i++)bs[i].classList.remove('on');btn.classList.add('on');
+document.getElementById('radBefore').style.display=(w==='after')?'none':'';
+document.getElementById('radAfter').style.display=(w==='before')?'none':'';}
+function tab(el,which){var ts=el.parentNode.querySelectorAll('.tab');
+for(var i=0;i<ts.length;i++)ts[i].classList.remove('on');el.classList.add('on');
+document.getElementById('sumOne').style.display=(which==='all')?'none':'';
+document.getElementById('sumAll').style.display=(which==='all')?'':'none';}
+</script>
+</body></html>

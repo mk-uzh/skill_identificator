@@ -1,0 +1,334 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skill-Matrix — UI-Varianten</title>
+<style>
+:root{--ink:#1f2933;--dim:#6b7684;--line:#dfe3e8;--soft:#f6f8fa;--accent:#2f5d8a;
+--l0:#eef1f4;--l1:#d6e4f0;--l2:#aecbe4;--l3:#7fa9ce;--l4:#4c7fae;--na:#fafbfc;
+--ok:#2f7d4f;--warn:#b5703a;--bad:#a8403a}
+*{box-sizing:border-box}
+body{margin:0;padding:36px 44px 90px;max-width:1180px;font:15px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:var(--ink)}
+h1{font-size:25px;margin:0 0 4px}h2{font-size:19px;margin:52px 0 6px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+h3{font-size:14px;margin:22px 0 8px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.sub{color:var(--dim);margin:0 0 4px}
+.kom{background:#fffdf5;border-left:3px solid #e0c060;padding:10px 14px;margin:12px 0 18px;font-size:14px}
+.card{border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:14px 0 8px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{text-align:left;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--ink);font-size:12.5px}
+td{padding:4px 8px;border-bottom:1px solid var(--line)}
+.cell{display:inline-flex;align-items:center;justify-content:center;width:34px;height:26px;border-radius:5px;
+font-size:12px;font-weight:600;cursor:pointer;border:1px solid transparent;color:#1f2933}
+.l0{background:var(--l0)}.l1{background:var(--l1)}.l2{background:var(--l2)}.l3{background:var(--l3);color:#fff}
+.l4{background:var(--l4);color:#fff}.na{background:var(--na);color:#c3c9d1;border:1px dashed var(--line)}
+.cell:hover{outline:2px solid var(--accent)}
+.grp{background:var(--soft);font-weight:600;cursor:pointer}
+.grp td{border-bottom:1px solid var(--line)}
+.chev{display:inline-block;width:12px;color:var(--dim)}
+.skill{padding-left:26px;color:var(--ink)}
+.tech{display:inline-block;padding:3px 9px;border-radius:12px;background:var(--soft);
+border:1px solid var(--line);font-size:12.5px;margin:3px 4px 3px 0}
+.tech b{font-weight:600}.tech .m{color:var(--dim);font-size:11.5px}
+.tech.cold{opacity:.5}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--dim);margin:10px 0 14px;align-items:center}
+.legend .cell{width:26px;height:20px;cursor:default}
+.ev{background:var(--soft);border-radius:8px;padding:14px 16px;font-size:13.5px;margin-top:10px}
+.ev h4{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+.ev ul{margin:0;padding-left:18px}.ev li{margin:5px 0}
+.ev code{background:#fff;border:1px solid var(--line);padding:1px 5px;border-radius:3px;font-size:12px}
+blockquote{margin:8px 0;padding:8px 12px;background:#fff;border-left:3px solid var(--line);font-size:13px}
+cite{display:block;margin-top:6px;font-style:normal;font-size:12px;color:var(--dim)}
+.flex{display:flex;gap:28px;flex-wrap:wrap}.flex>*{flex:1;min-width:300px}
+.btn{display:inline-block;padding:6px 14px;border-radius:7px;border:1px solid var(--line);
+background:#fff;font-size:13px;cursor:pointer;margin-right:8px}
+.btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sug{display:inline-flex;align-items:center;gap:7px;background:#eef4fb;border:1px solid #cfe0f0;
+border-radius:7px;padding:4px 10px;font-size:12.5px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block}
+.dot.mid{background:var(--warn)}.dot.low{background:var(--bad)}
+.bar{height:9px;border-radius:5px;background:var(--line);overflow:hidden;min-width:120px}
+.bar>i{display:block;height:100%;background:var(--accent)}
+.dim{color:var(--dim)}.n{text-align:right;font-variant-numeric:tabular-nums}
+.pill{font-size:11.5px;padding:2px 8px;border-radius:10px;background:var(--soft);border:1px solid var(--line);color:var(--dim)}
+.ok{color:var(--ok)}.warnc{color:var(--warn)}.badc{color:var(--bad)}
+</style></head><body>
+
+<h1>Skill-Matrix — Varianten für Task 1 und Task 2</h1>
+<p class="sub">Entwurf zur Diskussion. Alle Zahlen und Namen sind erfunden, die Struktur entspricht den echten Daten.</p>
+
+<div class="kom"><b>Das Problem zuerst.</b> 15 Personen × 30 Kompetenzen = 450 Zellen. Niemand beurteilt das
+in einer Sitzung. Jede Variante unten löst das anders: durch Gruppieren, durch Beschränkung auf eine
+Person, oder durch Trennung von Fähigkeiten und Technologien.</div>
+
+<!-- ============ A ============ -->
+<h2>Variante A · Matrix mit aufklappbaren Gruppen</h2>
+<p>Standardansicht sind die sechs Kategorien. Wer genauer hinschauen will, klappt eine Kategorie auf
+und sieht die einzelnen ESCO-Kompetenzen. Entscheidung bleibt auf Kategorieebene möglich.</p>
+
+<div class="card">
+<div class="legend"><span>Stufen:</span>
+<span class="cell na">–</span><span>nicht beobachtbar</span>
+<span class="cell l0">0</span><span class="cell l1">1</span><span class="cell l2">2</span>
+<span class="cell l3">3</span><span class="cell l4">4</span><span>Experte</span></div>
+<table>
+<tr><th style="width:280px">Kompetenz</th><th>DEV-01</th><th>DEV-02</th><th>DEV-04</th><th>DEV-06</th><th>DEV-07</th></tr>
+<tr class="grp" onclick="t('g1')"><td><span class="chev" id="c-g1">▸</span> Backend development <span class="pill">6 Kompetenzen</span></td>
+<td><span class="cell l4">4</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td></tr>
+<tbody id="g1" style="display:none">
+<tr><td class="skill">use object-oriented programming</td><td><span class="cell l4">4</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td><td><span class="cell l4">4</span></td><td><span class="cell l3">3</span></td></tr>
+<tr><td class="skill">use software design patterns</td><td><span class="cell l3">3</span></td><td><span class="cell l1">1</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td></tr>
+<tr><td class="skill">use concurrent programming</td><td><span class="cell l3">3</span></td><td><span class="cell na">–</span></td><td><span class="cell l2">2</span></td><td><span class="cell l4">4</span></td><td><span class="cell na">–</span></td></tr>
+<tr><td class="skill">integrate system components</td><td><span class="cell l4">4</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td></tr>
+<tr><td class="skill">debug software</td><td><span class="cell l4">4</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td></tr>
+<tr><td class="skill">software anomalies</td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td></tr>
+</tbody>
+<tr class="grp" onclick="t('g2')"><td><span class="chev" id="c-g2">▸</span> Frontend development <span class="pill">4 Kompetenzen</span></td>
+<td><span class="cell l4">4</span></td><td><span class="cell l2">2</span></td><td><span class="cell l2">2</span></td><td><span class="cell na">–</span></td><td><span class="cell l3">3</span></td></tr>
+<tbody id="g2" style="display:none">
+<tr><td class="skill">design user interface</td><td><span class="cell l4">4</span></td><td><span class="cell l2">2</span></td><td><span class="cell l1">1</span></td><td><span class="cell na">–</span></td><td><span class="cell l3">3</span></td></tr>
+<tr><td class="skill">World Wide Web Consortium standards</td><td><span class="cell l3">3</span></td><td><span class="cell l1">1</span></td><td><span class="cell na">–</span></td><td><span class="cell na">–</span></td><td><span class="cell l2">2</span></td></tr>
+<tr><td class="skill">JavaScript</td><td><span class="cell l4">4</span></td><td><span class="cell l2">2</span></td><td><span class="cell l2">2</span></td><td><span class="cell na">–</span></td><td><span class="cell l3">3</span></td></tr>
+<tr><td class="skill">AJAX</td><td><span class="cell l3">3</span></td><td><span class="cell l1">1</span></td><td><span class="cell na">–</span></td><td><span class="cell na">–</span></td><td><span class="cell l2">2</span></td></tr>
+</tbody>
+<tr class="grp" onclick="t('g3')"><td><span class="chev" id="c-g3">▸</span> Testing and quality assurance <span class="pill">3 Kompetenzen</span></td>
+<td><span class="cell l3">3</span></td><td><span class="cell l1">1</span></td><td><span class="cell l4">4</span></td><td><span class="cell l3">3</span></td><td><span class="cell l4">4</span></td></tr>
+<tbody id="g3" style="display:none">
+<tr><td class="skill">ICT debugging tools</td><td><span class="cell l3">3</span></td><td><span class="cell l1">1</span></td><td><span class="cell l4">4</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td></tr>
+<tr><td class="skill">develop automated test methods</td><td><span class="cell l3">3</span></td><td><span class="cell l1">1</span></td><td><span class="cell l4">4</span></td><td><span class="cell l2">2</span></td><td><span class="cell l4">4</span></td></tr>
+<tr><td class="skill">analyse software specifications</td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td><td><span class="cell l3">3</span></td></tr>
+</tbody>
+<tr class="grp" onclick="t('g4')"><td><span class="chev" id="c-g4">▸</span> Data and persistence <span class="pill">4 Kompetenzen</span></td>
+<td><span class="cell l2">2</span></td><td><span class="cell na">–</span></td><td><span class="cell l4">4</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td></tr>
+<tbody id="g4" style="display:none">
+<tr><td class="skill">migrate existing data</td><td><span class="cell l2">2</span></td><td><span class="cell na">–</span></td><td><span class="cell l4">4</span></td><td><span class="cell l1">1</span></td><td><span class="cell l3">3</span></td></tr>
+<tr><td class="skill">develop automated migration methods</td><td><span class="cell l1">1</span></td><td><span class="cell na">–</span></td><td><span class="cell l4">4</span></td><td><span class="cell na">–</span></td><td><span class="cell l2">2</span></td></tr>
+</tbody>
+<tr class="grp" onclick="t('g5')"><td><span class="chev" id="c-g5">▸</span> Infrastructure and operations <span class="pill">5 Kompetenzen</span></td>
+<td><span class="cell l2">2</span></td><td><span class="cell l1">1</span></td><td><span class="cell l4">4</span></td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td></tr>
+<tbody id="g5" style="display:none">
+<tr><td class="skill">tools for software configuration management</td><td><span class="cell l2">2</span></td><td><span class="cell l1">1</span></td><td><span class="cell l4">4</span></td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td></tr>
+<tr><td class="skill">Apache Maven</td><td><span class="cell l2">2</span></td><td><span class="cell l1">1</span></td><td><span class="cell l4">4</span></td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td></tr>
+</tbody>
+<tr class="grp" onclick="t('g6')"><td><span class="chev" id="c-g6">▸</span> Architecture and design <span class="pill">4 Kompetenzen</span></td>
+<td><span class="cell l3">3</span></td><td><span class="cell l1">1</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td></tr>
+<tbody id="g6" style="display:none">
+<tr><td class="skill">object-oriented modelling</td><td><span class="cell l3">3</span></td><td><span class="cell l1">1</span></td><td><span class="cell l2">2</span></td><td><span class="cell l3">3</span></td><td><span class="cell l2">2</span></td></tr>
+<tr><td class="skill">define technical requirements</td><td><span class="cell l2">2</span></td><td><span class="cell l1">1</span></td><td><span class="cell l2">2</span></td><td><span class="cell l2">2</span></td><td><span class="cell l2">2</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="kom"><b>Dafür:</b> eine Ansicht für alle, Vergleich zwischen Personen möglich, Detailtiefe auf Abruf.
+<b>Dagegen:</b> bei 15 Personen wird es breit — ab etwa acht Spalten muss gescrollt werden, und Scrollen
+quer ist beim Beurteilen unangenehm.</div>
+
+<!-- ============ B ============ -->
+<h2>Variante B · Eine Person pro Bildschirm</h2>
+<p>Die Teilnehmenden beurteilen nacheinander, nicht nebeneinander. Links die Kompetenzen, rechts der
+Beleg zur gerade gewählten Zeile. Das ist die Variante, die ich für Task 1 empfehlen würde.</p>
+
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+<h3 style="margin:0">DEV-07 · Person 3 von 6</h3><span class="dim">148 Commits · 23 Reviews · 9 Komponenten</span></div>
+<div class="flex">
+<div>
+<table>
+<tr><th>Kompetenz</th><th style="width:210px">Ihre Einschätzung</th></tr>
+<tr><td>use object-oriented programming</td><td>
+<span class="cell l0">0</span><span class="cell l1">1</span><span class="cell l2">2</span>
+<span class="cell l3" style="outline:2px solid var(--accent)">3</span><span class="cell l4">4</span>
+<span class="cell na">–</span></td></tr>
+<tr><td>debug software</td><td>
+<span class="cell l0">0</span><span class="cell l1">1</span><span class="cell l2">2</span>
+<span class="cell l3">3</span><span class="cell l4">4</span><span class="cell na">–</span></td></tr>
+<tr style="background:#f3f7fb"><td><b>develop automated test methods</b></td><td>
+<span class="cell l0">0</span><span class="cell l1">1</span><span class="cell l2">2</span>
+<span class="cell l3">3</span><span class="cell l4" style="outline:2px solid var(--accent)">4</span><span class="cell na">–</span></td></tr>
+<tr><td>migrate existing data</td><td>
+<span class="cell l0">0</span><span class="cell l1">1</span><span class="cell l2">2</span>
+<span class="cell l3">3</span><span class="cell l4">4</span><span class="cell na">–</span></td></tr>
+<tr><td>design user interface</td><td>
+<span class="cell l0">0</span><span class="cell l1">1</span><span class="cell l2">2</span>
+<span class="cell l3">3</span><span class="cell l4">4</span><span class="cell na">–</span></td></tr>
+</table>
+<p style="margin-top:14px"><span class="btn">Zurück</span><span class="btn p">Weiter zu DEV-09</span></p>
+</div>
+<div class="ev">
+<h4>Belege · develop automated test methods</h4>
+<ul>
+<li><b>18 Commits</b> mit Änderungen in Testdateien, davon 11 mit neuen Testfällen</li>
+<li>Berührte Bereiche: <code>e2e-tests/</code>, <code>samigo-app/src/test/</code>, <code>gradebookng/</code></li>
+<li>Typisch: <code>SAK-52921 Calendar Add Playwright E2E coverage (#15011)</code> — 140 neue Zeilen Testcode</li>
+<li><b>7 Reviews</b> an fremden Teständerungen gegeben, davon 2 mit verlangter Nacharbeit</li>
+</ul>
+<blockquote>The positive test fails without this check, so I removed it and added a case for
+the composite key path instead.<cite>Review-Kommentar von DEV-07 · Pull Request #14988</cite></blockquote>
+<p class="dim" style="margin:10px 0 0">Nicht belegt: Lasttests, Testarchitektur über Modulgrenzen.</p>
+</div>
+</div>
+</div>
+<div class="kom"><b>Dafür:</b> kognitiv entlastet, der Beleg steht immer neben der Entscheidung, funktioniert
+auch mit 30 Kompetenzen. <b>Dagegen:</b> kein direkter Vergleich zwischen Personen — den liefert erst die
+Übersicht am Ende.</div>
+
+<!-- ============ C ============ -->
+<h2>Variante C · Überblick als Netz, Detail als Tabelle</h2>
+<p>Das Spinnennetz beantwortet eine Frage gut: Ist jemand breit oder spitz aufgestellt. Für die
+Einstufung selbst taugt es nicht, weil man Werte schlecht ablesen und gar nicht eintragen kann.</p>
+<div class="card"><div class="flex">
+<div style="text-align:center">
+<svg viewBox="0 0 320 300" width="320" height="300">
+<g transform="translate(160,150)">
+<polygon points="0,-110 95,-55 95,55 0,110 -95,55 -95,-55" fill="none" stroke="#dfe3e8"/>
+<polygon points="0,-82 71,-41 71,41 0,82 -71,41 -71,-41" fill="none" stroke="#eceff2"/>
+<polygon points="0,-55 48,-27 48,27 0,55 -48,27 -48,-27" fill="none" stroke="#eceff2"/>
+<polygon points="0,-27 24,-14 24,14 0,27 -24,14 -24,-14" fill="none" stroke="#eceff2"/>
+<polygon points="0,-82 71,-41 24,14 0,82 -71,41 -48,-27" fill="rgba(76,127,174,.25)" stroke="#4c7fae" stroke-width="2"/>
+<circle cx="0" cy="-82" r="3.5" fill="#4c7fae"/><circle cx="71" cy="-41" r="3.5" fill="#4c7fae"/>
+<circle cx="24" cy="14" r="3.5" fill="#4c7fae"/><circle cx="0" cy="82" r="3.5" fill="#4c7fae"/>
+<circle cx="-71" cy="41" r="3.5" fill="#4c7fae"/><circle cx="-48" cy="-27" r="3.5" fill="#4c7fae"/>
+<text x="0" y="-122" text-anchor="middle" font-size="11" fill="#6b7684">Backend</text>
+<text x="108" y="-58" font-size="11" fill="#6b7684">Frontend</text>
+<text x="108" y="62" font-size="11" fill="#6b7684">Data</text>
+<text x="0" y="128" text-anchor="middle" font-size="11" fill="#6b7684">Infra</text>
+<text x="-150" y="62" font-size="11" fill="#6b7684">Testing</text>
+<text x="-152" y="-58" font-size="11" fill="#6b7684">Architecture</text>
+</g></svg>
+<p class="dim" style="font-size:12.5px">DEV-07 — breit, Schwerpunkt Testing</p>
+</div>
+<div>
+<h3 style="margin-top:0">Wofür das Netz taugt</h3>
+<p>Als <b>Ergebnisdarstellung</b> am Ende, wenn zwei Profile nebeneinandergelegt werden, oder um
+einer Führungskraft in drei Sekunden zu zeigen, dass DEV-06 spitz und DEV-07 breit ist.</p>
+<p>Als <b>Eingabefläche</b> ist es ungeeignet: Man kann weder präzise ablesen noch eintragen, und bei
+mehr als sechs Achsen wird es unlesbar. Deine dreissig Kompetenzen passen nie hinein.</p>
+<p><b>Empfehlung:</b> Netz nur in der Zusammenfassung, nie in Task 1 oder 2.</p>
+</div>
+</div></div>
+
+<!-- ============ D ============ -->
+<h2>Variante D · Fähigkeiten und Technologien getrennt</h2>
+<p>Zwei verschiedene Dinge, die unterschiedliche Darstellung verdienen. „use concurrent programming"
+ist eine Fähigkeit mit Niveau. „Apache Maven" ist eine Technologie — dort zählt eher, ob und wie
+aktuell jemand damit gearbeitet hat.</p>
+<div class="card"><div class="flex">
+<div>
+<h3 style="margin-top:0">Fähigkeiten — mit Stufe</h3>
+<table>
+<tr><td>use software design patterns</td><td><span class="cell l3">3</span></td></tr>
+<tr><td>use concurrent programming</td><td><span class="cell na">–</span></td></tr>
+<tr><td>integrate system components</td><td><span class="cell l3">3</span></td></tr>
+<tr><td>analyse software specifications</td><td><span class="cell l2">2</span></td></tr>
+</table>
+</div>
+<div>
+<h3 style="margin-top:0">Technologien — Vorhandensein und Aktualität</h3>
+<p style="margin:0">
+<span class="tech"><b>Java</b> <span class="m">· 112 Commits · zuletzt Okt 2026</span></span>
+<span class="tech"><b>JavaScript</b> <span class="m">· 64 · Sep 2026</span></span>
+<span class="tech"><b>SQL</b> <span class="m">· 9 · Aug 2026</span></span>
+<span class="tech"><b>Apache Maven</b> <span class="m">· 22 · Okt 2026</span></span>
+<span class="tech cold"><b>Python</b> <span class="m">· 3 · Feb 2025</span></span>
+<span class="tech cold"><b>Ansible</b> <span class="m">· 1 · Jan 2025</span></span>
+</p>
+<p class="dim" style="font-size:13px">Blass dargestellt: länger als ein Jahr nicht mehr berührt.
+Für eine Führungskraft ist das oft die wichtigste Angabe überhaupt.</p>
+</div>
+</div></div>
+
+<!-- ============ E ============ -->
+<h2>Variante E · Rollenabgleich mit ESCO</h2>
+<p>Die Antwort auf „welches Profil ist das eigentlich" und „was fehlt zur Rolle". Die Kompetenzliste
+kommt aus ESCO, nicht aus der Einschätzung der Forscherin.</p>
+<div class="card">
+<table>
+<tr><th style="width:230px">ESCO-Beruf</th><th style="width:220px">Abdeckung wesentlicher Kompetenzen</th><th>Nicht belegt</th></tr>
+<tr><td><b>software developer</b></td>
+<td><span class="bar"><i style="width:78%"></i></span> <span class="dim">18 / 23</span></td>
+<td class="dim">interpret technical requirements · provide technical documentation · manage engineering project · perform scientific research · project management</td></tr>
+<tr><td>ICT application developer</td>
+<td><span class="bar"><i style="width:65%"></i></span> <span class="dim">13 / 20</span></td>
+<td class="dim">ICT security legislation · identify customer requirements · …</td></tr>
+<tr><td>software tester</td>
+<td><span class="bar"><i style="width:55%"></i></span> <span class="dim">11 / 20</span></td>
+<td class="dim">execute software tests · test methods · …</td></tr>
+</table>
+<p class="dim" style="margin-top:12px">Lesart: DEV-07 arbeitet faktisch als <b>software developer</b>;
+die Lücken liegen durchgehend im Bereich Anforderungen, Dokumentation und Projektsteuerung —
+also dort, wo Repository-Daten ohnehin blind sind. Das gehört so beschriftet.</p>
+</div>
+
+<!-- ============ TASK 2 ============ -->
+<h2>Task 2 · Dieselbe Ansicht, plus Vorschlag</h2>
+<p>Wichtig für die Vergleichbarkeit: Das Layout bleibt identisch zu Task 1. Hinzu kommen nur der
+Vorschlag, seine Begründung und die drei Entscheidungen annehmen, anpassen, ablehnen.</p>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:baseline">
+<h3 style="margin:0">DEV-07 · use software design patterns</h3>
+<span class="pill">Ihre Einschätzung aus Task 1: Stufe 2</span></div>
+<p style="margin:12px 0 6px">
+<span class="sug"><span class="dot mid"></span> Vorschlag: <b>Stufe 3</b> · Konfidenz mittel</span>
+</p>
+<div class="ev">
+<h4>Warum Stufe 3</h4>
+<ul>
+<li>Führt in <code>rubrics/impl</code> ein Strategy-Muster ein, das von drei Aufrufern genutzt wird</li>
+<li>Ändert in vier Commits bestehende Schnittstellen, statt neue daneben zu stellen</li>
+<li>Begründet im Ticket, warum die bestehende Lösung nicht trägt</li>
+</ul>
+<blockquote>Very likely a regression from SAK-51438. That change added a forced version increment
+when rubric associations are created, which hits the version-lock path on publish.
+<cite>DEV-07 · SAK-53038</cite></blockquote>
+<p class="dim" style="margin:10px 0 0"><b>Gegen Stufe 4 spricht:</b> keine Belege für den Entwurf
+modulübergreifender Strukturen, keine Architekturdiskussionen.</p>
+</div>
+<p style="margin-top:14px">
+<span class="btn p">Vorschlag annehmen (3)</span>
+<span class="btn">Anpassen …</span>
+<span class="btn">Ablehnen, bei 2 bleiben</span>
+</p>
+<p class="dim" style="font-size:12.5px">Jede dieser drei Handlungen wird protokolliert — das ist deine
+abhängige Variable für RQ2 und RQ3.</p>
+</div>
+
+<!-- ============ SUMMARY ============ -->
+<h2>Zusammenfassung · manuell gegen Modell</h2>
+<div class="card">
+<div class="flex">
+<div>
+<h3 style="margin-top:0">Was sich geändert hat</h3>
+<table>
+<tr><th>Kompetenz</th><th class="n">Task 1</th><th class="n">Vorschlag</th><th class="n">Task 2</th><th>Entscheidung</th></tr>
+<tr><td>use object-oriented programming</td><td class="n">3</td><td class="n">3</td><td class="n">3</td><td class="ok">bestätigt</td></tr>
+<tr><td>use software design patterns</td><td class="n">2</td><td class="n">3</td><td class="n">3</td><td class="ok">angenommen</td></tr>
+<tr><td>develop automated test methods</td><td class="n">4</td><td class="n">3</td><td class="n">4</td><td class="badc">abgelehnt</td></tr>
+<tr><td>migrate existing data</td><td class="n">1</td><td class="n">3</td><td class="n">2</td><td class="warnc">angepasst</td></tr>
+<tr><td>design user interface</td><td class="n">–</td><td class="n">2</td><td class="n">2</td><td class="ok">angenommen</td></tr>
+</table>
+</div>
+<div>
+<h3 style="margin-top:0">Kennzahlen</h3>
+<table>
+<tr><td>Übereinstimmung vor dem Vorschlag</td><td class="n"><b>61 %</b></td></tr>
+<tr><td>Übereinstimmung nach dem Vorschlag</td><td class="n"><b>84 %</b></td></tr>
+<tr><td>Vorschläge angenommen</td><td class="n">18 von 30</td></tr>
+<tr><td>angepasst</td><td class="n">7</td></tr>
+<tr><td>abgelehnt</td><td class="n">5</td></tr>
+<tr><td>davon bei niedriger Konfidenz abgelehnt</td><td class="n">4 von 5</td></tr>
+<tr><td>Zellen erstmals gefüllt</td><td class="n">6</td></tr>
+</table>
+<p class="dim" style="font-size:13px">Die letzte Zeile ist interessant: Zellen, die ohne Unterstützung
+leer geblieben wären. Das ist ein Nutzenargument, das nicht über Übereinstimmung läuft.</p>
+</div>
+</div>
+</div>
+
+<div class="kom" style="margin-top:34px"><b>Meine Empfehlung.</b> Task 1 und Task 2 in Variante B,
+also eine Person pro Bildschirm mit Beleg daneben, Fähigkeiten und Technologien getrennt wie in D.
+Die Matrix aus A als Überblicksseite davor und danach, das Netz aus C nur in der Zusammenfassung,
+und den Rollenabgleich aus E als Abschluss je Person — er ist der Teil, bei dem eine Führungskraft
+sofort versteht, wozu das Ganze gut ist.</div>
+
+<script>
+function t(id){var e=document.getElementById(id),c=document.getElementById('c-'+id);
+var open=e.style.display!=='none';e.style.display=open?'none':'table-row-group';
+c.textContent=open?'▸':'▾';}
+</script>
+</body></html>
