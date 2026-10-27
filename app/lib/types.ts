@@ -1,21 +1,55 @@
 // Central type definitions of the study.
 
-export const SKILL_LEVELS = ["none", "basic", "proficient", "expert"] as const;
+/**
+ * Level scale (DP2).
+ *
+ * Five ordered levels from the European e-Competence Framework (EN 16234-1),
+ * plus "not observable", which is deliberately NOT a sixth level: it says the
+ * records hold nothing about this competence for this person. Keeping it apart
+ * from l1 matters for the analysis — a blind spot is information, not a low
+ * score, and averaging the two together would hide exactly what DP7 asks the
+ * system to declare.
+ */
+export const ORDERED_LEVELS = ["l1", "l2", "l3", "l4", "l5"] as const;
+export const SKILL_LEVELS = [...ORDERED_LEVELS, "not_observable"] as const;
 export type SkillLevel = (typeof SKILL_LEVELS)[number];
+export type OrderedLevel = (typeof ORDERED_LEVELS)[number];
 
-export const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
-  none: "none",
-  basic: "basic",
-  proficient: "proficient",
-  expert: "expert",
+export function isOrderedLevel(level: SkillLevel | null): level is OrderedLevel {
+  return level != null && level !== "not_observable";
+}
+
+/** Short form for the level buttons. */
+export const SKILL_LEVEL_SHORT: Record<SkillLevel, string> = {
+  l1: "1",
+  l2: "2",
+  l3: "3",
+  l4: "4",
+  l5: "5",
+  not_observable: "n/o",
 };
 
-/** Numeric value for the later analysis (distances, means). */
-export const SKILL_LEVEL_VALUE: Record<SkillLevel, number> = {
-  none: 0,
-  basic: 1,
-  proficient: 2,
-  expert: 3,
+export const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
+  l1: "Has touched it",
+  l2: "Works in it reliably",
+  l3: "Solves real problems",
+  l4: "Shapes the area",
+  l5: "Is the reference",
+  not_observable: "Not observable",
+};
+
+/**
+ * Numeric value for the analysis. null for "not observable" on purpose: there
+ * is no number that is honest there, and a 0 would be averaged as if it were
+ * the bottom of the scale.
+ */
+export const SKILL_LEVEL_VALUE: Record<SkillLevel, number | null> = {
+  l1: 1,
+  l2: 2,
+  l3: 3,
+  l4: 4,
+  l5: 5,
+  not_observable: null,
 };
 
 export interface Developer {
@@ -30,10 +64,21 @@ export interface Developer {
   evidence: string[];
 }
 
+/** A competence group, e.g. "Testing and quality assurance". */
+export interface CategoryGroup {
+  id: string;
+  label: string;
+  order: number;
+}
+
+/** One competence. `label` is the ESCO term, `plain` is what it means. */
 export interface Category {
   id: string;
   label: string;
+  plain: string;
   description: string;
+  groupId: string;
+  order: number;
 }
 
 /** devId -> categoryId -> level (null = not rated yet) */
@@ -161,6 +206,18 @@ export interface StudySession {
   config_hash?: string;
   /** Snapshot hash (demo: same as assessments config until real ingest). */
   snapshot_hash?: string;
+  /**
+   * Order in which this participant works through the developers. The study
+   * is blocked per person, so this is also the block order: index 0 is the
+   * first block. Derived from the participant code, stored for the analysis.
+   */
+  devOrder?: string[];
+  /**
+   * Set when the run was cut short from the prototype shortcut. Such a
+   * session is NOT a participant run: most cells were never seen, and the
+   * analysis has to exclude it.
+   */
+  prototype_skip?: boolean;
   task1?: {
     matrix: Matrix;
     startedAt: string;

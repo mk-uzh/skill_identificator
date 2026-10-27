@@ -35,6 +35,8 @@ export interface Assessment {
   confidence: number;
   rationale: string;
   evidence: EvidenceItem[];
+  /** DP7 — what these records cannot show about this competence. */
+  blind_spots?: string;
   /** Optional study-design knobs for scripted Task-2 suggestions. */
   study?: StudyScriptMeta;
 }
@@ -165,6 +167,10 @@ function validateAssessment(raw: unknown, index: number): Assessment {
     rationale: raw.rationale,
     evidence,
   };
+  if (raw.blind_spots !== undefined) {
+    assertString(raw.blind_spots, `${label}.blind_spots`);
+    assessment.blind_spots = raw.blind_spots;
+  }
   if (raw.study !== undefined) {
     assessment.study = validateStudy(raw.study, `${label}.study`);
   }
@@ -219,4 +225,14 @@ export function getAssessments(): AssessmentsFile {
 /** Assessments that carry study-script metadata (used for Task 2 suggestion control). */
 export function getScriptedAssessments(): Assessment[] {
   return getAssessments().assessments.filter((a) => a.study != null);
+}
+
+/** The assessment for one developer and one competence, if the file has it. */
+export function getAssessment(
+  developerId: string,
+  categoryId: string,
+): Assessment | undefined {
+  return getAssessments().assessments.find(
+    (a) => a.developer_id === developerId && a.category_id === categoryId,
+  );
 }

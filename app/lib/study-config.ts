@@ -1,108 +1,114 @@
 // ---------------------------------------------------------------------------
 // Study configuration
 //
-// All content-level knobs of the case study live here: developer profiles,
-// competence categories and the parameters of the AI suggestions. The rest of
-// the code does not need to be touched.
+// Content-level knobs of the case study. The competences are NOT defined here
+// any more — they come from model/taxonomy.json through lib/taxonomy.ts, so
+// the UI and the inference cannot drift apart.
+//
+// The people below are demo data standing in for a public open-source project
+// until the real pipeline output is wired in. Identifiers are pseudonyms by
+// design: the study never shows a real name.
 // ---------------------------------------------------------------------------
 
 import { getScriptedAssessments, type EvidenceItem } from "./assessments";
-import type { Category, Developer, SkillLevel } from "./types";
+import {
+  CATEGORIES,
+  CATEGORY_GROUPS,
+  groupedCategories,
+  LEVEL_ANCHORS,
+  LEVEL_ANCHORS_SHORT,
+} from "./taxonomy";
+import type { Developer, SkillLevel } from "./types";
 
 export const STUDY_TITLE = "DevSkill – Team Skill Matrix Study";
 
-export const CATEGORIES: Category[] = [
-  { id: "backend", label: "Backend", description: "Server-side development, APIs, domain logic" },
-  { id: "frontend", label: "Frontend", description: "UI development, components, accessibility" },
-  { id: "devops", label: "DevOps", description: "CI/CD, infrastructure as code, deployment" },
-  { id: "testing", label: "Testing", description: "Unit, integration and end-to-end tests" },
-  { id: "data", label: "Data", description: "Data modelling, SQL, data pipelines" },
-  { id: "security", label: "Security", description: "Secure development, reviews, vulnerability analysis" },
-];
+export { CATEGORIES, CATEGORY_GROUPS, groupedCategories, LEVEL_ANCHORS, LEVEL_ANCHORS_SHORT };
+
+const WINDOW = "active January 2025 to October 2026";
 
 export const DEVELOPERS: Developer[] = [
   {
-    id: "devA",
-    label: "Dev A",
-    role: "Senior Software Engineer",
-    tenure: "6 years with the company",
+    id: "DEV-01",
+    label: "DEV-01",
+    role: "212 changes · 41 reviews of other people's work",
+    tenure: WINDOW,
     profile:
-      "Works mainly on the deployment pipeline and the container platform. Maintains the team's release automation.",
+      "Works across the course tools: announcements, the calendar and the area where teachers put materials. Often picks up faults that cross several of them.",
     evidence: [
-      "142 commits in infra/ (last 12 months)",
-      "Owner of the GitLab CI configuration",
-      "Ran the internal training \u201cKubernetes Basics\u201d",
-      "Occasional contributions to service-api/",
+      "212 changes, the last one in October 2026",
+      "Read and approved the work of 41 other people",
+      "83 of the changes are linked to a task in the tracker",
+      "Nothing in the part that stores data",
     ],
   },
   {
-    id: "devB",
-    label: "Dev B",
-    role: "Software Engineer",
-    tenure: "3 years with the company",
+    id: "DEV-02",
+    label: "DEV-02",
+    role: "47 changes · 3 reviews of other people's work",
+    tenure: WINDOW,
     profile:
-      "Focuses on security reviews and access concepts. Regularly takes part in threat modelling workshops.",
+      "Works almost only on importing and exporting course material. A narrow area, and mostly alone in it.",
     evidence: [
-      "Runs security reviews for two teams",
-      "OWASP certification 2024",
-      "38 commits in auth-service/",
-      "No contributions to the frontend repository",
+      "47 changes, the last one in August 2026",
+      "Read the work of 3 other people",
+      "Nine of their own changes were sent back for rework",
+      "No work on the screens teachers see",
     ],
   },
   {
-    id: "devC",
-    label: "Dev C",
-    role: "Data Engineer",
-    tenure: "4 years with the company",
+    id: "DEV-04",
+    label: "DEV-04",
+    role: "168 changes · 52 reviews of other people's work",
+    tenure: WINDOW,
     profile:
-      "Builds and maintains the team's data pipelines. Point of contact for the data warehouse and reporting.",
+      "Builds the part that stores things: how course material and marks are kept, and the steps that move existing data to a new shape.",
     evidence: [
-      "Owner of etl-pipelines/",
-      "Creates the weekly reporting jobs",
-      "Sporadic test coverage in own modules",
-      "Occasionally works on backend tickets",
+      "168 changes, the last one in October 2026",
+      "Wrote 22 of the 29 migration steps in the window",
+      "Read and approved the work of 52 other people",
+      "Rarely touches the browser part",
     ],
   },
   {
-    id: "devD",
-    label: "Dev D",
-    role: "Tech Lead",
-    tenure: "8 years with the company",
+    id: "DEV-06",
+    label: "DEV-06",
+    role: "94 changes · 11 reviews of other people's work",
+    tenure: WINDOW,
     profile:
-      "Leads the technical architecture of the core product. Works broadly across several repositories.",
+      "Works on the screens teachers see, in particular the forms and whether they can be used with a screen reader.",
     evidence: [
-      "Architecture decisions for service-api/ and web-client/",
-      "Reviews roughly 40% of all merge requests",
-      "Few own commits in data repositories",
-      "Led the migration to the new cloud environment",
+      "94 changes, the last one in September 2026",
+      "Carried out the accessibility review of the forms",
+      "Read the work of 11 other people",
+      "No work on the part that stores data",
     ],
   },
   {
-    id: "devE",
-    label: "Dev E",
-    role: "Frontend Engineer",
-    tenure: "2 years with the company",
+    id: "DEV-07",
+    label: "DEV-07",
+    role: "148 changes · 37 reviews of other people's work",
+    tenure: WINDOW,
     profile:
-      "Develops the team's component library and maintains the design system.",
+      "Works almost entirely on two parts of the platform: the tool teachers use to build quizzes, and the gradebook where marks are recorded. Both the screens and the logic behind them.",
     evidence: [
-      "Owner of ui-components/",
-      "Implemented the accessibility audit",
-      "First contributions to data visualisations",
-      "No commits in infra/",
+      "148 changes, the last one in October 2026",
+      "Read and approved the work of 37 other people",
+      "None of their own changes were sent back for rework",
+      "61 of the changes are linked to a task in the tracker",
     ],
   },
   {
-    id: "devF",
-    label: "Dev F",
-    role: "Software Engineer (Junior)",
-    tenure: "1 year with the company",
+    id: "DEV-09",
+    label: "DEV-09",
+    role: "39 changes · 2 reviews of other people's work",
+    tenure: WINDOW,
     profile:
-      "New to the team, works primarily on bugfixes and test coverage. Currently rotating between two modules.",
+      "New in the project. Small fixes spread over many areas, almost always with somebody else's review before they are accepted.",
     evidence: [
-      "68 commits, mostly in tests/",
-      "Extended the E2E test suite",
-      "Implemented first frontend features",
-      "No deployment responsibility yet",
+      "39 changes, the first one in March 2026",
+      "Spread over nine different parts of the software",
+      "14 of their own changes were sent back for rework",
+      "Read the work of 2 other people",
     ],
   },
 ];
@@ -110,9 +116,9 @@ export const DEVELOPERS: Developer[] = [
 // ---------------------------------------------------------------------------
 // AI suggestions
 //
-// Controllable study script lives in data/assessments.json (fields study.*,
-// plus confidence / rationale / evidence). Loaded and schema-validated on
-// module load — malformed files fail loudly.
+// The controllable study script lives in study-data/assessments.json
+// (fields study.*, plus confidence / rationale / evidence). Loaded and
+// schema-validated on module load — malformed files fail loudly.
 // ---------------------------------------------------------------------------
 
 export interface ScriptedSuggestion {
@@ -151,14 +157,14 @@ function loadScriptedSuggestions(): ScriptedSuggestion[] {
   });
 }
 
-/** Lazily validated against data/assessments.json. */
+/** Lazily validated against study-data/assessments.json. */
 export const SCRIPTED_SUGGESTIONS: ScriptedSuggestion[] = loadScriptedSuggestions();
 
 /**
- * If a cell is left empty in task 1, this value is used as the starting point
+ * If a cell is left empty in the own assessment, this is the starting point
  * for computing the suggestion.
  */
-export const FALLBACK_BASELINE: SkillLevel = "basic";
+export const FALLBACK_BASELINE: SkillLevel = "l2";
 
 /** Controls whether confidence values and rationales are shown. */
 export const SHOW_CONFIDENCE = true;

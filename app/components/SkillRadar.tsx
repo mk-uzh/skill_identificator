@@ -3,26 +3,25 @@
 import { CATEGORIES } from "@/lib/study-config";
 import {
   SKILL_LEVEL_LABELS,
+  SKILL_LEVEL_VALUE,
   type Matrix,
   type SkillLevel,
 } from "@/lib/types";
 
 /**
- * Radar scale: missing/rejected stay at the centre (0).
- * Explicit "none" sits on the first ring so it is visible — unlike raw 0..3 mapping.
+ * Radar scale: 1..5 are the five levels.
+ *
+ * "not observable" and an unrated cell both sit at the centre, because there
+ * is no honest radius for them. The shape therefore understates a person
+ * wherever the records are silent — which is the point of DP7 and is stated
+ * under the chart rather than smoothed away.
  */
-const RADAR_VALUE: Record<SkillLevel, number> = {
-  none: 1,
-  basic: 2,
-  proficient: 3,
-  expert: 4,
-};
-const MAX_LEVEL = 4;
-const RING_LABELS = ["none", "basic", "proficient", "expert"];
+const MAX_LEVEL = 5;
+const RING_LABELS = ["1", "2", "3", "4", "5"];
 
 function levelValue(level: SkillLevel | null | undefined): number {
   if (!level) return 0;
-  return RADAR_VALUE[level];
+  return SKILL_LEVEL_VALUE[level] ?? 0;
 }
 
 function polar(cx: number, cy: number, radius: number, angleRad: number) {
@@ -54,21 +53,30 @@ export function SkillRadar({
   task1,
   task2,
   developerId,
+  show = "both",
+  withTable = true,
 }: {
   task1: Matrix;
   task2: Matrix;
   developerId: string;
+  /** Which series to draw. */
+  show?: "both" | "before" | "after";
+  /** The summary carries its own table; off by default there. */
+  withTable?: boolean;
 }) {
   const size = 420;
   const cx = size / 2;
   const cy = size / 2;
   const maxR = 140;
+  /** Room on both sides for the competence names. */
+  const margin = 150;
   const n = CATEGORIES.length;
 
   const row1 = task1[developerId] ?? {};
   const row2 = task2[developerId] ?? {};
 
-  // Every category must show a level: fall back to Task 1 if Task 2 is empty.
+  // Every competence must show a level: fall back to the own rating if the
+  // final one is empty.
   const levels1 = CATEGORIES.map((c) => (row1[c.id] ?? null) as SkillLevel | null);
   const levels2 = CATEGORIES.map(
     (c) => (row2[c.id] ?? row1[c.id] ?? null) as SkillLevel | null,
@@ -79,7 +87,7 @@ export function SkillRadar({
   const geo1 = seriesGeometry(values1, cx, cy, maxR);
   const geo2 = seriesGeometry(values2, cx, cy, maxR);
 
-  const rings = [1, 2, 3, 4].map((level) => {
+  const rings = [1, 2, 3, 4, 5].map((level) => {
     const r = (level / MAX_LEVEL) * maxR;
     const pts = Array.from({ length: n }, (_, i) => {
       const p = polar(cx, cy, r, (Math.PI * 2 * i) / n);
@@ -91,14 +99,18 @@ export function SkillRadar({
   const axes = CATEGORIES.map((category, i) => {
     const angle = (Math.PI * 2 * i) / n;
     const end = polar(cx, cy, maxR, angle);
-    const labelPos = polar(cx, cy, maxR + 28, angle);
+    const labelPos = polar(cx, cy, maxR + 26, angle);
+    // Anchor by side, otherwise a long competence name on the left runs out
+    // of the drawing and is cut off.
+    const anchor =
+      labelPos.x < cx - 4 ? "end" : labelPos.x > cx + 4 ? "start" : "middle";
     return (
       <g key={category.id}>
         <line x1={cx} y1={cy} x2={end.x} y2={end.y} className="radar__axis" />
         <text
           x={labelPos.x}
           y={labelPos.y}
-          textAnchor="middle"
+          textAnchor={anchor}
           dominantBaseline="middle"
           className="radar__label"
         >
@@ -122,16 +134,20 @@ export function SkillRadar({
     <div className="radar-wrap">
       <svg
         className="radar"
-        viewBox={`0 0 ${size} ${size}`}
+        viewBox={`${-margin} 0 ${size + margin * 2} ${size}`}
         role="img"
-        aria-label="Skill radar comparing Task 1 and Task 2"
+        aria-label="Skill radar comparing the own assessment with the final one"
       >
         {rings}
         {axes}
         {ticks}
-        <polygon points={geo1.points} className="radar__series radar__series--task1" />
-        <polygon points={geo2.points} className="radar__series radar__series--task2" />
-        {geo1.dots.map((p, i) =>
+        {show !== "after" && (
+          <polygon points={geo1.points} className="radar__series radar__series--task1" />
+        )}
+        {show !== "before" && (
+          <polygon points={geo2.points} className="radar__series radar__series--task2" />
+        )}
+        {(show === "after" ? [] : geo1.dots).map((p, i) =>
           values1[i] > 0 ? (
             <circle
               key={`t1-${CATEGORIES[i].id}`}
@@ -142,7 +158,7 @@ export function SkillRadar({
             />
           ) : null,
         )}
-        {geo2.dots.map((p, i) =>
+        {(show === "before" ? [] : geo2.dots).map((p, i) =>
           values2[i] > 0 ? (
             <circle
               key={`t2-${CATEGORIES[i].id}`}
@@ -160,7 +176,7 @@ export function SkillRadar({
         <span className="radar-legend__item radar-legend__item--task2">Task 2</span>
       </div>
 
-      <table className="radar-table">
+      {withTable && (<table className="radar-table">
         <thead>
           <tr>
             <th>Category</th>
@@ -177,7 +193,7 @@ export function SkillRadar({
             </tr>
           ))}
         </tbody>
-      </table>
+      </table>)}
     </div>
   );
 }
