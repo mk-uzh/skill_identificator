@@ -1,475 +1,39 @@
 {
-  "taxonomy_version": "1.0",
-  "organization_id": "demo-org",
-  "computed_at": "2025-12-01T10:00:00.000Z",
-  "config_hash": "325ca0bfb9bc7a2c",
+  "taxonomy_version": "2.0",
+  "organization_id": "demo-project",
+  "computed_at": "2026-10-25T00:00:00.000Z",
+  "config_hash": "c37ddb36d494d9eb",
+  "generated_by": "tools/make-demo-assessments.mjs",
+  "data_status": "PLACEHOLDER - generated demo content, not pipeline output",
   "assessments": [
     {
-      "id": "assess-devA-backend",
-      "developer_id": "devA",
-      "category_id": "backend",
-      "level": "proficient",
-      "confidence": 0.9,
-      "rationale": "Works independently in Backend, supported by commit, pull_request and review activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "review",
-          "title": "Review: add idempotency keys to billing endpoints",
-          "timestamp": "2025-09-28T15:40:00.000Z",
-          "url": "https://github.com/example-org/service-api/pull/418"
-        },
-        {
-          "kind": "pull_request",
-          "title": "blue/green rollout for payment-service",
-          "timestamp": "2025-10-21T16:30:00.000Z",
-          "url": "https://github.com/example-org/infra/pull/92"
-        },
-        {
-          "kind": "commit",
-          "title": "fix(api): tighten rate limiter in service-api",
-          "timestamp": "2025-10-14T09:22:00.000Z",
-          "url": "https://github.com/example-org/service-api/commit/a1b2c3d4"
-        }
-      ],
-      "study": {
-        "direction": "raise",
-        "delta": 1,
-        "veracity": "incorrect"
-      }
-    },
-    {
-      "id": "assess-devA-data",
-      "developer_id": "devA",
-      "category_id": "data",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Data within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Data artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-DATA"
-        }
-      ]
-    },
-    {
-      "id": "assess-devA-devops",
-      "developer_id": "devA",
-      "category_id": "devops",
-      "level": "proficient",
-      "confidence": 0.9,
-      "rationale": "Works independently in DevOps, supported by commit, issue and pull request activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "pull_request",
-          "title": "blue/green rollout for payment-service",
-          "timestamp": "2025-10-21T16:30:00.000Z",
-          "url": "https://github.com/example-org/infra/pull/92"
-        },
-        {
-          "kind": "issue",
-          "title": "Kubernetes Basics internal training",
-          "timestamp": "2025-07-18T13:00:00.000Z",
-          "url": "https://jira.example.org/browse/OPS-301"
-        },
-        {
-          "kind": "commit",
-          "title": "ci: migrate deploy jobs to Kubernetes runners",
-          "timestamp": "2025-11-02T08:15:00.000Z",
-          "url": "https://github.com/example-org/infra/commit/e7f8a9b0"
-        }
-      ]
-    },
-    {
-      "id": "assess-devA-frontend",
-      "developer_id": "devA",
-      "category_id": "frontend",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Frontend within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Frontend artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-FRONTEND"
-        }
-      ]
-    },
-    {
-      "id": "assess-devA-security",
-      "developer_id": "devA",
-      "category_id": "security",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Security within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Security artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-SECURITY"
-        }
-      ]
-    },
-    {
-      "id": "assess-devA-testing",
-      "developer_id": "devA",
-      "category_id": "testing",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Testing within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Testing artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-TESTING"
-        }
-      ]
-    },
-    {
-      "id": "assess-devB-backend",
-      "developer_id": "devB",
-      "category_id": "backend",
-      "level": "proficient",
-      "confidence": 0.93,
-      "rationale": "Works independently in Backend, supported by commit, pull_request and review activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "review",
-          "title": "Security review: partner OAuth integration",
-          "timestamp": "2025-11-08T09:50:00.000Z",
-          "url": "https://github.com/example-org/service-api/pull/455"
-        },
-        {
-          "kind": "pull_request",
-          "title": "scoped API tokens for partner integrations",
-          "timestamp": "2025-09-16T17:05:00.000Z",
-          "url": "https://github.com/example-org/auth-service/pull/210"
-        },
-        {
-          "kind": "commit",
-          "title": "feat(auth): rotate JWT signing keys without downtime",
-          "timestamp": "2025-10-05T12:18:00.000Z",
-          "url": "https://github.com/example-org/auth-service/commit/b4d5e6f7"
-        }
-      ],
-      "study": {
-        "direction": "lower",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
-      "id": "assess-devB-data",
-      "developer_id": "devB",
-      "category_id": "data",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Data within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Data artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-DATA"
-        }
-      ]
-    },
-    {
-      "id": "assess-devB-devops",
-      "developer_id": "devB",
-      "category_id": "devops",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in DevOps within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No DevOps artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-DEVOPS"
-        }
-      ]
-    },
-    {
-      "id": "assess-devB-frontend",
-      "developer_id": "devB",
-      "category_id": "frontend",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Frontend within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Frontend artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-FRONTEND"
-        }
-      ]
-    },
-    {
-      "id": "assess-devB-security",
-      "developer_id": "devB",
-      "category_id": "security",
-      "level": "proficient",
-      "confidence": 0.93,
-      "rationale": "Works independently in Security, supported by commit, issue, pull_request and review activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "review",
-          "title": "Security review: partner OAuth integration",
-          "timestamp": "2025-11-08T09:50:00.000Z",
-          "url": "https://github.com/example-org/service-api/pull/455"
-        },
-        {
-          "kind": "pull_request",
-          "title": "scoped API tokens for partner integrations",
-          "timestamp": "2025-09-16T17:05:00.000Z",
-          "url": "https://github.com/example-org/auth-service/pull/210"
-        },
-        {
-          "kind": "issue",
-          "title": "threat model for payment callbacks",
-          "timestamp": "2025-10-19T14:10:00.000Z",
-          "url": "https://jira.example.org/browse/SEC-140"
-        }
-      ]
-    },
-    {
-      "id": "assess-devB-testing",
-      "developer_id": "devB",
-      "category_id": "testing",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Testing within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Testing artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-TESTING"
-        }
-      ]
-    },
-    {
-      "id": "assess-devC-backend",
-      "developer_id": "devC",
-      "category_id": "backend",
-      "level": "basic",
-      "confidence": 0.69,
-      "rationale": "Has worked in Backend under guidance, with commit activity in the observation window.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "fix(api): expose export status endpoint for ETL",
-          "timestamp": "2025-08-06T15:12:00.000Z",
-          "url": "https://github.com/example-org/service-api/commit/be11ac00"
-        }
-      ]
-    },
-    {
-      "id": "assess-devC-data",
-      "developer_id": "devC",
-      "category_id": "data",
-      "level": "proficient",
-      "confidence": 0.9,
-      "rationale": "Works independently in Data, supported by commit, issue and pull request activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "pull_request",
-          "title": "backfill historical FX rates",
-          "timestamp": "2025-08-20T09:15:00.000Z",
-          "url": "https://github.com/example-org/etl-pipelines/pull/71"
-        },
-        {
-          "kind": "issue",
-          "title": "redesign weekly revenue mart",
-          "timestamp": "2025-10-02T13:40:00.000Z",
-          "url": "https://jira.example.org/browse/DATA-201"
-        },
-        {
-          "kind": "commit",
-          "title": "feat(etl): incremental load for customer_dim",
-          "timestamp": "2025-11-11T10:00:00.000Z",
-          "url": "https://github.com/example-org/etl-pipelines/commit/data99ee"
-        }
-      ]
-    },
-    {
-      "id": "assess-devC-devops",
-      "developer_id": "devC",
-      "category_id": "devops",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in DevOps within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No DevOps artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-DEVOPS"
-        }
-      ]
-    },
-    {
-      "id": "assess-devC-frontend",
-      "developer_id": "devC",
-      "category_id": "frontend",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Frontend within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Frontend artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-FRONTEND"
-        }
-      ]
-    },
-    {
-      "id": "assess-devC-security",
-      "developer_id": "devC",
-      "category_id": "security",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Security within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Security artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-SECURITY"
-        }
-      ]
-    },
-    {
-      "id": "assess-devC-testing",
-      "developer_id": "devC",
-      "category_id": "testing",
-      "level": "proficient",
-      "confidence": 0.78,
-      "rationale": "Works independently in Testing, supported by commit activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "test(etl): assert late-arriving invoice rows",
-          "timestamp": "2025-10-28T11:05:00.000Z",
-          "url": "https://github.com/example-org/etl-pipelines/commit/te57cafe"
-        }
-      ],
-      "study": {
-        "direction": "raise",
-        "delta": 1,
-        "veracity": "incorrect"
-      }
-    },
-    {
-      "id": "assess-devD-backend",
-      "developer_id": "devD",
-      "category_id": "backend",
-      "level": "proficient",
-      "confidence": 0.94,
-      "rationale": "Works independently in Backend, supported by commit, issue and review activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "review",
-          "title": "Architecture review: event-driven order pipeline",
-          "timestamp": "2025-11-05T16:00:00.000Z",
-          "url": "https://github.com/example-org/service-api/pull/480"
-        },
-        {
-          "kind": "review",
-          "title": "Review: harden webhook signature verification",
-          "timestamp": "2025-10-30T12:50:00.000Z",
-          "url": "https://github.com/example-org/service-api/pull/471"
-        },
-        {
-          "kind": "issue",
-          "title": "privilege model for admin APIs",
-          "timestamp": "2025-09-18T10:15:00.000Z",
-          "url": "https://jira.example.org/browse/SEC-133"
-        }
-      ]
-    },
-    {
-      "id": "assess-devD-data",
-      "developer_id": "devD",
-      "category_id": "data",
-      "level": "proficient",
+      "id": "assess-DEV-01-dev_automated_tests",
+      "developer_id": "DEV-01",
+      "category_id": "dev_automated_tests",
+      "level": "l3",
       "confidence": 0.81,
-      "rationale": "Works independently in Data, supported by review activity aligned to this discipline.",
+      "rationale": "Of the 212 changes in the window, 37 touched tests, and in 17 of those the tests were new, so they covered behaviour nobody had checked before. In 14 of them the reasoning is set out in the task discussion.",
       "evidence": [
-        {
-          "kind": "review",
-          "title": "Architecture review: event-driven order pipeline",
-          "timestamp": "2025-11-05T16:00:00.000Z",
-          "url": "https://github.com/example-org/service-api/pull/480"
-        }
-      ]
-    },
-    {
-      "id": "assess-devD-devops",
-      "developer_id": "devD",
-      "category_id": "devops",
-      "level": "proficient",
-      "confidence": 0.9,
-      "rationale": "Works independently in DevOps, supported by commit and review activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "review",
-          "title": "Architecture review: event-driven order pipeline",
-          "timestamp": "2025-11-05T16:00:00.000Z",
-          "url": "https://github.com/example-org/service-api/pull/480"
-        },
-        {
-          "kind": "review",
-          "title": "Review: Terraform modules for shared networking",
-          "timestamp": "2025-07-22T11:35:00.000Z",
-          "url": "https://github.com/example-org/infra/pull/77"
-        },
         {
           "kind": "commit",
-          "title": "refactor(api): extract pricing domain module",
-          "timestamp": "2025-09-25T10:30:00.000Z",
-          "url": "https://github.com/example-org/service-api/commit/arch7d01"
-        }
-      ]
-    },
-    {
-      "id": "assess-devD-frontend",
-      "developer_id": "devD",
-      "category_id": "frontend",
-      "level": "basic",
-      "confidence": 0.7,
-      "rationale": "Has worked in Frontend under guidance, with pull request activity in the observation window.",
-      "evidence": [
+          "title": "fix: the course tools, correct the order in which changes are applied",
+          "timestamp": "2025-02-10T03:23:32.575Z",
+          "url": "https://example.org/demo/commit/dev-01-dev_automated_tests-1"
+        },
         {
-          "kind": "pull_request",
-          "title": "shared error-boundary contract for web-client",
-          "timestamp": "2025-08-14T14:45:00.000Z",
-          "url": "https://github.com/example-org/web-client/pull/312"
-        }
-      ]
-    },
-    {
-      "id": "assess-devD-security",
-      "developer_id": "devD",
-      "category_id": "security",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "Evidence in Security is too thin to support a higher level.",
-      "evidence": [
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-04-06T01:51:19.105Z",
+          "url": "https://example.org/demo/review/dev-01-dev_automated_tests-2"
+        },
         {
           "kind": "issue",
-          "title": "privilege model for admin APIs",
-          "timestamp": "2025-09-18T10:15:00.000Z",
-          "url": "https://jira.example.org/browse/SEC-133"
+          "title": "Request: make the course tools usable with a screen reader",
+          "timestamp": "2025-08-27T16:57:29.167Z",
+          "url": "https://example.org/demo/issue/dev-01-dev_automated_tests-3"
         }
       ],
+      "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -477,52 +41,93 @@
       }
     },
     {
-      "id": "assess-devD-testing",
-      "developer_id": "devD",
-      "category_id": "testing",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Testing within the observation window.",
+      "id": "assess-DEV-01-ict_debugging_tools",
+      "developer_id": "DEV-01",
+      "category_id": "ict_debugging_tools",
+      "level": "l3",
+      "confidence": 0.85,
+      "rationale": "In 38 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. In 13 of them the reasoning is set out in the task discussion.",
       "evidence": [
         {
-          "kind": "issue",
-          "title": "No Testing artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-TESTING"
-        }
-      ]
-    },
-    {
-      "id": "assess-devE-backend",
-      "developer_id": "devE",
-      "category_id": "backend",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Backend within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Backend artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-BACKEND"
-        }
-      ]
-    },
-    {
-      "id": "assess-devE-data",
-      "developer_id": "devE",
-      "category_id": "data",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Data within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Data artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-DATA"
+          "kind": "commit",
+          "title": "fix: the course tools, correct the order in which changes are applied",
+          "timestamp": "2025-03-16T00:36:16.401Z",
+          "url": "https://example.org/demo/commit/dev-01-ict_debugging_tools-1"
         }
       ],
+      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-01-debug_software",
+      "developer_id": "DEV-01",
+      "category_id": "debug_software",
+      "level": "l4",
+      "confidence": 0.9,
+      "rationale": "13 of the changes are linked to a fault report, and in 6 of them the task discussion names the cause rather than only the fix. 5 other people later built on this work, and this person read and approved 14 of their changes.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the course tools, pull the repeated part into one place",
+          "timestamp": "2025-06-15T23:15:33.996Z",
+          "url": "https://example.org/demo/commit/dev-01-debug_software-1"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the course tools after an update",
+          "timestamp": "2026-08-14T14:52:19.153Z",
+          "url": "https://example.org/demo/issue/dev-01-debug_software-2"
+        }
+      ],
+      "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "study": {
+        "direction": "raise",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-01-design_patterns",
+      "developer_id": "DEV-01",
+      "category_id": "design_patterns",
+      "level": "l3",
+      "confidence": 0.74,
+      "rationale": "In 5 changes an existing structure was replaced rather than worked around, and 3 of those were later built on by somebody else. In 2 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make the course tools usable with a screen reader",
+          "timestamp": "2026-02-21T14:49:51.132Z",
+          "url": "https://example.org/demo/issue/dev-01-design_patterns-1"
+        }
+      ],
+      "blind_spots": "design decisions taken in a meeting and never written down in the project",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-01-concurrent_programming",
+      "developer_id": "DEV-01",
+      "category_id": "concurrent_programming",
+      "level": "not_observable",
+      "confidence": 0.37,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the course tools that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the course tools after an update",
+          "timestamp": "2026-04-04T06:39:16.377Z",
+          "url": "https://example.org/demo/issue/dev-01-concurrent_programming-1"
+        }
+      ],
+      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -530,193 +135,1760 @@
       }
     },
     {
-      "id": "assess-devE-devops",
-      "developer_id": "devE",
-      "category_id": "devops",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in DevOps within the observation window.",
+      "id": "assess-DEV-01-integrate_components",
+      "developer_id": "DEV-01",
+      "category_id": "integrate_components",
+      "level": "l4",
+      "confidence": 0.94,
+      "rationale": "20 changes join parts of the software that are developed separately, and 10 of them had to be coordinated with another team's work. 8 other people later built on this work, and this person read and approved 6 of their changes.",
       "evidence": [
         {
-          "kind": "issue",
-          "title": "No DevOps artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-DEVOPS"
-        }
-      ]
-    },
-    {
-      "id": "assess-devE-frontend",
-      "developer_id": "devE",
-      "category_id": "frontend",
-      "level": "proficient",
-      "confidence": 0.89,
-      "rationale": "Works independently in Frontend, supported by commit, issue and pull request activity aligned to this discipline.",
-      "evidence": [
+          "kind": "commit",
+          "title": "fix: the course tools, correct the order in which changes are applied",
+          "timestamp": "2026-09-01T22:24:49.686Z",
+          "url": "https://example.org/demo/commit/dev-01-integrate_components-1"
+        },
         {
           "kind": "pull_request",
-          "title": "design-token sync with Figma",
-          "timestamp": "2025-10-16T16:10:00.000Z",
-          "url": "https://github.com/example-org/ui-components/pull/188"
+          "title": "the course tools: rework after review",
+          "timestamp": "2025-03-30T22:40:54.841Z",
+          "url": "https://example.org/demo/pull_request/dev-01-integrate_components-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-05-06T20:58:26.368Z",
+          "url": "https://example.org/demo/review/dev-01-integrate_components-3"
         },
         {
           "kind": "issue",
-          "title": "accessibility audit remediation",
-          "timestamp": "2025-08-25T11:55:00.000Z",
-          "url": "https://jira.example.org/browse/UI-101"
-        },
-        {
-          "kind": "commit",
-          "title": "feat(ui): accessible combobox for filter bars",
-          "timestamp": "2025-11-03T09:40:00.000Z",
-          "url": "https://github.com/example-org/ui-components/commit/fe0a11bb"
-        }
-      ]
-    },
-    {
-      "id": "assess-devE-security",
-      "developer_id": "devE",
-      "category_id": "security",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Security within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Security artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-SECURITY"
-        }
-      ]
-    },
-    {
-      "id": "assess-devE-testing",
-      "developer_id": "devE",
-      "category_id": "testing",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Testing within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Testing artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-TESTING"
-        }
-      ]
-    },
-    {
-      "id": "assess-devF-backend",
-      "developer_id": "devF",
-      "category_id": "backend",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Backend within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Backend artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-BACKEND"
-        }
-      ]
-    },
-    {
-      "id": "assess-devF-data",
-      "developer_id": "devF",
-      "category_id": "data",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Data within the observation window.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "No Data artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-DATA"
-        }
-      ]
-    },
-    {
-      "id": "assess-devF-devops",
-      "developer_id": "devF",
-      "category_id": "devops",
-      "level": "proficient",
-      "confidence": 0.78,
-      "rationale": "Works independently in DevOps, supported by commit activity aligned to this discipline.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "ci(tests): retry flaky Playwright jobs twice",
-          "timestamp": "2025-10-11T08:55:00.000Z",
-          "url": "https://github.com/example-org/web-client/commit/ci7e57aa"
+          "title": "Fault report: behaviour in the course tools after an update",
+          "timestamp": "2025-03-21T14:30:09.929Z",
+          "url": "https://example.org/demo/issue/dev-01-integrate_components-4"
         }
       ],
+      "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
       "study": {
         "direction": "raise",
         "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-01-design_user_interface",
+      "developer_id": "DEV-01",
+      "category_id": "design_user_interface",
+      "level": "l3",
+      "confidence": 0.85,
+      "rationale": "5 changes are on the screens themselves, 3 of them on forms that teachers fill in. In 2 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the course tools, correct the order in which changes are applied",
+          "timestamp": "2025-10-24T02:09:16.562Z",
+          "url": "https://example.org/demo/commit/dev-01-design_user_interface-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the course tools: new behaviour behind a setting",
+          "timestamp": "2025-02-18T22:05:36.728Z",
+          "url": "https://example.org/demo/pull_request/dev-01-design_user_interface-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the course tools",
+          "timestamp": "2026-05-20T23:07:25.941Z",
+          "url": "https://example.org/demo/review/dev-01-design_user_interface-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the course tools usable with a screen reader",
+          "timestamp": "2025-05-02T15:17:49.146Z",
+          "url": "https://example.org/demo/issue/dev-01-design_user_interface-4"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "raise",
+        "delta": 2,
         "veracity": "incorrect"
       }
     },
     {
-      "id": "assess-devF-frontend",
-      "developer_id": "devF",
-      "category_id": "frontend",
-      "level": "basic",
-      "confidence": 0.73,
-      "rationale": "Has worked in Frontend under guidance, with commit activity in the observation window.",
+      "id": "assess-DEV-01-javascript",
+      "developer_id": "DEV-01",
+      "category_id": "javascript",
+      "level": "l3",
+      "confidence": 0.74,
+      "rationale": "30 of the changes are in the browser part of the software, spread over 18 different screens. In 14 of them the reasoning is set out in the task discussion.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "feat(web): empty-state for notification inbox",
-          "timestamp": "2025-10-23T14:20:00.000Z",
-          "url": "https://github.com/example-org/web-client/commit/featur01"
+          "title": "refactor: the course tools, pull the repeated part into one place",
+          "timestamp": "2026-08-14T08:05:10.654Z",
+          "url": "https://example.org/demo/commit/dev-01-javascript-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the course tools: rework after review",
+          "timestamp": "2025-08-20T20:07:10.423Z",
+          "url": "https://example.org/demo/pull_request/dev-01-javascript-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the course tools",
+          "timestamp": "2025-11-10T20:40:41.996Z",
+          "url": "https://example.org/demo/review/dev-01-javascript-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the course tools usable with a screen reader",
+          "timestamp": "2026-09-05T17:56:57.927Z",
+          "url": "https://example.org/demo/issue/dev-01-javascript-4"
         }
-      ]
+      ],
+      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
     },
     {
-      "id": "assess-devF-security",
-      "developer_id": "devF",
-      "category_id": "security",
-      "level": "none",
-      "confidence": 0.72,
-      "rationale": "No observable contribution in Security within the observation window.",
+      "id": "assess-DEV-01-migrate_existing_data",
+      "developer_id": "DEV-01",
+      "category_id": "migrate_existing_data",
+      "level": "not_observable",
+      "confidence": 0.34,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the course tools that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "No Security artifacts in observation window",
-          "timestamp": "2025-12-01T00:00:00.000Z",
-          "url": "https://jira.example.org/browse/COV-SECURITY"
+          "title": "Fault report: behaviour in the course tools after an update",
+          "timestamp": "2025-08-26T22:22:05.318Z",
+          "url": "https://example.org/demo/issue/dev-01-migrate_existing_data-1"
         }
-      ]
+      ],
+      "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
     },
     {
-      "id": "assess-devF-testing",
-      "developer_id": "devF",
-      "category_id": "testing",
-      "level": "proficient",
-      "confidence": 0.93,
-      "rationale": "Works independently in Testing, supported by commit, issue and pull request activity aligned to this discipline.",
+      "id": "assess-DEV-01-object_oriented_modelling",
+      "developer_id": "DEV-01",
+      "category_id": "object_oriented_modelling",
+      "level": "l3",
+      "confidence": 0.73,
+      "rationale": "In 5 changes the names and the cut of the parts were revised, not just their contents. In 2 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the course tools, stop the error when a marking scheme is attached",
+          "timestamp": "2025-09-15T09:16:11.116Z",
+          "url": "https://example.org/demo/commit/dev-01-object_oriented_modelling-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the course tools: new behaviour behind a setting",
+          "timestamp": "2026-02-22T06:03:46.978Z",
+          "url": "https://example.org/demo/pull_request/dev-01-object_oriented_modelling-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-06-02T17:05:52.628Z",
+          "url": "https://example.org/demo/review/dev-01-object_oriented_modelling-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the course tools after an update",
+          "timestamp": "2026-04-13T17:47:26.460Z",
+          "url": "https://example.org/demo/issue/dev-01-object_oriented_modelling-4"
+        }
+      ],
+      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-dev_automated_tests",
+      "developer_id": "DEV-02",
+      "category_id": "dev_automated_tests",
+      "level": "l1",
+      "confidence": 0.58,
+      "rationale": "Of the 47 changes in the window, 8 touched tests, and in 3 of those the tests were new, so they covered behaviour nobody had checked before. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-01-24T08:55:58.828Z",
+          "url": "https://example.org/demo/review/dev-02-dev_automated_tests-1"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of course material after an update",
+          "timestamp": "2026-05-18T14:31:19.550Z",
+          "url": "https://example.org/demo/issue/dev-02-dev_automated_tests-2"
+        }
+      ],
+      "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-ict_debugging_tools",
+      "developer_id": "DEV-02",
+      "category_id": "ict_debugging_tools",
+      "level": "not_observable",
+      "confidence": 0.36,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of course material that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make the import and export of course material usable with a screen reader",
+          "timestamp": "2025-09-23T10:59:48.863Z",
+          "url": "https://example.org/demo/issue/dev-02-ict_debugging_tools-1"
+        }
+      ],
+      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-debug_software",
+      "developer_id": "DEV-02",
+      "category_id": "debug_software",
+      "level": "l2",
+      "confidence": 0.61,
+      "rationale": "4 of the changes are linked to a fault report, and in 2 of them the task discussion names the cause rather than only the fix. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the import and export of course material, pull the repeated part into one place",
+          "timestamp": "2025-11-03T22:24:25.501Z",
+          "url": "https://example.org/demo/commit/dev-02-debug_software-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the import and export of course material: rework after review",
+          "timestamp": "2025-12-08T05:50:59.218Z",
+          "url": "https://example.org/demo/pull_request/dev-02-debug_software-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of course material after an update",
+          "timestamp": "2025-03-12T15:07:55.746Z",
+          "url": "https://example.org/demo/issue/dev-02-debug_software-3"
+        }
+      ],
+      "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-design_patterns",
+      "developer_id": "DEV-02",
+      "category_id": "design_patterns",
+      "level": "l1",
+      "confidence": 0.47,
+      "rationale": "In 5 changes an existing structure was replaced rather than worked around, and 2 of those were later built on by somebody else. The approach was set by someone else in each case.",
       "evidence": [
         {
           "kind": "pull_request",
-          "title": "stabilise login fixture across browsers",
-          "timestamp": "2025-10-01T09:05:00.000Z",
-          "url": "https://github.com/example-org/tests/pull/18"
+          "title": "the import and export of course material: rework after review",
+          "timestamp": "2026-01-09T03:34:15.051Z",
+          "url": "https://example.org/demo/pull_request/dev-02-design_patterns-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-11-01T06:02:18.894Z",
+          "url": "https://example.org/demo/review/dev-02-design_patterns-2"
         },
         {
           "kind": "issue",
-          "title": "expand regression pack for release 2025.10",
-          "timestamp": "2025-09-20T10:30:00.000Z",
-          "url": "https://jira.example.org/browse/QA-44"
+          "title": "Request: make the import and export of course material usable with a screen reader",
+          "timestamp": "2025-04-25T17:35:31.597Z",
+          "url": "https://example.org/demo/issue/dev-02-design_patterns-3"
+        }
+      ],
+      "blind_spots": "design decisions taken in a meeting and never written down in the project",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-concurrent_programming",
+      "developer_id": "DEV-02",
+      "category_id": "concurrent_programming",
+      "level": "not_observable",
+      "confidence": 0.41,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of course material that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make the import and export of course material usable with a screen reader",
+          "timestamp": "2025-03-17T02:37:49.717Z",
+          "url": "https://example.org/demo/issue/dev-02-concurrent_programming-1"
+        }
+      ],
+      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-integrate_components",
+      "developer_id": "DEV-02",
+      "category_id": "integrate_components",
+      "level": "l2",
+      "confidence": 0.67,
+      "rationale": "7 changes join parts of the software that are developed separately, and 4 of them had to be coordinated with another team's work. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-01-28T19:06:11.291Z",
+          "url": "https://example.org/demo/review/dev-02-integrate_components-1"
         },
         {
-          "kind": "commit",
-          "title": "test(e2e): cover checkout retry path",
-          "timestamp": "2025-11-06T13:15:00.000Z",
-          "url": "https://github.com/example-org/tests/commit/e2e88f00"
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of course material after an update",
+          "timestamp": "2025-02-04T11:26:05.676Z",
+          "url": "https://example.org/demo/issue/dev-02-integrate_components-2"
         }
-      ]
+      ],
+      "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-02-design_user_interface",
+      "developer_id": "DEV-02",
+      "category_id": "design_user_interface",
+      "level": "not_observable",
+      "confidence": 0.34,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of course material that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make the import and export of course material usable with a screen reader",
+          "timestamp": "2025-10-23T03:04:00.553Z",
+          "url": "https://example.org/demo/issue/dev-02-design_user_interface-1"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-javascript",
+      "developer_id": "DEV-02",
+      "category_id": "javascript",
+      "level": "not_observable",
+      "confidence": 0.31,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of course material that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of course material after an update",
+          "timestamp": "2025-04-04T16:22:11.638Z",
+          "url": "https://example.org/demo/issue/dev-02-javascript-1"
+        }
+      ],
+      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-migrate_existing_data",
+      "developer_id": "DEV-02",
+      "category_id": "migrate_existing_data",
+      "level": "l2",
+      "confidence": 0.7,
+      "rationale": "This person wrote 6 of the steps that move existing data to a new shape, including 4 that had to run while the platform stayed available. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the import and export of course material, pull the repeated part into one place",
+          "timestamp": "2026-03-12T05:10:34.982Z",
+          "url": "https://example.org/demo/commit/dev-02-migrate_existing_data-1"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the import and export of course material usable with a screen reader",
+          "timestamp": "2025-08-03T04:31:50.929Z",
+          "url": "https://example.org/demo/issue/dev-02-migrate_existing_data-2"
+        }
+      ],
+      "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-02-object_oriented_modelling",
+      "developer_id": "DEV-02",
+      "category_id": "object_oriented_modelling",
+      "level": "l1",
+      "confidence": 0.47,
+      "rationale": "In 7 changes the names and the cut of the parts were revised, not just their contents. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the import and export of course material, correct the order in which changes are applied",
+          "timestamp": "2025-06-28T20:38:19.620Z",
+          "url": "https://example.org/demo/commit/dev-02-object_oriented_modelling-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the import and export of course material",
+          "timestamp": "2025-03-19T16:27:03.209Z",
+          "url": "https://example.org/demo/review/dev-02-object_oriented_modelling-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of course material after an update",
+          "timestamp": "2026-03-17T09:34:56.588Z",
+          "url": "https://example.org/demo/issue/dev-02-object_oriented_modelling-3"
+        }
+      ],
+      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-dev_automated_tests",
+      "developer_id": "DEV-04",
+      "category_id": "dev_automated_tests",
+      "level": "l3",
+      "confidence": 0.73,
+      "rationale": "Of the 168 changes in the window, 15 touched tests, and in 8 of those the tests were new, so they covered behaviour nobody had checked before. In 6 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the part that stores course material and marks, correct the order in which changes are applied",
+          "timestamp": "2025-09-28T09:58:23.677Z",
+          "url": "https://example.org/demo/commit/dev-04-dev_automated_tests-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores course material and marks: rework after review",
+          "timestamp": "2026-03-18T09:06:10.238Z",
+          "url": "https://example.org/demo/pull_request/dev-04-dev_automated_tests-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the part that stores course material and marks",
+          "timestamp": "2025-01-31T00:11:55.537Z",
+          "url": "https://example.org/demo/review/dev-04-dev_automated_tests-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the part that stores course material and marks after an update",
+          "timestamp": "2025-12-18T13:39:42.509Z",
+          "url": "https://example.org/demo/issue/dev-04-dev_automated_tests-4"
+        }
+      ],
+      "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-ict_debugging_tools",
+      "developer_id": "DEV-04",
+      "category_id": "ict_debugging_tools",
+      "level": "l2",
+      "confidence": 0.7,
+      "rationale": "In 8 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the part that stores course material and marks, pull the repeated part into one place",
+          "timestamp": "2025-05-12T04:02:53.401Z",
+          "url": "https://example.org/demo/commit/dev-04-ict_debugging_tools-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores course material and marks: rework after review",
+          "timestamp": "2025-07-10T07:00:21.410Z",
+          "url": "https://example.org/demo/pull_request/dev-04-ict_debugging_tools-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-02-10T08:30:52.699Z",
+          "url": "https://example.org/demo/review/dev-04-ict_debugging_tools-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the part that stores course material and marks after an update",
+          "timestamp": "2025-04-06T04:34:00.448Z",
+          "url": "https://example.org/demo/issue/dev-04-ict_debugging_tools-4"
+        }
+      ],
+      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-debug_software",
+      "developer_id": "DEV-04",
+      "category_id": "debug_software",
+      "level": "l3",
+      "confidence": 0.8,
+      "rationale": "17 of the changes are linked to a fault report, and in 11 of them the task discussion names the cause rather than only the fix. In 9 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the part that stores course material and marks, correct the order in which changes are applied",
+          "timestamp": "2025-02-11T16:35:06.092Z",
+          "url": "https://example.org/demo/commit/dev-04-debug_software-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores course material and marks: rework after review",
+          "timestamp": "2025-04-30T11:30:23.415Z",
+          "url": "https://example.org/demo/pull_request/dev-04-debug_software-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the part that stores course material and marks usable with a screen reader",
+          "timestamp": "2025-06-01T06:28:23.148Z",
+          "url": "https://example.org/demo/issue/dev-04-debug_software-3"
+        }
+      ],
+      "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-design_patterns",
+      "developer_id": "DEV-04",
+      "category_id": "design_patterns",
+      "level": "l4",
+      "confidence": 0.87,
+      "rationale": "In 12 changes an existing structure was replaced rather than worked around, and 4 of those were later built on by somebody else. 3 other people later built on this work, and this person read and approved 8 of their changes.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the part that stores course material and marks, pull the repeated part into one place",
+          "timestamp": "2026-03-30T12:35:16.570Z",
+          "url": "https://example.org/demo/commit/dev-04-design_patterns-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the part that stores course material and marks",
+          "timestamp": "2025-05-24T06:18:58.667Z",
+          "url": "https://example.org/demo/review/dev-04-design_patterns-2"
+        }
+      ],
+      "blind_spots": "design decisions taken in a meeting and never written down in the project",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-concurrent_programming",
+      "developer_id": "DEV-04",
+      "category_id": "concurrent_programming",
+      "level": "l3",
+      "confidence": 0.74,
+      "rationale": "18 changes touch the places where two people can act at the same time, for example locking a quiz while it is being published. In 10 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the part that stores course material and marks, stop the error when a marking scheme is attached",
+          "timestamp": "2025-02-06T07:16:35.698Z",
+          "url": "https://example.org/demo/commit/dev-04-concurrent_programming-1"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the part that stores course material and marks usable with a screen reader",
+          "timestamp": "2025-03-09T22:26:29.382Z",
+          "url": "https://example.org/demo/issue/dev-04-concurrent_programming-2"
+        }
+      ],
+      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "study": {
+        "direction": "raise",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-04-integrate_components",
+      "developer_id": "DEV-04",
+      "category_id": "integrate_components",
+      "level": "l3",
+      "confidence": 0.84,
+      "rationale": "10 changes join parts of the software that are developed separately, and 6 of them had to be coordinated with another team's work. In 5 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the part that stores course material and marks, correct the order in which changes are applied",
+          "timestamp": "2025-04-07T03:38:56.693Z",
+          "url": "https://example.org/demo/commit/dev-04-integrate_components-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores course material and marks: new behaviour behind a setting",
+          "timestamp": "2026-08-28T17:16:33.379Z",
+          "url": "https://example.org/demo/pull_request/dev-04-integrate_components-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the part that stores course material and marks after an update",
+          "timestamp": "2026-05-27T09:32:23.620Z",
+          "url": "https://example.org/demo/issue/dev-04-integrate_components-3"
+        }
+      ],
+      "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-design_user_interface",
+      "developer_id": "DEV-04",
+      "category_id": "design_user_interface",
+      "level": "not_observable",
+      "confidence": 0.29,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the part that stores course material and marks that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make the part that stores course material and marks usable with a screen reader",
+          "timestamp": "2026-03-04T13:06:04.769Z",
+          "url": "https://example.org/demo/issue/dev-04-design_user_interface-1"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-javascript",
+      "developer_id": "DEV-04",
+      "category_id": "javascript",
+      "level": "not_observable",
+      "confidence": 0.43,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the part that stores course material and marks that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make the part that stores course material and marks usable with a screen reader",
+          "timestamp": "2026-06-02T17:32:35.027Z",
+          "url": "https://example.org/demo/issue/dev-04-javascript-1"
+        }
+      ],
+      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-migrate_existing_data",
+      "developer_id": "DEV-04",
+      "category_id": "migrate_existing_data",
+      "level": "l5",
+      "confidence": 0.88,
+      "rationale": "This person wrote 23 of the steps that move existing data to a new shape, including 13 that had to run while the platform stayed available. This is the person others turn to here: 3 of the changes in this area were read and approved by them.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the part that stores course material and marks, correct the order in which changes are applied",
+          "timestamp": "2025-06-27T00:11:38.397Z",
+          "url": "https://example.org/demo/commit/dev-04-migrate_existing_data-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-03-27T12:44:11.667Z",
+          "url": "https://example.org/demo/review/dev-04-migrate_existing_data-2"
+        }
+      ],
+      "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-object_oriented_modelling",
+      "developer_id": "DEV-04",
+      "category_id": "object_oriented_modelling",
+      "level": "l4",
+      "confidence": 0.87,
+      "rationale": "In 14 changes the names and the cut of the parts were revised, not just their contents. 8 other people later built on this work, and this person read and approved 6 of their changes.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the part that stores course material and marks, pull the repeated part into one place",
+          "timestamp": "2026-09-21T15:34:46.671Z",
+          "url": "https://example.org/demo/commit/dev-04-object_oriented_modelling-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the part that stores course material and marks",
+          "timestamp": "2026-08-07T11:00:11.231Z",
+          "url": "https://example.org/demo/review/dev-04-object_oriented_modelling-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the part that stores course material and marks after an update",
+          "timestamp": "2026-01-28T08:04:41.167Z",
+          "url": "https://example.org/demo/issue/dev-04-object_oriented_modelling-3"
+        }
+      ],
+      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "study": {
+        "direction": "raise",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-06-dev_automated_tests",
+      "developer_id": "DEV-06",
+      "category_id": "dev_automated_tests",
+      "level": "l2",
+      "confidence": 0.72,
+      "rationale": "Of the 94 changes in the window, 3 touched tests, and in 1 of those the tests were new, so they covered behaviour nobody had checked before. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the screens teachers see, correct the order in which changes are applied",
+          "timestamp": "2025-02-26T10:21:56.732Z",
+          "url": "https://example.org/demo/commit/dev-06-dev_automated_tests-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the screens teachers see: new behaviour behind a setting",
+          "timestamp": "2026-01-04T15:49:23.381Z",
+          "url": "https://example.org/demo/pull_request/dev-06-dev_automated_tests-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the screens teachers see",
+          "timestamp": "2025-08-17T02:10:17.471Z",
+          "url": "https://example.org/demo/review/dev-06-dev_automated_tests-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the screens teachers see usable with a screen reader",
+          "timestamp": "2025-12-27T09:34:51.087Z",
+          "url": "https://example.org/demo/issue/dev-06-dev_automated_tests-4"
+        }
+      ],
+      "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-06-ict_debugging_tools",
+      "developer_id": "DEV-06",
+      "category_id": "ict_debugging_tools",
+      "level": "l2",
+      "confidence": 0.72,
+      "rationale": "In 14 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "the screens teachers see: rework after review",
+          "timestamp": "2026-04-11T02:28:11.658Z",
+          "url": "https://example.org/demo/pull_request/dev-06-ict_debugging_tools-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-03-15T16:21:53.794Z",
+          "url": "https://example.org/demo/review/dev-06-ict_debugging_tools-2"
+        }
+      ],
+      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-debug_software",
+      "developer_id": "DEV-06",
+      "category_id": "debug_software",
+      "level": "l2",
+      "confidence": 0.61,
+      "rationale": "4 of the changes are linked to a fault report, and in 3 of them the task discussion names the cause rather than only the fix. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "the screens teachers see: new behaviour behind a setting",
+          "timestamp": "2025-11-21T22:42:00.848Z",
+          "url": "https://example.org/demo/pull_request/dev-06-debug_software-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-01-24T21:39:20.672Z",
+          "url": "https://example.org/demo/review/dev-06-debug_software-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the screens teachers see usable with a screen reader",
+          "timestamp": "2026-03-13T18:04:06.545Z",
+          "url": "https://example.org/demo/issue/dev-06-debug_software-3"
+        }
+      ],
+      "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-design_patterns",
+      "developer_id": "DEV-06",
+      "category_id": "design_patterns",
+      "level": "l2",
+      "confidence": 0.61,
+      "rationale": "In 5 changes an existing structure was replaced rather than worked around, and 3 of those were later built on by somebody else. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the screens teachers see, pull the repeated part into one place",
+          "timestamp": "2026-04-01T04:57:55.505Z",
+          "url": "https://example.org/demo/commit/dev-06-design_patterns-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the screens teachers see: new behaviour behind a setting",
+          "timestamp": "2026-04-30T15:50:24.839Z",
+          "url": "https://example.org/demo/pull_request/dev-06-design_patterns-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the screens teachers see",
+          "timestamp": "2025-12-09T18:35:36.741Z",
+          "url": "https://example.org/demo/review/dev-06-design_patterns-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the screens teachers see after an update",
+          "timestamp": "2025-12-19T09:59:57.959Z",
+          "url": "https://example.org/demo/issue/dev-06-design_patterns-4"
+        }
+      ],
+      "blind_spots": "design decisions taken in a meeting and never written down in the project",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-concurrent_programming",
+      "developer_id": "DEV-06",
+      "category_id": "concurrent_programming",
+      "level": "not_observable",
+      "confidence": 0.38,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the screens teachers see that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make the screens teachers see usable with a screen reader",
+          "timestamp": "2025-06-24T23:21:23.224Z",
+          "url": "https://example.org/demo/issue/dev-06-concurrent_programming-1"
+        }
+      ],
+      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-integrate_components",
+      "developer_id": "DEV-06",
+      "category_id": "integrate_components",
+      "level": "l2",
+      "confidence": 0.61,
+      "rationale": "8 changes join parts of the software that are developed separately, and 5 of them had to be coordinated with another team's work. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the screens teachers see, stop the error when a marking scheme is attached",
+          "timestamp": "2026-02-22T21:23:46.722Z",
+          "url": "https://example.org/demo/commit/dev-06-integrate_components-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the screens teachers see: new behaviour behind a setting",
+          "timestamp": "2025-07-14T06:39:41.570Z",
+          "url": "https://example.org/demo/pull_request/dev-06-integrate_components-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-02-24T06:55:36.031Z",
+          "url": "https://example.org/demo/review/dev-06-integrate_components-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the screens teachers see usable with a screen reader",
+          "timestamp": "2026-05-07T18:02:53.962Z",
+          "url": "https://example.org/demo/issue/dev-06-integrate_components-4"
+        }
+      ],
+      "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-design_user_interface",
+      "developer_id": "DEV-06",
+      "category_id": "design_user_interface",
+      "level": "l4",
+      "confidence": 0.88,
+      "rationale": "8 changes are on the screens themselves, 5 of them on forms that teachers fill in. 4 other people later built on this work, and this person read and approved 13 of their changes.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the screens teachers see, pull the repeated part into one place",
+          "timestamp": "2025-05-22T13:37:40.719Z",
+          "url": "https://example.org/demo/commit/dev-06-design_user_interface-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the screens teachers see",
+          "timestamp": "2025-06-26T19:06:37.674Z",
+          "url": "https://example.org/demo/review/dev-06-design_user_interface-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the screens teachers see after an update",
+          "timestamp": "2025-12-21T16:30:32.595Z",
+          "url": "https://example.org/demo/issue/dev-06-design_user_interface-3"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-javascript",
+      "developer_id": "DEV-06",
+      "category_id": "javascript",
+      "level": "l4",
+      "confidence": 0.91,
+      "rationale": "17 of the changes are in the browser part of the software, spread over 12 different screens. 10 other people later built on this work, and this person read and approved 9 of their changes.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the screens teachers see, pull the repeated part into one place",
+          "timestamp": "2026-03-24T11:44:59.554Z",
+          "url": "https://example.org/demo/commit/dev-06-javascript-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the screens teachers see: rework after review",
+          "timestamp": "2026-09-08T21:57:47.934Z",
+          "url": "https://example.org/demo/pull_request/dev-06-javascript-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the screens teachers see",
+          "timestamp": "2025-08-27T10:18:25.217Z",
+          "url": "https://example.org/demo/review/dev-06-javascript-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the screens teachers see after an update",
+          "timestamp": "2026-02-09T18:10:58.881Z",
+          "url": "https://example.org/demo/issue/dev-06-javascript-4"
+        }
+      ],
+      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "study": {
+        "direction": "raise",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-06-migrate_existing_data",
+      "developer_id": "DEV-06",
+      "category_id": "migrate_existing_data",
+      "level": "not_observable",
+      "confidence": 0.33,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the screens teachers see that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the screens teachers see after an update",
+          "timestamp": "2025-04-01T10:53:19.056Z",
+          "url": "https://example.org/demo/issue/dev-06-migrate_existing_data-1"
+        }
+      ],
+      "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-object_oriented_modelling",
+      "developer_id": "DEV-06",
+      "category_id": "object_oriented_modelling",
+      "level": "l2",
+      "confidence": 0.63,
+      "rationale": "In 7 changes the names and the cut of the parts were revised, not just their contents. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the screens teachers see, stop the error when a marking scheme is attached",
+          "timestamp": "2026-05-02T18:28:30.668Z",
+          "url": "https://example.org/demo/commit/dev-06-object_oriented_modelling-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the screens teachers see: new behaviour behind a setting",
+          "timestamp": "2026-04-07T01:31:48.001Z",
+          "url": "https://example.org/demo/pull_request/dev-06-object_oriented_modelling-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-05-31T18:53:43.086Z",
+          "url": "https://example.org/demo/review/dev-06-object_oriented_modelling-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the screens teachers see after an update",
+          "timestamp": "2026-09-19T09:47:32.478Z",
+          "url": "https://example.org/demo/issue/dev-06-object_oriented_modelling-4"
+        }
+      ],
+      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-dev_automated_tests",
+      "developer_id": "DEV-07",
+      "category_id": "dev_automated_tests",
+      "level": "l3",
+      "confidence": 0.78,
+      "rationale": "Of the 148 changes in the window, 19 touched tests, and in 13 of those the tests were new, so they covered behaviour nobody had checked before. In 10 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the quiz tool and the gradebook, pull the repeated part into one place",
+          "timestamp": "2025-06-02T23:01:53.705Z",
+          "url": "https://example.org/demo/commit/dev-07-dev_automated_tests-1"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the quiz tool and the gradebook after an update",
+          "timestamp": "2026-09-22T08:06:18.236Z",
+          "url": "https://example.org/demo/issue/dev-07-dev_automated_tests-2"
+        }
+      ],
+      "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "study": {
+        "direction": "raise",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-07-ict_debugging_tools",
+      "developer_id": "DEV-07",
+      "category_id": "ict_debugging_tools",
+      "level": "l3",
+      "confidence": 0.73,
+      "rationale": "In 7 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. In 4 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the quiz tool and the gradebook, stop the error when a marking scheme is attached",
+          "timestamp": "2025-08-25T12:45:05.386Z",
+          "url": "https://example.org/demo/commit/dev-07-ict_debugging_tools-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the quiz tool and the gradebook: new behaviour behind a setting",
+          "timestamp": "2026-09-13T08:56:22.650Z",
+          "url": "https://example.org/demo/pull_request/dev-07-ict_debugging_tools-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the quiz tool and the gradebook",
+          "timestamp": "2026-01-02T17:58:27.438Z",
+          "url": "https://example.org/demo/review/dev-07-ict_debugging_tools-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the quiz tool and the gradebook usable with a screen reader",
+          "timestamp": "2026-04-02T22:47:00.276Z",
+          "url": "https://example.org/demo/issue/dev-07-ict_debugging_tools-4"
+        }
+      ],
+      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-debug_software",
+      "developer_id": "DEV-07",
+      "category_id": "debug_software",
+      "level": "l3",
+      "confidence": 0.81,
+      "rationale": "6 of the changes are linked to a fault report, and in 2 of them the task discussion names the cause rather than only the fix. In 2 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the quiz tool and the gradebook, correct the order in which changes are applied",
+          "timestamp": "2025-04-17T13:12:45.596Z",
+          "url": "https://example.org/demo/commit/dev-07-debug_software-1"
+        }
+      ],
+      "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-design_patterns",
+      "developer_id": "DEV-07",
+      "category_id": "design_patterns",
+      "level": "l3",
+      "confidence": 0.85,
+      "rationale": "In 3 changes an existing structure was replaced rather than worked around, and 2 of those were later built on by somebody else. In 2 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the quiz tool and the gradebook, correct the order in which changes are applied",
+          "timestamp": "2025-02-05T13:00:53.938Z",
+          "url": "https://example.org/demo/commit/dev-07-design_patterns-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the quiz tool and the gradebook: new behaviour behind a setting",
+          "timestamp": "2025-10-22T11:44:52.933Z",
+          "url": "https://example.org/demo/pull_request/dev-07-design_patterns-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the quiz tool and the gradebook",
+          "timestamp": "2026-06-19T20:09:43.236Z",
+          "url": "https://example.org/demo/review/dev-07-design_patterns-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the quiz tool and the gradebook usable with a screen reader",
+          "timestamp": "2026-05-07T08:21:27.166Z",
+          "url": "https://example.org/demo/issue/dev-07-design_patterns-4"
+        }
+      ],
+      "blind_spots": "design decisions taken in a meeting and never written down in the project",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-concurrent_programming",
+      "developer_id": "DEV-07",
+      "category_id": "concurrent_programming",
+      "level": "l2",
+      "confidence": 0.7,
+      "rationale": "10 changes touch the places where two people can act at the same time, for example locking a quiz while it is being published. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the quiz tool and the gradebook, pull the repeated part into one place",
+          "timestamp": "2025-02-03T22:41:24.851Z",
+          "url": "https://example.org/demo/commit/dev-07-concurrent_programming-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the quiz tool and the gradebook: rework after review",
+          "timestamp": "2025-02-07T03:06:59.071Z",
+          "url": "https://example.org/demo/pull_request/dev-07-concurrent_programming-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-10-16T18:40:31.897Z",
+          "url": "https://example.org/demo/review/dev-07-concurrent_programming-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the quiz tool and the gradebook usable with a screen reader",
+          "timestamp": "2025-09-30T14:31:29.365Z",
+          "url": "https://example.org/demo/issue/dev-07-concurrent_programming-4"
+        }
+      ],
+      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-07-integrate_components",
+      "developer_id": "DEV-07",
+      "category_id": "integrate_components",
+      "level": "l3",
+      "confidence": 0.78,
+      "rationale": "24 changes join parts of the software that are developed separately, and 11 of them had to be coordinated with another team's work. In 9 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the quiz tool and the gradebook, stop the error when a marking scheme is attached",
+          "timestamp": "2026-03-26T06:38:56.883Z",
+          "url": "https://example.org/demo/commit/dev-07-integrate_components-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the quiz tool and the gradebook: rework after review",
+          "timestamp": "2025-04-20T23:21:55.966Z",
+          "url": "https://example.org/demo/pull_request/dev-07-integrate_components-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the quiz tool and the gradebook usable with a screen reader",
+          "timestamp": "2025-06-21T05:41:26.329Z",
+          "url": "https://example.org/demo/issue/dev-07-integrate_components-3"
+        }
+      ],
+      "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-design_user_interface",
+      "developer_id": "DEV-07",
+      "category_id": "design_user_interface",
+      "level": "l3",
+      "confidence": 0.81,
+      "rationale": "6 changes are on the screens themselves, 2 of them on forms that teachers fill in. In 2 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the quiz tool and the gradebook, correct the order in which changes are applied",
+          "timestamp": "2025-10-10T15:13:37.709Z",
+          "url": "https://example.org/demo/commit/dev-07-design_user_interface-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the quiz tool and the gradebook",
+          "timestamp": "2026-09-22T14:44:11.427Z",
+          "url": "https://example.org/demo/review/dev-07-design_user_interface-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the quiz tool and the gradebook after an update",
+          "timestamp": "2025-07-07T19:09:47.950Z",
+          "url": "https://example.org/demo/issue/dev-07-design_user_interface-3"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-javascript",
+      "developer_id": "DEV-07",
+      "category_id": "javascript",
+      "level": "l3",
+      "confidence": 0.85,
+      "rationale": "19 of the changes are in the browser part of the software, spread over 8 different screens. In 6 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "the quiz tool and the gradebook: new behaviour behind a setting",
+          "timestamp": "2025-03-08T17:12:33.610Z",
+          "url": "https://example.org/demo/pull_request/dev-07-javascript-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the quiz tool and the gradebook",
+          "timestamp": "2026-02-26T04:43:27.396Z",
+          "url": "https://example.org/demo/review/dev-07-javascript-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the quiz tool and the gradebook after an update",
+          "timestamp": "2025-03-23T14:04:29.282Z",
+          "url": "https://example.org/demo/issue/dev-07-javascript-3"
+        }
+      ],
+      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-migrate_existing_data",
+      "developer_id": "DEV-07",
+      "category_id": "migrate_existing_data",
+      "level": "l3",
+      "confidence": 0.78,
+      "rationale": "This person wrote 8 of the steps that move existing data to a new shape, including 4 that had to run while the platform stayed available. In 3 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the quiz tool and the gradebook, correct the order in which changes are applied",
+          "timestamp": "2025-10-22T11:49:45.632Z",
+          "url": "https://example.org/demo/commit/dev-07-migrate_existing_data-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the quiz tool and the gradebook: new behaviour behind a setting",
+          "timestamp": "2025-09-10T00:41:41.759Z",
+          "url": "https://example.org/demo/pull_request/dev-07-migrate_existing_data-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-09-10T21:01:03.996Z",
+          "url": "https://example.org/demo/review/dev-07-migrate_existing_data-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the quiz tool and the gradebook usable with a screen reader",
+          "timestamp": "2026-06-03T07:56:46.129Z",
+          "url": "https://example.org/demo/issue/dev-07-migrate_existing_data-4"
+        }
+      ],
+      "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "study": {
+        "direction": "raise",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-07-object_oriented_modelling",
+      "developer_id": "DEV-07",
+      "category_id": "object_oriented_modelling",
+      "level": "l2",
+      "confidence": 0.66,
+      "rationale": "In 3 changes the names and the cut of the parts were revised, not just their contents. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the quiz tool and the gradebook, pull the repeated part into one place",
+          "timestamp": "2026-07-18T14:35:17.450Z",
+          "url": "https://example.org/demo/commit/dev-07-object_oriented_modelling-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the quiz tool and the gradebook: rework after review",
+          "timestamp": "2025-07-03T06:31:02.864Z",
+          "url": "https://example.org/demo/pull_request/dev-07-object_oriented_modelling-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the quiz tool and the gradebook",
+          "timestamp": "2026-07-18T04:30:54.146Z",
+          "url": "https://example.org/demo/review/dev-07-object_oriented_modelling-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the quiz tool and the gradebook usable with a screen reader",
+          "timestamp": "2026-07-10T04:18:23.630Z",
+          "url": "https://example.org/demo/issue/dev-07-object_oriented_modelling-4"
+        }
+      ],
+      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-dev_automated_tests",
+      "developer_id": "DEV-09",
+      "category_id": "dev_automated_tests",
+      "level": "l2",
+      "confidence": 0.68,
+      "rationale": "Of the 39 changes in the window, 7 touched tests, and in 3 of those the tests were new, so they covered behaviour nobody had checked before. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: a number of small areas, pull the repeated part into one place",
+          "timestamp": "2025-03-31T14:09:44.715Z",
+          "url": "https://example.org/demo/commit/dev-09-dev_automated_tests-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: new behaviour behind a setting",
+          "timestamp": "2025-10-21T08:25:38.485Z",
+          "url": "https://example.org/demo/pull_request/dev-09-dev_automated_tests-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2025-02-25T11:43:02.303Z",
+          "url": "https://example.org/demo/review/dev-09-dev_automated_tests-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make a number of small areas usable with a screen reader",
+          "timestamp": "2025-10-21T02:54:08.061Z",
+          "url": "https://example.org/demo/issue/dev-09-dev_automated_tests-4"
+        }
+      ],
+      "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-ict_debugging_tools",
+      "developer_id": "DEV-09",
+      "category_id": "ict_debugging_tools",
+      "level": "l1",
+      "confidence": 0.46,
+      "rationale": "In 6 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: a number of small areas, stop the error when a marking scheme is attached",
+          "timestamp": "2026-08-04T20:17:48.048Z",
+          "url": "https://example.org/demo/commit/dev-09-ict_debugging_tools-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2025-09-25T03:36:23.799Z",
+          "url": "https://example.org/demo/review/dev-09-ict_debugging_tools-2"
+        }
+      ],
+      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-09-debug_software",
+      "developer_id": "DEV-09",
+      "category_id": "debug_software",
+      "level": "l1",
+      "confidence": 0.47,
+      "rationale": "7 of the changes are linked to a fault report, and in 3 of them the task discussion names the cause rather than only the fix. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: rework after review",
+          "timestamp": "2025-02-05T13:45:53.904Z",
+          "url": "https://example.org/demo/pull_request/dev-09-debug_software-1"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in a number of small areas after an update",
+          "timestamp": "2025-04-04T06:32:12.922Z",
+          "url": "https://example.org/demo/issue/dev-09-debug_software-2"
+        }
+      ],
+      "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-design_patterns",
+      "developer_id": "DEV-09",
+      "category_id": "design_patterns",
+      "level": "l1",
+      "confidence": 0.58,
+      "rationale": "In 3 changes an existing structure was replaced rather than worked around, and 1 of those were later built on by somebody else. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: a number of small areas, stop the error when a marking scheme is attached",
+          "timestamp": "2025-06-25T18:37:03.036Z",
+          "url": "https://example.org/demo/commit/dev-09-design_patterns-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: rework after review",
+          "timestamp": "2026-01-10T23:11:21.255Z",
+          "url": "https://example.org/demo/pull_request/dev-09-design_patterns-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2026-05-27T22:27:16.363Z",
+          "url": "https://example.org/demo/review/dev-09-design_patterns-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in a number of small areas after an update",
+          "timestamp": "2026-09-27T11:55:40.414Z",
+          "url": "https://example.org/demo/issue/dev-09-design_patterns-4"
+        }
+      ],
+      "blind_spots": "design decisions taken in a meeting and never written down in the project",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-concurrent_programming",
+      "developer_id": "DEV-09",
+      "category_id": "concurrent_programming",
+      "level": "not_observable",
+      "confidence": 0.42,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in a number of small areas that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in a number of small areas after an update",
+          "timestamp": "2026-06-27T21:41:04.353Z",
+          "url": "https://example.org/demo/issue/dev-09-concurrent_programming-1"
+        }
+      ],
+      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-integrate_components",
+      "developer_id": "DEV-09",
+      "category_id": "integrate_components",
+      "level": "l1",
+      "confidence": 0.47,
+      "rationale": "5 changes join parts of the software that are developed separately, and 2 of them had to be coordinated with another team's work. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2026-05-28T18:15:08.505Z",
+          "url": "https://example.org/demo/review/dev-09-integrate_components-1"
+        }
+      ],
+      "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-design_user_interface",
+      "developer_id": "DEV-09",
+      "category_id": "design_user_interface",
+      "level": "l2",
+      "confidence": 0.67,
+      "rationale": "7 changes are on the screens themselves, 4 of them on forms that teachers fill in. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: a number of small areas, stop the error when a marking scheme is attached",
+          "timestamp": "2025-05-14T01:38:04.334Z",
+          "url": "https://example.org/demo/commit/dev-09-design_user_interface-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: rework after review",
+          "timestamp": "2025-11-23T09:25:32.671Z",
+          "url": "https://example.org/demo/pull_request/dev-09-design_user_interface-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2025-03-29T07:28:59.602Z",
+          "url": "https://example.org/demo/review/dev-09-design_user_interface-3"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-09-javascript",
+      "developer_id": "DEV-09",
+      "category_id": "javascript",
+      "level": "l2",
+      "confidence": 0.69,
+      "rationale": "6 of the changes are in the browser part of the software, spread over 4 different screens. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: a number of small areas, stop the error when a marking scheme is attached",
+          "timestamp": "2025-11-05T08:38:14.258Z",
+          "url": "https://example.org/demo/commit/dev-09-javascript-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: rework after review",
+          "timestamp": "2025-08-16T12:15:16.574Z",
+          "url": "https://example.org/demo/pull_request/dev-09-javascript-2"
+        }
+      ],
+      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-migrate_existing_data",
+      "developer_id": "DEV-09",
+      "category_id": "migrate_existing_data",
+      "level": "not_observable",
+      "confidence": 0.44,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in a number of small areas that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in a number of small areas after an update",
+          "timestamp": "2025-06-30T06:45:19.563Z",
+          "url": "https://example.org/demo/issue/dev-09-migrate_existing_data-1"
+        }
+      ],
+      "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-object_oriented_modelling",
+      "developer_id": "DEV-09",
+      "category_id": "object_oriented_modelling",
+      "level": "l1",
+      "confidence": 0.53,
+      "rationale": "In 4 changes the names and the cut of the parts were revised, not just their contents. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: a number of small areas, correct the order in which changes are applied",
+          "timestamp": "2026-08-29T05:34:01.128Z",
+          "url": "https://example.org/demo/commit/dev-09-object_oriented_modelling-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: rework after review",
+          "timestamp": "2026-07-13T12:29:25.073Z",
+          "url": "https://example.org/demo/pull_request/dev-09-object_oriented_modelling-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make a number of small areas usable with a screen reader",
+          "timestamp": "2025-08-02T16:56:00.743Z",
+          "url": "https://example.org/demo/issue/dev-09-object_oriented_modelling-3"
+        }
+      ],
+      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
     }
   ]
 }
