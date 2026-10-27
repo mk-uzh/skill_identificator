@@ -21,6 +21,8 @@ interface SubmitBody {
   survey?: SurveyAnswers;
   /** Allow re-running Task 1 before Task 2 is finished (recalculates suggestions). */
   recalculate?: boolean;
+  /** Prototype shortcut: the run was cut short and must not be analysed. */
+  prototypeSkip?: boolean;
 }
 
 /**
@@ -98,6 +100,7 @@ export async function POST(request: Request) {
     }
 
     await updateSession(body.sessionId, {
+      ...(body.prototypeSkip ? { prototype_skip: true } : {}),
       task2: {
         matrix: body.matrix,
         startedAt,

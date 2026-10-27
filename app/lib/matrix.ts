@@ -45,6 +45,19 @@ export function setCell(
   return next;
 }
 
+/**
+ * One developer's row as a matrix of its own.
+ *
+ * CellTracker builds its interaction rows by walking the matrix it is given,
+ * not the cells that were actually touched. In the blocked flow each block
+ * must therefore hand it only the person of that block, otherwise every block
+ * would write rows for all developers and the log would hold six copies of
+ * each cell.
+ */
+export function developerMatrix(matrix: Matrix, devId: string): Matrix {
+  return { [devId]: { ...(matrix[devId] ?? {}) } };
+}
+
 export function countFilled(matrix: Matrix): number {
   return Object.values(matrix).reduce(
     (total, byCategory) => total + Object.values(byCategory).filter(Boolean).length,

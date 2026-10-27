@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { getAssessments } from "@/lib/assessments";
 import { readSession, saveSession } from "@/lib/store";
+import { developerOrder } from "@/lib/study-flow";
 import type { StudySession } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
       consent: true,
       config_hash: assessments.config_hash,
       snapshot_hash: assessments.config_hash,
+      devOrder: developerOrder(participantCode),
     };
 
     await saveSession(session);
@@ -40,6 +42,7 @@ export async function POST(request: Request) {
       sessionId: session.sessionId,
       config_hash: session.config_hash,
       snapshot_hash: session.snapshot_hash,
+      devOrder: session.devOrder,
     });
   } catch (error) {
     console.error("session route", error);
@@ -63,6 +66,9 @@ export async function GET(request: Request) {
     participantCode: session.participantCode,
     task1Submitted: Boolean(session.task1),
     task2Submitted: Boolean(session.task2),
+    devOrder: session.devOrder ?? null,
+    outcomes: session.task2?.outcomes ?? null,
+    prototypeSkip: Boolean(session.prototype_skip),
     task1Matrix: session.task1?.matrix ?? null,
     task2Matrix: session.task2?.matrix ?? null,
     config_hash: session.config_hash ?? null,
