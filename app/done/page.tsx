@@ -96,7 +96,7 @@ export default function DonePage() {
   if (sent) {
     return (
       <div className="page page--narrow">
-        <Steps current={4} />
+        <Steps current={5} />
         <div className="card">
           <h1>Thank you for taking part</h1>
           <p className="lede">Your answers have been saved. You can close this window now.</p>
@@ -111,7 +111,7 @@ export default function DonePage() {
   return (
     <div className="page page--narrow">
       {busy && <LoadingSpinner fullPage label="Sending …" />}
-      <Steps current={4} />
+      <Steps current={5} />
       <div className="card">
         <h1>Final questions</h1>
         <p className="lede">
