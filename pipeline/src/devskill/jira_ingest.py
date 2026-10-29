@@ -6,8 +6,9 @@ UA = {"Accept": "application/json", "User-Agent": "devskill-pipeline/0.1"}
 
 
 class Jira:
-    def __init__(self, base: str, pause: float = 0.3):
-        self.base, self.pause = base.rstrip("/"), pause
+    def __init__(self, base: str, pause: float = 0.3, api: str = "cloud"):
+        # api: "cloud" (Atlassian Cloud, e.g. Sakai) or "server" (self-hosted, e.g. issues.apache.org)
+        self.base, self.pause, self.api = base.rstrip("/"), pause, api
 
     def _get(self, url: str, tries: int = 3):
         for n in range(tries):
@@ -32,6 +33,18 @@ class Jira:
         """All issue keys in the window, via the paged search endpoint."""
         jql = (f'project={project} AND created >= "{start}" AND created <= "{end}" '
                f'ORDER BY created ASC')
+        if self.api == "server":
+            start = 0
+            while True:
+                d = self._get(f"{self.base}/rest/api/2/search?jql={urllib.parse.quote(jql)}"
+                              f"&startAt={start}&maxResults=100&fields=key")
+                if not d or not d.get("issues"):
+                    return
+                for it in d["issues"]:
+                    yield it["key"]
+                start += len(d["issues"])
+                if start >= d.get("total", 0):
+                    return
         token = None
         while True:
             url = (f"{self.base}/rest/api/3/search/jql"

@@ -1,0 +1,36 @@
+# Second project for the comparison. Select with DEVSKILL_PROJECT=nifi (see README).
+# Everything project-specific lives under data/nifi/, so the sakai files stay untouched.
+project:
+  name: nifi
+  jira_base: "https://issues.apache.org/jira"   # self-hosted Jira, anonymous read
+  jira_project_key: NIFI
+  github_owner: apache
+  github_repo: nifi
+  repo_url: "https://github.com/apache/nifi.git"
+  repo_path: "data/clones/nifi"
+  data_root: "data/nifi"          # mapping.secrets.json, .salt
+  shallow_since: "2024-11-01"
+
+window:                          # same window as sakai, so the two are comparable
+  start: "2025-01-01"
+  end: "2026-10-01"
+
+scope:
+  min_commits: 10
+  exclude_bots: true
+  bot_patterns: ["dependabot", "[bot]", "renovate", "github-actions"]
+
+paths:
+  bronze_dir: "data/nifi/bronze"
+  sqlite_bronze: "data/nifi/bronze/bronze.sqlite"
+  sqlite_silver: "data/nifi/silver/silver.sqlite"
+  sqlite_gold: "data/nifi/gold/gold.sqlite"
+
+github:
+  token_env: GITHUB_TOKEN
+  pulls_state: all
+
+jira:
+  api: server                    # not Atlassian Cloud: /rest/api/2/search with startAt
+  page_size: 100
+  pause_seconds: 0.5

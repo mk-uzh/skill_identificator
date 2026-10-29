@@ -15,7 +15,7 @@ from devskill import db
 from devskill.jira_ingest import Jira
 
 cfg = Config()
-ji = Jira(cfg.project["jira_base"], cfg.jira.get("pause_seconds", 0.3))
+ji = Jira(cfg.project["jira_base"], cfg.jira.get("pause_seconds", 0.3), cfg.jira.get("api", "cloud"))
 pkey = cfg.project["jira_project_key"]
 print(cfg, "|", cfg.project["jira_base"], pkey)
 

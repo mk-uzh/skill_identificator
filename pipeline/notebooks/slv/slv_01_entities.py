@@ -15,7 +15,7 @@ from devskill import db
 from devskill.identity import build, write_mapping, _salt, is_bot
 
 cfg = Config()
-SALT = _salt(PIPELINE_ROOT)
+SALT = _salt(PIPELINE_ROOT, cfg.data_root)
 bro = db.connect(cfg.path("sqlite_bronze"))
 sil = db.connect(cfg.path("sqlite_silver"))
 db.run_script(sil, ROOT / "sql" / "01_silver.sql")
@@ -37,8 +37,8 @@ def log(step, n, params=None):
 
 # %% --- developers --------------------------------------------------------
 pairs = bro.execute("SELECT author_name, author_email FROM tbl_brz_gh_commit").fetchall()
-mapping, people = build(pairs, PIPELINE_ROOT)
-write_mapping(people, PIPELINE_ROOT / "data" / "mapping.secrets.json")
+mapping, people = build(pairs, PIPELINE_ROOT, cfg.data_root)
+write_mapping(people, cfg.data_root / "mapping.secrets.json")
 threshold = cfg.scope.get("min_commits", 10)
 
 dates = collections.defaultdict(list)

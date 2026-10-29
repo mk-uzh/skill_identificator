@@ -12,12 +12,12 @@ from pathlib import Path
 BOT_PATTERNS = ("[bot]", "dependabot", "renovate", "github-actions", "copilot")
 
 
-def _salt(pipeline_root: Path) -> str:
+def _salt(pipeline_root: Path, data_dir: Path | None = None) -> str:
     """Salt from the environment, otherwise generated once and stored locally."""
     s = os.environ.get("DEVSKILL_SALT")
     if s:
         return s
-    f = pipeline_root / "data" / ".salt"
+    f = (data_dir or pipeline_root / "data") / ".salt"
     if f.exists():
         return f.read_text(encoding="utf-8").strip()
     s = secrets.token_hex(16)
@@ -39,7 +39,7 @@ def is_bot(name: str, email: str) -> bool:
     return any(m in t for m in BOT_PATTERNS)
 
 
-def build(pairs, pipeline_root: Path):
+def build(pairs, pipeline_root: Path, data_dir: Path | None = None):
     """pairs: iterable of (name, email) per commit, repetitions included.
 
     Returns (mapping, people):
@@ -72,7 +72,7 @@ def build(pairs, pipeline_root: Path):
         names[r].add(n)
         emails[r].add(e)
 
-    salt = _salt(pipeline_root)
+    salt = _salt(pipeline_root, data_dir)
     label = _labels()
     people, mapping = {}, {}
     for root, n_commits in counts.most_common():

@@ -9,7 +9,12 @@ PIPELINE_ROOT = Path(__file__).resolve().parents[2]
 
 class Config:
     def __init__(self, path: str | Path | None = None):
-        p = Path(path) if path else PIPELINE_ROOT / "conf" / "params.yaml"
+        if path:
+            p = Path(path)
+        else:
+            # DEVSKILL_PROJECT=nifi selects conf/nifi.yaml; unset keeps conf/params.yaml (sakai).
+            name = os.environ.get("DEVSKILL_PROJECT", "").strip().lower()
+            p = PIPELINE_ROOT / "conf" / (f"{name}.yaml" if name and name != "sakai" else "params.yaml")
         with open(p, encoding="utf-8") as f:
             self.raw = yaml.safe_load(f)
         self.project = self.raw["project"]
@@ -27,6 +32,11 @@ class Config:
     @property
     def repo_path(self) -> Path:
         return (PIPELINE_ROOT / self.project["repo_path"]).resolve()
+
+    @property
+    def data_root(self) -> Path:
+        """Folder for project-specific local files (mapping, salt, samples). Default: data/."""
+        return PIPELINE_ROOT / self.project.get("data_root", "data")
 
     @property
     def github_token(self) -> str | None:

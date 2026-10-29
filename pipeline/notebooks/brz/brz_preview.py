@@ -37,8 +37,8 @@ for src, ts, params, n in con.execute(
 # %% --- 2. people ---
 rule("2. People")
 pairs = con.execute("SELECT author_name, author_email FROM tbl_brz_gh_commit").fetchall()
-mapping, people = build(pairs, PIPELINE_ROOT)
-write_mapping(people, PIPELINE_ROOT / "data" / "mapping.secrets.json")
+mapping, people = build(pairs, PIPELINE_ROOT, cfg.data_root)
+write_mapping(people, cfg.data_root / "mapping.secrets.json")
 threshold = cfg.scope.get("min_commits", 10)
 in_scope = [p for p in people.values() if p["n_commits"] >= threshold and not p["is_bot"]]
 print(f"  merged identities : {len(people)} people "

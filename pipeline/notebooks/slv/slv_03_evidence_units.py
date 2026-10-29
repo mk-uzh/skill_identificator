@@ -51,7 +51,10 @@ def _pipeline_root() -> Path:
 
 
 ROOT = _pipeline_root()
-DB = ROOT / "data" / "silver" / "silver.sqlite"
+import sys as _sys
+_sys.path.insert(0, str(ROOT / "src"))
+from devskill.config import Config as _Config
+DB = _Config().path("sqlite_silver")
 
 # A unit has to stay readable for a model and comparable to the others.
 MAX_CHARS = 12_000
@@ -110,7 +113,8 @@ def ensure_schema(con: sqlite3.Connection) -> None:
     if "role" not in cols:
         raise SystemExit(
             "tbl_slv_evidence_unit has no 'role' column.\n"
-            "Run: python ../../migrations/2026-10-28_evidence_unit_role.py"
+            "The table predates the role column. It is rebuilt on every run, so:\n"
+            "  DROP TABLE tbl_slv_evidence_unit;  then run sql/01_silver.sql, then this script again."
         )
 
 
