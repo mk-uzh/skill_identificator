@@ -1,0 +1,74 @@
+{
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "judgeable",
+  "observations"
+ ],
+ "properties": {
+  "judgeable": {
+   "enum": [
+    "yes",
+    "limited",
+    "no"
+   ]
+  },
+  "observations": {
+   "type": "array",
+   "maxItems": 2,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "category",
+     "level",
+     "quote",
+     "reason",
+     "confidence"
+    ],
+    "properties": {
+     "category": {
+      "enum": [
+       "dev_automated_tests",
+       "debug_software",
+       "code_review",
+       "integrate_components",
+       "security_permissions",
+       "build_dependencies",
+       "javascript",
+       "design_user_interface",
+       "internationalisation",
+       "data_persistence",
+       "software_design",
+       "technical_communication",
+       "other"
+      ]
+     },
+     "level": {
+      "enum": [
+       "l1",
+       "l2",
+       "l3",
+       "l4"
+      ]
+     },
+     "quote": {
+      "type": "string",
+      "maxLength": 200
+     },
+     "reason": {
+      "type": "string",
+      "maxLength": 300
+     },
+     "confidence": {
+      "enum": [
+       "H",
+       "M",
+       "L"
+      ]
+     }
+    }
+   }
+  }
+ }
+}
