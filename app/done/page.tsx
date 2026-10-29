@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { BottomBar } from "@/components/BottomBar";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { Steps } from "@/components/Steps";
 import { clientSession } from "@/lib/client-session";
 import { logger } from "@/lib/logger";
 import { VISIBILITY_LABELS, type VisibilityMode } from "@/lib/org-config";
@@ -95,103 +95,99 @@ export default function DonePage() {
 
   if (sent) {
     return (
-      <div className="page page--narrow">
-        <Steps current={5} />
-        <div className="card">
-          <h1>Thank you for taking part</h1>
-          <p className="lede">Your answers have been saved. You can close this window now.</p>
-          <p className="small muted">
-            If you have questions about the study, please contact the study team.
-          </p>
+      <div className="page page--narrow2">
+        <div className="card thanks">
+          <span className="thanks__mark" aria-hidden="true">
+            ✓
+          </span>
+          <h1 className="title">Thank you</h1>
+          <p className="lede">Your answers are saved. You can close this window.</p>
         </div>
       </div>
     );
   }
 
+  const answered = QUESTIONS.filter((q) => answers[q.key] != null).length;
+
   return (
-    <div className="page page--narrow">
+    <div className="page page--narrow2 page--flow">
       {busy && <LoadingSpinner fullPage label="Sending …" />}
-      <Steps current={5} />
-      <div className="card">
-        <h1>Final questions</h1>
-        <p className="lede">
-          Short questions about how you experienced the two tasks (1 = left, 7 = right), plus one
-          question on visibility settings.
-        </p>
+      <p className="crumb">Last step</p>
+      <h1 className="title">Four questions</h1>
+      <p className="lede">1 is the left end, 7 the right end.</p>
 
-        {QUESTIONS.map((question) => (
-          <div className="field" key={question.key}>
-            <label>{question.label}</label>
-            <div className="likert">
-              {[1, 2, 3, 4, 5, 6, 7].map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  aria-pressed={answers[question.key] === value}
-                  onClick={() => setAnswers((a) => ({ ...a, [question.key]: value }))}
-                >
-                  {value}
-                </button>
-              ))}
-            </div>
-            <div className="likert__ends">
-              <span>{question.ends[0]}</span>
-              <span>{question.ends[1]}</span>
-            </div>
-          </div>
-        ))}
-
-        <div className="field">
-          <label htmlFor="visibilityPreference">
-            Which of the three visibility variants would you choose in your organisation, and why?
-          </label>
-          <select
-            id="visibilityPreference"
-            value={answers.visibilityPreference ?? ""}
-            onChange={(e) =>
-              setAnswers((a) => ({
-                ...a,
-                visibilityPreference: (e.target.value || null) as VisibilityPreference,
-              }))
-            }
-          >
-            <option value="">Select …</option>
-            {VISIBILITY_OPTIONS.map((mode) => (
-              <option key={mode} value={mode}>
-                {VISIBILITY_LABELS[mode]} ({mode})
-              </option>
+      {QUESTIONS.map((question, qi) => (
+        <div className="card" key={question.key}>
+          <h3>
+            {qi + 1}. {question.label}
+          </h3>
+          <div className="likert2" role="radiogroup" aria-label={question.label}>
+            {[1, 2, 3, 4, 5, 6, 7].map((value) => (
+              <button
+                key={value}
+                type="button"
+                role="radio"
+                aria-checked={answers[question.key] === value}
+                onClick={() => setAnswers((a) => ({ ...a, [question.key]: value }))}
+              >
+                {value}
+              </button>
             ))}
-          </select>
-          <textarea
-            id="visibilityReason"
-            rows={3}
-            style={{ marginTop: 8 }}
-            value={answers.visibilityReason}
-            placeholder="Please briefly explain why you would choose this setting…"
-            onChange={(e) => setAnswers((a) => ({ ...a, visibilityReason: e.target.value }))}
-          />
-          <p className="small muted" style={{ marginTop: 6 }}>
-            Lead only · Team visible · Self + lead — the interviews did not converge on one answer.
-          </p>
+          </div>
+          <div className="likert2__ends">
+            <span>{question.ends[0]}</span>
+            <span>{question.ends[1]}</span>
+          </div>
         </div>
+      ))}
 
-        <div className="field">
-          <label htmlFor="comment">Comments (optional)</label>
-          <textarea
-            id="comment"
-            rows={4}
-            value={answers.comment}
-            onChange={(e) => setAnswers((a) => ({ ...a, comment: e.target.value }))}
-          />
-        </div>
-
-        <div className="actions">
-          <span />
-          <button type="button" className="btn" disabled={!canSubmit} onClick={submit}>
-            {busy ? "Sending …" : "Submit"}
-          </button>
-        </div>
+      <div className="card">
+        <h3>Which visibility would you choose in your organisation, and why?</h3>
+        <select
+          id="visibilityPreference"
+          aria-label="Visibility preference"
+          value={answers.visibilityPreference ?? ""}
+          onChange={(e) =>
+            setAnswers((a) => ({
+              ...a,
+              visibilityPreference: (e.target.value || null) as VisibilityPreference,
+            }))
+          }
+        >
+          <option value="">Select …</option>
+          {VISIBILITY_OPTIONS.map((mode) => (
+            <option key={mode} value={mode}>
+              {VISIBILITY_LABELS[mode]}
+            </option>
+          ))}
+        </select>
+        <textarea
+          id="visibilityReason"
+          aria-label="Reason"
+          rows={3}
+          style={{ marginTop: 10 }}
+          value={answers.visibilityReason}
+          placeholder="Briefly, why this setting …"
+          onChange={(e) => setAnswers((a) => ({ ...a, visibilityReason: e.target.value }))}
+        />
       </div>
+
+      <div className="card">
+        <h3>Anything else? Optional</h3>
+        <textarea
+          id="comment"
+          aria-label="Comments"
+          rows={3}
+          value={answers.comment}
+          onChange={(e) => setAnswers((a) => ({ ...a, comment: e.target.value }))}
+        />
+      </div>
+
+      <BottomBar text={canSubmit ? "Ready to send" : `${answered} of ${QUESTIONS.length} rated, plus the visibility question`}>
+        <button type="button" className="btn" disabled={!canSubmit} onClick={submit}>
+          {busy ? "Sending …" : "Submit"}
+        </button>
+      </BottomBar>
     </div>
   );
 }

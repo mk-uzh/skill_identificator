@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <VisibilityProvider>
           <Topbar />
+          <StudyBanner />
           <main>{children}</main>
         </VisibilityProvider>
       </body>

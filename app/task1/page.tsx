@@ -2,19 +2,19 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CompetenceList } from "@/components/CompetenceList";
 import { EvidencePanel } from "@/components/EvidencePanel";
-import { LevelGuide } from "@/components/LevelGuide";
+import { BottomBar } from "@/components/BottomBar";
+import { FlowBar } from "@/components/FlowBar";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { PersonCard } from "@/components/PersonCard";
-import { Steps } from "@/components/Steps";
-import { StudyBanner } from "@/components/StudyBanner";
+import { PersonLine } from "@/components/PersonLine";
+import { Rail, type RailItem } from "@/components/Rail";
+import { RatingPanel } from "@/components/RatingPanel";
 import { CellTracker } from "@/lib/cell-tracker";
 import { clientSession } from "@/lib/client-session";
 import { nowIsoMs } from "@/lib/interaction-log";
 import { logger } from "@/lib/logger";
 import { cloneMatrix, developerMatrix, emptyMatrix, setCell } from "@/lib/matrix";
-import { CATEGORIES, DEVELOPERS } from "@/lib/study-config";
+import { CATEGORIES, CATEGORY_GROUPS, DEVELOPERS } from "@/lib/study-config";
 import {
   afterOwn,
   BLOCK_COUNT,
@@ -38,7 +38,7 @@ export default function Task1Page() {
   const [block, setBlock] = useState(0);
   const [order, setOrder] = useState<string[]>([]);
   const [matrix, setMatrix] = useState<Matrix>(emptyMatrix);
-  const [selected, setSelected] = useState<string | null>(CATEGORIES[0]?.id ?? null);
+  const [ci, setCi] = useState(0);
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,9 +89,53 @@ export default function Task1Page() {
     [matrix, devId],
   );
   const complete = filled === CATEGORIES.length;
+  const category = CATEGORIES[ci] ?? CATEGORIES[0];
+  const selected = category?.id ?? null;
+  const lastStep = ci === CATEGORIES.length - 1;
+  const currentLevel = devId && category ? matrix[devId]?.[category.id] ?? null : null;
+  const firstOpen = devId
+    ? CATEGORIES.findIndex((c) => matrix[devId]?.[c.id] == null)
+    : -1;
+
+  // Opening a competence is an event of its own, because reading the records
+  // before rating is what the study is about.
+  useEffect(() => {
+    if (!ready || !devId || !selected) return;
+    tracker.current.open(devId, selected);
+    logger.log("cell_open", { devId, categoryId: selected, meta: { block, step: ci } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ci, ready, devId]);
+
+  function go(next: number) {
+    setCi(Math.max(0, Math.min(CATEGORIES.length - 1, next)));
+  }
+
+  // 1-5 and N rate, arrow keys move. Not while typing in a field.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      const el = e.target as HTMLElement | null;
+      if (el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === "ArrowRight") go(ci + 1);
+      else if (e.key === "ArrowLeft") go(ci - 1);
+      else if (/^[1-5]$/.test(e.key)) handleChange(selected ?? "", `l${e.key}` as SkillLevel);
+      else if (e.key.toLowerCase() === "n") handleChange(selected ?? "", "not_observable");
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ci, selected, devId, busy]);
+
+  const chips: RailItem[] = CATEGORIES.map((c, i) => ({
+    id: c.id,
+    label: c.label,
+    state:
+      i === ci ? "current" : devId && matrix[devId]?.[c.id] != null ? "done" : "todo",
+  }));
 
   function handleChange(categoryId: string, level: SkillLevel) {
-    if (!devId) return;
+    if (!devId || !categoryId || busy) return;
+    tracker.current.open(devId, categoryId);
     tracker.current.change(devId, categoryId);
     setMatrix((current) => {
       logger.log("cell_change", {
@@ -119,6 +163,7 @@ export default function Task1Page() {
       return next;
     });
     logger.log("cell_change", { meta: { action: "default_fill", task: 1, block } });
+    go(CATEGORIES.length - 1);
   }
 
   async function submit() {
@@ -173,98 +218,110 @@ export default function Task1Page() {
     return (
       <div className="page page--wide">
         <LoadingSpinner fullPage label="Loading …" />
-        <Steps current={1} />
       </div>
     );
   }
 
-  return (
-    <div className="page page--wide">
-      {busy && <LoadingSpinner fullPage label="Saving …" />}
-      <Steps current={1} detail={`Person ${block + 1} of ${BLOCK_COUNT}`} />
-      <StudyBanner />
+  const remaining = CATEGORIES.length - filled;
+  const nextLabel = lastStep
+    ? isLastBlock(block)
+      ? "Continue to the overview →"
+      : "Next person →"
+    : "Next competence →";
 
-      <div className="t1">
-        <PersonCard
-          className="span2"
-          developer={developer}
-          position={`person ${block + 1} of ${BLOCK_COUNT}`}
-          right={
-            <>
-              <button type="button" className="btn btn--ghost btn--sm" onClick={fillDefault}>
-                Default
-              </button>
-              <button
-                type="button"
-                className="btn btn--sm"
-                disabled={!complete || busy}
-                onClick={submit}
-              >
-                {busy
-                  ? "Saving …"
-                  : isLastBlock(block)
-                    ? "Continue to the overview →"
-                    : "Next person →"}
-              </button>
-            </>
-          }
+  return (
+    <div className="page page--flow">
+      {busy && <LoadingSpinner fullPage label="Saving …" />}
+      <FlowBar
+        phase="Task 1: your own view"
+        personLabel={developer.label}
+        personIndex={block}
+        personCount={BLOCK_COUNT}
+        right={
+          <button type="button" className="btn btn--ghost btn--sm" onClick={fillDefault}>
+            Fill randomly (demo)
+          </button>
+        }
+      />
+
+      <div className="shell shell--3">
+        <Rail
+          title={`Competences of ${developer.label}`}
+          items={chips}
+          hint={complete ? "All rated" : `${remaining} still to rate`}
+          onJump={go}
         />
 
-        <div className="rail">
+        <section>
+          <p className="crumb">
+            {CATEGORY_GROUPS.find((g) => g.id === category.groupId)?.label}
+          </p>
+          <h1 className="title">{category.label}</h1>
+          <p className="lede">{category.plain}.</p>
+
           <div className="card">
-            <LevelGuide open compact />
+            <h3>What the records show</h3>
+            <EvidencePanel
+              devId={devId}
+              categoryId={selected}
+              onEvidenceOpen={() =>
+                logger.log("evidence_open", {
+                  devId,
+                  categoryId: selected ?? undefined,
+                  meta: { block, task: 1 },
+                })
+              }
+            />
           </div>
-        </div>
 
-        <div className="card">
-          <h3>What the records show</h3>
-          <EvidencePanel
-            devId={devId}
-            categoryId={selected}
-            onEvidenceOpen={() =>
-              logger.log("evidence_open", {
-                devId,
-                categoryId: selected ?? undefined,
-                meta: { block, task: 1 },
-              })
-            }
-          />
-          <p className="small muted">
-            {filled} of {CATEGORIES.length} competences rated.
-          </p>
-        </div>
-
-        <div className="card">
-          <h3>Set a level for each competence</h3>
-          <p className="small muted" style={{ marginTop: -6 }}>
-            Select a competence to read its records on the left. No suggestions in this
-            step — you will see the same people again in Task 2.
-          </p>
-          <CompetenceList
-            devId={devId}
-            matrix={matrix}
-            selected={selected}
-            onSelect={(categoryId) => {
-              setSelected(categoryId);
-              logger.log("cell_open", { devId, categoryId, meta: { block } });
-            }}
-            onOpen={(categoryId) => tracker.current.open(devId, categoryId)}
-            onChange={handleChange}
-          />
-
-          {error && <p className="error">{error}</p>}
-
-          <p className="small muted" style={{ marginTop: 12, marginBottom: 0 }}>
-            {filled} of {CATEGORIES.length} rated.
-            {!complete && (
-              <>
-                {" "}
-                Rate every competence to continue — use <b>n/o</b> where the records show nothing.
-              </>
+          <div className="card">
+            <h3>Your level</h3>
+            <RatingPanel
+              name={category.label}
+              value={currentLevel}
+              onChange={(level) => handleChange(category.id, level)}
+            />
+            {error && (
+              <p className="error" role="alert">
+                {error}
+              </p>
             )}
-          </p>
-        </div>
+          </div>
+
+        </section>
+
+        <PersonLine developer={developer} />
       </div>
+
+      <BottomBar
+        text={
+          lastStep && !complete
+            ? `${remaining} not rated yet`
+            : `Competence ${ci + 1} of ${CATEGORIES.length}`
+        }
+        onBack={() => go(ci - 1)}
+        backDisabled={ci === 0 || busy}
+      >
+        {lastStep && !complete && firstOpen >= 0 && (
+          <button type="button" className="btn btn--ghost" onClick={() => go(firstOpen)}>
+            Go to the first open one
+          </button>
+        )}
+        {lastStep ? (
+          <button type="button" className="btn" disabled={!complete || busy} onClick={submit}>
+            {busy ? "Saving …" : nextLabel}
+          </button>
+        ) : (
+          <button
+            type="button"
+            className={"btn" + (currentLevel ? "" : " btn--quiet")}
+            disabled={busy}
+            onClick={() => go(ci + 1)}
+          >
+            {nextLabel}
+          </button>
+        )}
+      </BottomBar>
     </div>
   );
 }

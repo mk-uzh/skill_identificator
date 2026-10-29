@@ -3,6 +3,13 @@
 import { getAssessment, type EvidenceItem } from "@/lib/assessments";
 import { CATEGORIES } from "@/lib/taxonomy";
 
+const KIND_LABEL: Record<string, string> = {
+  commit: "Commit",
+  pull_request: "Proposal",
+  review: "Review",
+  issue: "Task",
+};
+
 /**
  * What the records show for one developer and one competence.
  *
@@ -16,21 +23,14 @@ export function EvidencePanel({
   devId,
   categoryId,
   onEvidenceOpen,
-  showHeader = true,
 }: {
   devId: string;
   categoryId: string | null;
   onEvidenceOpen?: (url: string) => void;
-  /** Off where the screen heading already names the competence. */
+  /** Kept for the old call sites; the heading is now always the screen title. */
   showHeader?: boolean;
 }) {
-  if (!categoryId) {
-    return (
-      <p className="small muted">
-        Select a competence on the right to read what the records show about it.
-      </p>
-    );
-  }
+  if (!categoryId) return null;
   const category = CATEGORIES.find((c) => c.id === categoryId);
   const assessment = getAssessment(devId, categoryId);
   if (!category || !assessment) {
@@ -39,40 +39,31 @@ export function EvidencePanel({
 
   return (
     <div>
-      {showHeader && (
-        <p className="small muted" style={{ marginTop: 0 }}>
-          Selected competence: <b>{category.label}</b>
-        </p>
+      <p className="sum">{assessment.rationale}</p>
+      <ul className="ev">
+        {assessment.evidence.map((item: EvidenceItem) => (
+          <li key={item.url}>
+            <span className={"tag tag--" + item.kind}>{KIND_LABEL[item.kind] ?? item.kind}</span>
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => onEvidenceOpen?.(item.url)}
+            >
+              {item.title}
+            </a>
+            <time dateTime={item.timestamp}>
+              {new Date(item.timestamp).toLocaleDateString("en-GB", {
+                month: "short",
+                year: "numeric",
+              })}
+            </time>
+          </li>
+        ))}
+      </ul>
+      {assessment.blind_spots && (
+        <p className="blind">Not visible here: {assessment.blind_spots}.</p>
       )}
-      <div className="ev">
-        <p style={{ marginTop: 0 }}>{assessment.rationale}</p>
-        <ul className="small">
-          {assessment.evidence.map((item: EvidenceItem) => (
-            <li key={item.url}>
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => onEvidenceOpen?.(item.url)}
-              >
-                {item.title}
-              </a>{" "}
-              <span className="muted">
-                · {item.kind.replace("_", " ")} ·{" "}
-                {new Date(item.timestamp).toLocaleDateString("en-GB", {
-                  month: "short",
-                  year: "numeric",
-                })}
-              </span>
-            </li>
-          ))}
-        </ul>
-        {assessment.blind_spots && (
-          <p className="small muted" style={{ marginBottom: 0 }}>
-            <b>Not visible here:</b> {assessment.blind_spots}.
-          </p>
-        )}
-      </div>
     </div>
   );
 }

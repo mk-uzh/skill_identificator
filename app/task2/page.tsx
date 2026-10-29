@@ -4,11 +4,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { EvidencePanel } from "@/components/EvidencePanel";
 import { ConfidenceGuide, LevelGuide } from "@/components/LevelGuide";
-import { LevelButtons } from "@/components/LevelButtons";
+import { RatingPanel } from "@/components/RatingPanel";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { PersonCard } from "@/components/PersonCard";
-import { Steps } from "@/components/Steps";
-import { StudyBanner } from "@/components/StudyBanner";
+import { BottomBar } from "@/components/BottomBar";
+import { FlowBar } from "@/components/FlowBar";
+import { PersonLine } from "@/components/PersonLine";
+import { Rail, type RailItem } from "@/components/Rail";
 import { CellTracker } from "@/lib/cell-tracker";
 import { clientSession } from "@/lib/client-session";
 import { nowIsoMs } from "@/lib/interaction-log";
@@ -20,7 +21,8 @@ import {
   emptyMatrix,
   setCell,
 } from "@/lib/matrix";
-import { CATEGORIES, DEVELOPERS } from "@/lib/study-config";
+import { SKILL_LEVELS } from "@/lib/types";
+import { CATEGORIES, CATEGORY_GROUPS, DEVELOPERS } from "@/lib/study-config";
 import { indexSuggestions, suggestionKey } from "@/lib/suggestions";
 import {
   afterSystem,
@@ -35,6 +37,7 @@ import {
 import {
   SKILL_LEVEL_LABELS,
   SKILL_LEVEL_SHORT,
+  SKILL_LEVEL_VALUE,
   type AiSuggestion,
   type Matrix,
   type SkillLevel,
@@ -259,6 +262,37 @@ export default function Task2Page() {
     markDecided(key, type);
   }
 
+  /** Demo shortcut: decides every competence of this person at random, then jumps to the last one. */
+  function fillRandom() {
+    if (!devId) return;
+    let nextMatrix = cloneMatrix(matrix);
+    const nextDecisions = { ...decisions };
+    for (const cid of steps) {
+      const s = suggestionMap.get(suggestionKey(devId, cid));
+      if (!s) continue;
+      const k = suggestionKey(devId, cid);
+      const t1 = task1Matrix[devId]?.[cid] ?? null;
+      const r = Math.random();
+      let level: SkillLevel = s.suggested;
+      if (t1 != null && r >= 0.5 && r < 0.75) level = t1;
+      else if (t1 != null && r >= 0.75) level = SKILL_LEVELS[Math.floor(Math.random() * SKILL_LEVELS.length)];
+      const type: Exclude<SuggestionDecision, "open"> =
+        level === s.suggested ? "accepted_unchanged" : level === t1 ? "rejected" : "adjusted";
+      tracker.current.open(devId, cid);
+      tracker.current.change(devId, cid);
+      tracker.current.setExplicitType(devId, cid, type);
+      if (decidedAfterMs.current[k] === undefined) {
+        decidedAfterMs.current[k] = Date.now() - (shownAt.current[k] ?? Date.now());
+      }
+      nextMatrix = setCell(nextMatrix, devId, cid, level);
+      nextDecisions[k] = type;
+    }
+    setMatrix(nextMatrix);
+    setDecisions(nextDecisions);
+    setCi(steps.length - 1);
+    logger.log("cell_change", { meta: { action: "default_fill", task: 2, block } });
+  }
+
   function handleNote(note: string) {
     if (!devId || !categoryId) return;
     setNotes((current) => ({ ...current, [key]: note }));
@@ -443,7 +477,6 @@ export default function Task2Page() {
     return (
       <div className="page page--wide">
         <LoadingSpinner fullPage label="Loading the system's view …" />
-        <Steps current={3} />
       </div>
     );
   }
@@ -451,114 +484,138 @@ export default function Task2Page() {
   const lastStep = ci === steps.length - 1;
   const lastPerson = isLastBlock(block);
   const confidencePct = Math.round(suggestion.confidence * 100);
+  const settledCount = steps.filter((cid) => {
+    const k = suggestionKey(devId, cid);
+    return (decisions[k] ?? "open") !== "open";
+  }).length;
+  const items: RailItem[] = steps.map((cid, i) => {
+    const k = suggestionKey(devId, cid);
+    return {
+      id: cid,
+      label: CATEGORIES.find((c) => c.id === cid)?.label ?? cid,
+      state: i === ci ? "current" : (decisions[k] ?? "open") !== "open" ? "done" : "todo",
+    };
+  });
+  const nextLabel = !lastStep ? "Next competence →" : lastPerson ? "Finish →" : "Next person →";
+  const decided = decision !== "open";
+  const pos = (level: SkillLevel | null) => {
+    const v = level ? SKILL_LEVEL_VALUE[level] : null;
+    return v != null ? (v - 1) * 25 : null;
+  };
+  const youPos = pos(yourLevel);
+  const sysPos = pos(suggestion.suggested);
 
   return (
-    <div className="page page--wide">
+    <div className="page page--flow">
       {busy && <LoadingSpinner fullPage label="Saving …" />}
-      <Steps
-        current={3}
-        detail={`Person ${block + 1} of ${BLOCK_COUNT} · competence ${ci + 1} of ${steps.length}`}
+      <FlowBar
+        phase="Task 2: with the system"
+        personLabel={developer.label}
+        personIndex={block}
+        personCount={BLOCK_COUNT}
+        right={
+          <button type="button" className="btn btn--ghost btn--sm" onClick={fillRandom}>
+            Fill randomly (demo)
+          </button>
+        }
       />
-      <StudyBanner />
 
-      <PersonCard developer={developer} position={`person ${block + 1} of ${BLOCK_COUNT}`} />
+      <div className="shell">
+        <Rail
+          title={`Competences of ${developer.label}`}
+          items={items}
+          hint={`${settledCount} of ${steps.length} decided`}
+          onJump={(i) => setCi(i)}
+        />
 
-      <div className="card">
-        <div className="card__title-row">
-          <h2 style={{ margin: 0 }}>
-            {developer.label} – {category.label}
-          </h2>
-          <span className="person__nav">
-            <button
-              type="button"
-              className="btn btn--ghost"
-              disabled={ci === 0 || busy}
-              onClick={() => setCi(ci - 1)}
-            >
-              ← Back
-            </button>
-            <button type="button" className="btn" disabled={busy} onClick={advance}>
-              {!lastStep
-                ? "Next competence →"
-                : lastPerson
-                  ? "Finish →"
-                  : "Next person →"}
-            </button>
-          </span>
-        </div>
-        <p className="small muted" style={{ marginTop: -4 }}>
-          {category.plain}
-        </p>
-
-        <div className="foldrow">
-          <LevelGuide open={false} />
-          <ConfidenceGuide />
-        </div>
-
-        <div className="layout">
-          <div>
-            <div className="half">
-              <div className="panel">
-                <h3>Your answer</h3>
-                <p className="panel__level">
-                  <LevelBadge level={yourLevel} />
-                  <b>{yourLevel ? SKILL_LEVEL_LABELS[yourLevel] : "not set"}</b>
-                </p>
+        <section>
+          <p className="crumb">
+            {CATEGORY_GROUPS.find((g) => g.id === category.groupId)?.label}
+          </p>
+          <h1 className="title">{category.label}</h1>
+          <div className="t2grid">
+          <div className="t2grid__main">
+          <div className="card">
+            <div className="cmp">
+              <div className="pill">
+                <small>You said</small>
+                <big>
+                  <i>{yourLevel ? SKILL_LEVEL_SHORT[yourLevel] : "–"}</i>
+                  {yourLevel ? SKILL_LEVEL_LABELS[yourLevel] : "not set"}
+                </big>
               </div>
-              <div className="panel panel--system">
-                <h3>What the system proposes</h3>
-                <p className="panel__level">
-                  <LevelBadge level={suggestion.suggested} />
-                  <b>{SKILL_LEVEL_LABELS[suggestion.suggested]}</b>
-                  <span className="sug">
-                    <span className={`dot ${confidenceClass(suggestion.confidence)}`} />
-                    confidence {confidencePct} %
+              <div className="pill pill--sys">
+                <small>The system proposes</small>
+                <big>
+                  <i>{SKILL_LEVEL_SHORT[suggestion.suggested]}</i>
+                  {SKILL_LEVEL_LABELS[suggestion.suggested]}
+                </big>
+                <div className="conf">
+                  <span className="conf__bar">
+                    <span style={{ width: `${confidencePct}%` }} className={confidenceClass(suggestion.confidence)} />
                   </span>
-                </p>
+                  Confidence {confidencePct} %
+                </div>
               </div>
             </div>
-
-            <div style={{ marginTop: 18 }}>
-              <h3>What the records show</h3>
-              <p className="small muted" style={{ marginTop: -6 }}>
-                The same records you saw in Task 1. The system reads them as{" "}
-                <b>{SKILL_LEVEL_LABELS[suggestion.suggested]}</b>.
-              </p>
-              <EvidencePanel
-                devId={devId}
-                categoryId={category.id}
-                showHeader={false}
-                onEvidenceOpen={() =>
-                  logger.log("evidence_open", {
-                    devId,
-                    categoryId: category.id,
-                    meta: { block, task: 2 },
-                  })
-                }
-              />
-            </div>
+            {youPos != null && sysPos != null && (
+              <>
+                <div className="track" aria-hidden="true">
+                  <em style={{ left: `${youPos}%` }}>{youPos === sysPos ? "You and system" : "You"}</em>
+                  <span className="track__you" style={{ left: `${youPos}%` }} />
+                  {youPos !== sysPos && <em className="track__sys-l" style={{ left: `${sysPos}%` }}>System</em>}
+                  <span className="track__sys" style={{ left: `${sysPos}%` }} />
+                </div>
+                <div className="ticks" aria-hidden="true">
+                  <span>1</span>
+                  <span>2</span>
+                  <span>3</span>
+                  <span>4</span>
+                  <span>5</span>
+                </div>
+              </>
+            )}
           </div>
 
-          <div className="side">
-            <div className="panel panel--system">
-              <h3>Your decision</h3>
+          <div className="card">
+            <h3>What the records show</h3>
+            <EvidencePanel
+              devId={devId}
+              categoryId={category.id}
+              onEvidenceOpen={() =>
+                logger.log("evidence_open", {
+                  devId,
+                  categoryId: category.id,
+                  meta: { block, task: 2 },
+                })
+              }
+            />
+          </div>
+
+          </div>
+
+          <div className="t2grid__side">
+          <div className="card">
+            <h3>Your decision</h3>
+            <div className="dec">
               <button
                 type="button"
-                className={"btn btn--wide" + (decision === "accepted_unchanged" ? " btn--on" : "")}
+                className={"dec__opt" + (decision === "accepted_unchanged" ? " dec__opt--on" : "")}
                 onClick={() => setLevel(suggestion.suggested, "accepted_unchanged", "accept")}
               >
-                Accept, set to {SKILL_LEVEL_SHORT[suggestion.suggested]}
+                Accept the proposal <span>Set to {SKILL_LEVEL_SHORT[suggestion.suggested]}</span>
               </button>
               <button
                 type="button"
-                className={"btn btn--ghost btn--wide" + (adjusting ? " btn--on" : "")}
+                className={"dec__opt" + (adjusting || decision === "adjusted" ? " dec__opt--on" : "")}
                 onClick={() => setAdjusting(!adjusting)}
+                aria-expanded={adjusting}
               >
-                Adjust, pick another level
+                Adjust <span>Pick another level</span>
               </button>
               {adjusting && (
-                <div style={{ margin: "8px 0" }}>
-                  <LevelButtons
+                <div className="dec__adjust">
+                  <RatingPanel
                     name={category.label}
                     value={currentLevel}
                     onChange={(level) => setLevel(level, "adjusted", "modify")}
@@ -567,36 +624,69 @@ export default function Task2Page() {
               )}
               <button
                 type="button"
-                className={"btn btn--ghost btn--wide" + (decision === "rejected" ? " btn--on" : "")}
+                className={"dec__opt" + (decision === "rejected" ? " dec__opt--on" : "")}
                 disabled={!yourLevel}
                 onClick={() => yourLevel && setLevel(yourLevel, "rejected", "dismiss")}
               >
-                Keep my answer{yourLevel ? `, stay at ${SKILL_LEVEL_SHORT[yourLevel]}` : ""}
+                Keep my answer{" "}
+                <span>{yourLevel ? `Stay at ${SKILL_LEVEL_SHORT[yourLevel]}` : ""}</span>
               </button>
-
-              <p className="small" style={{ margin: "14px 0 6px" }}>
-                <b>Why, optional</b>
-              </p>
-              <textarea
-                value={notes[key] ?? ""}
-                onChange={(e) => handleNote(e.target.value)}
-                placeholder="If you disagree, write briefly why. This is recorded with your answer."
-              />
             </div>
+            <label className="why" htmlFor="why">
+              Why? <span className="muted">Optional</span>
+            </label>
+            <textarea
+              id="why"
+              rows={3}
+              value={notes[key] ?? ""}
+              onChange={(e) => handleNote(e.target.value)}
+              placeholder="If you disagree, write briefly why …"
+            />
+            {error && (
+              <p className="error" role="alert">
+                {error}
+              </p>
+            )}
           </div>
-        </div>
 
-        {error && <p className="error">{error}</p>}
+          <PersonLine developer={developer} />
 
-        <p style={{ marginTop: 18 }}>
-          <button type="button" className="btn btn--ghost" disabled={busy} onClick={skipToSummary}>
-            Skip to summary, prototype only
-          </button>
-          <span className="small muted" style={{ marginLeft: 10 }}>
-            Ends the run here and marks the session as a prototype run, excluded from the analysis.
-          </span>
-        </p>
+          <aside className="side">
+            <details className="acc">
+              <summary>What the levels mean</summary>
+              <LevelGuide open />
+            </details>
+            <details className="acc">
+              <summary>What confidence means</summary>
+              <ConfidenceGuide open />
+            </details>
+          </aside>
+          </div>
+          </div>
+
+          <p className="proto">
+            <button type="button" className="linkbtn" disabled={busy} onClick={skipToSummary}>
+              Skip to summary (prototype only)
+            </button>{" "}
+            <span className="muted">Marks the session as a prototype run, excluded from the analysis.</span>
+          </p>
+        </section>
       </div>
+
+      <BottomBar
+        text={`Competence ${ci + 1} of ${steps.length}`}
+        onBack={() => setCi(ci - 1)}
+        backDisabled={ci === 0 || busy}
+      >
+        <button
+          type="button"
+          className={"btn" + (decided ? "" : " btn--quiet")}
+          disabled={busy}
+          onClick={advance}
+        >
+          {nextLabel}
+        </button>
+      </BottomBar>
     </div>
   );
 }

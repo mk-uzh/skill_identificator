@@ -2,10 +2,9 @@
 
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LevelButtons } from "@/components/LevelButtons";
-import { LevelGuide } from "@/components/LevelGuide";
+import { BottomBar } from "@/components/BottomBar";
+import { RatingPanel } from "@/components/RatingPanel";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { Steps } from "@/components/Steps";
 import { clientSession } from "@/lib/client-session";
 import { nowIsoMs } from "@/lib/interaction-log";
 import { logger } from "@/lib/logger";
@@ -128,7 +127,6 @@ export default function OverviewPage() {
     return (
       <div className="page page--wide">
         <LoadingSpinner fullPage label="Loading …" />
-        <Steps current={2} />
       </div>
     );
   }
@@ -136,17 +134,17 @@ export default function OverviewPage() {
   const selCategory = sel ? CATEGORIES.find((c) => c.id === sel.categoryId) : null;
 
   return (
-    <div className="page page--wide">
+    <div className="page page--flow page--wide2">
       {busy && <LoadingSpinner fullPage label="Preparing Task 2 …" />}
-      <Steps current={2} />
 
+      <p className="crumb">Between the two tasks</p>
+      <h1 className="title">Your assessment so far</h1>
+      <p className="lede">
+        The last chance to change something before the suggestions appear.
+      </p>
+
+      <div className="ovgrid">
       <div className="card">
-        <h1>Your assessment so far</h1>
-        <p className="small muted" style={{ marginTop: -8 }}>
-          Click a cell to change it. <b>n/o</b> means the records showed nothing about that
-          competence for that person.
-        </p>
-
         <div className="ovwrap">
           <table className="ovmatrix">
             <thead>
@@ -175,8 +173,11 @@ export default function OverviewPage() {
                             <button
                               type="button"
                               title={value ? SKILL_LEVEL_LABELS[value] : "not rated"}
+                              aria-label={`${person.label}, ${category.label}: ${
+                                value ? SKILL_LEVEL_LABELS[value] : "not rated"
+                              }`}
                               className={
-                                "lv " +
+                                "lv ovcell " +
                                 (value ? `lv--${value}` : "lv--na") +
                                 (active ? " lv--on" : "")
                               }
@@ -196,31 +197,40 @@ export default function OverviewPage() {
             </tbody>
           </table>
         </div>
-
-        {sel && selCategory && (
-          <div className="panel" style={{ marginTop: 16 }}>
-            <h3>
-              {sel.devId} · {selCategory.label}
-            </h3>
-            <LevelButtons name={selCategory.label} value={matrix[sel.devId]?.[sel.categoryId] ?? null} onChange={change} />
-          </div>
-        )}
-
-        <div className="foldrow">
-          <LevelGuide open={false} />
-        </div>
-
-        {error && <p className="error">{error}</p>}
-
-        <div className="actions">
-          <span className="small muted">
-            {missing === 0 ? "Everything rated" : `${missing} still missing`}
-          </span>
-          <button type="button" className="btn" disabled={busy || missing > 0} onClick={submit}>
-            {busy ? "Saving …" : "Continue to Task 2 →"}
-          </button>
-        </div>
       </div>
+
+      <div className="ovgrid__side">
+      {sel && selCategory ? (
+        <div className="card">
+          <h3>
+            {sel.devId}: {selCategory.label}
+          </h3>
+          <RatingPanel
+            name={selCategory.label}
+            value={matrix[sel.devId]?.[sel.categoryId] ?? null}
+            onChange={change}
+          />
+        </div>
+      ) : (
+        <div className="card">
+          <h3>Pick a cell</h3>
+          <p className="muted">Click any number to change it.</p>
+        </div>
+      )}
+      </div>
+      </div>
+
+      {error && (
+        <p className="error" role="alert">
+          {error}
+        </p>
+      )}
+
+      <BottomBar text={missing === 0 ? "Everything rated" : `${missing} still missing`}>
+        <button type="button" className="btn" disabled={busy || missing > 0} onClick={submit}>
+          {busy ? "Saving …" : "Continue to Task 2 →"}
+        </button>
+      </BottomBar>
     </div>
   );
 }
