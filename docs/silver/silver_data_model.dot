@@ -1,0 +1,36 @@
+digraph G {
+  graph [rankdir=LR, compound=true, fontname="Helvetica", nodesep=0.3, ranksep=0.7, pad=0.3, bgcolor="white"];
+  node [fontname="Helvetica", fontsize=11, shape=plain];
+  edge [fontname="Helvetica", fontsize=9, color="#7a7f75", arrowsize=0.7];
+
+  subgraph cluster_gh { label="GitHub tables"; labeljust=l; fontsize=13; fontname="Helvetica-Bold"; style="rounded,filled"; fillcolor="#fafbf8"; color="#c9cec2";
+    commit [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_commit</b></font></td></tr><tr><td align="left">sha, dev_id, issue_key,<br align="left"/>pr_number, subject, body<br align="left"/></td></tr></table>>];
+    cfile [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_commit_file</b></font></td></tr><tr><td align="left">sha, file_path, language<br align="left"/></td></tr></table>>];
+    cpatch [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_commit_patch</b></font></td></tr><tr><td align="left">sha, file_path, added_lines<br align="left"/></td></tr></table>>];
+    pr [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_pull_request</b></font></td></tr><tr><td align="left">pr_number, author_dev_id,<br align="left"/>issue_key, title, body<br align="left"/></td></tr></table>>];
+    review [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_review</b></font></td></tr><tr><td align="left">review_id, pr_number,<br align="left"/>reviewer_dev_id, state, body<br align="left"/></td></tr></table>>];
+    rcom [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_review_comment</b></font></td></tr><tr><td align="left">comment_id, pr_number,<br align="left"/>reviewer_dev_id, file_path, body<br align="left"/></td></tr></table>>];
+  }
+  subgraph cluster_ji { label="Jira tables"; labeljust=l; fontsize=13; fontname="Helvetica-Bold"; style="rounded,filled"; fillcolor="#fafbf8"; color="#c9cec2";
+    issue [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_issue</b></font></td></tr><tr><td align="left">issue_key, issue_type, status,<br align="left"/>summary, description<br align="left"/></td></tr></table>>];
+    icom [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_issue_comment</b></font></td></tr><tr><td align="left">comment_id, issue_key,<br align="left"/>author_dev_id, body<br align="left"/></td></tr></table>>];
+    icl [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#7a7f75"><tr><td bgcolor="#e6e8e3"><font color="black"><b>slv_issue_component / _label</b></font></td></tr><tr><td align="left">issue_key, component | label<br align="left"/></td></tr></table>>];
+  }
+
+  dev [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#3f8a1f"><tr><td bgcolor="#1f4a12"><font color="white"><b>slv_developer</b></font></td></tr><tr><td align="left">dev_id  (DEV-nn), n_commits,<br align="left"/>is_bot, in_scope<br align="left"/><br align="left"/>dev_id is the only person key<br align="left"/>in every other table<br align="left"/></td></tr></table>>];
+  unit [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#3f8a1f"><tr><td bgcolor="#7cb82f"><font color="black"><b>slv_evidence_unit  (docs/evidence/)</b></font></td></tr><tr><td align="left">one row per person, issue and role<br align="left"/>evidence_id = dev_id:role:issue_key<br align="left"/>role = author | reviewer<br align="left"/>text = task, commits, code, reviews,<br align="left"/>own comments, capped at 12,000 chars<br align="left"/></td></tr></table>>];
+  node [shape=box, style="rounded,filled", fillcolor="#eef6e2", color="#7cb82f", fontsize=12, margin="0.18,0.1"];
+  gold [label="Coding of the units\ngold standard by hand,\nthen the model\n(unit level l1 to l4, n/o)"];
+  prof [label="Skill profile per person\nand study interface"];
+
+  commit -> cfile [label="sha"]; commit -> cpatch [label="sha"];
+  commit -> pr [label="pr_number", style=dashed];
+  pr -> review [label="pr_number"]; pr -> rcom [label="pr_number"];
+  issue -> icom [label="issue_key"]; issue -> icl [label="issue_key"];
+  commit -> issue [label="issue_key"]; pr -> issue [label="issue_key"];
+  dev -> commit [label="dev_id", lhead=cluster_gh, style=dotted];
+  commit -> unit [label="author units", ltail=cluster_gh, color="#3f8a1f", penwidth=1.6];
+  review -> unit [label="reviewer units", color="#3f8a1f", penwidth=1.6];
+  icom -> unit [label="task and own comments", ltail=cluster_ji, color="#3f8a1f", penwidth=1.6];
+  unit -> gold [penwidth=1.6, color="#3f8a1f"]; gold -> prof [penwidth=1.6, color="#3f8a1f"];
+}

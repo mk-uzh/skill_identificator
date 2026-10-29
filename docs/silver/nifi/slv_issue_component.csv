@@ -1,0 +1,1320 @@
+issue_key,component
+NIFI-10502,Core UI
+NIFI-11295,Extensions
+NIFI-11450,Core Framework
+NIFI-11719,Core Framework
+NIFI-12456,Extensions
+NIFI-13009,Documentation & Website
+NIFI-13016,NiFi Registry
+NIFI-13230,Documentation & Website
+NIFI-13531,Extensions
+NIFI-13672,Documentation & Website
+NIFI-13673,Documentation & Website
+NIFI-13738,Extensions
+NIFI-13856,Tools and Build
+NIFI-13923,Core UI
+NIFI-13949,Extensions
+NIFI-13981,Core UI
+NIFI-13987,Extensions
+NIFI-14020,Extensions
+NIFI-14023,Core Framework
+NIFI-14029,Extensions
+NIFI-14042,Core UI
+NIFI-14059,Core Framework
+NIFI-14071,Core UI
+NIFI-14079,Core UI
+NIFI-14086,Tools and Build
+NIFI-14093,Documentation & Website
+NIFI-14094,Core Framework
+NIFI-14095,Configuration
+NIFI-14099,Extensions
+NIFI-14105,Core UI
+NIFI-14123,Extensions
+NIFI-14125,Core Framework
+NIFI-14127,NiFi Registry
+NIFI-14129,Extensions
+NIFI-14133,Tools and Build
+NIFI-14136,Core UI
+NIFI-14137,Tools and Build
+NIFI-14139,Core Framework
+NIFI-14139,Extensions
+NIFI-14139,Tools and Build
+NIFI-14141,Extensions
+NIFI-14143,Tools and Build
+NIFI-14145,Core Framework
+NIFI-14146,Extensions
+NIFI-14147,Extensions
+NIFI-14149,MiNiFi
+NIFI-14150,Extensions
+NIFI-14151,Core UI
+NIFI-14152,Core Framework
+NIFI-14154,Extensions
+NIFI-14155,Core Framework
+NIFI-14155,Examples
+NIFI-14156,Core Framework
+NIFI-14157,Extensions
+NIFI-14159,Flow Versioning
+NIFI-14163,Extensions
+NIFI-14164,Core Framework
+NIFI-14165,Core UI
+NIFI-14166,Extensions
+NIFI-14167,Tools and Build
+NIFI-14170,Extensions
+NIFI-14172,Core UI
+NIFI-14173,Core UI
+NIFI-14175,MiNiFi
+NIFI-14177,Extensions
+NIFI-14180,Core UI
+NIFI-14181,Extensions
+NIFI-14182,Core UI
+NIFI-14183,Configuration
+NIFI-14183,Core UI
+NIFI-14183,Docker
+NIFI-14184,Tools and Build
+NIFI-14185,Core UI
+NIFI-14190,Core Framework
+NIFI-14191,Core UI
+NIFI-14195,Extensions
+NIFI-14196,Core UI
+NIFI-14197,Core Framework
+NIFI-14206,NiFi Registry
+NIFI-14208,Tools and Build
+NIFI-14211,Extensions
+NIFI-14213,Flow Versioning
+NIFI-14213,NiFi Registry
+NIFI-14214,MiNiFi
+NIFI-14215,Tools and Build
+NIFI-14216,Tools and Build
+NIFI-14218,Extensions
+NIFI-14220,Core Framework
+NIFI-14221,Documentation & Website
+NIFI-14222,Documentation & Website
+NIFI-14226,Core Framework
+NIFI-14228,Core Framework
+NIFI-14229,NiFi Registry
+NIFI-14230,C2
+NIFI-14230,MiNiFi
+NIFI-14232,Core UI
+NIFI-14233,Extensions
+NIFI-14235,Core UI
+NIFI-14236,Core Framework
+NIFI-14237,Core UI
+NIFI-14238,Extensions
+NIFI-14239,Core UI
+NIFI-14241,Core UI
+NIFI-14242,Security
+NIFI-14243,Core Framework
+NIFI-14243,Core UI
+NIFI-14245,NiFi Registry
+NIFI-14247,Extensions
+NIFI-14249,Core UI
+NIFI-14250,Core UI
+NIFI-14254,Core UI
+NIFI-14255,Core Framework
+NIFI-14257,Extensions
+NIFI-14259,Core Framework
+NIFI-14263,Core UI
+NIFI-14266,Extensions
+NIFI-14267,NiFi API
+NIFI-14269,Core Framework
+NIFI-14270,Documentation & Website
+NIFI-14271,Extensions
+NIFI-14272,Extensions
+NIFI-14274,Extensions
+NIFI-14279,Core Framework
+NIFI-14282,Core Framework
+NIFI-14283,Extensions
+NIFI-14284,Extensions
+NIFI-14285,Extensions
+NIFI-14286,Core UI
+NIFI-14290,Tools and Build
+NIFI-14292,Extensions
+NIFI-14293,Extensions
+NIFI-14296,Extensions
+NIFI-14297,NiFi API
+NIFI-14298,Docker
+NIFI-14298,NiFi Registry
+NIFI-14299,Core UI
+NIFI-14300,NiFi Registry
+NIFI-14301,Extensions
+NIFI-14304,Extensions
+NIFI-14306,NiFi Registry
+NIFI-14308,Extensions
+NIFI-14309,Core Framework
+NIFI-14310,Core Framework
+NIFI-14314,Extensions
+NIFI-14315,Core UI
+NIFI-14316,Extensions
+NIFI-14317,Core UI
+NIFI-14319,NiFi Registry
+NIFI-14323,Core Framework
+NIFI-14324,NiFi API
+NIFI-14325,Extensions
+NIFI-14326,Core Framework
+NIFI-14328,Extensions
+NIFI-14333,Extensions
+NIFI-14335,Extensions
+NIFI-14347,Extensions
+NIFI-14348,Extensions
+NIFI-14349,Core UI
+NIFI-14351,Extensions
+NIFI-14352,MiNiFi
+NIFI-14353,Core Framework
+NIFI-14354,Core UI
+NIFI-14355,Flow Versioning
+NIFI-14355,NiFi Registry
+NIFI-14356,Core Framework
+NIFI-14357,Extensions
+NIFI-14358,Extensions
+NIFI-14359,Extensions
+NIFI-14360,Extensions
+NIFI-14361,Extensions
+NIFI-14363,Core Framework
+NIFI-14364,MiNiFi
+NIFI-14365,Extensions
+NIFI-14366,Core Framework
+NIFI-14366,NiFi API
+NIFI-14368,Extensions
+NIFI-14370,NiFi API
+NIFI-14371,NiFi API
+NIFI-14372,Extensions
+NIFI-14374,NiFi API
+NIFI-14375,Extensions
+NIFI-14378,Extensions
+NIFI-14380,Extensions
+NIFI-14381,Extensions
+NIFI-14383,Core Framework
+NIFI-14384,NiFi Registry
+NIFI-14386,Extensions
+NIFI-14393,Extensions
+NIFI-14394,Extensions
+NIFI-14395,Configuration
+NIFI-14396,Configuration
+NIFI-14401,Core UI
+NIFI-14402,Core UI
+NIFI-14403,Core UI
+NIFI-14405,Core Framework
+NIFI-14408,NiFi Registry
+NIFI-14410,Core Framework
+NIFI-14411,Core Framework
+NIFI-14412,Core Framework
+NIFI-14413,Core Framework
+NIFI-14413,Security
+NIFI-14414,Core Framework
+NIFI-14415,Extensions
+NIFI-14416,NiFi API
+NIFI-14417,Core UI
+NIFI-14420,Tools and Build
+NIFI-14422,NiFi Registry
+NIFI-14423,Documentation & Website
+NIFI-14424,Extensions
+NIFI-14426,Extensions
+NIFI-14427,Extensions
+NIFI-14430,Core UI
+NIFI-14431,Core UI
+NIFI-14432,MiNiFi
+NIFI-14433,Core UI
+NIFI-14434,Core Framework
+NIFI-14442,Core Framework
+NIFI-14443,Extensions
+NIFI-14445,Extensions
+NIFI-14448,Extensions
+NIFI-14449,Core Framework
+NIFI-14450,Extensions
+NIFI-14452,Core Framework
+NIFI-14453,Extensions
+NIFI-14454,NiFi API
+NIFI-14455,MiNiFi
+NIFI-14457,Extensions
+NIFI-14458,Core Framework
+NIFI-14460,Extensions
+NIFI-14461,Extensions
+NIFI-14462,Core UI
+NIFI-14463,Extensions
+NIFI-14464,Core Framework
+NIFI-14466,Extensions
+NIFI-14468,Extensions
+NIFI-14472,Extensions
+NIFI-14478,Flow Versioning
+NIFI-14480,Extensions
+NIFI-14482,Extensions
+NIFI-14484,Core Framework
+NIFI-14485,Core UI
+NIFI-14486,Extensions
+NIFI-14488,NiFi Stateless
+NIFI-14489,Core Framework
+NIFI-14489,Core UI
+NIFI-14490,Core Framework
+NIFI-14491,Extensions
+NIFI-14492,Documentation & Website
+NIFI-14496,Core Framework
+NIFI-14497,Extensions
+NIFI-14498,Core UI
+NIFI-14499,Extensions
+NIFI-14501,Extensions
+NIFI-14504,Extensions
+NIFI-14507,Core Framework
+NIFI-14508,Extensions
+NIFI-14509,Core Framework
+NIFI-14540,Extensions
+NIFI-14541,Core Framework
+NIFI-14541,Security
+NIFI-14543,Extensions
+NIFI-14547,MiNiFi
+NIFI-14552,Tools and Build
+NIFI-14555,Extensions
+NIFI-14556,Extensions
+NIFI-14557,Core UI
+NIFI-14559,Extensions
+NIFI-14560,Extensions
+NIFI-14561,Extensions
+NIFI-14562,Extensions
+NIFI-14563,Core UI
+NIFI-14564,Extensions
+NIFI-14566,Extensions
+NIFI-14568,Extensions
+NIFI-14569,Extensions
+NIFI-14570,Extensions
+NIFI-14571,NiFi API
+NIFI-14572,Core Framework
+NIFI-14575,Configuration
+NIFI-14578,Documentation & Website
+NIFI-14579,Extensions
+NIFI-14581,Core UI
+NIFI-14583,Extensions
+NIFI-14584,Extensions
+NIFI-14585,NiFi Registry
+NIFI-14586,Core Framework
+NIFI-14587,Core Framework
+NIFI-14590,Core Framework
+NIFI-14591,Core Framework
+NIFI-14595,Core Framework
+NIFI-14597,Core Framework
+NIFI-14598,Extensions
+NIFI-14600,Tools and Build
+NIFI-14616,Core Framework
+NIFI-14619,Extensions
+NIFI-14620,Core Framework
+NIFI-14621,Core Framework
+NIFI-14622,Extensions
+NIFI-14624,Extensions
+NIFI-14626,Extensions
+NIFI-14628,Extensions
+NIFI-14629,Extensions
+NIFI-14631,Core Framework
+NIFI-14632,Tools and Build
+NIFI-14634,Core UI
+NIFI-14635,Core UI
+NIFI-14636,Core UI
+NIFI-14637,Core UI
+NIFI-14639,Core UI
+NIFI-14641,Core UI
+NIFI-14645,SDLC
+NIFI-14645,Tools and Build
+NIFI-14646,Extensions
+NIFI-14648,Core UI
+NIFI-14649,Core UI
+NIFI-14653,Core UI
+NIFI-14654,Core Framework
+NIFI-14655,Core Framework
+NIFI-14656,Core Framework
+NIFI-14657,Core Framework
+NIFI-14663,Core Framework
+NIFI-14664,Examples
+NIFI-14667,Core UI
+NIFI-14669,Core Framework
+NIFI-14670,Core Framework
+NIFI-14671,Core Framework
+NIFI-14672,Core Framework
+NIFI-14673,Core Framework
+NIFI-14677,Extensions
+NIFI-14679,Core Framework
+NIFI-14680,Extensions
+NIFI-14681,Tools and Build
+NIFI-14682,Extensions
+NIFI-14687,Extensions
+NIFI-14692,Extensions
+NIFI-14693,NiFi Stateless
+NIFI-14696,Extensions
+NIFI-14700,Extensions
+NIFI-14701,NiFi Registry
+NIFI-14702,Extensions
+NIFI-14707,Core Framework
+NIFI-14708,Core Framework
+NIFI-14708,Core UI
+NIFI-14710,Core Framework
+NIFI-14710,NiFi Stateless
+NIFI-14711,Core Framework
+NIFI-14711,Core UI
+NIFI-14711,NiFi Stateless
+NIFI-14712,Core Framework
+NIFI-14715,Flow Versioning
+NIFI-14715,NiFi Registry
+NIFI-14717,Extensions
+NIFI-14718,NiFi API
+NIFI-14720,Extensions
+NIFI-14721,Security
+NIFI-14722,NiFi API
+NIFI-14726,NiFi Registry
+NIFI-14727,Extensions
+NIFI-14728,Flow Versioning
+NIFI-14728,NiFi Registry
+NIFI-14730,Extensions
+NIFI-14732,Documentation & Website
+NIFI-14732,Extensions
+NIFI-14733,Extensions
+NIFI-14734,Extensions
+NIFI-14735,Extensions
+NIFI-14736,Extensions
+NIFI-14737,Extensions
+NIFI-14739,Core Framework
+NIFI-14747,Extensions
+NIFI-14748,Core Framework
+NIFI-14751,Core UI
+NIFI-14752,Extensions
+NIFI-14753,Extensions
+NIFI-14754,NiFi API
+NIFI-14756,Extensions
+NIFI-14760,Extensions
+NIFI-14764,Tools and Build
+NIFI-14768,Extensions
+NIFI-14770,Core Framework
+NIFI-14770,Core UI
+NIFI-14778,Core UI
+NIFI-14779,Core UI
+NIFI-14781,Core Framework
+NIFI-14784,Extensions
+NIFI-14790,Core UI
+NIFI-14799,Core UI
+NIFI-14800,Core UI
+NIFI-14803,Core UI
+NIFI-14805,Extensions
+NIFI-14807,Core Framework
+NIFI-14809,Extensions
+NIFI-14810,Extensions
+NIFI-14811,Tools and Build
+NIFI-14816,Extensions
+NIFI-14820,Extensions
+NIFI-14824,Documentation & Website
+NIFI-14825,Extensions
+NIFI-14826,Docker
+NIFI-14828,Docker
+NIFI-14831,NiFi API
+NIFI-14832,NiFi API
+NIFI-14833,Extensions
+NIFI-14834,Docker
+NIFI-14836,NiFi Registry
+NIFI-14837,Extensions
+NIFI-14838,Extensions
+NIFI-14839,Extensions
+NIFI-14844,Core UI
+NIFI-14849,Documentation & Website
+NIFI-14850,NiFi API
+NIFI-14852,NiFi API
+NIFI-14854,Core UI
+NIFI-14855,Extensions
+NIFI-14861,Extensions
+NIFI-14862,Extensions
+NIFI-14864,Configuration
+NIFI-14866,Extensions
+NIFI-14867,Configuration Management
+NIFI-14869,Extensions
+NIFI-14872,Core Framework
+NIFI-14873,Core Framework
+NIFI-14876,Tools and Build
+NIFI-14878,Extensions
+NIFI-14880,Core UI
+NIFI-14881,NiFi API
+NIFI-14882,Extensions
+NIFI-14886,Flow Versioning
+NIFI-14887,Extensions
+NIFI-14888,NiFi API
+NIFI-14889,Extensions
+NIFI-14890,NiFi API
+NIFI-14893,NiFi Registry
+NIFI-14894,NiFi Registry
+NIFI-14897,Extensions
+NIFI-14903,Core UI
+NIFI-14907,Core Framework
+NIFI-14908,Extensions
+NIFI-14916,Extensions
+NIFI-14918,Core UI
+NIFI-14920,Documentation & Website
+NIFI-14921,Core Framework
+NIFI-14923,Core UI
+NIFI-14924,Core UI
+NIFI-14925,Core Framework
+NIFI-14926,Security
+NIFI-14928,Extensions
+NIFI-14929,Extensions
+NIFI-14931,NiFi API
+NIFI-14933,Extensions
+NIFI-14934,Extensions
+NIFI-14935,Flow Versioning
+NIFI-14936,Core Framework
+NIFI-14938,Security
+NIFI-14942,Extensions
+NIFI-14943,Flow Versioning
+NIFI-14944,Flow Versioning
+NIFI-14947,Core Framework
+NIFI-14949,Core UI
+NIFI-14950,Core UI
+NIFI-14952,NiFi API
+NIFI-14953,Extensions
+NIFI-14955,Core UI
+NIFI-14957,Core UI
+NIFI-14961,Core UI
+NIFI-14963,Core UI
+NIFI-14964,NiFi Registry
+NIFI-14965,Core UI
+NIFI-14968,Extensions
+NIFI-14969,Extensions
+NIFI-14972,NiFi Registry
+NIFI-14973,Extensions
+NIFI-14974,Tools and Build
+NIFI-14975,NiFi Registry
+NIFI-14977,Flow Versioning
+NIFI-14977,NiFi API
+NIFI-14979,Core UI
+NIFI-14980,NiFi Registry
+NIFI-14980,Tools and Build
+NIFI-14981,Tools and Build
+NIFI-14984,Core UI
+NIFI-14986,Core UI
+NIFI-14987,NiFi Registry
+NIFI-14988,Core UI
+NIFI-14991,Core Framework
+NIFI-14994,Extensions
+NIFI-14996,Core Framework
+NIFI-14996,Core UI
+NIFI-14999,Core Framework
+NIFI-15000,Docker
+NIFI-15001,Extensions
+NIFI-15007,NiFi Registry
+NIFI-15016,Flow Versioning
+NIFI-15017,C2
+NIFI-15017,MiNiFi
+NIFI-15024,Core Framework
+NIFI-15028,Core UI
+NIFI-15029,Core UI
+NIFI-15030,Extensions
+NIFI-15031,Core Framework
+NIFI-15032,Extensions
+NIFI-15034,Docker
+NIFI-15034,NiFi API
+NIFI-15040,Core UI
+NIFI-15042,Core UI
+NIFI-15043,Core Framework
+NIFI-15045,Core UI
+NIFI-15046,Extensions
+NIFI-15048,Extensions
+NIFI-15051,Core UI
+NIFI-15053,Extensions
+NIFI-15055,NiFi API
+NIFI-15056,Tools and Build
+NIFI-15058,Core Framework
+NIFI-15058,Core UI
+NIFI-15058,Extensions
+NIFI-15061,Core Framework
+NIFI-15062,Extensions
+NIFI-15072,Extensions
+NIFI-15073,Core Framework
+NIFI-15074,Flow Versioning
+NIFI-15075,C2
+NIFI-15076,Core Framework
+NIFI-15077,Core Framework
+NIFI-15078,Core Framework
+NIFI-15080,Core UI
+NIFI-15081,Core Framework
+NIFI-15081,Security
+NIFI-15082,NiFi API
+NIFI-15083,Core UI
+NIFI-15084,Extensions
+NIFI-15085,Core Framework
+NIFI-15085,Security
+NIFI-15086,Core UI
+NIFI-15087,Core UI
+NIFI-15088,Core Framework
+NIFI-15089,Core UI
+NIFI-15090,Core Framework
+NIFI-15091,Configuration
+NIFI-15093,Core Framework
+NIFI-15094,Extensions
+NIFI-15095,Core UI
+NIFI-15096,Core UI
+NIFI-15097,Core UI
+NIFI-15102,Core Framework
+NIFI-15103,Core Framework
+NIFI-15111,Tools and Build
+NIFI-15112,Docker
+NIFI-15113,Core Framework
+NIFI-15114,Documentation & Website
+NIFI-15115,Docker
+NIFI-15116,Documentation & Website
+NIFI-15117,Documentation & Website
+NIFI-15118,Documentation & Website
+NIFI-15119,Documentation & Website
+NIFI-15122,Core Framework
+NIFI-15123,Tools and Build
+NIFI-15124,NiFi Registry
+NIFI-15126,Tools and Build
+NIFI-15127,Documentation & Website
+NIFI-15128,Documentation & Website
+NIFI-15129,Documentation & Website
+NIFI-15130,Documentation & Website
+NIFI-15131,Documentation & Website
+NIFI-15133,Extensions
+NIFI-15135,Core Framework
+NIFI-15136,Documentation & Website
+NIFI-15137,Core Framework
+NIFI-15138,Docker
+NIFI-15140,Core Framework
+NIFI-15141,NiFi API
+NIFI-15141,NiFi Registry
+NIFI-15142,NiFi API
+NIFI-15146,Security
+NIFI-15147,Security
+NIFI-15148,Core Framework
+NIFI-15149,Core UI
+NIFI-15150,Configuration
+NIFI-15151,Extensions
+NIFI-15152,Extensions
+NIFI-15154,Extensions
+NIFI-15155,NiFi API
+NIFI-15156,NiFi API
+NIFI-15157,Extensions
+NIFI-15159,Core Framework
+NIFI-15161,Extensions
+NIFI-15162,Core Framework
+NIFI-15166,Extensions
+NIFI-15168,Extensions
+NIFI-15169,Core Framework
+NIFI-15170,Core Framework
+NIFI-15171,Extensions
+NIFI-15172,Extensions
+NIFI-15173,NiFi Registry
+NIFI-15174,NiFi Registry
+NIFI-15175,Extensions
+NIFI-15176,Extensions
+NIFI-15179,Extensions
+NIFI-15180,Extensions
+NIFI-15182,Core UI
+NIFI-15183,Extensions
+NIFI-15184,Core Framework
+NIFI-15186,Extensions
+NIFI-15187,NiFi API
+NIFI-15190,Core Framework
+NIFI-15192,MiNiFi
+NIFI-15194,Core Framework
+NIFI-15195,NiFi Registry
+NIFI-15197,Extensions
+NIFI-15198,Core UI
+NIFI-15203,Extensions
+NIFI-15204,Extensions
+NIFI-15205,Extensions
+NIFI-15208,Extensions
+NIFI-15212,Extensions
+NIFI-15213,Extensions
+NIFI-15214,Core Framework
+NIFI-15215,Core Framework
+NIFI-15215,Core UI
+NIFI-15216,Extensions
+NIFI-15223,Core Framework
+NIFI-15223,Extensions
+NIFI-15224,Extensions
+NIFI-15226,Extensions
+NIFI-15227,Core Framework
+NIFI-15228,Documentation & Website
+NIFI-15229,Extensions
+NIFI-15232,Flow Versioning
+NIFI-15234,Docker
+NIFI-15235,Core UI
+NIFI-15236,Docker
+NIFI-15239,NiFi Registry
+NIFI-15246,Documentation & Website
+NIFI-15248,NiFi API
+NIFI-15251,Extensions
+NIFI-15252,Core Framework
+NIFI-15253,Extensions
+NIFI-15254,Configuration
+NIFI-15254,Core Framework
+NIFI-15254,Extensions
+NIFI-15255,Docker
+NIFI-15256,Tools and Build
+NIFI-15257,Core Framework
+NIFI-15258,Core Framework
+NIFI-15258,Core UI
+NIFI-15259,Core Framework
+NIFI-15260,Core UI
+NIFI-15262,Configuration
+NIFI-15266,Core UI
+NIFI-15267,Core Framework
+NIFI-15269,Extensions
+NIFI-15270,Extensions
+NIFI-15276,Core UI
+NIFI-15278,Extensions
+NIFI-15283,Extensions
+NIFI-15284,Extensions
+NIFI-15285,Extensions
+NIFI-15286,Extensions
+NIFI-15287,Security
+NIFI-15288,Configuration
+NIFI-15288,Security
+NIFI-15291,Core UI
+NIFI-15292,Extensions
+NIFI-15293,Extensions
+NIFI-15294,Extensions
+NIFI-15296,Core Framework
+NIFI-15302,Extensions
+NIFI-15303,Core Framework
+NIFI-15304,Extensions
+NIFI-15305,Extensions
+NIFI-15307,Extensions
+NIFI-15311,Core Framework
+NIFI-15312,Core Framework
+NIFI-15313,Flow Versioning
+NIFI-15316,Core Framework
+NIFI-15317,Extensions
+NIFI-15321,Core Framework
+NIFI-15322,Core Framework
+NIFI-15323,Core Framework
+NIFI-15326,Core Framework
+NIFI-15330,Core Framework
+NIFI-15336,Core Framework
+NIFI-15338,Extensions
+NIFI-15340,Core Framework
+NIFI-15341,Core Framework
+NIFI-15343,Core Framework
+NIFI-15347,Core Framework
+NIFI-15349,Core Framework
+NIFI-15353,Core Framework
+NIFI-15353,Core UI
+NIFI-15356,Core Framework
+NIFI-15359,Extensions
+NIFI-15360,NiFi API
+NIFI-15361,Core Framework
+NIFI-15365,Core Framework
+NIFI-15366,Flow Versioning
+NIFI-15373,Core UI
+NIFI-15374,Core UI
+NIFI-15375,Extensions
+NIFI-15376,Core Framework
+NIFI-15377,Tools and Build
+NIFI-15378,Core UI
+NIFI-15385,Extensions
+NIFI-15394,Core Framework
+NIFI-15395,Core Framework
+NIFI-15396,Core Framework
+NIFI-15397,Flow Versioning
+NIFI-15398,Extensions
+NIFI-15401,Extensions
+NIFI-15403,Core Framework
+NIFI-15403,Security
+NIFI-15404,Core Framework
+NIFI-15404,Security
+NIFI-15405,Tools and Build
+NIFI-15406,Tools and Build
+NIFI-15408,Tools and Build
+NIFI-15409,Core UI
+NIFI-15418,Tools and Build
+NIFI-15420,Tools and Build
+NIFI-15423,Documentation & Website
+NIFI-15424,Core Framework
+NIFI-15426,Core Framework
+NIFI-15426,NiFi API
+NIFI-15427,Core Framework
+NIFI-15429,Core Framework
+NIFI-15432,Tools and Build
+NIFI-15435,Extensions
+NIFI-15437,Core UI
+NIFI-15442,Core Framework
+NIFI-15443,NiFi API
+NIFI-15444,Core UI
+NIFI-15447,Core Framework
+NIFI-15448,Extensions
+NIFI-15449,Core Framework
+NIFI-15452,Core Framework
+NIFI-15453,Core Framework
+NIFI-15455,Extensions
+NIFI-15459,Core UI
+NIFI-15465,Core Framework
+NIFI-15470,Flow Versioning
+NIFI-15471,Core UI
+NIFI-15473,Extensions
+NIFI-15477,NiFi API
+NIFI-15483,Extensions
+NIFI-15486,Core Framework
+NIFI-15487,NiFi API
+NIFI-15492,Core Framework
+NIFI-15494,Core Framework
+NIFI-15496,Core UI
+NIFI-15498,Flow Versioning
+NIFI-15499,Core UI
+NIFI-15500,Core Framework
+NIFI-15501,Core Framework
+NIFI-15503,NiFi API
+NIFI-15504,Core UI
+NIFI-15508,Core Framework
+NIFI-15510,Configuration
+NIFI-15510,Core UI
+NIFI-15512,Core Framework
+NIFI-15516,NiFi API
+NIFI-15518,Core UI
+NIFI-15519,Core Framework
+NIFI-15520,Configuration
+NIFI-15521,NiFi API
+NIFI-15522,MiNiFi
+NIFI-15524,Extensions
+NIFI-15526,Core Framework
+NIFI-15527,Extensions
+NIFI-15528,Extensions
+NIFI-15530,Core Framework
+NIFI-15537,Core UI
+NIFI-15539,Core Framework
+NIFI-15541,Core Framework
+NIFI-15541,Flow Versioning
+NIFI-15545,Extensions
+NIFI-15546,Core UI
+NIFI-15549,Core Framework
+NIFI-15550,Extensions
+NIFI-15555,Core Framework
+NIFI-15559,Core Framework
+NIFI-15561,Core Framework
+NIFI-15563,Extensions
+NIFI-15566,Extensions
+NIFI-15567,Core Framework
+NIFI-15567,Security
+NIFI-15568,Extensions
+NIFI-15570,Core Framework
+NIFI-15573,Core UI
+NIFI-15574,NiFi API
+NIFI-15575,Core Framework
+NIFI-15575,Extensions
+NIFI-15576,Extensions
+NIFI-15577,Core Framework
+NIFI-15578,Core UI
+NIFI-15582,Tools and Build
+NIFI-15583,Extensions
+NIFI-15584,Extensions
+NIFI-15586,Extensions
+NIFI-15587,Core Framework
+NIFI-15588,Core Framework
+NIFI-15589,Core Framework
+NIFI-15590,Core Framework
+NIFI-15591,Extensions
+NIFI-15592,Extensions
+NIFI-15593,Extensions
+NIFI-15594,Extensions
+NIFI-15595,Core Framework
+NIFI-15597,Extensions
+NIFI-15600,Flow Versioning
+NIFI-15601,NiFi API
+NIFI-15603,Tools and Build
+NIFI-15608,NiFi API
+NIFI-15609,NiFi API
+NIFI-15610,Core Framework
+NIFI-15614,Extensions
+NIFI-15619,Documentation & Website
+NIFI-15620,Tools and Build
+NIFI-15622,Core Framework
+NIFI-15624,Core Framework
+NIFI-15626,Core Framework
+NIFI-15627,Extensions
+NIFI-15628,Core Framework
+NIFI-15632,Tools and Build
+NIFI-15639,Documentation & Website
+NIFI-15643,Core UI
+NIFI-15644,Extensions
+NIFI-15646,NiFi API
+NIFI-15647,Core Framework
+NIFI-15649,Core Framework
+NIFI-15652,Extensions
+NIFI-15652,Tools and Build
+NIFI-15654,Core UI
+NIFI-15657,Flow Versioning
+NIFI-15658,Core Framework
+NIFI-15658,Extensions
+NIFI-15659,Flow Versioning
+NIFI-15659,NiFi Registry
+NIFI-15660,NiFi API
+NIFI-15661,Flow Versioning
+NIFI-15662,Documentation & Website
+NIFI-15664,NiFi API
+NIFI-15665,Extensions
+NIFI-15666,Documentation & Website
+NIFI-15668,Core Framework
+NIFI-15669,Extensions
+NIFI-15670,NiFi API
+NIFI-15671,Core Framework
+NIFI-15673,Flow Versioning
+NIFI-15674,Core Framework
+NIFI-15675,Tools and Build
+NIFI-15676,Tools and Build
+NIFI-15677,Core UI
+NIFI-15680,Core Framework
+NIFI-15681,Extensions
+NIFI-15682,Core Framework
+NIFI-15683,Core Framework
+NIFI-15685,Extensions
+NIFI-15687,Extensions
+NIFI-15691,Core UI
+NIFI-15692,Extensions
+NIFI-15693,Core Framework
+NIFI-15693,Security
+NIFI-15695,Core UI
+NIFI-15696,Flow Versioning
+NIFI-15697,Flow Versioning
+NIFI-15699,Core UI
+NIFI-15707,Extensions
+NIFI-15708,Core UI
+NIFI-15709,Extensions
+NIFI-15710,Core Framework
+NIFI-15710,Security
+NIFI-15711,Extensions
+NIFI-15712,Extensions
+NIFI-15714,Core Framework
+NIFI-15717,Configuration
+NIFI-15717,Core Framework
+NIFI-15717,Extensions
+NIFI-15718,Extensions
+NIFI-15720,Extensions
+NIFI-15722,Tools and Build
+NIFI-15723,Tools and Build
+NIFI-15724,Core Framework
+NIFI-15725,Extensions
+NIFI-15727,Core Framework
+NIFI-15728,NiFi API
+NIFI-15729,Extensions
+NIFI-15731,Core Framework
+NIFI-15733,NiFi API
+NIFI-15734,Extensions
+NIFI-15735,Core Framework
+NIFI-15736,Extensions
+NIFI-15738,Security
+NIFI-15739,Extensions
+NIFI-15742,Core UI
+NIFI-15743,Core Framework
+NIFI-15745,Extensions
+NIFI-15746,Flow Versioning
+NIFI-15749,Core Framework
+NIFI-15749,Flow Versioning
+NIFI-15751,Core Framework
+NIFI-15754,Extensions
+NIFI-15756,Extensions
+NIFI-15759,Extensions
+NIFI-15760,NiFi API
+NIFI-15767,Tools and Build
+NIFI-15770,Core Framework
+NIFI-15770,NiFi API
+NIFI-15774,Core Framework
+NIFI-15775,Extensions
+NIFI-15776,Flow Versioning
+NIFI-15777,Core Framework
+NIFI-15778,NiFi API
+NIFI-15778,Tools and Build
+NIFI-15781,Core UI
+NIFI-15782,Extensions
+NIFI-15783,Core Framework
+NIFI-15784,Core Framework
+NIFI-15785,Flow Versioning
+NIFI-15786,Core Framework
+NIFI-15787,NiFi API
+NIFI-15788,NiFi API
+NIFI-15789,Extensions
+NIFI-15790,Core Framework
+NIFI-15792,Extensions
+NIFI-15793,Core UI
+NIFI-15794,Tools and Build
+NIFI-15795,Extensions
+NIFI-15799,Core UI
+NIFI-15800,Extensions
+NIFI-15801,Core Framework
+NIFI-15803,Extensions
+NIFI-15804,Tools and Build
+NIFI-15805,Documentation & Website
+NIFI-15807,Extensions
+NIFI-15808,Extensions
+NIFI-15809,Extensions
+NIFI-15810,Documentation & Website
+NIFI-15811,Tools and Build
+NIFI-15812,NiFi API
+NIFI-15813,Extensions
+NIFI-15815,Core UI
+NIFI-15816,Core UI
+NIFI-15817,Core UI
+NIFI-15818,Core UI
+NIFI-15819,Core UI
+NIFI-15820,Core UI
+NIFI-15821,Core UI
+NIFI-15822,Core UI
+NIFI-15823,Core UI
+NIFI-15824,Core UI
+NIFI-15825,Core UI
+NIFI-15826,Extensions
+NIFI-15827,Core UI
+NIFI-15828,Extensions
+NIFI-15829,Core Framework
+NIFI-15830,Flow Versioning
+NIFI-15833,Core Framework
+NIFI-15834,Core Framework
+NIFI-15835,Extensions
+NIFI-15836,Extensions
+NIFI-15837,Core UI
+NIFI-15840,Core Framework
+NIFI-15842,Core Framework
+NIFI-15843,Core Framework
+NIFI-15844,Core Framework
+NIFI-15845,Core Framework
+NIFI-15845,Security
+NIFI-15846,Core Framework
+NIFI-15846,Core UI
+NIFI-15846,Extensions
+NIFI-15846,Security
+NIFI-15847,Extensions
+NIFI-15848,Core UI
+NIFI-15849,Flow Versioning
+NIFI-15851,Extensions
+NIFI-15852,Core UI
+NIFI-15853,Core UI
+NIFI-15854,Core UI
+NIFI-15855,Core UI
+NIFI-15860,Core Framework
+NIFI-15862,Core Framework
+NIFI-15863,Flow Versioning
+NIFI-15864,Core Framework
+NIFI-15865,Core Framework
+NIFI-15867,Documentation & Website
+NIFI-15868,Core Framework
+NIFI-15870,Core Framework
+NIFI-15872,Flow Versioning
+NIFI-15875,Core Framework
+NIFI-15876,Core Framework
+NIFI-15876,Security
+NIFI-15877,Core Framework
+NIFI-15879,NiFi API
+NIFI-15880,Core Framework
+NIFI-15883,Extensions
+NIFI-15885,Core Framework
+NIFI-15887,NiFi Registry
+NIFI-15888,Core UI
+NIFI-15889,Core Framework
+NIFI-15890,Extensions
+NIFI-15892,Extensions
+NIFI-15894,Core UI
+NIFI-15895,Extensions
+NIFI-15896,Core Framework
+NIFI-15897,Extensions
+NIFI-15898,Documentation & Website
+NIFI-15900,Core Framework
+NIFI-15901,Core Framework
+NIFI-15902,Core Framework
+NIFI-15904,Core Framework
+NIFI-15905,Extensions
+NIFI-15906,Core Framework
+NIFI-15907,Flow Versioning
+NIFI-15908,Core UI
+NIFI-15909,Core Framework
+NIFI-15910,Core Framework
+NIFI-15911,Core Framework
+NIFI-15912,Extensions
+NIFI-15913,Core Framework
+NIFI-15917,Core Framework
+NIFI-15918,Core Framework
+NIFI-15919,Core Framework
+NIFI-15923,Core Framework
+NIFI-15924,Documentation & Website
+NIFI-15925,Core UI
+NIFI-15926,NiFi API
+NIFI-15931,Core Framework
+NIFI-15931,Core UI
+NIFI-15932,Core Framework
+NIFI-15932,NiFi API
+NIFI-15933,Core UI
+NIFI-15934,Extensions
+NIFI-15935,Extensions
+NIFI-15936,Core Framework
+NIFI-15937,Core UI
+NIFI-15938,Extensions
+NIFI-15939,Core Framework
+NIFI-15940,Core Framework
+NIFI-15941,Core UI
+NIFI-15945,Flow Versioning
+NIFI-15948,Extensions
+NIFI-15950,Security
+NIFI-15952,Core Framework
+NIFI-15953,Core Framework
+NIFI-15954,Core Framework
+NIFI-15959,Core UI
+NIFI-15961,Extensions
+NIFI-15962,Core UI
+NIFI-15963,Core UI
+NIFI-15964,Core UI
+NIFI-15965,Core UI
+NIFI-15967,Core Framework
+NIFI-15971,MiNiFi
+NIFI-15973,Core Framework
+NIFI-15974,Extensions
+NIFI-15976,Core UI
+NIFI-15977,Extensions
+NIFI-15979,Core Framework
+NIFI-15979,NiFi API
+NIFI-15982,NiFi API
+NIFI-15983,NiFi API
+NIFI-15987,Core UI
+NIFI-15988,Core Framework
+NIFI-15988,NiFi API
+NIFI-15990,NiFi API
+NIFI-15991,Core Framework
+NIFI-15995,Documentation & Website
+NIFI-15999,NiFi API
+NIFI-16000,Core Framework
+NIFI-16001,Core Framework
+NIFI-16003,Extensions
+NIFI-16004,NiFi API
+NIFI-16008,Extensions
+NIFI-16010,Extensions
+NIFI-16011,Core Framework
+NIFI-16014,Core UI
+NIFI-16015,Core Framework
+NIFI-16017,Core Framework
+NIFI-16020,Core Framework
+NIFI-16022,NiFi API
+NIFI-16023,Core UI
+NIFI-16024,Core Framework
+NIFI-16025,Core UI
+NIFI-16028,Extensions
+NIFI-16029,Documentation & Website
+NIFI-16033,Documentation & Website
+NIFI-16035,Core UI
+NIFI-16036,Core UI
+NIFI-16038,NiFi API
+NIFI-16039,Core UI
+NIFI-16040,Extensions
+NIFI-16040,Flow Versioning
+NIFI-16042,Core UI
+NIFI-16043,Extensions
+NIFI-16045,NiFi API
+NIFI-16046,Core Framework
+NIFI-16046,Core UI
+NIFI-16046,Extensions
+NIFI-16048,NiFi API
+NIFI-16051,Core Framework
+NIFI-16053,Extensions
+NIFI-16058,Flow Versioning
+NIFI-16059,Core UI
+NIFI-16060,Core Framework
+NIFI-16061,Extensions
+NIFI-16063,NiFi API
+NIFI-16064,Flow Versioning
+NIFI-16065,NiFi API
+NIFI-16066,Extensions
+NIFI-16067,Core Framework
+NIFI-16069,Core Framework
+NIFI-16072,Core Framework
+NIFI-16075,NiFi Registry
+NIFI-16076,Extensions
+NIFI-16077,Extensions
+NIFI-16078,Docker
+NIFI-16079,Core UI
+NIFI-16080,Extensions
+NIFI-16082,Core Framework
+NIFI-16084,Core Framework
+NIFI-16085,Core Framework
+NIFI-16086,Extensions
+NIFI-16086,Flow Versioning
+NIFI-16087,Extensions
+NIFI-16087,Flow Versioning
+NIFI-16089,Core UI
+NIFI-16090,Core UI
+NIFI-16091,NiFi API
+NIFI-16097,Extensions
+NIFI-16105,Core Framework
+NIFI-16109,Core UI
+NIFI-16110,MiNiFi
+NIFI-16112,Core Framework
+NIFI-16112,Security
+NIFI-16115,Extensions
+NIFI-16120,Core Framework
+NIFI-16123,Core Framework
+NIFI-16125,Core Framework
+NIFI-16131,Core Framework
+NIFI-16131,Core UI
+NIFI-16132,Core Framework
+NIFI-16135,Core UI
+NIFI-16136,Core Framework
+NIFI-16138,Core UI
+NIFI-16139,Core Framework
+NIFI-16146,Core Framework
+NIFI-16148,Core Framework
+NIFI-16148,Security
+NIFI-16152,Core Framework
+NIFI-16154,Core Framework
+NIFI-16156,Core UI
+NIFI-16164,NiFi API
+NIFI-16165,NiFi API
+NIFI-16166,Core Framework
+NIFI-16168,Core Framework
+NIFI-16169,Core UI
+NIFI-16170,Core Framework
+NIFI-16172,Core UI
+NIFI-16175,Documentation & Website
+NIFI-16178,Core Framework
+NIFI-16179,Core Framework
+NIFI-16179,Core UI
+NIFI-16181,Core Framework
+NIFI-16183,Tools and Build
+NIFI-16184,Core Framework
+NIFI-16186,Extensions
+NIFI-16187,Extensions
+NIFI-16192,Core Framework
+NIFI-16195,Extensions
+NIFI-16200,Core Framework
+NIFI-16205,Core Framework
+NIFI-16207,Extensions
+NIFI-16208,Core Framework
+NIFI-16209,Tools and Build
+NIFI-16210,Extensions
+NIFI-16211,NiFi Registry
+NIFI-16212,Extensions
+NIFI-16214,Extensions
+NIFI-16215,Core Framework
+NIFI-16217,Core UI
+NIFI-16219,Tools and Build
+NIFI-16221,Core UI
+NIFI-16226,Core Framework
+NIFI-16228,Flow Versioning
+NIFI-16229,Core Framework
+NIFI-16230,Core Framework
+NIFI-16233,Tools and Build
+NIFI-16234,Extensions
+NIFI-16236,Core Framework
+NIFI-16238,Core Framework
+NIFI-16239,NiFi Stateless
+NIFI-16240,Core UI
+NIFI-16241,Extensions
+NIFI-16242,Core Framework
+NIFI-16244,Extensions
+NIFI-16246,Tools and Build
+NIFI-16247,Extensions
+NIFI-16248,Core Framework
+NIFI-16250,Core UI
+NIFI-16253,NiFi API
+NIFI-16255,NiFi API
+NIFI-16256,Core Framework
+NIFI-16256,Security
+NIFI-16258,Security
+NIFI-16259,NiFi API
+NIFI-16260,Extensions
+NIFI-16261,Core Framework
+NIFI-16261,NiFi API
+NIFI-16262,Extensions
+NIFI-16263,Core Framework
+NIFI-16264,Tools and Build
+NIFI-16265,Core Framework
+NIFI-16265,Tools and Build
+NIFI-16266,Configuration Management
+NIFI-16269,Core Framework
+NIFI-16269,Core UI
+NIFI-16269,NiFi API
+NIFI-16270,NiFi API
+NIFI-16271,Core Framework
+NIFI-16272,Extensions
+NIFI-16275,Core Framework
+NIFI-16276,Flow Versioning
+NIFI-16277,Core Framework
+NIFI-16280,Core Framework
+NIFI-16281,Core Framework
+NIFI-16281,Security
+NIFI-16282,Core Framework
+NIFI-16282,Security
+NIFI-16283,Core Framework
+NIFI-16283,Core UI
+NIFI-16284,Core Framework
+NIFI-16285,Core Framework
+NIFI-16286,Core Framework
+NIFI-16288,Core Framework
+NIFI-16289,Extensions
+NIFI-16290,Core Framework
+NIFI-16291,Core Framework
+NIFI-16291,Security
+NIFI-16292,Extensions
+NIFI-16293,Extensions
+NIFI-16296,Core Framework
+NIFI-16297,Core Framework
+NIFI-16298,Core Framework
+NIFI-16299,Core Framework
+NIFI-16299,Security
+NIFI-16300,Core Framework
+NIFI-16300,Security
+NIFI-16302,Core UI
+NIFI-16303,Core Framework
+NIFI-16303,Security
+NIFI-16305,Core Framework
+NIFI-16307,NiFi API
+NIFI-16310,Flow Versioning
+NIFI-16311,Extensions
+NIFI-16319,Core Framework
+NIFI-16320,Core Framework
+NIFI-16321,Core Framework
+NIFI-16323,Extensions
+NIFI-16324,Core Framework
+NIFI-16325,NiFi API
+NIFI-16327,Extensions
+NIFI-16329,NiFi Registry
+NIFI-16331,Core UI
+NIFI-16332,Core Framework
+NIFI-16335,NiFi API
+NIFI-16337,Core Framework
+NIFI-16337,Core UI
+NIFI-16339,Core Framework
+NIFI-16341,Core Framework
+NIFI-16343,Core Framework
+NIFI-16346,NiFi Registry
+NIFI-16347,Tools and Build
+NIFI-16348,Tools and Build
+NIFI-16352,Core UI
+NIFI-16353,Core Framework
+NIFI-16354,MiNiFi
+NIFI-16357,Core Framework
+NIFI-16358,NiFi Stateless
+NIFI-16359,Flow Versioning
+NIFI-16360,Extensions
+NIFI-16362,Core Framework
+NIFI-16364,NiFi API
+NIFI-16365,Core Framework
+NIFI-16365,Core UI
+NIFI-16365,Documentation & Website
+NIFI-16365,Extensions
+NIFI-16369,Extensions
+NIFI-16373,Extensions
+NIFI-16374,Core Framework
+NIFI-16375,Extensions
+NIFI-16376,Core Framework
+NIFI-16377,Core Framework
+NIFI-16377,NiFi API
+NIFI-16378,Core Framework
+NIFI-16380,Extensions
+NIFI-16382,NiFi API
+NIFI-16387,Extensions
+NIFI-16391,Flow Versioning
+NIFI-16394,Core UI
+NIFI-16395,Core UI
+NIFI-16396,Core UI
+NIFI-16397,Core UI
+NIFI-16398,Core UI
+NIFI-16400,Core UI
+NIFI-16401,Core UI
+NIFI-16402,Core UI
+NIFI-16403,Core UI
+NIFI-16404,Core Framework
+NIFI-16406,Core UI
+NIFI-16408,Core UI
+NIFI-16409,Extensions
+NIFI-16411,Core UI
+NIFI-2482,Core Framework
+NIFI-5579,Core Framework
+NIFI-6532,Documentation & Website
+NIFI-7307,Extensions
+NIFI-8812,NiFi Registry
+NIFI-8816,NiFi Registry
+NIFI-9369,Extensions
