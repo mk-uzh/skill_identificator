@@ -133,6 +133,7 @@ CREATE INDEX IF NOT EXISTS ix_tbl_slv_rcomment_pr ON tbl_slv_review_comment(pr_n
 CREATE TABLE IF NOT EXISTS tbl_slv_evidence_unit (
   evidence_id       TEXT PRIMARY KEY,
   dev_id            TEXT NOT NULL REFERENCES tbl_slv_developer(dev_id),
+  role              TEXT NOT NULL DEFAULT 'author',   -- 'author' | 'reviewer'
   issue_key         TEXT,
   n_commits         INTEGER,
   n_files           INTEGER,
