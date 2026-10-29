@@ -27,7 +27,8 @@ import { DEVELOPERS } from "./study-config";
 /** "own" = participant rates alone, "system" = suggestions shown. */
 export type Phase = "own" | "system";
 
-export const BLOCK_COUNT = DEVELOPERS.length;
+export const PERSONS_PER_PARTICIPANT = 3;
+export const BLOCK_COUNT = Math.min(PERSONS_PER_PARTICIPANT, DEVELOPERS.length);
 
 /** FNV-1a. Deterministic so a reload cannot reshuffle the order. */
 function hashCode(seed: string): number {
@@ -62,7 +63,7 @@ export function developerOrder(participantCode: string): string[] {
     const j = Math.floor(random() * (i + 1));
     [ids[i], ids[j]] = [ids[j], ids[i]];
   }
-  return ids;
+  return ids.slice(0, BLOCK_COUNT);
 }
 
 export function parseBlock(raw: string | null | undefined): number {
