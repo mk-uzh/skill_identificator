@@ -142,4 +142,4 @@ print(f"  commit -> PR      : {len(pr_refs & pr_loaded)} of {len(pr_refs)} "
       f"referenced pull requests are loaded")
 
 con.close()
-print("\nTo browse the data: open pipeline/data/bronze/bronze.sqlite in a database tool.")
+print("\nTo browse the data: open the project's bronze.sqlite (pipeline/data/<project>/bronze/) in a database tool.")

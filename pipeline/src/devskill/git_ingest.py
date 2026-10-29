@@ -104,7 +104,7 @@ def read_patches(repo_path: str | Path, since: str, until: str | None = None,
                  max_lines: int = 200, max_added_per_file: int = 1000):
     """Yield (sha, file_path, added_lines, n_added, n_removed, truncated).
 
-    Requires a clone that carries file contents (see shallow_since in params.yaml).
+    Requires a clone that carries file contents (see shallow_since in conf/<project>.yaml).
     """
     # A shallow clone turns its oldest commit into a parentless root commit, whose
     # diff would be the whole source tree. Those commits are skipped; set

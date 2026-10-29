@@ -37,9 +37,9 @@ Bronze (order is free, every run is resumable):
 Silver (the order matters):
 
 5. `slv_01_entities.py` — merges identities, resolves keys, writes the `tbl_slv_*` tables (schema in `sql/01_silver.sql`).
-6. `slv_02_dataprofile.py` — writes `data/silver/data_profile.html`: what the data can and cannot show.
+6. `slv_02_dataprofile.py` — writes `data/<project>/silver/data_profile.html`: what the data can and cannot show.
 7. `slv_03_evidence_units.py` — one evidence unit per person, issue and role (`author` or `reviewer`), as a text block capped at 12,000 characters. E-mail addresses and `@handles` are removed before the text can reach a model. Rebuilds the table on every run.
-8. `slv_04_sample_units.py` — seeded draw of evidence units for coding by hand, stratified by role. `py pipeline/notebooks/slv/slv_04_sample_units.py --n 120` writes a readable `.md` and the drawn ids as `.csv` into `data/silver/samples/`. The sample becomes the goldstandard, so keep the files of the final draw.
+8. `slv_04_sample_units.py` — seeded draw of evidence units for coding by hand, stratified by role. `py pipeline/notebooks/slv/slv_04_sample_units.py --n 120` writes a readable `.md` and the drawn ids as `.csv` into `data/<project>/silver/samples/`. The sample becomes the goldstandard, so keep the files of the final draw.
 
 Taxonomy and gold are not built yet:
 
@@ -58,7 +58,7 @@ cp .env.example .env          # add GITHUB_TOKEN
 py notebooks/brz/brz_gh_commits.py     # from the pipeline/ folder; on Linux or macOS use python
 ```
 
-All parameters live in `conf/params.yaml` — observation window, project,
+All parameters live in `conf/<project>.yaml` — observation window, project,
 thresholds, model name. No notebook carries parameters of its own.
 
 ## Privacy
@@ -80,13 +80,14 @@ built on them. `slv_03` and `slv_04` run from any working directory (they locate
 ## Several projects
 
 The pipeline runs on one project at a time. The project is chosen with the environment
-variable `DEVSKILL_PROJECT`; without it `conf/params.yaml` (sakai) is used, so existing
-runs stay as they are.
+variable `DEVSKILL_PROJECT`; without it sakai is used.
 
 | Project | Config | Local data |
 |---|---|---|
-| sakai (default) | `conf/params.yaml` | `data/` |
-| nifi | `conf/nifi.yaml` | `data/nifi/` (bronze, silver, mapping.secrets.json, .salt, samples) |
+| sakai (default) | `conf/sakai.yaml` | `data/sakai/` |
+| nifi | `conf/nifi.yaml` | `data/nifi/` |
+
+Both projects have the same layout: `bronze/`, `silver/` (with `samples/`), `gold/`, `clones/`, `mapping.secrets.json`, `.salt`. All of it stays local (`pipeline/data/` is ignored by git).
 
 PowerShell, from `pipeline/`:
 

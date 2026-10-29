@@ -1,4 +1,4 @@
-# Parameters for every pipeline step. Single source of truth.
+# Sakai. Select with DEVSKILL_PROJECT=sakai (the default). Everything project-specific lives under data/sakai/.
 project:
   name: sakai
   jira_base: "https://sakaiproject.atlassian.net"
@@ -6,7 +6,8 @@ project:
   github_owner: sakaiproject
   github_repo: sakai
   repo_url: "https://github.com/sakaiproject/sakai.git"
-  repo_path: "data/clones/sakai"      # local clone, relative to pipeline/
+  repo_path: "data/sakai/clones/sakai"   # local clone, relative to pipeline/
+  data_root: "data/sakai"          # mapping.secrets.json, .salt
   # Clone carries file contents from this date on, so patches can be read.
   # Set it before window.start; boundary commits then fall outside the window.
   shallow_since: "2024-11-01"
@@ -21,10 +22,10 @@ scope:
   bot_patterns: ["dependabot", "[bot]", "renovate", "github-actions"]
 
 paths:
-  bronze_dir: "data/bronze"
-  sqlite_bronze: "data/bronze/bronze.sqlite"
-  sqlite_silver: "data/silver/silver.sqlite"
-  sqlite_gold: "data/gold/gold.sqlite"
+  bronze_dir: "data/sakai/bronze"
+  sqlite_bronze: "data/sakai/bronze/bronze.sqlite"
+  sqlite_silver: "data/sakai/silver/silver.sqlite"
+  sqlite_gold: "data/sakai/gold/gold.sqlite"
 
 github:
   # Token optional but strongly recommended: 60 requests/hour without, 5000 with.

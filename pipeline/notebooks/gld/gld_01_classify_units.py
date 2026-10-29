@@ -14,7 +14,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-SAMPLE = ROOT / "pipeline/data/silver/samples/sample_n120_seed42"
+sys.path.insert(0, str(ROOT / "pipeline/src"))
+from devskill.config import Config
+CFG = Config()                       # project from DEVSKILL_PROJECT (default sakai)
+DATA = CFG.data_root
+SAMPLE = DATA / "silver/samples" / ("sample_n120_seed42" if CFG.project["name"] == "sakai" else "sample_n60_seed42")
 PROMPT = ROOT / "pipeline/prompts/unit_classification_v1.md"
 SCHEMA = ROOT / "pipeline/prompts/unit_schema.json"
 TAX = ROOT / "model/taxonomy.v3.json"
@@ -31,7 +35,7 @@ def load_units():
     for i, (p, r) in enumerate(zip(parts, rows), 1):
         a = p.index("```text\n") + 8
         b = p.rindex("\n```\n\n**What this person can do")
-        units.append(dict(n=i, split="dev" if i <= 60 else "test", evidence_id=r["evidence_id"],
+        units.append(dict(n=i, split="dev" if (i <= 60 or CFG.project["name"] != "sakai") else "test", evidence_id=r["evidence_id"],
                           role=r["role"], text=p[a:b]))
     return units
 
@@ -78,7 +82,7 @@ def main():
     units = [u for u in load_units() if a.split in ("all", u["split"])]
     if a.limit:
         units = units[: a.limit]
-    out = Path(a.out or ROOT / f"pipeline/data/gold/runs/{a.provider}_{a.model or 'na'}_{a.split}.jsonl")
+    out = Path(a.out or DATA / f"gold/runs/{a.provider}_{a.model or 'na'}_{a.split}.jsonl")
     out.parent.mkdir(parents=True, exist_ok=True)
 
     n_bad = 0

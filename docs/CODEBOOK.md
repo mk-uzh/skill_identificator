@@ -1,6 +1,6 @@
 # Codebook (proposal v1)
 
-Derived from open coding of 120 evidence units (`pipeline/data/silver/samples/sample_n120_seed42.*`, seed 42). The coding in `coding_proposal_n120_seed42.xlsx` is a first pass for the codebook. The gold standard is the researcher's own judgement, made on these units before any model sees them.
+Derived from open coding of 120 evidence units (`pipeline/data/sakai/silver/samples/sample_n120_seed42.*`, seed 42). The coding in `coding_proposal_n120_seed42.xlsx` is a first pass for the codebook. The gold standard is the researcher's own judgement, made on these units before any model sees them.
 
 ## What the sample showed
 

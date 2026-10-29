@@ -3,7 +3,7 @@
 # # BRZ — code changes per commit
 # Stores the added lines per changed file, capped per file. Generated files,
 # translation bundles and binaries are skipped: they carry no competence signal.
-# Requires a clone with file contents (shallow_since in params.yaml).
+# Requires a clone with file contents (shallow_since in conf/<project>.yaml).
 
 # %%
 import sys

@@ -17,7 +17,7 @@ Usage:
     py pipeline/notebooks/slv/slv_04_sample_units.py --n 120        # full set
     py pipeline/notebooks/slv/slv_04_sample_units.py --n 120 --seed 7
 
-Writes into pipeline/data/silver/samples/:
+Writes into pipeline/data/<project>/silver/samples/:
     sample_n<N>_seed<S>.md    readable, one unit per section
     sample_n<N>_seed<S>.csv   the drawn ids, for the record
 """

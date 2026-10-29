@@ -1,4 +1,4 @@
-"""Loads conf/params.yaml and resolves paths relative to the pipeline root."""
+"""Loads conf/<project>.yaml and resolves paths relative to the pipeline root."""
 from __future__ import annotations
 import os
 from pathlib import Path
@@ -12,9 +12,9 @@ class Config:
         if path:
             p = Path(path)
         else:
-            # DEVSKILL_PROJECT=nifi selects conf/nifi.yaml; unset keeps conf/params.yaml (sakai).
+            # DEVSKILL_PROJECT=nifi selects conf/nifi.yaml; unset means sakai.
             name = os.environ.get("DEVSKILL_PROJECT", "").strip().lower()
-            p = PIPELINE_ROOT / "conf" / (f"{name}.yaml" if name and name != "sakai" else "params.yaml")
+            p = PIPELINE_ROOT / "conf" / f"{name or 'sakai'}.yaml"
         with open(p, encoding="utf-8") as f:
             self.raw = yaml.safe_load(f)
         self.project = self.raw["project"]
@@ -35,7 +35,7 @@ class Config:
 
     @property
     def data_root(self) -> Path:
-        """Folder for project-specific local files (mapping, salt, samples). Default: data/."""
+        """Folder for project-specific local files (mapping, salt, samples)."""
         return PIPELINE_ROOT / self.project.get("data_root", "data")
 
     @property

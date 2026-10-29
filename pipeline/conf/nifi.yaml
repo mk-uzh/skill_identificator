@@ -1,5 +1,5 @@
 # Second project for the comparison. Select with DEVSKILL_PROJECT=nifi (see README).
-# Everything project-specific lives under data/nifi/, so the sakai files stay untouched.
+# Everything project-specific lives under data/nifi/, next to data/sakai/.
 project:
   name: nifi
   jira_base: "https://issues.apache.org/jira"   # self-hosted Jira, anonymous read
@@ -7,7 +7,7 @@ project:
   github_owner: apache
   github_repo: nifi
   repo_url: "https://github.com/apache/nifi.git"
-  repo_path: "data/clones/nifi"
+  repo_path: "data/nifi/clones/nifi"
   data_root: "data/nifi"          # mapping.secrets.json, .salt
   shallow_since: "2024-11-01"
 
