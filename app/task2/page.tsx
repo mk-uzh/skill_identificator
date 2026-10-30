@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { EvidencePanel } from "@/components/EvidencePanel";
-import { ConfidenceGuide, LevelGuide } from "@/components/LevelGuide";
+import { ConfidenceGuide } from "@/components/LevelGuide";
 import { RatingPanel } from "@/components/RatingPanel";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { BottomBar } from "@/components/BottomBar";
@@ -22,7 +22,8 @@ import {
   setCell,
 } from "@/lib/matrix";
 import { SKILL_LEVELS } from "@/lib/types";
-import { CATEGORIES, CATEGORY_GROUPS, DEVELOPERS } from "@/lib/study-config";
+import { useProject } from "@/lib/project-context";
+import { CATEGORIES, CATEGORY_GROUPS } from "@/lib/study-config";
 import { indexSuggestions, suggestionKey } from "@/lib/suggestions";
 import {
   afterSystem,
@@ -191,9 +192,10 @@ export default function Task2Page() {
   }, [router]);
 
   const devId = order[block];
+  const { developers } = useProject();
   const developer = useMemo(
-    () => DEVELOPERS.find((d) => d.id === devId) ?? null,
-    [devId],
+    () => developers.find((d) => d.id === devId) ?? null,
+    [developers, devId],
   );
   const blockSuggestions = useMemo(
     () => allSuggestions.filter((s) => s.devId === devId),
@@ -652,10 +654,6 @@ export default function Task2Page() {
           <PersonLine developer={developer} />
 
           <aside className="side">
-            <details className="acc">
-              <summary>What the levels mean</summary>
-              <LevelGuide open />
-            </details>
             <details className="acc">
               <summary>What confidence means</summary>
               <ConfidenceGuide open />

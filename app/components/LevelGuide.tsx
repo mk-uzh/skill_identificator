@@ -17,15 +17,15 @@ import {
 export function LevelGuide({
   open = true,
   compact = false,
+  bare = false,
 }: {
   open?: boolean;
   compact?: boolean;
+  /** Only the table, for use inside another collapsible. */
+  bare?: boolean;
 }) {
   const anchors = compact ? LEVEL_ANCHORS_SHORT : LEVEL_ANCHORS;
-  return (
-    <details className="guide" open={open}>
-      <summary>Level guide</summary>
-      <div className="guide__body">
+  const table = (
         <table className="lvtab">
           <tbody>
             {[...ORDERED_LEVELS, "not_observable" as const].map((level) => (
@@ -54,7 +54,12 @@ export function LevelGuide({
             ))}
           </tbody>
         </table>
-      </div>
+  );
+  if (bare) return table;
+  return (
+    <details className="guide" open={open}>
+      <summary>Level guide</summary>
+      <div className="guide__body">{table}</div>
     </details>
   );
 }

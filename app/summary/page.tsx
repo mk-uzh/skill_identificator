@@ -7,7 +7,8 @@ import { BottomBar } from "@/components/BottomBar";
 import { clientSession } from "@/lib/client-session";
 import { cloneMatrix, coalesceMatrix } from "@/lib/matrix";
 import { futureWork, labelOf, roleFits } from "@/lib/roles";
-import { CATEGORIES, DEVELOPERS } from "@/lib/study-config";
+import { useProject } from "@/lib/project-context";
+import { CATEGORIES } from "@/lib/study-config";
 import { BLOCK_COUNT, developerOrder, ownHref } from "@/lib/study-flow";
 import {
   SKILL_LEVEL_SHORT,
@@ -87,12 +88,13 @@ export default function SummaryPage() {
     })();
   }, [router]);
 
+  const { developers } = useProject();
   const people = useMemo(
     () =>
       order
-        .map((id) => DEVELOPERS.find((d) => d.id === id))
-        .filter((d): d is (typeof DEVELOPERS)[number] => d != null),
-    [order],
+        .map((id) => developers.find((d) => d.id === id))
+        .filter((d): d is (typeof developers)[number] => d != null),
+    [order, developers],
   );
 
   const stats = useMemo(() => {
@@ -153,7 +155,7 @@ export default function SummaryPage() {
   }
 
   const devId = tab === "all" ? null : tab;
-  const developer = devId ? DEVELOPERS.find((d) => d.id === devId) ?? null : null;
+  const developer = devId ? developers.find((d) => d.id === devId) ?? null : null;
 
   const fw = devId ? futureWork(task2, devId) : null;
   const fits = devId ? roleFits(task2, devId) : [];

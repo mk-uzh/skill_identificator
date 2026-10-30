@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { CellInteractionRow } from "@/lib/interaction-log";
+import { parseProject } from "@/lib/project";
 import { appendInteractions, readSession, updateSession } from "@/lib/store";
 import {
   assessmentsToMatrix,
@@ -78,8 +79,9 @@ export async function POST(request: Request) {
       }
 
       // Suggestions from assessments.json — synchronous, no heavy compute.
-      const suggestions = buildSuggestionsFromAssessments();
-      const prefill = assessmentsToMatrix();
+      const project = parseProject(session.project);
+      const suggestions = buildSuggestionsFromAssessments(project);
+      const prefill = assessmentsToMatrix(project);
       return NextResponse.json({
         ok: true,
         suggestions,

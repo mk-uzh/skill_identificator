@@ -1,9 +1,12 @@
 // ---------------------------------------------------------------------------
 // Demo assessments generator
 //
-//   node tools/make-demo-assessments.mjs
+//   node tools/make-demo-assessments.mjs [sakai|nifi]
 //
-// Writes study-data/assessments.json: one entry per developer x competence.
+// Writes study-data/assessments.json (sakai, the default) or
+// study-data/assessments.nifi.json (nifi): one entry per developer x competence.
+// Both projects share the same study script (levels, wrong cells); only the
+// wording differs, so the two are comparable.
 // This is PLACEHOLDER content standing in for the real pipeline output. It is
 // generated rather than hand-written so that the file stays consistent with
 // model/taxonomy.json, and seeded so that re-running produces byte-identical
@@ -15,6 +18,9 @@
 
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
+
+const PROJECT = process.argv[2] ?? "sakai";
+if (!["sakai", "nifi"].includes(PROJECT)) throw new Error(`unknown project ${PROJECT}`);
 
 const taxonomy = JSON.parse(readFileSync("model/taxonomy.json", "utf8"));
 const COMPETENCES = taxonomy.categories.map((c) => c.key);
@@ -49,14 +55,49 @@ const INCORRECT = new Set([
   "DEV-09::ict_debugging_tools",
 ]);
 
-const AREA = {
-  "DEV-01": "the course tools",
-  "DEV-02": "the import and export of course material",
-  "DEV-04": "the part that stores course material and marks",
-  "DEV-06": "the screens teachers see",
-  "DEV-07": "the quiz tool and the gradebook",
-  "DEV-09": "a number of small areas",
+const AREAS = {
+  sakai: {
+    "DEV-01": "the course tools",
+    "DEV-02": "the import and export of course material",
+    "DEV-04": "the part that stores course material and marks",
+    "DEV-06": "the screens teachers see",
+    "DEV-07": "the quiz tool and the gradebook",
+    "DEV-09": "a number of small areas",
+  },
+  nifi: {
+    "DEV-01": "the engine that runs a data flow",
+    "DEV-02": "the import and export of flow definitions",
+    "DEV-04": "the part that stores data in transit and its history",
+    "DEV-06": "the canvas on which users build flows",
+    "DEV-07": "the processors and the shared services they use",
+    "DEV-09": "a number of small areas",
+  },
 };
+const AREA = AREAS[PROJECT];
+
+// Wording that is specific to one project. The sakai texts are the originals;
+// for nifi each is swapped for its counterpart when a sentence is filled in.
+const WORDS = {
+  sakai: {
+    lock: "locking a quiz while it is being published",
+    form: "forms that teachers fill in",
+    scheme: "stop the error when a marking scheme is attached",
+    access: "usable with a screen reader",
+    avail: "the platform stayed available",
+  },
+  nifi: {
+    lock: "two processors writing to the same queue",
+    form: "dialogs in which users configure a processor",
+    scheme: "stop the error when a processor is configured without a required property",
+    access: "usable with the keyboard only",
+    avail: "the cluster stayed available",
+  },
+};
+const localise = (str) =>
+  Object.keys(WORDS.sakai).reduce(
+    (acc, k) => acc.replaceAll(WORDS.sakai[k], WORDS[PROJECT][k]),
+    str,
+  );
 
 // What the records cannot show, per competence (DP7).
 const BLIND = {
@@ -176,7 +217,7 @@ const assessments = [];
 for (const [devId, levels] of Object.entries(SCRIPT)) {
   levels.forEach((level, i) => {
     const key = COMPETENCES[i];
-    const r = rngFrom(`${devId}::${key}`);
+    const r = rngFrom(PROJECT === "sakai" ? `${devId}::${key}` : `${PROJECT}::${devId}::${key}`);
     const total = TOTALS[devId];
     const area = AREA[devId];
     const observed = level !== N;
@@ -188,9 +229,10 @@ for (const [devId, levels] of Object.entries(SCRIPT)) {
     const fill = (s) =>
       s.replace("{total}", total).replace("{a}", a).replace("{b}", b)
        .replace("{c}", c).replace("{d}", d).replace("{area}", area);
+    const say = (str) => localise(fill(str));
 
     const rationale = observed
-      ? `${fill(NARRATIVE[key])} ${fill(LEVEL_CLAUSE[level])}`
+      ? `${say(NARRATIVE[key])} ${say(LEVEL_CLAUSE[level])}`
       : `Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in ${area} that touches it. This is a declared blind spot, not a low rating.`;
 
     const kinds = observed
@@ -198,9 +240,9 @@ for (const [devId, levels] of Object.entries(SCRIPT)) {
       : ["issue"];
     const evidence = (kinds.length ? kinds : ["commit"]).map((kind, j) => ({
       kind,
-      title: fill(pick(r, EV_TITLES[kind])),
+      title: say(pick(r, EV_TITLES[kind])),
       timestamp: isoIn(r),
-      url: `https://example.org/demo/${kind}/${devId.toLowerCase()}-${key}-${j + 1}`,
+      url: `https://example.org/demo/${PROJECT === "sakai" ? "" : PROJECT + "/"}${kind}/${devId.toLowerCase()}-${key}-${j + 1}`,
     }));
 
     const [lo, hi] = CONFIDENCE_BAND[level];
@@ -215,7 +257,7 @@ for (const [devId, levels] of Object.entries(SCRIPT)) {
       confidence,
       rationale,
       evidence,
-      blind_spots: BLIND[key],
+      blind_spots: localise(BLIND[key]),
       study: {
         // Descriptive only: the level above is absolute. These fields say in
         // which direction the designed proposal pulls and by how much.
@@ -229,7 +271,7 @@ for (const [devId, levels] of Object.entries(SCRIPT)) {
 
 const doc = {
   taxonomy_version: taxonomy.taxonomy_version,
-  organization_id: "demo-project",
+  organization_id: PROJECT === "sakai" ? "demo-project" : `demo-project-${PROJECT}`,
   computed_at: "2026-10-25T00:00:00.000Z",
   config_hash: "",
   generated_by: "tools/make-demo-assessments.mjs",
@@ -241,7 +283,8 @@ doc.config_hash = createHash("sha256")
   .digest("hex")
   .slice(0, 16);
 
-writeFileSync("study-data/assessments.json", JSON.stringify(doc, null, 2) + "\n", "utf8");
+const OUT = PROJECT === "sakai" ? "study-data/assessments.json" : `study-data/assessments.${PROJECT}.json`;
+writeFileSync(OUT, JSON.stringify(doc, null, 2) + "\n", "utf8");
 
 const counts = assessments.reduce((acc, a) => {
   acc[a.level] = (acc[a.level] ?? 0) + 1;

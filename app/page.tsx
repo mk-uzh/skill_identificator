@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { clientSession } from "@/lib/client-session";
 import { ORG_CONFIG } from "@/lib/org-config";
+import { projectInfo } from "@/lib/project";
+import { useProject } from "@/lib/project-context";
 import { CATEGORIES, LEVEL_ANCHORS_SHORT } from "@/lib/study-config";
 import { LEVEL_SCALE_SOURCE } from "@/lib/taxonomy";
 import { BLOCK_COUNT, ownHref } from "@/lib/study-flow";
@@ -15,6 +17,7 @@ import {
 
 export default function IntroPage() {
   const router = useRouter();
+  const { project } = useProject();
   const [code, setCode] = useState("");
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +30,7 @@ export default function IntroPage() {
       const response = await fetch("/api/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ participantCode: code.trim(), consent }),
+        body: JSON.stringify({ participantCode: code.trim(), consent, project }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Unknown error");
@@ -49,7 +52,7 @@ export default function IntroPage() {
         <p className="crumb">Study on assessing skills from public project records</p>
         <h1 className="title title--xl">Read the records. Rate what they show.</h1>
         <p className="lede">
-          You will look at {BLOCK_COUNT} developers of an open-source learning platform and say, for
+          You will look at {BLOCK_COUNT} developers of {projectInfo(project).full} and say, for
           each of {CATEGORIES.length} competences, how far their work reaches. No technical
           knowledge needed.
         </p>
@@ -74,7 +77,7 @@ export default function IntroPage() {
       </div>
 
       <div className="card">
-        <h3>The five levels</h3>
+        <h3>The levels</h3>
         <div className="scale scale--static">
           {ORDERED_LEVELS.map((level) => (
             <div key={level} className="lvtile lvtile--static">
@@ -83,6 +86,10 @@ export default function IntroPage() {
               <span className="lvtile__tip">{LEVEL_ANCHORS_SHORT[level]}</span>
             </div>
           ))}
+          <div className="lvtile lvtile--static lvtile--na">
+            <b>n/o</b>
+            <small>Nothing in the records</small>
+          </div>
         </div>
         <p className="meaning">
           <b>n/o, not observable.</b> The records show nothing about this competence. That is

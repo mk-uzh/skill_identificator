@@ -5,7 +5,9 @@
 // This module loads and validates it; malformed files fail loudly.
 // ---------------------------------------------------------------------------
 
-import rawAssessments from "../../study-data/assessments.json";
+import rawSakai from "../../study-data/assessments.json";
+import rawNifi from "../../study-data/assessments.nifi.json";
+import { DEFAULT_PROJECT, type ProjectId } from "./project";
 import { SKILL_LEVELS, type SkillLevel } from "./types";
 
 const EVIDENCE_KINDS = ["commit", "pull_request", "review", "issue"] as const;
@@ -211,28 +213,32 @@ export function validateAssessmentsFile(raw: unknown): AssessmentsFile {
   };
 }
 
-/** Loads and validates study-data/assessments.json. Fails loudly on any schema violation. */
-export function loadAssessments(): AssessmentsFile {
-  return validateAssessmentsFile(rawAssessments);
+/** Loads and validates the assessments of one project. Fails loudly on any schema violation. */
+export function loadAssessments(project: ProjectId = DEFAULT_PROJECT): AssessmentsFile {
+  return validateAssessmentsFile(project === "nifi" ? rawNifi : rawSakai);
 }
 
-const assessmentsFile: AssessmentsFile = loadAssessments();
+const assessmentFiles: Record<ProjectId, AssessmentsFile> = {
+  sakai: loadAssessments("sakai"),
+  nifi: loadAssessments("nifi"),
+};
 
-export function getAssessments(): AssessmentsFile {
-  return assessmentsFile;
+export function getAssessments(project: ProjectId = DEFAULT_PROJECT): AssessmentsFile {
+  return assessmentFiles[project];
 }
 
 /** Assessments that carry study-script metadata (used for Task 2 suggestion control). */
-export function getScriptedAssessments(): Assessment[] {
-  return getAssessments().assessments.filter((a) => a.study != null);
+export function getScriptedAssessments(project: ProjectId = DEFAULT_PROJECT): Assessment[] {
+  return getAssessments(project).assessments.filter((a) => a.study != null);
 }
 
 /** The assessment for one developer and one competence, if the file has it. */
 export function getAssessment(
   developerId: string,
   categoryId: string,
+  project: ProjectId = DEFAULT_PROJECT,
 ): Assessment | undefined {
-  return getAssessments().assessments.find(
+  return getAssessments(project).assessments.find(
     (a) => a.developer_id === developerId && a.category_id === categoryId,
   );
 }

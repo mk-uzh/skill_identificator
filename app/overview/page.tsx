@@ -9,7 +9,8 @@ import { clientSession } from "@/lib/client-session";
 import { nowIsoMs } from "@/lib/interaction-log";
 import { logger } from "@/lib/logger";
 import { cloneMatrix, emptyMatrix, setCell } from "@/lib/matrix";
-import { CATEGORIES, DEVELOPERS, groupedCategories } from "@/lib/study-config";
+import { useProject } from "@/lib/project-context";
+import { CATEGORIES, groupedCategories } from "@/lib/study-config";
 import { developerOrder, systemHref } from "@/lib/study-flow";
 import {
   SKILL_LEVEL_LABELS,
@@ -57,12 +58,13 @@ export default function OverviewPage() {
     setReady(true);
   }, [router]);
 
+  const { developers } = useProject();
   const people = useMemo(
     () =>
       order
-        .map((id) => DEVELOPERS.find((d) => d.id === id))
-        .filter((d): d is (typeof DEVELOPERS)[number] => d != null),
-    [order],
+        .map((id) => developers.find((d) => d.id === id))
+        .filter((d): d is (typeof developers)[number] => d != null),
+    [order, developers],
   );
 
   const missing = useMemo(() => {
@@ -203,7 +205,7 @@ export default function OverviewPage() {
       {sel && selCategory ? (
         <div className="card">
           <h3>
-            {sel.devId}: {selCategory.label}
+            {people.find((p) => p.id === sel.devId)?.label ?? sel.devId}: {selCategory.label}
           </h3>
           <RatingPanel
             name={selCategory.label}

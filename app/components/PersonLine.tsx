@@ -1,5 +1,6 @@
 "use client";
 
+import { LevelGuide } from "@/components/LevelGuide";
 import { ORG_CONFIG, VISIBILITY_LABELS } from "@/lib/org-config";
 import type { Developer } from "@/lib/types";
 
@@ -30,6 +31,10 @@ export function PersonLine({ developer }: { developer: Developer }) {
       <details className="acc">
         <summary>Who can see this</summary>
         <p>In this study: {VISIBILITY_LABELS[ORG_CONFIG.visibility]}, the same for everyone.</p>
+      </details>
+      <details className="acc">
+        <summary>What the levels mean</summary>
+        <LevelGuide compact bare />
       </details>
     </aside>
   );

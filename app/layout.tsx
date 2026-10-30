@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { StudyBanner } from "@/components/StudyBanner";
 import { Topbar } from "@/components/Topbar";
+import { ProjectProvider } from "@/lib/project-context";
 import { VisibilityProvider } from "@/lib/visibility-context";
 import { STUDY_TITLE } from "@/lib/study-config";
 import "./globals.css";
@@ -14,11 +15,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <VisibilityProvider>
-          <Topbar />
-          <StudyBanner />
-          <main>{children}</main>
-        </VisibilityProvider>
+        <ProjectProvider>
+          <VisibilityProvider>
+            <Topbar />
+            <StudyBanner />
+            <main>{children}</main>
+          </VisibilityProvider>
+        </ProjectProvider>
       </body>
     </html>
   );

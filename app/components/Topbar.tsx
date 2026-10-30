@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { PROJECTS, parseProject } from "@/lib/project";
+import { useProject } from "@/lib/project-context";
 
 const PHASES: { label: string; paths: string[] }[] = [
   { label: "Start", paths: ["/"] },
@@ -16,6 +18,7 @@ export function Topbar() {
   const path = usePathname() ?? "/";
   const current = PHASES.findIndex((p) => p.paths.includes(path));
   const inStudy = current >= 0;
+  const { project, setProject } = useProject();
 
   return (
     <header className="topbar">
@@ -37,6 +40,20 @@ export function Topbar() {
             ))}
           </ol>
         )}
+        <label className="projsel">
+          <span>Project</span>
+          <select
+            value={project}
+            onChange={(e) => setProject(parseProject(e.target.value))}
+            aria-label="Project the case study is run on"
+          >
+            {PROJECTS.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.label}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
     </header>
   );

@@ -9,7 +9,7 @@ import {
 } from "@/lib/types";
 
 /**
- * Five tiles in a row; the meaning of the chosen level is written below, so
+ * Five level tiles and an n/o tile in a row; the meaning of the chosen level is written below, so
  * the scale never has to be looked up elsewhere (DP2).
  *
  * "Not observable" is set apart on purpose: it is not a sixth, lower level
@@ -41,6 +41,17 @@ export function RatingPanel({
             <small>{SKILL_LEVEL_LABELS[level]}</small>
           </button>
         ))}
+        <button
+          type="button"
+          role="radio"
+          aria-checked={na}
+          className="lvtile lvtile--na"
+          onClick={() => onChange("not_observable")}
+          title="The records show nothing about this"
+        >
+          <b>n/o</b>
+          <small>Nothing in the records</small>
+        </button>
       </div>
       <div className="meaning" aria-live="polite">
         {value ? (
@@ -56,15 +67,6 @@ export function RatingPanel({
           </>
         )}
       </div>
-      <button
-        type="button"
-        role="radio"
-        aria-checked={na}
-        className="nalink"
-        onClick={() => onChange("not_observable")}
-      >
-        The records show nothing about this (n/o)
-      </button>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { getAssessments } from "@/lib/assessments";
 import { readSession, saveSession } from "@/lib/store";
+import { parseProject } from "@/lib/project";
 import { developerOrder } from "@/lib/study-flow";
 import type { StudySession } from "@/lib/types";
 
@@ -14,6 +15,7 @@ export async function POST(request: Request) {
       participantCode?: string;
       condition?: string;
       consent?: boolean;
+      project?: string;
     };
 
     const participantCode = (body.participantCode ?? "").trim();
@@ -24,7 +26,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Consent missing" }, { status: 400 });
     }
 
-    const assessments = getAssessments();
+    const project = parseProject(body.project);
+    const assessments = getAssessments(project);
     const session: StudySession = {
       sessionId: randomUUID(),
       participantCode,
@@ -32,6 +35,7 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
       userAgent: request.headers.get("user-agent") ?? "unknown",
       consent: true,
+      project,
       config_hash: assessments.config_hash,
       snapshot_hash: assessments.config_hash,
       devOrder: developerOrder(participantCode),

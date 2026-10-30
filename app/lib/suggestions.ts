@@ -1,4 +1,5 @@
 import { getAssessments } from "./assessments";
+import { DEFAULT_PROJECT, type ProjectId } from "./project";
 import { emptyMatrix } from "./matrix";
 import { signalsFromEvidence } from "./org-config";
 import type { AiSuggestion, Matrix, SkillLevel } from "./types";
@@ -7,8 +8,8 @@ import type { AiSuggestion, Matrix, SkillLevel } from "./types";
  * Builds Task-2 suggestions from data/assessments.json (absolute levels).
  * One suggestion per developer × display category.
  */
-export function buildSuggestionsFromAssessments(): AiSuggestion[] {
-  return getAssessments().assessments.map((assessment) => ({
+export function buildSuggestionsFromAssessments(project: ProjectId = DEFAULT_PROJECT): AiSuggestion[] {
+  return getAssessments(project).assessments.map((assessment) => ({
     devId: assessment.developer_id,
     categoryId: assessment.category_id,
     suggested: assessment.level,
@@ -22,9 +23,9 @@ export function buildSuggestionsFromAssessments(): AiSuggestion[] {
 }
 
 /** Prefill matrix for Task 2 — every cell set to the inferred level from the file. */
-export function assessmentsToMatrix(): Matrix {
+export function assessmentsToMatrix(project: ProjectId = DEFAULT_PROJECT): Matrix {
   const matrix = emptyMatrix();
-  for (const assessment of getAssessments().assessments) {
+  for (const assessment of getAssessments(project).assessments) {
     if (!matrix[assessment.developer_id]) {
       matrix[assessment.developer_id] = {};
     }

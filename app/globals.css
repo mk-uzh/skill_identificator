@@ -2080,3 +2080,18 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
 .page--narrow2 { max-width: 900px; }
 .bbar__in { max-width: 1760px; }
 .page--narrow2 + .bbar .bbar__in { max-width: 900px; }
+
+/* ---------- project switch, top right ---------- */
+.projsel { display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 13px; color: var(--ink-3); }
+.projsel select { font: inherit; font-weight: 600; color: var(--ink); padding: 6px 28px 6px 12px; border: 1px solid var(--line); border-radius: 99px; background: #fff; cursor: pointer; }
+.projsel select:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.phases { margin-right: 0; }
+.side { max-height: calc(100vh - 290px); overflow-y: auto; }
+
+/* n/o as a tile of its own, set apart from the five levels */
+.scale { grid-template-columns: repeat(5, minmax(0, 1fr)) minmax(0, 1.1fr); }
+.lvtile--na { border-style: dashed; margin-left: 6px; background: transparent; }
+.lvtile--na b { font-size: 20px; color: var(--ink-2); padding-top: 3px; }
+.lvtile--na[aria-checked="true"] { border-style: solid; background: var(--grey-100, #ececea); }
+.dec__adjust .lvtile--na { margin-left: 2px; }
+@media (max-width: 900px) { .scale { grid-template-columns: repeat(3, minmax(0, 1fr)); } .lvtile--na { margin-left: 0; } }

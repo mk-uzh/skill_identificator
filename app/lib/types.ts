@@ -31,9 +31,9 @@ export const SKILL_LEVEL_SHORT: Record<SkillLevel, string> = {
 
 export const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
   l1: "Has touched it",
-  l2: "Works in it reliably",
-  l3: "Solves real problems",
-  l4: "Shapes the area",
+  l2: "Works on its own",
+  l3: "Goes beneath the symptom",
+  l4: "Others build on it",
   l5: "Is the reference",
   not_observable: "Not observable",
 };
@@ -202,6 +202,8 @@ export interface StudySession {
   createdAt: string;
   userAgent: string;
   consent: boolean;
+  /** Project the case study was run on (sakai or nifi). */
+  project?: string;
   /** Taxonomy / inference config hash from assessments.json */
   config_hash?: string;
   /** Snapshot hash (demo: same as assessments config until real ingest). */

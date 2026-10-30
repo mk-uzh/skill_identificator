@@ -1,6 +1,7 @@
 "use client";
 
 import { getAssessment, type EvidenceItem } from "@/lib/assessments";
+import { useProject } from "@/lib/project-context";
 import { CATEGORIES } from "@/lib/taxonomy";
 
 const KIND_LABEL: Record<string, string> = {
@@ -30,9 +31,10 @@ export function EvidencePanel({
   /** Kept for the old call sites; the heading is now always the screen title. */
   showHeader?: boolean;
 }) {
+  const { project } = useProject();
   if (!categoryId) return null;
   const category = CATEGORIES.find((c) => c.id === categoryId);
-  const assessment = getAssessment(devId, categoryId);
+  const assessment = getAssessment(devId, categoryId, project);
   if (!category || !assessment) {
     return <p className="small muted">No records for this competence.</p>;
   }

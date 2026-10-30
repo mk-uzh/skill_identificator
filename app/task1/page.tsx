@@ -14,7 +14,8 @@ import { clientSession } from "@/lib/client-session";
 import { nowIsoMs } from "@/lib/interaction-log";
 import { logger } from "@/lib/logger";
 import { cloneMatrix, developerMatrix, emptyMatrix, setCell } from "@/lib/matrix";
-import { CATEGORIES, CATEGORY_GROUPS, DEVELOPERS } from "@/lib/study-config";
+import { useProject } from "@/lib/project-context";
+import { CATEGORIES, CATEGORY_GROUPS } from "@/lib/study-config";
 import {
   afterOwn,
   BLOCK_COUNT,
@@ -79,9 +80,10 @@ export default function Task1Page() {
   }, [router]);
 
   const devId = order[block];
+  const { developers } = useProject();
   const developer = useMemo(
-    () => DEVELOPERS.find((d) => d.id === devId) ?? null,
-    [devId],
+    () => developers.find((d) => d.id === devId) ?? null,
+    [developers, devId],
   );
 
   const filled = useMemo(
