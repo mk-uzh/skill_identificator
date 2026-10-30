@@ -19,7 +19,7 @@ from devskill.config import Config
 CFG = Config()                       # project from DEVSKILL_PROJECT (default sakai)
 DATA = CFG.data_root
 SAMPLE = DATA / "silver/samples" / ("sample_n120_seed42" if CFG.project["name"] == "sakai" else "sample_n60_seed42")
-PROMPT = ROOT / "pipeline/prompts/unit_classification_v1.md"
+PROMPT = ROOT / "pipeline/prompts/unit_classification_v2.md"
 SCHEMA = ROOT / "pipeline/prompts/unit_schema.json"
 TAX = ROOT / "model/taxonomy.v3.json"
 

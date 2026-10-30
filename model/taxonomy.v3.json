@@ -22,28 +22,28 @@
     ],
     "non_level": "not_observable",
     "anchors": {
-      "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-      "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-      "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-      "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+      "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+      "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+      "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+      "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
       "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
       "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
     },
     "anchors_short": {
-      "l1": "Has touched it, approach set by others",
-      "l2": "Works reliably, accepted without rework",
-      "l3": "Finds causes, changes the structure",
-      "l4": "Builds what others rely on, inspects their work",
+      "l1": "Mechanical or cosmetic change, approach set by others",
+      "l2": "Finishes ordinary tasks alone, no substantial rework",
+      "l3": "Finds the cause or restructures, and explains why",
+      "l4": "Builds shared pieces others rely on",
       "l5": "The reference, sets the approach",
       "not_observable": "Records show nothing about it"
     },
     "unit_level_guide": {
-      "l1": "Small change inside something that exists (a few lines, a label, a version), or a single remark. The approach came from the ticket or from someone else.",
-      "l2": "An ordinary task done independently and completely. If a review is recorded, it was accepted without a rework round that changed the substance.",
-      "l3": "Finds the cause of a non-obvious fault, or changes the structure instead of working around it, or explains the reasoning. For reviews: reasoned feedback or a fix handed over.",
-      "l4": "A change across several components or tools, or something others reuse, backed by tests and a long review thread.",
+      "l1": "Is the unit mechanical or cosmetic, needing no judgement? (a label or string, a style value, a config default, a version, wiring the ticket dictated, a one-line follow-up to someone else's change, a bare question or vague worry from a reviewer)",
+      "l2": "Does the change alter behaviour and complete an ordinary task alone (a bug fix, a small feature, a test, a concrete correct review suggestion), even if only a few lines? It stands as it is, without a substantive rework.",
+      "l3": "Does the unit show WHY, or restructure instead of patching? (a) the person states a cause or gives a reasoned explanation in their own words (commit message, comment, code comment); (b) the person restructures existing code (refactor, removal of an obsolete concept across files, moving work to where it belongs); (c) a reviewer diagnoses a problem and hands over a concrete fix. A reason that appears only in the ticket text does not count.",
+      "l4": "Did the person create, or substantially extend, a shared piece (service, API, library, model) that several other parts of the software rely on, and is it backed by tests or a human review that accepted it? A new method on an API used by one or two callers is not l4. Without a test and a human review the highest level is l3.",
       "l5": "Not assignable from a single unit. It can only come from the pattern across units: others turn to this person, the person sets the approach.",
-      "not_observable": "The unit holds nothing the person wrote or did about this competence (for example a verdict alone)."
+      "not_observable": "The unit holds nothing the person wrote or did about this competence (a verdict alone such as APPROVED, LGTM or 'tested', ticket text by someone else, a version bump, generated files)."
     }
   },
   "coding_rules": [
@@ -61,7 +61,7 @@
     },
     {
       "id": "R4",
-      "text": "Review rounds (comments, changes requested) do not lower a level by themselves. Iteration is normal. A second commit that corrects the first is noted."
+      "text": "Review rounds (comments, changes requested) do not lower a level by themselves. Iteration is normal. A second commit that corrects the first is noted. A bare CHANGES_REQUESTED does not decide it; only a rework that clearly changed the substance keeps a unit at l1."
     },
     {
       "id": "R5",
@@ -78,6 +78,14 @@
     {
       "id": "R8",
       "text": "Same ticket, different people: the units are rated independently (units 3 and 29, 11 and 40, 28 and 54, 96 and 114, 49 and 93)."
+    },
+    {
+      "id": "R9",
+      "text": "For a reviewer unit the category is the technical area the comments are about, code_review only if they are general. When a change fits several categories, the main one is the one the person's own commit message or comment is about."
+    },
+    {
+      "id": "R10",
+      "text": "Between two levels take the lower one, except that a short functional fix is never moved down to l1: l1 is only for mechanical or cosmetic changes."
     }
   ],
   "groups": [

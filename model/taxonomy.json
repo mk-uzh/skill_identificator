@@ -14,18 +14,18 @@
     ],
     "non_level": "not_observable",
     "anchors": {
-      "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-      "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-      "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-      "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+      "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+      "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+      "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+      "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
       "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
       "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
     },
     "anchors_short": {
-      "l1": "Has touched it, approach set by others",
-      "l2": "Works reliably, accepted without rework",
-      "l3": "Finds causes, changes the structure",
-      "l4": "Builds what others rely on, inspects their work",
+      "l1": "Mechanical or cosmetic change, approach set by others",
+      "l2": "Finishes ordinary tasks alone, no substantial rework",
+      "l3": "Finds the cause or restructures, and explains why",
+      "l4": "Builds shared pieces others rely on",
       "l5": "The reference, sets the approach",
       "not_observable": "Records show nothing about it"
     }
@@ -66,10 +66,10 @@
       "description": "Writing small programs that check the software after a change",
       "order": 1,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -104,10 +104,10 @@
       "description": "Using the tools that help locate a fault",
       "order": 2,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -139,10 +139,10 @@
       "description": "Working out why something broke, not just hiding the symptom",
       "order": 3,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -173,10 +173,10 @@
       "description": "Building in shapes other developers recognise and can extend",
       "order": 4,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -207,10 +207,10 @@
       "description": "Making sure two people acting at once do not corrupt each other's work",
       "order": 5,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -241,10 +241,10 @@
       "description": "Joining separate parts of the software so they work together",
       "order": 6,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -277,10 +277,10 @@
       "description": "The visible part: buttons, forms, tables",
       "order": 7,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -315,10 +315,10 @@
       "description": "The language the browser part is written in",
       "order": 8,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -350,10 +350,10 @@
       "description": "Changing how information is stored without losing any of it",
       "order": 9,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },
@@ -386,10 +386,10 @@
       "description": "Deciding how the parts of the software are cut and named",
       "order": 10,
       "anchors": {
-        "l1": "Small edits inside something that already existed. The approach was set by someone else.",
-        "l2": "Handles ordinary tasks in this area without help, and the work is accepted without being sent back.",
-        "l3": "Finds the cause of a difficult fault, changes the existing structure instead of working around it, and explains the reasoning.",
-        "l4": "Builds things other people then rely on, changes several parts of the software together, and regularly inspects other people's work here.",
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
         "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
         "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
       },

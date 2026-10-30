@@ -33,7 +33,7 @@ No category fitted two units (99 and 105, generic backend logic). They stay as `
 
 - **Definition.** Writing or maintaining automated tests: unit, integration, end-to-end or web-component tests, including the set-up they need.
 - **Counts as evidence.** Test files in the change; own comments about test cases; tests added together with a fix.
-- **Does not count.** Saying 'tested' after trying a change by hand (that is review, level 1). A test file that only appears because a generator or tool added it.
+- **Does not count.** Saying 'tested' after trying a change by hand (a verdict alone, not observable). A test file that only appears because a generator or tool added it.
 - **ESCO / e-CF.** develop automated software tests (local). e-CF: B.3 Testing (e-CF levels e-1 to e-4).
 - **Sample units.** 13, 33, 53, 75, 88
 
@@ -137,27 +137,33 @@ No category fitted two units (99 and 105, generic backend logic). They stay as `
 
 ## Levels
 
-Five levels as in the e-CF (EN 16234-1). The descriptions are our own wording. Person-level descriptions are in `taxonomy.json`. For coding a single unit:
+Five levels as in the e-CF (EN 16234-1). The descriptions are our own wording. They rise along autonomy (l1 to l2),
+depth (l3) and reach (l4 to l5). Person-level descriptions are in `taxonomy.json`. For coding a single unit, ask the
+questions from the top down and stop at the first yes. Between two levels take the lower one (R10).
 
-- **l1.** Small change inside something that exists (a few lines, a label, a version), or a single remark. The approach came from the ticket or from someone else.
-- **l2.** An ordinary task done independently and completely. If a review is recorded, it was accepted without a rework round that changed the substance.
-- **l3.** Finds the cause of a non-obvious fault, or changes the structure instead of working around it, or explains the reasoning. For reviews: reasoned feedback or a fix handed over.
-- **l4.** A change across several components or tools, or something others reuse, backed by tests and a long review thread.
+- **n/o.** The unit holds nothing the person wrote or did about this competence: a verdict alone (APPROVED, LGTM, "tested"), ticket text by someone else, a version bump, generated files.
+- **l4, others build on it.** Did the person create, or substantially extend, a shared piece (service, API, library, model) that several other parts of the software rely on, and is it backed by tests or a human review that accepted it? A new method on an API used by one or two callers is not l4. Without a test and a human review the highest level is l3.
+- **l3, goes beneath the symptom.** Does the unit show WHY, or restructure instead of patching? (a) the person states a cause or gives a reasoned explanation in their own words (commit message, comment, code comment); (b) the person restructures existing code (refactor, removal of an obsolete concept across files, moving work to where it belongs); (c) a reviewer diagnoses a problem and hands over a concrete fix. A reason that appears only in the ticket text does not count.
+- **l2, works on its own.** Does the change alter behaviour and complete an ordinary task alone (a bug fix, a small feature, a test, a concrete correct review suggestion), even if only a few lines? It stands as it is, without a substantive rework.
+- **l1, has touched it.** Is the unit mechanical or cosmetic, needing no judgement? (a label or string, a style value, a config default, a version, wiring the ticket dictated, a one-line follow-up to someone else's change, a bare question or vague worry from a reviewer)
 - **l5.** Not assignable from a single unit. It can only come from the pattern across units: others turn to this person, the person sets the approach.
-- **n/o.** The unit holds nothing the person wrote or did about this competence (for example a verdict alone).
 
 The e-CF defines levels only up to e-3 or e-4 for most build competences (B.1 up to e-3, B.2 and B.3 up to e-4). l4 and l5 here therefore go beyond what the e-CF foresees for these competences. This has to be stated in the thesis.
+
+A first test of these definitions (rated blind by a model on the 120 sample units) is in `docs/LEVELS_proposal.md`.
 
 ## Coding rules
 
 - **R1.** Evidence is what the person did or wrote: commits, code, own comments, review comments, verdict. The ticket text is context, never evidence, and especially not for reviewers.
 - **R2.** A reviewer unit with a verdict alone (APPROVED, LGTM, tested) is not observable. In the sample this is 44 of 63 reviewer units.
 - **R3.** An author unit with no human review recorded is rated from the content. Autonomy through acceptance cannot be judged; mark it and lower the confidence (9 of 57 author units).
-- **R4.** Review rounds (comments, changes requested) do not lower a level by themselves. Iteration is normal. A second commit that corrects the first is noted.
+- **R4.** Review rounds (comments, changes requested) do not lower a level by themselves. Iteration is normal. A second commit that corrects the first is noted. A bare CHANGES_REQUESTED does not decide it; only a rework that clearly changed the substance keeps a unit at l1.
 - **R5.** At most two categories per unit, the main one first. Each category needs its own verbatim quote of at most 200 characters from the unit text.
 - **R6.** Volume is not ability. Translation bundles and generated files inflate file counts (units 8, 48, 75). Judge what the change does.
 - **R7.** l5 is never assigned at unit level.
 - **R8.** Same ticket, different people: the units are rated independently (units 3 and 29, 11 and 40, 28 and 54, 96 and 114, 49 and 93).
+- **R9.** For a reviewer unit the category is the technical area the comments are about, code_review only if they are general. When a change fits several categories, the main one is the one the person's own commit message or comment is about.
+- **R10.** Between two levels take the lower one, except that a short functional fix is never moved down to l1: l1 is only for mechanical or cosmetic changes.
 
 ## Not decided yet
 
