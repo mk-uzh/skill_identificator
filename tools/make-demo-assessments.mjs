@@ -167,6 +167,16 @@ const LEVEL_CLAUSE = {
   l5: "This is the person others turn to here: {d} of the changes in this area were read and approved by them.",
 };
 
+// Why the level was proposed: autonomy, complexity and influence (e-CF), and
+// why the next level up is not supported. Shown in Task 2 only.
+const LEVEL_REASON = {
+  l1: "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
+  l2: "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
+  l3: "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
+  l4: "{c} other people later built on this work, and the person read and approved {d} of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
+  l5: "Others turn to this person here: {d} of the changes in this area were read and approved by them, and the approach followed is theirs. This is the top level and rests on the pattern across many changes, not on one change.",
+};
+
 const EV_TITLES = {
   commit: [
     "fix: {area}, correct the order in which changes are applied",
@@ -244,8 +254,12 @@ for (const [devId, levels] of Object.entries(SCRIPT)) {
     const say = (str) => localise(fill(str));
 
     const rationale = observed
-      ? `${say(NARRATIVE[key])} ${say(LEVEL_CLAUSE[level])}`
+      ? say(NARRATIVE[key])
       : `Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in ${area} that touches it. This is a declared blind spot, not a low rating.`;
+
+    const levelReason = observed
+      ? say(LEVEL_REASON[level])
+      : "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.";
 
     const kinds = observed
       ? ["commit", "pull_request", "review", "issue"].filter(() => r() > 0.25)
@@ -270,6 +284,7 @@ for (const [devId, levels] of Object.entries(SCRIPT)) {
       rationale,
       evidence,
       blind_spots: localise(BLIND[key]),
+      level_reason: levelReason,
       study: {
         // Descriptive only: the level above is absolute. These fields say in
         // which direction the designed proposal pulls and by how much.

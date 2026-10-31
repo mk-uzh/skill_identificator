@@ -579,6 +579,13 @@ export default function Task2Page() {
             )}
           </div>
 
+          {suggestion.levelReason && (
+            <div className="card card--why">
+              <h3>Why the system proposes this</h3>
+              <p className="why-sys">{suggestion.levelReason}</p>
+            </div>
+          )}
+
           <div className="card">
             <h3>What the records show</h3>
             <EvidencePanel

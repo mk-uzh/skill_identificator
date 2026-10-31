@@ -2153,9 +2153,10 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
   /* Task 2 on one column: what the system proposes, then your decision, then the records. */
   .t2grid__main, .t2grid__side { display: contents; }
   .t2grid__main > .card:nth-child(1) { order: 1; }
-  .t2grid__side > .card:nth-child(1) { order: 2; }
-  .t2grid__main > .card:nth-child(2) { order: 3; }
-  .t2grid__side > :not(:first-child) { order: 4; }
+  .t2grid__main > .card--why { order: 2; }
+  .t2grid__side > .card:nth-child(1) { order: 3; }
+  .t2grid__main > .card:last-child { order: 4; }
+  .t2grid__side > :not(:first-child) { order: 5; }
   .t2grid { gap: 18px; }
 }
 
@@ -2213,3 +2214,6 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
 @media (min-width: 1440px) and (max-width: 1679px) { html { zoom: 0.88; } }
 @media (min-width: 1680px) and (max-width: 1919px) { html { zoom: 0.95; } }
 @media (min-width: 1920px) { html { zoom: 1; } }
+
+.card--why { background: var(--g100); }
+.why-sys { margin: 0; font-size: 16px; line-height: 1.55; }

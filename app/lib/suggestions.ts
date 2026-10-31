@@ -16,6 +16,7 @@ export function buildSuggestionsFromAssessments(project: ProjectId = DEFAULT_PRO
     direction: assessment.study?.direction ?? "raise",
     confidence: assessment.confidence,
     rationale: assessment.rationale,
+    levelReason: assessment.level_reason,
     evidence: assessment.evidence,
     signals: signalsFromEvidence(assessment.evidence),
     veracity: assessment.study?.veracity ?? "correct",

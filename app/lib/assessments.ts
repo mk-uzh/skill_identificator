@@ -39,6 +39,8 @@ export interface Assessment {
   evidence: EvidenceItem[];
   /** DP7 — what these records cannot show about this competence. */
   blind_spots?: string;
+  /** Why this level: the reasoning of the assessment, shown next to the proposal in Task 2 only. */
+  level_reason?: string;
   /** Optional study-design knobs for scripted Task-2 suggestions. */
   study?: StudyScriptMeta;
 }
@@ -172,6 +174,10 @@ function validateAssessment(raw: unknown, index: number): Assessment {
   if (raw.blind_spots !== undefined) {
     assertString(raw.blind_spots, `${label}.blind_spots`);
     assessment.blind_spots = raw.blind_spots;
+  }
+  if (raw.level_reason !== undefined) {
+    assertString(raw.level_reason, `${label}.level_reason`);
+    assessment.level_reason = raw.level_reason;
   }
   if (raw.study !== undefined) {
     assessment.study = validateStudy(raw.study, `${label}.study`);

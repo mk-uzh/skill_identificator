@@ -107,6 +107,8 @@ export interface AiSuggestion {
   confidence: number;
   /** Short rationale shown by the system. */
   rationale: string;
+  /** Why the system proposes this level (Task 2). */
+  levelReason?: string;
   /** Concrete artifacts behind the suggestion (M1 contract). */
   evidence: SuggestionEvidence[];
   /** Signals that contributed to the assessment (shown in evidence popover). */

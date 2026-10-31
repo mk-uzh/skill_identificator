@@ -17,7 +17,7 @@ A study tool shows a team lead three developers, one competence at a time. The t
 ## Requirements
 
 1. **Show what the person can do (Task 1).** For every person and competence, show from the data what the person did, with concrete examples (each with date and a working link), so that a team lead can judge it alone. The text must not reveal the level.
-2. **Propose a level (Task 2).** For every person and competence, a large language model (LLM) places the person on a level, based on the competences and levels defined below. The level is shown with a confidence and a short reason. The lead decides what to take over.
+2. **Propose a level (Task 2).** For every person and competence, a large language model (LLM) places the person on a level, based on the competences and levels defined below. The level is shown with a confidence and a reason that says why this level and not the next one up (autonomy, complexity, influence). The lead decides what to take over.
 3. **Stay inside the definitions.** Only the 12 competences and the levels below are used. If the records show nothing about a competence, the result is "not observable", not a low level.
 4. **Be traceable.** Every number, example and reason shown must come from the data and be checkable. The final level and the confidence must be explainable and repeatable, not an unchecked answer of the model.
 5. **Show that it works.** Compare the LLM result with a reference set coded by the researcher, and report how well they agree before the result is used in the study.
@@ -29,7 +29,7 @@ A study tool shows a team lead three developers, one competence at a time. The t
 
 ## Competences: where they come from
 
-Built in two directions. Top-down from ESCO (occupation *software developer*, ESCO v1.2.0). Bottom-up from about 120 evidence units coded openly, without a list, and only then compared with ESCO. What ESCO did not cover is marked local. The list is in `model/taxonomy.json` (version 3.0).
+Built in two directions. Top-down from ESCO (occupation *software developer*, ESCO v1.2.0). Bottom-up from a sample of about 120 evidence units (out of 3,000 for Sakai and 3,387 for NiFi) coded openly, without a list, and only then compared with ESCO. What ESCO did not cover is marked local. The list is in `model/taxonomy.json` (version 3.0).
 
 | # | Competence | Source |
 |---|---|---|
@@ -82,7 +82,8 @@ The tool reads this file and needs no other change. One entry per person and com
       "category_id": "dev_automated_tests",
       "level": "l1 | l2 | l3 | l4 | l5 | not_observable",
       "confidence": 0.81,
-      "rationale": "statement of what the records show",
+      "rationale": "statement of what the records show (must not name the level)",
+      "level_reason": "why this level: who set the approach, how complex, who relies on it, and why not the next level up",
       "evidence": [
         { "kind": "commit | pull_request | review | issue", "title": "...", "timestamp": "ISO", "url": "https://..." }
       ],

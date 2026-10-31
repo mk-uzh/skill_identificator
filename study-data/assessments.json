@@ -2,7 +2,7 @@
   "taxonomy_version": "3.0",
   "organization_id": "demo-project",
   "computed_at": "2026-10-25T00:00:00.000Z",
-  "config_hash": "02baa140f1a7c949",
+  "config_hash": "304b5ac84ffd2244",
   "generated_by": "tools/make-demo-assessments.mjs",
   "data_status": "PLACEHOLDER - generated demo content, not pipeline output",
   "assessments": [
@@ -12,7 +12,7 @@
       "category_id": "dev_automated_tests",
       "level": "l3",
       "confidence": 0.81,
-      "rationale": "Of the 212 changes in the window, 37 touched tests, and in 17 of those the tests were new, so they covered behaviour nobody had checked before. In 14 of them the reasoning is set out in the task discussion.",
+      "rationale": "Of the 212 changes in the window, 37 touched tests, and in 17 of those the tests were new, so they covered behaviour nobody had checked before.",
       "evidence": [
         {
           "kind": "commit",
@@ -34,6 +34,7 @@
         }
       ],
       "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -46,7 +47,7 @@
       "category_id": "debug_software",
       "level": "l4",
       "confidence": 0.9,
-      "rationale": "13 of the changes are linked to a fault report, and in 6 of them the task discussion names the cause rather than only the fix. 5 other people later built on this work, and this person read and approved 14 of their changes.",
+      "rationale": "13 of the changes are linked to a fault report, and in 6 of them the task discussion names the cause rather than only the fix.",
       "evidence": [
         {
           "kind": "commit",
@@ -62,6 +63,7 @@
         }
       ],
       "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "level_reason": "5 other people later built on this work, and the person read and approved 14 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -74,7 +76,7 @@
       "category_id": "code_review",
       "level": "l3",
       "confidence": 0.75,
-      "rationale": "35 reviews of other people's changes carry a suggestion or a stated reason, and in 20 of them the author changed the work before it was accepted. In 16 of them the reasoning is set out in the task discussion.",
+      "rationale": "35 reviews of other people's changes carry a suggestion or a stated reason, and in 20 of them the author changed the work before it was accepted.",
       "evidence": [
         {
           "kind": "commit",
@@ -102,6 +104,7 @@
         }
       ],
       "blind_spots": "review remarks made in meetings or chat that never reached the project",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -114,7 +117,7 @@
       "category_id": "integrate_components",
       "level": "l4",
       "confidence": 0.94,
-      "rationale": "20 changes join parts of the software that are developed separately, and 10 of them had to be coordinated with another team's work. 8 other people later built on this work, and this person read and approved 6 of their changes.",
+      "rationale": "20 changes join parts of the software that are developed separately, and 10 of them had to be coordinated with another team's work.",
       "evidence": [
         {
           "kind": "commit",
@@ -142,6 +145,7 @@
         }
       ],
       "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "level_reason": "8 other people later built on this work, and the person read and approved 6 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -164,6 +168,7 @@
         }
       ],
       "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -176,7 +181,7 @@
       "category_id": "build_dependencies",
       "level": "l3",
       "confidence": 0.79,
-      "rationale": "3 changes are in build and configuration files, and 2 of them update a library or a setting that several parts depend on. In 2 of them the reasoning is set out in the task discussion.",
+      "rationale": "3 changes are in build and configuration files, and 2 of them update a library or a setting that several parts depend on.",
       "evidence": [
         {
           "kind": "commit",
@@ -198,6 +203,7 @@
         }
       ],
       "blind_spots": "whether the build ran cleanly in the set-ups of other users",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -210,7 +216,7 @@
       "category_id": "javascript",
       "level": "l3",
       "confidence": 0.74,
-      "rationale": "30 of the changes are in the browser part of the software, spread over 18 different screens. In 14 of them the reasoning is set out in the task discussion.",
+      "rationale": "30 of the changes are in the browser part of the software, spread over 18 different screens.",
       "evidence": [
         {
           "kind": "commit",
@@ -238,6 +244,7 @@
         }
       ],
       "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -250,7 +257,7 @@
       "category_id": "design_user_interface",
       "level": "l3",
       "confidence": 0.85,
-      "rationale": "5 changes are on the screens themselves, 3 of them on forms that teachers fill in. In 2 of them the reasoning is set out in the task discussion.",
+      "rationale": "5 changes are on the screens themselves, 3 of them on forms that teachers fill in.",
       "evidence": [
         {
           "kind": "commit",
@@ -278,6 +285,7 @@
         }
       ],
       "blind_spots": "whether the result was tested with the people who use it",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -300,6 +308,7 @@
         }
       ],
       "blind_spots": "whether the translations were checked by people who speak the language",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -322,6 +331,7 @@
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -334,7 +344,7 @@
       "category_id": "software_design",
       "level": "l3",
       "confidence": 0.75,
-      "rationale": "In 24 changes an existing structure was replaced rather than worked around, and 12 of those were later built on by somebody else. In 10 of them the reasoning is set out in the task discussion.",
+      "rationale": "In 24 changes an existing structure was replaced rather than worked around, and 12 of those were later built on by somebody else.",
       "evidence": [
         {
           "kind": "commit",
@@ -362,6 +372,7 @@
         }
       ],
       "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -374,7 +385,7 @@
       "category_id": "technical_communication",
       "level": "l3",
       "confidence": 0.82,
-      "rationale": "In 36 discussions or change notes this person explained why something behaves as it does, and in 21 of them the explanation names the reason. In 17 of them the reasoning is set out in the task discussion.",
+      "rationale": "In 36 discussions or change notes this person explained why something behaves as it does, and in 21 of them the explanation names the reason.",
       "evidence": [
         {
           "kind": "commit",
@@ -402,6 +413,7 @@
         }
       ],
       "blind_spots": "explanations given in meetings or chat rather than in the project",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -414,7 +426,7 @@
       "category_id": "dev_automated_tests",
       "level": "l1",
       "confidence": 0.58,
-      "rationale": "Of the 47 changes in the window, 8 touched tests, and in 3 of those the tests were new, so they covered behaviour nobody had checked before. The approach was set by someone else in each case.",
+      "rationale": "Of the 47 changes in the window, 8 touched tests, and in 3 of those the tests were new, so they covered behaviour nobody had checked before.",
       "evidence": [
         {
           "kind": "review",
@@ -430,6 +442,7 @@
         }
       ],
       "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -442,7 +455,7 @@
       "category_id": "debug_software",
       "level": "l2",
       "confidence": 0.61,
-      "rationale": "4 of the changes are linked to a fault report, and in 2 of them the task discussion names the cause rather than only the fix. None of this work was sent back for rework.",
+      "rationale": "4 of the changes are linked to a fault report, and in 2 of them the task discussion names the cause rather than only the fix.",
       "evidence": [
         {
           "kind": "commit",
@@ -464,6 +477,7 @@
         }
       ],
       "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -486,6 +500,7 @@
         }
       ],
       "blind_spots": "review remarks made in meetings or chat that never reached the project",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -498,7 +513,7 @@
       "category_id": "integrate_components",
       "level": "l2",
       "confidence": 0.67,
-      "rationale": "7 changes join parts of the software that are developed separately, and 4 of them had to be coordinated with another team's work. None of this work was sent back for rework.",
+      "rationale": "7 changes join parts of the software that are developed separately, and 4 of them had to be coordinated with another team's work.",
       "evidence": [
         {
           "kind": "review",
@@ -514,6 +529,7 @@
         }
       ],
       "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 2,
@@ -536,6 +552,7 @@
         }
       ],
       "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -548,7 +565,7 @@
       "category_id": "build_dependencies",
       "level": "l1",
       "confidence": 0.49,
-      "rationale": "5 changes are in build and configuration files, and 3 of them update a library or a setting that several parts depend on. The approach was set by someone else in each case.",
+      "rationale": "5 changes are in build and configuration files, and 3 of them update a library or a setting that several parts depend on.",
       "evidence": [
         {
           "kind": "pull_request",
@@ -564,6 +581,7 @@
         }
       ],
       "blind_spots": "whether the build ran cleanly in the set-ups of other users",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -586,6 +604,7 @@
         }
       ],
       "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -608,6 +627,7 @@
         }
       ],
       "blind_spots": "whether the result was tested with the people who use it",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -630,6 +650,7 @@
         }
       ],
       "blind_spots": "whether the translations were checked by people who speak the language",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -642,7 +663,7 @@
       "category_id": "data_persistence",
       "level": "l2",
       "confidence": 0.71,
-      "rationale": "3 changes touch how data is stored or queried, and 2 of them are steps that move existing data to a new shape. None of this work was sent back for rework.",
+      "rationale": "3 changes touch how data is stored or queried, and 2 of them are steps that move existing data to a new shape.",
       "evidence": [
         {
           "kind": "commit",
@@ -670,6 +691,7 @@
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 2,
@@ -682,7 +704,7 @@
       "category_id": "software_design",
       "level": "l1",
       "confidence": 0.46,
-      "rationale": "In 3 changes an existing structure was replaced rather than worked around, and 2 of those were later built on by somebody else. The approach was set by someone else in each case.",
+      "rationale": "In 3 changes an existing structure was replaced rather than worked around, and 2 of those were later built on by somebody else.",
       "evidence": [
         {
           "kind": "pull_request",
@@ -704,6 +726,7 @@
         }
       ],
       "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -726,6 +749,7 @@
         }
       ],
       "blind_spots": "explanations given in meetings or chat rather than in the project",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -738,7 +762,7 @@
       "category_id": "dev_automated_tests",
       "level": "l3",
       "confidence": 0.73,
-      "rationale": "Of the 168 changes in the window, 15 touched tests, and in 8 of those the tests were new, so they covered behaviour nobody had checked before. In 6 of them the reasoning is set out in the task discussion.",
+      "rationale": "Of the 168 changes in the window, 15 touched tests, and in 8 of those the tests were new, so they covered behaviour nobody had checked before.",
       "evidence": [
         {
           "kind": "commit",
@@ -766,6 +790,7 @@
         }
       ],
       "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -778,7 +803,7 @@
       "category_id": "debug_software",
       "level": "l3",
       "confidence": 0.8,
-      "rationale": "17 of the changes are linked to a fault report, and in 11 of them the task discussion names the cause rather than only the fix. In 9 of them the reasoning is set out in the task discussion.",
+      "rationale": "17 of the changes are linked to a fault report, and in 11 of them the task discussion names the cause rather than only the fix.",
       "evidence": [
         {
           "kind": "commit",
@@ -800,6 +825,7 @@
         }
       ],
       "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -812,7 +838,7 @@
       "category_id": "code_review",
       "level": "l4",
       "confidence": 0.92,
-      "rationale": "5 reviews of other people's changes carry a suggestion or a stated reason, and in 3 of them the author changed the work before it was accepted. 2 other people later built on this work, and this person read and approved 9 of their changes.",
+      "rationale": "5 reviews of other people's changes carry a suggestion or a stated reason, and in 3 of them the author changed the work before it was accepted.",
       "evidence": [
         {
           "kind": "commit",
@@ -828,6 +854,7 @@
         }
       ],
       "blind_spots": "review remarks made in meetings or chat that never reached the project",
+      "level_reason": "2 other people later built on this work, and the person read and approved 9 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -840,7 +867,7 @@
       "category_id": "integrate_components",
       "level": "l3",
       "confidence": 0.84,
-      "rationale": "10 changes join parts of the software that are developed separately, and 6 of them had to be coordinated with another team's work. In 5 of them the reasoning is set out in the task discussion.",
+      "rationale": "10 changes join parts of the software that are developed separately, and 6 of them had to be coordinated with another team's work.",
       "evidence": [
         {
           "kind": "commit",
@@ -862,6 +889,7 @@
         }
       ],
       "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -874,7 +902,7 @@
       "category_id": "security_permissions",
       "level": "l3",
       "confidence": 0.84,
-      "rationale": "18 changes deal with who may see or do what, for example a check before data is shown, and 8 of them add a check that did not exist before. In 6 of them the reasoning is set out in the task discussion.",
+      "rationale": "18 changes deal with who may see or do what, for example a check before data is shown, and 8 of them add a check that did not exist before.",
       "evidence": [
         {
           "kind": "commit",
@@ -902,6 +930,7 @@
         }
       ],
       "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -914,7 +943,7 @@
       "category_id": "build_dependencies",
       "level": "l2",
       "confidence": 0.73,
-      "rationale": "14 changes are in build and configuration files, and 6 of them update a library or a setting that several parts depend on. None of this work was sent back for rework.",
+      "rationale": "14 changes are in build and configuration files, and 6 of them update a library or a setting that several parts depend on.",
       "evidence": [
         {
           "kind": "commit",
@@ -942,6 +971,7 @@
         }
       ],
       "blind_spots": "whether the build ran cleanly in the set-ups of other users",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -964,6 +994,7 @@
         }
       ],
       "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -986,6 +1017,7 @@
         }
       ],
       "blind_spots": "whether the result was tested with the people who use it",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1008,6 +1040,7 @@
         }
       ],
       "blind_spots": "whether the translations were checked by people who speak the language",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1020,7 +1053,7 @@
       "category_id": "data_persistence",
       "level": "l5",
       "confidence": 0.89,
-      "rationale": "11 changes touch how data is stored or queried, and 7 of them are steps that move existing data to a new shape. This is the person others turn to here: 5 of the changes in this area were read and approved by them.",
+      "rationale": "11 changes touch how data is stored or queried, and 7 of them are steps that move existing data to a new shape.",
       "evidence": [
         {
           "kind": "pull_request",
@@ -1036,6 +1069,7 @@
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "level_reason": "Others turn to this person here: 5 of the changes in this area were read and approved by them, and the approach followed is theirs. This is the top level and rests on the pattern across many changes, not on one change.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1048,7 +1082,7 @@
       "category_id": "software_design",
       "level": "l4",
       "confidence": 0.93,
-      "rationale": "In 15 changes an existing structure was replaced rather than worked around, and 7 of those were later built on by somebody else. 6 other people later built on this work, and this person read and approved 11 of their changes.",
+      "rationale": "In 15 changes an existing structure was replaced rather than worked around, and 7 of those were later built on by somebody else.",
       "evidence": [
         {
           "kind": "commit",
@@ -1070,6 +1104,7 @@
         }
       ],
       "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "level_reason": "6 other people later built on this work, and the person read and approved 11 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -1082,7 +1117,7 @@
       "category_id": "technical_communication",
       "level": "l3",
       "confidence": 0.74,
-      "rationale": "In 13 discussions or change notes this person explained why something behaves as it does, and in 5 of them the explanation names the reason. In 4 of them the reasoning is set out in the task discussion.",
+      "rationale": "In 13 discussions or change notes this person explained why something behaves as it does, and in 5 of them the explanation names the reason.",
       "evidence": [
         {
           "kind": "commit",
@@ -1104,6 +1139,7 @@
         }
       ],
       "blind_spots": "explanations given in meetings or chat rather than in the project",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1116,7 +1152,7 @@
       "category_id": "dev_automated_tests",
       "level": "l2",
       "confidence": 0.72,
-      "rationale": "Of the 94 changes in the window, 3 touched tests, and in 1 of those the tests were new, so they covered behaviour nobody had checked before. None of this work was sent back for rework.",
+      "rationale": "Of the 94 changes in the window, 3 touched tests, and in 1 of those the tests were new, so they covered behaviour nobody had checked before.",
       "evidence": [
         {
           "kind": "commit",
@@ -1144,6 +1180,7 @@
         }
       ],
       "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 2,
@@ -1156,7 +1193,7 @@
       "category_id": "debug_software",
       "level": "l2",
       "confidence": 0.61,
-      "rationale": "4 of the changes are linked to a fault report, and in 3 of them the task discussion names the cause rather than only the fix. None of this work was sent back for rework.",
+      "rationale": "4 of the changes are linked to a fault report, and in 3 of them the task discussion names the cause rather than only the fix.",
       "evidence": [
         {
           "kind": "pull_request",
@@ -1178,6 +1215,7 @@
         }
       ],
       "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1190,7 +1228,7 @@
       "category_id": "code_review",
       "level": "l2",
       "confidence": 0.67,
-      "rationale": "16 reviews of other people's changes carry a suggestion or a stated reason, and in 9 of them the author changed the work before it was accepted. None of this work was sent back for rework.",
+      "rationale": "16 reviews of other people's changes carry a suggestion or a stated reason, and in 9 of them the author changed the work before it was accepted.",
       "evidence": [
         {
           "kind": "commit",
@@ -1218,6 +1256,7 @@
         }
       ],
       "blind_spots": "review remarks made in meetings or chat that never reached the project",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1230,7 +1269,7 @@
       "category_id": "integrate_components",
       "level": "l2",
       "confidence": 0.61,
-      "rationale": "8 changes join parts of the software that are developed separately, and 5 of them had to be coordinated with another team's work. None of this work was sent back for rework.",
+      "rationale": "8 changes join parts of the software that are developed separately, and 5 of them had to be coordinated with another team's work.",
       "evidence": [
         {
           "kind": "commit",
@@ -1258,6 +1297,7 @@
         }
       ],
       "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1280,6 +1320,7 @@
         }
       ],
       "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1302,6 +1343,7 @@
         }
       ],
       "blind_spots": "whether the build ran cleanly in the set-ups of other users",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1314,7 +1356,7 @@
       "category_id": "javascript",
       "level": "l4",
       "confidence": 0.91,
-      "rationale": "17 of the changes are in the browser part of the software, spread over 12 different screens. 10 other people later built on this work, and this person read and approved 9 of their changes.",
+      "rationale": "17 of the changes are in the browser part of the software, spread over 12 different screens.",
       "evidence": [
         {
           "kind": "commit",
@@ -1342,6 +1384,7 @@
         }
       ],
       "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "level_reason": "10 other people later built on this work, and the person read and approved 9 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -1354,7 +1397,7 @@
       "category_id": "design_user_interface",
       "level": "l4",
       "confidence": 0.88,
-      "rationale": "8 changes are on the screens themselves, 5 of them on forms that teachers fill in. 4 other people later built on this work, and this person read and approved 13 of their changes.",
+      "rationale": "8 changes are on the screens themselves, 5 of them on forms that teachers fill in.",
       "evidence": [
         {
           "kind": "commit",
@@ -1376,6 +1419,7 @@
         }
       ],
       "blind_spots": "whether the result was tested with the people who use it",
+      "level_reason": "4 other people later built on this work, and the person read and approved 13 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1388,7 +1432,7 @@
       "category_id": "internationalisation",
       "level": "l2",
       "confidence": 0.71,
-      "rationale": "13 changes deal with translations or the formatting of dates and numbers, and 6 of them move text that was written into the code into the translation files. None of this work was sent back for rework.",
+      "rationale": "13 changes deal with translations or the formatting of dates and numbers, and 6 of them move text that was written into the code into the translation files.",
       "evidence": [
         {
           "kind": "commit",
@@ -1416,6 +1460,7 @@
         }
       ],
       "blind_spots": "whether the translations were checked by people who speak the language",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1438,6 +1483,7 @@
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1450,7 +1496,7 @@
       "category_id": "software_design",
       "level": "l2",
       "confidence": 0.65,
-      "rationale": "In 17 changes an existing structure was replaced rather than worked around, and 7 of those were later built on by somebody else. None of this work was sent back for rework.",
+      "rationale": "In 17 changes an existing structure was replaced rather than worked around, and 7 of those were later built on by somebody else.",
       "evidence": [
         {
           "kind": "commit",
@@ -1472,6 +1518,7 @@
         }
       ],
       "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1484,7 +1531,7 @@
       "category_id": "technical_communication",
       "level": "l2",
       "confidence": 0.72,
-      "rationale": "In 11 discussions or change notes this person explained why something behaves as it does, and in 4 of them the explanation names the reason. None of this work was sent back for rework.",
+      "rationale": "In 11 discussions or change notes this person explained why something behaves as it does, and in 4 of them the explanation names the reason.",
       "evidence": [
         {
           "kind": "review",
@@ -1500,6 +1547,7 @@
         }
       ],
       "blind_spots": "explanations given in meetings or chat rather than in the project",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 2,
@@ -1512,7 +1560,7 @@
       "category_id": "dev_automated_tests",
       "level": "l3",
       "confidence": 0.78,
-      "rationale": "Of the 148 changes in the window, 19 touched tests, and in 13 of those the tests were new, so they covered behaviour nobody had checked before. In 10 of them the reasoning is set out in the task discussion.",
+      "rationale": "Of the 148 changes in the window, 19 touched tests, and in 13 of those the tests were new, so they covered behaviour nobody had checked before.",
       "evidence": [
         {
           "kind": "commit",
@@ -1528,6 +1576,7 @@
         }
       ],
       "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -1540,7 +1589,7 @@
       "category_id": "debug_software",
       "level": "l3",
       "confidence": 0.81,
-      "rationale": "6 of the changes are linked to a fault report, and in 2 of them the task discussion names the cause rather than only the fix. In 2 of them the reasoning is set out in the task discussion.",
+      "rationale": "6 of the changes are linked to a fault report, and in 2 of them the task discussion names the cause rather than only the fix.",
       "evidence": [
         {
           "kind": "commit",
@@ -1550,6 +1599,7 @@
         }
       ],
       "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1562,7 +1612,7 @@
       "category_id": "code_review",
       "level": "l3",
       "confidence": 0.81,
-      "rationale": "7 reviews of other people's changes carry a suggestion or a stated reason, and in 4 of them the author changed the work before it was accepted. In 3 of them the reasoning is set out in the task discussion.",
+      "rationale": "7 reviews of other people's changes carry a suggestion or a stated reason, and in 4 of them the author changed the work before it was accepted.",
       "evidence": [
         {
           "kind": "pull_request",
@@ -1572,6 +1622,7 @@
         }
       ],
       "blind_spots": "review remarks made in meetings or chat that never reached the project",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1584,7 +1635,7 @@
       "category_id": "integrate_components",
       "level": "l3",
       "confidence": 0.78,
-      "rationale": "24 changes join parts of the software that are developed separately, and 11 of them had to be coordinated with another team's work. In 9 of them the reasoning is set out in the task discussion.",
+      "rationale": "24 changes join parts of the software that are developed separately, and 11 of them had to be coordinated with another team's work.",
       "evidence": [
         {
           "kind": "commit",
@@ -1606,6 +1657,7 @@
         }
       ],
       "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1618,7 +1670,7 @@
       "category_id": "security_permissions",
       "level": "l2",
       "confidence": 0.72,
-      "rationale": "4 changes deal with who may see or do what, for example a check before data is shown, and 3 of them add a check that did not exist before. None of this work was sent back for rework.",
+      "rationale": "4 changes deal with who may see or do what, for example a check before data is shown, and 3 of them add a check that did not exist before.",
       "evidence": [
         {
           "kind": "commit",
@@ -1640,6 +1692,7 @@
         }
       ],
       "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 2,
@@ -1652,7 +1705,7 @@
       "category_id": "build_dependencies",
       "level": "l3",
       "confidence": 0.79,
-      "rationale": "23 changes are in build and configuration files, and 8 of them update a library or a setting that several parts depend on. In 6 of them the reasoning is set out in the task discussion.",
+      "rationale": "23 changes are in build and configuration files, and 8 of them update a library or a setting that several parts depend on.",
       "evidence": [
         {
           "kind": "commit",
@@ -1680,6 +1733,7 @@
         }
       ],
       "blind_spots": "whether the build ran cleanly in the set-ups of other users",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1692,7 +1746,7 @@
       "category_id": "javascript",
       "level": "l3",
       "confidence": 0.85,
-      "rationale": "19 of the changes are in the browser part of the software, spread over 8 different screens. In 6 of them the reasoning is set out in the task discussion.",
+      "rationale": "19 of the changes are in the browser part of the software, spread over 8 different screens.",
       "evidence": [
         {
           "kind": "pull_request",
@@ -1714,6 +1768,7 @@
         }
       ],
       "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1726,7 +1781,7 @@
       "category_id": "design_user_interface",
       "level": "l3",
       "confidence": 0.81,
-      "rationale": "6 changes are on the screens themselves, 2 of them on forms that teachers fill in. In 2 of them the reasoning is set out in the task discussion.",
+      "rationale": "6 changes are on the screens themselves, 2 of them on forms that teachers fill in.",
       "evidence": [
         {
           "kind": "commit",
@@ -1748,6 +1803,7 @@
         }
       ],
       "blind_spots": "whether the result was tested with the people who use it",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1760,7 +1816,7 @@
       "category_id": "internationalisation",
       "level": "l2",
       "confidence": 0.7,
-      "rationale": "16 changes deal with translations or the formatting of dates and numbers, and 6 of them move text that was written into the code into the translation files. None of this work was sent back for rework.",
+      "rationale": "16 changes deal with translations or the formatting of dates and numbers, and 6 of them move text that was written into the code into the translation files.",
       "evidence": [
         {
           "kind": "commit",
@@ -1782,6 +1838,7 @@
         }
       ],
       "blind_spots": "whether the translations were checked by people who speak the language",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1794,7 +1851,7 @@
       "category_id": "data_persistence",
       "level": "l3",
       "confidence": 0.84,
-      "rationale": "3 changes touch how data is stored or queried, and 1 of them are steps that move existing data to a new shape. In 1 of them the reasoning is set out in the task discussion.",
+      "rationale": "3 changes touch how data is stored or queried, and 1 of them are steps that move existing data to a new shape.",
       "evidence": [
         {
           "kind": "commit",
@@ -1822,6 +1879,7 @@
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -1834,7 +1892,7 @@
       "category_id": "software_design",
       "level": "l3",
       "confidence": 0.77,
-      "rationale": "In 27 changes an existing structure was replaced rather than worked around, and 17 of those were later built on by somebody else. In 14 of them the reasoning is set out in the task discussion.",
+      "rationale": "In 27 changes an existing structure was replaced rather than worked around, and 17 of those were later built on by somebody else.",
       "evidence": [
         {
           "kind": "commit",
@@ -1862,6 +1920,7 @@
         }
       ],
       "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1874,7 +1933,7 @@
       "category_id": "technical_communication",
       "level": "l2",
       "confidence": 0.67,
-      "rationale": "In 25 discussions or change notes this person explained why something behaves as it does, and in 11 of them the explanation names the reason. None of this work was sent back for rework.",
+      "rationale": "In 25 discussions or change notes this person explained why something behaves as it does, and in 11 of them the explanation names the reason.",
       "evidence": [
         {
           "kind": "commit",
@@ -1902,6 +1961,7 @@
         }
       ],
       "blind_spots": "explanations given in meetings or chat rather than in the project",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1914,7 +1974,7 @@
       "category_id": "dev_automated_tests",
       "level": "l2",
       "confidence": 0.68,
-      "rationale": "Of the 39 changes in the window, 7 touched tests, and in 3 of those the tests were new, so they covered behaviour nobody had checked before. None of this work was sent back for rework.",
+      "rationale": "Of the 39 changes in the window, 7 touched tests, and in 3 of those the tests were new, so they covered behaviour nobody had checked before.",
       "evidence": [
         {
           "kind": "commit",
@@ -1942,6 +2002,7 @@
         }
       ],
       "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1954,7 +2015,7 @@
       "category_id": "debug_software",
       "level": "l1",
       "confidence": 0.47,
-      "rationale": "7 of the changes are linked to a fault report, and in 3 of them the task discussion names the cause rather than only the fix. The approach was set by someone else in each case.",
+      "rationale": "7 of the changes are linked to a fault report, and in 3 of them the task discussion names the cause rather than only the fix.",
       "evidence": [
         {
           "kind": "pull_request",
@@ -1970,6 +2031,7 @@
         }
       ],
       "blind_spots": "faults that were diagnosed in conversation and fixed by somebody else",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1992,6 +2054,7 @@
         }
       ],
       "blind_spots": "review remarks made in meetings or chat that never reached the project",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -2004,7 +2067,7 @@
       "category_id": "integrate_components",
       "level": "l1",
       "confidence": 0.47,
-      "rationale": "5 changes join parts of the software that are developed separately, and 2 of them had to be coordinated with another team's work. The approach was set by someone else in each case.",
+      "rationale": "5 changes join parts of the software that are developed separately, and 2 of them had to be coordinated with another team's work.",
       "evidence": [
         {
           "kind": "review",
@@ -2014,6 +2077,7 @@
         }
       ],
       "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -2036,6 +2100,7 @@
         }
       ],
       "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -2048,7 +2113,7 @@
       "category_id": "build_dependencies",
       "level": "l1",
       "confidence": 0.48,
-      "rationale": "3 changes are in build and configuration files, and 2 of them update a library or a setting that several parts depend on. The approach was set by someone else in each case.",
+      "rationale": "3 changes are in build and configuration files, and 2 of them update a library or a setting that several parts depend on.",
       "evidence": [
         {
           "kind": "review",
@@ -2058,6 +2123,7 @@
         }
       ],
       "blind_spots": "whether the build ran cleanly in the set-ups of other users",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 2,
@@ -2070,7 +2136,7 @@
       "category_id": "javascript",
       "level": "l2",
       "confidence": 0.69,
-      "rationale": "6 of the changes are in the browser part of the software, spread over 4 different screens. None of this work was sent back for rework.",
+      "rationale": "6 of the changes are in the browser part of the software, spread over 4 different screens.",
       "evidence": [
         {
           "kind": "commit",
@@ -2086,6 +2152,7 @@
         }
       ],
       "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -2098,7 +2165,7 @@
       "category_id": "design_user_interface",
       "level": "l2",
       "confidence": 0.67,
-      "rationale": "7 changes are on the screens themselves, 4 of them on forms that teachers fill in. None of this work was sent back for rework.",
+      "rationale": "7 changes are on the screens themselves, 4 of them on forms that teachers fill in.",
       "evidence": [
         {
           "kind": "commit",
@@ -2120,6 +2187,7 @@
         }
       ],
       "blind_spots": "whether the result was tested with the people who use it",
+      "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 2,
@@ -2132,7 +2200,7 @@
       "category_id": "internationalisation",
       "level": "l1",
       "confidence": 0.51,
-      "rationale": "6 changes deal with translations or the formatting of dates and numbers, and 2 of them move text that was written into the code into the translation files. The approach was set by someone else in each case.",
+      "rationale": "6 changes deal with translations or the formatting of dates and numbers, and 2 of them move text that was written into the code into the translation files.",
       "evidence": [
         {
           "kind": "commit",
@@ -2160,6 +2228,7 @@
         }
       ],
       "blind_spots": "whether the translations were checked by people who speak the language",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -2182,6 +2251,7 @@
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
+      "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -2194,7 +2264,7 @@
       "category_id": "software_design",
       "level": "l1",
       "confidence": 0.53,
-      "rationale": "In 7 changes an existing structure was replaced rather than worked around, and 3 of those were later built on by somebody else. The approach was set by someone else in each case.",
+      "rationale": "In 7 changes an existing structure was replaced rather than worked around, and 3 of those were later built on by somebody else.",
       "evidence": [
         {
           "kind": "commit",
@@ -2222,6 +2292,7 @@
         }
       ],
       "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -2234,7 +2305,7 @@
       "category_id": "technical_communication",
       "level": "l1",
       "confidence": 0.58,
-      "rationale": "In 3 discussions or change notes this person explained why something behaves as it does, and in 1 of them the explanation names the reason. The approach was set by someone else in each case.",
+      "rationale": "In 3 discussions or change notes this person explained why something behaves as it does, and in 1 of them the explanation names the reason.",
       "evidence": [
         {
           "kind": "commit",
@@ -2262,6 +2333,7 @@
         }
       ],
       "blind_spots": "explanations given in meetings or chat rather than in the project",
+      "level_reason": "The approach was set by someone else in each case and the changes are small and mechanical. Nothing shows the person choosing the approach alone, so the next level, \"Completes routine tasks alone\", is not supported.",
       "study": {
         "direction": "lower",
         "delta": 1,
