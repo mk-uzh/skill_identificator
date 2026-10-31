@@ -656,7 +656,7 @@ export default function Task2Page() {
           <aside className="side">
             <details className="acc">
               <summary>What confidence means</summary>
-              <ConfidenceGuide open />
+              <ConfidenceGuide bare />
             </details>
           </aside>
           </div>

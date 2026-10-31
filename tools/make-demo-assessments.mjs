@@ -28,12 +28,13 @@ const N = "not_observable";
 
 // developer -> level per competence, in the order of COMPETENCES.
 const SCRIPT = {
-  "DEV-01": ["l3", "l3", "l4", "l3", N,    "l4", "l3", "l3", N,    "l3"],
-  "DEV-02": ["l1", N,    "l2", "l1", N,    "l2", N,    N,    "l2", "l1"],
-  "DEV-04": ["l3", "l2", "l3", "l4", "l3", "l3", N,    N,    "l5", "l4"],
-  "DEV-06": ["l2", "l2", "l2", "l2", N,    "l2", "l4", "l4", N,    "l2"],
-  "DEV-07": ["l3", "l3", "l3", "l3", "l2", "l3", "l3", "l3", "l3", "l2"],
-  "DEV-09": ["l2", "l1", "l1", "l1", N,    "l1", "l2", "l2", N,    "l1"],
+  //             tests  debug  review integr secur  build  js     ui     i18n   data   design techcomm
+  "DEV-01": ["l3", "l4", "l3", "l4", N,    "l3", "l3", "l3", N,    N,    "l3", "l3"],
+  "DEV-02": ["l1", "l2", N,    "l2", N,    "l1", N,    N,    N,    "l2", "l1", N   ],
+  "DEV-04": ["l3", "l3", "l4", "l3", "l3", "l2", N,    N,    N,    "l5", "l4", "l3"],
+  "DEV-06": ["l2", "l2", "l2", "l2", N,    N,    "l4", "l4", "l2", N,    "l2", "l2"],
+  "DEV-07": ["l3", "l3", "l3", "l3", "l2", "l3", "l3", "l3", "l2", "l3", "l3", "l2"],
+  "DEV-09": ["l2", "l1", N,    "l1", N,    "l1", "l2", "l2", "l1", N,    "l1", "l1"],
 };
 
 // Cells where the system is deliberately wrong (the study's error condition).
@@ -42,17 +43,20 @@ const SCRIPT = {
 const INCORRECT = new Set([
   "DEV-01::debug_software",
   "DEV-01::design_user_interface",
+  "DEV-01::code_review",
   "DEV-02::integrate_components",
-  "DEV-02::migrate_existing_data",
-  "DEV-04::concurrent_programming",
-  "DEV-04::object_oriented_modelling",
+  "DEV-02::data_persistence",
+  "DEV-04::security_permissions",
+  "DEV-04::software_design",
+  "DEV-04::dev_automated_tests",
   "DEV-06::dev_automated_tests",
   "DEV-06::javascript",
+  "DEV-06::technical_communication",
   "DEV-07::dev_automated_tests",
-  "DEV-07::migrate_existing_data",
-  "DEV-07::concurrent_programming",
+  "DEV-07::data_persistence",
+  "DEV-07::security_permissions",
   "DEV-09::design_user_interface",
-  "DEV-09::ict_debugging_tools",
+  "DEV-09::build_dependencies",
 ]);
 
 const AREAS = {
@@ -103,48 +107,56 @@ const localise = (str) =>
 const BLIND = {
   dev_automated_tests:
     "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
-  ict_debugging_tools:
-    "which tools were used on their own machine, since only the result of the search reaches the records",
   debug_software:
     "faults that were diagnosed in conversation and fixed by somebody else",
-  design_patterns:
-    "design decisions taken in a meeting and never written down in the project",
-  concurrent_programming:
-    "whether the chosen approach holds under real load, which no record here measures",
+  code_review:
+    "review remarks made in meetings or chat that never reached the project",
   integrate_components:
     "work on systems outside this project that had to be adjusted at the same time",
-  design_user_interface:
-    "whether the result was tested with the people who use it",
+  security_permissions:
+    "security checks done outside the project, and whether the rules hold in every set-up",
+  build_dependencies:
+    "whether the build ran cleanly in the set-ups of other users",
   javascript:
     "knowledge of the language beyond what this project happens to need",
-  migrate_existing_data:
+  design_user_interface:
+    "whether the result was tested with the people who use it",
+  internationalisation:
+    "whether the translations were checked by people who speak the language",
+  data_persistence:
     "whether the migration ran cleanly on the production data, which is not recorded here",
-  object_oriented_modelling:
-    "modelling work done on a whiteboard before any code was written",
+  software_design:
+    "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+  technical_communication:
+    "explanations given in meetings or chat rather than in the project",
 };
 
 // Narrative per competence. {n} slots are filled from the seeded generator.
 const NARRATIVE = {
   dev_automated_tests:
     "Of the {total} changes in the window, {a} touched tests, and in {b} of those the tests were new, so they covered behaviour nobody had checked before.",
-  ict_debugging_tools:
-    "In {a} task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from.",
   debug_software:
     "{a} of the changes are linked to a fault report, and in {b} of them the task discussion names the cause rather than only the fix.",
-  design_patterns:
-    "In {a} changes an existing structure was replaced rather than worked around, and {b} of those were later built on by somebody else.",
-  concurrent_programming:
-    "{a} changes touch the places where two people can act at the same time, for example locking a quiz while it is being published.",
+  code_review:
+    "{a} reviews of other people's changes carry a suggestion or a stated reason, and in {b} of them the author changed the work before it was accepted.",
   integrate_components:
     "{a} changes join parts of the software that are developed separately, and {b} of them had to be coordinated with another team's work.",
-  design_user_interface:
-    "{a} changes are on the screens themselves, {b} of them on forms that teachers fill in.",
+  security_permissions:
+    "{a} changes deal with who may see or do what, for example a check before data is shown, and {b} of them add a check that did not exist before.",
+  build_dependencies:
+    "{a} changes are in build and configuration files, and {b} of them update a library or a setting that several parts depend on.",
   javascript:
     "{a} of the changes are in the browser part of the software, spread over {b} different screens.",
-  migrate_existing_data:
-    "This person wrote {a} of the steps that move existing data to a new shape, including {b} that had to run while the platform stayed available.",
-  object_oriented_modelling:
-    "In {a} changes the names and the cut of the parts were revised, not just their contents.",
+  design_user_interface:
+    "{a} changes are on the screens themselves, {b} of them on forms that teachers fill in.",
+  internationalisation:
+    "{a} changes deal with translations or the formatting of dates and numbers, and {b} of them move text that was written into the code into the translation files.",
+  data_persistence:
+    "{a} changes touch how data is stored or queried, and {b} of them are steps that move existing data to a new shape.",
+  software_design:
+    "In {a} changes an existing structure was replaced rather than worked around, and {b} of those were later built on by somebody else.",
+  technical_communication:
+    "In {a} discussions or change notes this person explained why something behaves as it does, and in {b} of them the explanation names the reason.",
 };
 
 const LEVEL_CLAUSE = {

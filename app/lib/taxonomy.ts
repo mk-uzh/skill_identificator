@@ -15,9 +15,9 @@ interface RawCategory {
   group: string;
   label: string;
   plain: string;
-  description: string;
+  description?: string;
+  definition?: string;
   order: number;
-  anchors: Record<string, string>;
 }
 
 interface RawTaxonomy {
@@ -51,7 +51,7 @@ export const CATEGORIES: Category[] = [...taxonomy.categories]
     id: c.key,
     label: c.label,
     plain: c.plain,
-    description: c.description,
+    description: c.description ?? c.definition ?? c.plain,
     groupId: c.group,
     order: c.order,
   }));

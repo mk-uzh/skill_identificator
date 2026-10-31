@@ -1,5 +1,5 @@
 {
-  "roles_version": "1.0",
+  "roles_version": "1.1",
   "esco_version": "ESCO v1.2.0, occupation layer",
   "uri_status": "PLACEHOLDER - the occupation URIs below are local identifiers, not resolvable ESCO URIs. Replace them with the real occupation URIs before any result is reported.",
   "note": "essential_measured lists only those essential competences of an occupation that this taxonomy actually measures. essential_not_measured names the ones it does not, so that a match is never read as completeness.",
@@ -10,18 +10,15 @@
       "label": "software developer",
       "essential_measured": [
         "dev_automated_tests",
-        "ict_debugging_tools",
         "debug_software",
-        "design_patterns",
-        "concurrent_programming",
+        "software_design",
         "integrate_components",
         "design_user_interface",
         "javascript",
-        "object_oriented_modelling"
+        "technical_communication"
       ],
       "essential_not_measured": [
         "interpreting requirements",
-        "writing technical documentation",
         "running a project"
       ]
     },
@@ -31,11 +28,13 @@
       "label": "software tester",
       "essential_measured": [
         "dev_automated_tests",
-        "ict_debugging_tools",
         "debug_software",
         "integrate_components"
       ],
-      "essential_not_measured": ["performance testing", "planning a test approach"]
+      "essential_not_measured": [
+        "performance testing",
+        "planning a test approach"
+      ]
     },
     {
       "key": "ict_application_developer",
@@ -44,24 +43,28 @@
       "essential_measured": [
         "design_user_interface",
         "javascript",
-        "design_patterns",
+        "software_design",
         "debug_software",
-        "integrate_components",
-        "object_oriented_modelling"
+        "integrate_components"
       ],
-      "essential_not_measured": ["security legislation", "identifying customer requirements"]
+      "essential_not_measured": [
+        "security legislation",
+        "identifying customer requirements"
+      ]
     },
     {
       "key": "database_developer",
       "uri": "urn:devskill:esco-pending:occupation/database-developer",
       "label": "database developer",
       "essential_measured": [
-        "migrate_existing_data",
-        "concurrent_programming",
-        "integrate_components",
-        "object_oriented_modelling"
+        "data_persistence",
+        "software_design",
+        "integrate_components"
       ],
-      "essential_not_measured": ["database performance tuning", "capacity planning"]
+      "essential_not_measured": [
+        "database performance tuning",
+        "capacity planning"
+      ]
     }
   ]
 }

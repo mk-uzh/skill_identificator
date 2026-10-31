@@ -1,8 +1,8 @@
 {
-  "taxonomy_version": "2.0",
+  "taxonomy_version": "3.0",
   "organization_id": "demo-project-nifi",
   "computed_at": "2026-10-25T00:00:00.000Z",
-  "config_hash": "875cd85835237c1a",
+  "config_hash": "c14105f58e002a4a",
   "generated_by": "tools/make-demo-assessments.mjs",
   "data_status": "PLACEHOLDER - generated demo content, not pipeline output",
   "assessments": [
@@ -41,40 +41,6 @@
       }
     },
     {
-      "id": "assess-DEV-01-ict_debugging_tools",
-      "developer_id": "DEV-01",
-      "category_id": "ict_debugging_tools",
-      "level": "l3",
-      "confidence": 0.85,
-      "rationale": "In 24 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. In 9 of them the reasoning is set out in the task discussion.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "fix: the engine that runs a data flow, correct the order in which changes are applied",
-          "timestamp": "2025-09-27T06:37:40.448Z",
-          "url": "https://example.org/demo/nifi/commit/dev-01-ict_debugging_tools-1"
-        },
-        {
-          "kind": "pull_request",
-          "title": "the engine that runs a data flow: rework after review",
-          "timestamp": "2026-01-28T22:39:53.328Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-01-ict_debugging_tools-2"
-        },
-        {
-          "kind": "review",
-          "title": "Review of somebody else's change in the engine that runs a data flow",
-          "timestamp": "2025-07-31T12:54:09.521Z",
-          "url": "https://example.org/demo/nifi/review/dev-01-ict_debugging_tools-3"
-        }
-      ],
-      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
-      "study": {
-        "direction": "raise",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
       "id": "assess-DEV-01-debug_software",
       "developer_id": "DEV-01",
       "category_id": "debug_software",
@@ -103,53 +69,37 @@
       }
     },
     {
-      "id": "assess-DEV-01-design_patterns",
+      "id": "assess-DEV-01-code_review",
       "developer_id": "DEV-01",
-      "category_id": "design_patterns",
+      "category_id": "code_review",
       "level": "l3",
-      "confidence": 0.73,
-      "rationale": "In 33 changes an existing structure was replaced rather than worked around, and 17 of those were later built on by somebody else. In 14 of them the reasoning is set out in the task discussion.",
+      "confidence": 0.83,
+      "rationale": "14 reviews of other people's changes carry a suggestion or a stated reason, and in 5 of them the author changed the work before it was accepted. In 4 of them the reasoning is set out in the task discussion.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "refactor: the engine that runs a data flow, pull the repeated part into one place",
-          "timestamp": "2026-07-13T07:30:08.320Z",
-          "url": "https://example.org/demo/nifi/commit/dev-01-design_patterns-1"
+          "title": "fix: the engine that runs a data flow, correct the order in which changes are applied",
+          "timestamp": "2025-05-30T19:08:24.884Z",
+          "url": "https://example.org/demo/nifi/commit/dev-01-code_review-1"
         },
         {
-          "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2026-09-06T00:53:05.366Z",
-          "url": "https://example.org/demo/nifi/review/dev-01-design_patterns-2"
-        }
-      ],
-      "blind_spots": "design decisions taken in a meeting and never written down in the project",
-      "study": {
-        "direction": "raise",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
-      "id": "assess-DEV-01-concurrent_programming",
-      "developer_id": "DEV-01",
-      "category_id": "concurrent_programming",
-      "level": "not_observable",
-      "confidence": 0.38,
-      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the engine that runs a data flow that touches it. This is a declared blind spot, not a low rating.",
-      "evidence": [
+          "kind": "pull_request",
+          "title": "the engine that runs a data flow: new behaviour behind a setting",
+          "timestamp": "2026-06-27T09:35:29.798Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-01-code_review-2"
+        },
         {
           "kind": "issue",
-          "title": "Request: make the engine that runs a data flow usable with the keyboard only",
-          "timestamp": "2025-11-17T03:35:35.567Z",
-          "url": "https://example.org/demo/nifi/issue/dev-01-concurrent_programming-1"
+          "title": "Fault report: behaviour in the engine that runs a data flow after an update",
+          "timestamp": "2026-04-17T00:12:13.937Z",
+          "url": "https://example.org/demo/nifi/issue/dev-01-code_review-3"
         }
       ],
-      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "blind_spots": "review remarks made in meetings or chat that never reached the project",
       "study": {
-        "direction": "lower",
-        "delta": 1,
-        "veracity": "correct"
+        "direction": "raise",
+        "delta": 2,
+        "veracity": "incorrect"
       }
     },
     {
@@ -180,6 +130,96 @@
         }
       ],
       "blind_spots": "work on systems outside this project that had to be adjusted at the same time",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-01-security_permissions",
+      "developer_id": "DEV-01",
+      "category_id": "security_permissions",
+      "level": "not_observable",
+      "confidence": 0.4,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the engine that runs a data flow that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the engine that runs a data flow after an update",
+          "timestamp": "2025-07-24T12:53:05.110Z",
+          "url": "https://example.org/demo/nifi/issue/dev-01-security_permissions-1"
+        }
+      ],
+      "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-01-build_dependencies",
+      "developer_id": "DEV-01",
+      "category_id": "build_dependencies",
+      "level": "l3",
+      "confidence": 0.74,
+      "rationale": "38 changes are in build and configuration files, and 19 of them update a library or a setting that several parts depend on. In 15 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the engine that runs a data flow, correct the order in which changes are applied",
+          "timestamp": "2026-08-17T10:31:22.869Z",
+          "url": "https://example.org/demo/nifi/commit/dev-01-build_dependencies-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the engine that runs a data flow",
+          "timestamp": "2025-07-08T13:59:22.263Z",
+          "url": "https://example.org/demo/nifi/review/dev-01-build_dependencies-2"
+        }
+      ],
+      "blind_spots": "whether the build ran cleanly in the set-ups of other users",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-01-javascript",
+      "developer_id": "DEV-01",
+      "category_id": "javascript",
+      "level": "l3",
+      "confidence": 0.82,
+      "rationale": "11 of the changes are in the browser part of the software, spread over 5 different screens. In 4 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the engine that runs a data flow, correct the order in which changes are applied",
+          "timestamp": "2025-04-12T12:40:23.623Z",
+          "url": "https://example.org/demo/nifi/commit/dev-01-javascript-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the engine that runs a data flow: new behaviour behind a setting",
+          "timestamp": "2026-02-16T15:10:31.705Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-01-javascript-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the engine that runs a data flow",
+          "timestamp": "2025-07-09T06:42:07.970Z",
+          "url": "https://example.org/demo/nifi/review/dev-01-javascript-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the engine that runs a data flow after an update",
+          "timestamp": "2025-12-12T21:18:01.048Z",
+          "url": "https://example.org/demo/nifi/issue/dev-01-javascript-4"
+        }
+      ],
+      "blind_spots": "knowledge of the language beyond what this project happens to need",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -227,58 +267,40 @@
       }
     },
     {
-      "id": "assess-DEV-01-javascript",
+      "id": "assess-DEV-01-internationalisation",
       "developer_id": "DEV-01",
-      "category_id": "javascript",
-      "level": "l3",
-      "confidence": 0.82,
-      "rationale": "11 of the changes are in the browser part of the software, spread over 5 different screens. In 4 of them the reasoning is set out in the task discussion.",
+      "category_id": "internationalisation",
+      "level": "not_observable",
+      "confidence": 0.38,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the engine that runs a data flow that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
-          "kind": "commit",
-          "title": "fix: the engine that runs a data flow, correct the order in which changes are applied",
-          "timestamp": "2025-04-12T12:40:23.623Z",
-          "url": "https://example.org/demo/nifi/commit/dev-01-javascript-1"
-        },
-        {
-          "kind": "pull_request",
-          "title": "the engine that runs a data flow: new behaviour behind a setting",
-          "timestamp": "2026-02-16T15:10:31.705Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-01-javascript-2"
-        },
-        {
-          "kind": "review",
-          "title": "Review of somebody else's change in the engine that runs a data flow",
-          "timestamp": "2025-07-09T06:42:07.970Z",
-          "url": "https://example.org/demo/nifi/review/dev-01-javascript-3"
-        },
-        {
           "kind": "issue",
-          "title": "Fault report: behaviour in the engine that runs a data flow after an update",
-          "timestamp": "2025-12-12T21:18:01.048Z",
-          "url": "https://example.org/demo/nifi/issue/dev-01-javascript-4"
+          "title": "Request: make the engine that runs a data flow usable with the keyboard only",
+          "timestamp": "2025-07-23T05:56:44.581Z",
+          "url": "https://example.org/demo/nifi/issue/dev-01-internationalisation-1"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "whether the translations were checked by people who speak the language",
       "study": {
-        "direction": "raise",
+        "direction": "lower",
         "delta": 1,
         "veracity": "correct"
       }
     },
     {
-      "id": "assess-DEV-01-migrate_existing_data",
+      "id": "assess-DEV-01-data_persistence",
       "developer_id": "DEV-01",
-      "category_id": "migrate_existing_data",
+      "category_id": "data_persistence",
       "level": "not_observable",
-      "confidence": 0.34,
+      "confidence": 0.35,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the engine that runs a data flow that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "Fault report: behaviour in the engine that runs a data flow after an update",
-          "timestamp": "2025-07-26T18:26:09.892Z",
-          "url": "https://example.org/demo/nifi/issue/dev-01-migrate_existing_data-1"
+          "title": "Request: make the engine that runs a data flow usable with the keyboard only",
+          "timestamp": "2025-11-21T13:45:06.333Z",
+          "url": "https://example.org/demo/nifi/issue/dev-01-data_persistence-1"
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
@@ -289,39 +311,73 @@
       }
     },
     {
-      "id": "assess-DEV-01-object_oriented_modelling",
+      "id": "assess-DEV-01-software_design",
       "developer_id": "DEV-01",
-      "category_id": "object_oriented_modelling",
+      "category_id": "software_design",
       "level": "l3",
-      "confidence": 0.8,
-      "rationale": "In 6 changes the names and the cut of the parts were revised, not just their contents. In 2 of them the reasoning is set out in the task discussion.",
+      "confidence": 0.85,
+      "rationale": "In 18 changes an existing structure was replaced rather than worked around, and 6 of those were later built on by somebody else. In 5 of them the reasoning is set out in the task discussion.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "fix: the engine that runs a data flow, stop the error when a processor is configured without a required property",
-          "timestamp": "2025-12-21T09:07:11.154Z",
-          "url": "https://example.org/demo/nifi/commit/dev-01-object_oriented_modelling-1"
+          "title": "refactor: the engine that runs a data flow, pull the repeated part into one place",
+          "timestamp": "2025-02-01T17:07:23.272Z",
+          "url": "https://example.org/demo/nifi/commit/dev-01-software_design-1"
         },
         {
           "kind": "pull_request",
           "title": "the engine that runs a data flow: rework after review",
-          "timestamp": "2025-07-08T00:59:01.027Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-01-object_oriented_modelling-2"
+          "timestamp": "2026-05-15T20:31:51.463Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-01-software_design-2"
         },
         {
           "kind": "review",
           "title": "Review of somebody else's change in the engine that runs a data flow",
-          "timestamp": "2025-02-14T07:16:00.293Z",
-          "url": "https://example.org/demo/nifi/review/dev-01-object_oriented_modelling-3"
+          "timestamp": "2026-04-28T11:38:18.291Z",
+          "url": "https://example.org/demo/nifi/review/dev-01-software_design-3"
         },
         {
           "kind": "issue",
           "title": "Fault report: behaviour in the engine that runs a data flow after an update",
-          "timestamp": "2025-02-02T06:14:55.341Z",
-          "url": "https://example.org/demo/nifi/issue/dev-01-object_oriented_modelling-4"
+          "timestamp": "2025-08-21T21:45:44.749Z",
+          "url": "https://example.org/demo/nifi/issue/dev-01-software_design-4"
         }
       ],
-      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-01-technical_communication",
+      "developer_id": "DEV-01",
+      "category_id": "technical_communication",
+      "level": "l3",
+      "confidence": 0.74,
+      "rationale": "In 16 discussions or change notes this person explained why something behaves as it does, and in 6 of them the explanation names the reason. In 5 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "the engine that runs a data flow: new behaviour behind a setting",
+          "timestamp": "2026-08-31T01:19:29.790Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-01-technical_communication-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-06-01T13:59:45.683Z",
+          "url": "https://example.org/demo/nifi/review/dev-01-technical_communication-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the engine that runs a data flow after an update",
+          "timestamp": "2025-06-03T03:29:51.567Z",
+          "url": "https://example.org/demo/nifi/issue/dev-01-technical_communication-3"
+        }
+      ],
+      "blind_spots": "explanations given in meetings or chat rather than in the project",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -363,28 +419,6 @@
       }
     },
     {
-      "id": "assess-DEV-02-ict_debugging_tools",
-      "developer_id": "DEV-02",
-      "category_id": "ict_debugging_tools",
-      "level": "not_observable",
-      "confidence": 0.37,
-      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of flow definitions that touches it. This is a declared blind spot, not a low rating.",
-      "evidence": [
-        {
-          "kind": "issue",
-          "title": "Request: make the import and export of flow definitions usable with the keyboard only",
-          "timestamp": "2025-02-18T05:02:58.667Z",
-          "url": "https://example.org/demo/nifi/issue/dev-02-ict_debugging_tools-1"
-        }
-      ],
-      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
-      "study": {
-        "direction": "lower",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
       "id": "assess-DEV-02-debug_software",
       "developer_id": "DEV-02",
       "category_id": "debug_software",
@@ -413,61 +447,21 @@
       }
     },
     {
-      "id": "assess-DEV-02-design_patterns",
+      "id": "assess-DEV-02-code_review",
       "developer_id": "DEV-02",
-      "category_id": "design_patterns",
-      "level": "l1",
-      "confidence": 0.54,
-      "rationale": "In 6 changes an existing structure was replaced rather than worked around, and 3 of those were later built on by somebody else. The approach was set by someone else in each case.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "fix: the import and export of flow definitions, correct the order in which changes are applied",
-          "timestamp": "2025-06-15T21:56:18.631Z",
-          "url": "https://example.org/demo/nifi/commit/dev-02-design_patterns-1"
-        },
-        {
-          "kind": "pull_request",
-          "title": "the import and export of flow definitions: rework after review",
-          "timestamp": "2025-04-15T21:34:01.733Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-02-design_patterns-2"
-        },
-        {
-          "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2026-05-24T05:17:25.769Z",
-          "url": "https://example.org/demo/nifi/review/dev-02-design_patterns-3"
-        },
-        {
-          "kind": "issue",
-          "title": "Fault report: behaviour in the import and export of flow definitions after an update",
-          "timestamp": "2025-11-18T21:00:18.470Z",
-          "url": "https://example.org/demo/nifi/issue/dev-02-design_patterns-4"
-        }
-      ],
-      "blind_spots": "design decisions taken in a meeting and never written down in the project",
-      "study": {
-        "direction": "lower",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
-      "id": "assess-DEV-02-concurrent_programming",
-      "developer_id": "DEV-02",
-      "category_id": "concurrent_programming",
+      "category_id": "code_review",
       "level": "not_observable",
-      "confidence": 0.42,
+      "confidence": 0.4,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of flow definitions that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "Fault report: behaviour in the import and export of flow definitions after an update",
-          "timestamp": "2025-12-04T06:47:52.252Z",
-          "url": "https://example.org/demo/nifi/issue/dev-02-concurrent_programming-1"
+          "title": "Request: make the import and export of flow definitions usable with the keyboard only",
+          "timestamp": "2025-03-09T10:55:48.126Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-code_review-1"
         }
       ],
-      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "blind_spots": "review remarks made in meetings or chat that never reached the project",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -515,21 +509,55 @@
       }
     },
     {
-      "id": "assess-DEV-02-design_user_interface",
+      "id": "assess-DEV-02-security_permissions",
       "developer_id": "DEV-02",
-      "category_id": "design_user_interface",
+      "category_id": "security_permissions",
       "level": "not_observable",
-      "confidence": 0.32,
+      "confidence": 0.35,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of flow definitions that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
           "title": "Fault report: behaviour in the import and export of flow definitions after an update",
-          "timestamp": "2025-12-11T20:40:09.016Z",
-          "url": "https://example.org/demo/nifi/issue/dev-02-design_user_interface-1"
+          "timestamp": "2025-07-04T16:27:27.365Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-security_permissions-1"
         }
       ],
-      "blind_spots": "whether the result was tested with the people who use it",
+      "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-build_dependencies",
+      "developer_id": "DEV-02",
+      "category_id": "build_dependencies",
+      "level": "l1",
+      "confidence": 0.46,
+      "rationale": "3 changes are in build and configuration files, and 1 of them update a library or a setting that several parts depend on. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "the import and export of flow definitions: rework after review",
+          "timestamp": "2025-02-13T00:09:33.248Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-02-build_dependencies-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the import and export of flow definitions",
+          "timestamp": "2025-07-04T01:54:34.617Z",
+          "url": "https://example.org/demo/nifi/review/dev-02-build_dependencies-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the import and export of flow definitions usable with the keyboard only",
+          "timestamp": "2026-03-08T21:24:05.007Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-build_dependencies-3"
+        }
+      ],
+      "blind_spots": "whether the build ran cleanly in the set-ups of other users",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -559,24 +587,74 @@
       }
     },
     {
-      "id": "assess-DEV-02-migrate_existing_data",
+      "id": "assess-DEV-02-design_user_interface",
       "developer_id": "DEV-02",
-      "category_id": "migrate_existing_data",
-      "level": "l2",
-      "confidence": 0.6,
-      "rationale": "This person wrote 6 of the steps that move existing data to a new shape, including 2 that had to run while the cluster stayed available. None of this work was sent back for rework.",
+      "category_id": "design_user_interface",
+      "level": "not_observable",
+      "confidence": 0.32,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of flow definitions that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
-          "kind": "pull_request",
-          "title": "the import and export of flow definitions: rework after review",
-          "timestamp": "2026-06-12T20:40:38.183Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-02-migrate_existing_data-1"
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of flow definitions after an update",
+          "timestamp": "2025-12-11T20:40:09.016Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-design_user_interface-1"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-internationalisation",
+      "developer_id": "DEV-02",
+      "category_id": "internationalisation",
+      "level": "not_observable",
+      "confidence": 0.4,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of flow definitions that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of flow definitions after an update",
+          "timestamp": "2026-02-23T23:30:37.777Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-internationalisation-1"
+        }
+      ],
+      "blind_spots": "whether the translations were checked by people who speak the language",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-data_persistence",
+      "developer_id": "DEV-02",
+      "category_id": "data_persistence",
+      "level": "l2",
+      "confidence": 0.64,
+      "rationale": "4 changes touch how data is stored or queried, and 2 of them are steps that move existing data to a new shape. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the import and export of flow definitions, stop the error when a processor is configured without a required property",
+          "timestamp": "2025-04-22T23:56:56.383Z",
+          "url": "https://example.org/demo/nifi/commit/dev-02-data_persistence-1"
         },
         {
           "kind": "review",
-          "title": "Review of somebody else's change in the import and export of flow definitions",
-          "timestamp": "2025-04-01T11:57:37.424Z",
-          "url": "https://example.org/demo/nifi/review/dev-02-migrate_existing_data-2"
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-04-23T07:48:54.884Z",
+          "url": "https://example.org/demo/nifi/review/dev-02-data_persistence-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of flow definitions after an update",
+          "timestamp": "2026-03-27T22:00:13.997Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-data_persistence-3"
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
@@ -587,27 +665,55 @@
       }
     },
     {
-      "id": "assess-DEV-02-object_oriented_modelling",
+      "id": "assess-DEV-02-software_design",
       "developer_id": "DEV-02",
-      "category_id": "object_oriented_modelling",
+      "category_id": "software_design",
       "level": "l1",
-      "confidence": 0.58,
-      "rationale": "In 4 changes the names and the cut of the parts were revised, not just their contents. The approach was set by someone else in each case.",
+      "confidence": 0.46,
+      "rationale": "In 5 changes an existing structure was replaced rather than worked around, and 3 of those were later built on by somebody else. The approach was set by someone else in each case.",
       "evidence": [
         {
-          "kind": "commit",
-          "title": "fix: the import and export of flow definitions, stop the error when a processor is configured without a required property",
-          "timestamp": "2025-06-17T21:17:41.963Z",
-          "url": "https://example.org/demo/nifi/commit/dev-02-object_oriented_modelling-1"
+          "kind": "pull_request",
+          "title": "the import and export of flow definitions: new behaviour behind a setting",
+          "timestamp": "2025-12-20T03:10:43.539Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-02-software_design-1"
         },
         {
           "kind": "review",
           "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2025-07-08T11:44:16.401Z",
-          "url": "https://example.org/demo/nifi/review/dev-02-object_oriented_modelling-2"
+          "timestamp": "2026-05-10T18:55:31.136Z",
+          "url": "https://example.org/demo/nifi/review/dev-02-software_design-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the import and export of flow definitions usable with the keyboard only",
+          "timestamp": "2025-02-17T15:01:03.742Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-software_design-3"
         }
       ],
-      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-02-technical_communication",
+      "developer_id": "DEV-02",
+      "category_id": "technical_communication",
+      "level": "not_observable",
+      "confidence": 0.31,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of flow definitions that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the import and export of flow definitions after an update",
+          "timestamp": "2025-06-03T03:18:54.269Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-technical_communication-1"
+        }
+      ],
+      "blind_spots": "explanations given in meetings or chat rather than in the project",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -650,42 +756,8 @@
       "blind_spots": "whether this person can test behaviour under heavy load, and whether they decide how a whole area is tested rather than writing individual tests",
       "study": {
         "direction": "raise",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
-      "id": "assess-DEV-04-ict_debugging_tools",
-      "developer_id": "DEV-04",
-      "category_id": "ict_debugging_tools",
-      "level": "l2",
-      "confidence": 0.62,
-      "rationale": "In 21 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. None of this work was sent back for rework.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "fix: the part that stores data in transit and its history, correct the order in which changes are applied",
-          "timestamp": "2025-12-25T04:06:58.455Z",
-          "url": "https://example.org/demo/nifi/commit/dev-04-ict_debugging_tools-1"
-        },
-        {
-          "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2025-11-26T20:47:19.330Z",
-          "url": "https://example.org/demo/nifi/review/dev-04-ict_debugging_tools-2"
-        },
-        {
-          "kind": "issue",
-          "title": "Fault report: behaviour in the part that stores data in transit and its history after an update",
-          "timestamp": "2025-02-22T01:29:51.708Z",
-          "url": "https://example.org/demo/nifi/issue/dev-04-ict_debugging_tools-3"
-        }
-      ],
-      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
-      "study": {
-        "direction": "lower",
-        "delta": 1,
-        "veracity": "correct"
+        "delta": 2,
+        "veracity": "incorrect"
       }
     },
     {
@@ -717,59 +789,43 @@
       }
     },
     {
-      "id": "assess-DEV-04-design_patterns",
+      "id": "assess-DEV-04-code_review",
       "developer_id": "DEV-04",
-      "category_id": "design_patterns",
+      "category_id": "code_review",
       "level": "l4",
-      "confidence": 0.88,
-      "rationale": "In 17 changes an existing structure was replaced rather than worked around, and 7 of those were later built on by somebody else. 6 other people later built on this work, and this person read and approved 7 of their changes.",
+      "confidence": 0.91,
+      "rationale": "24 reviews of other people's changes carry a suggestion or a stated reason, and in 10 of them the author changed the work before it was accepted. 8 other people later built on this work, and this person read and approved 13 of their changes.",
       "evidence": [
         {
+          "kind": "commit",
+          "title": "fix: the part that stores data in transit and its history, stop the error when a processor is configured without a required property",
+          "timestamp": "2025-01-25T02:53:08.578Z",
+          "url": "https://example.org/demo/nifi/commit/dev-04-code_review-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores data in transit and its history: rework after review",
+          "timestamp": "2026-03-16T23:35:48.592Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-04-code_review-2"
+        },
+        {
           "kind": "review",
-          "title": "Review of somebody else's change in the part that stores data in transit and its history",
-          "timestamp": "2026-03-14T05:41:53.209Z",
-          "url": "https://example.org/demo/nifi/review/dev-04-design_patterns-1"
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-04-27T02:51:15.535Z",
+          "url": "https://example.org/demo/nifi/review/dev-04-code_review-3"
         },
         {
           "kind": "issue",
           "title": "Request: make the part that stores data in transit and its history usable with the keyboard only",
-          "timestamp": "2025-12-21T19:35:06.846Z",
-          "url": "https://example.org/demo/nifi/issue/dev-04-design_patterns-2"
+          "timestamp": "2025-05-11T15:02:53.947Z",
+          "url": "https://example.org/demo/nifi/issue/dev-04-code_review-4"
         }
       ],
-      "blind_spots": "design decisions taken in a meeting and never written down in the project",
+      "blind_spots": "review remarks made in meetings or chat that never reached the project",
       "study": {
         "direction": "raise",
         "delta": 1,
         "veracity": "correct"
-      }
-    },
-    {
-      "id": "assess-DEV-04-concurrent_programming",
-      "developer_id": "DEV-04",
-      "category_id": "concurrent_programming",
-      "level": "l3",
-      "confidence": 0.74,
-      "rationale": "12 changes touch the places where two people can act at the same time, for example two processors writing to the same queue. In 6 of them the reasoning is set out in the task discussion.",
-      "evidence": [
-        {
-          "kind": "pull_request",
-          "title": "the part that stores data in transit and its history: new behaviour behind a setting",
-          "timestamp": "2025-11-01T12:54:33.665Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-04-concurrent_programming-1"
-        },
-        {
-          "kind": "issue",
-          "title": "Request: make the part that stores data in transit and its history usable with the keyboard only",
-          "timestamp": "2025-01-21T10:56:54.092Z",
-          "url": "https://example.org/demo/nifi/issue/dev-04-concurrent_programming-2"
-        }
-      ],
-      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
-      "study": {
-        "direction": "raise",
-        "delta": 2,
-        "veracity": "incorrect"
       }
     },
     {
@@ -813,21 +869,67 @@
       }
     },
     {
-      "id": "assess-DEV-04-design_user_interface",
+      "id": "assess-DEV-04-security_permissions",
       "developer_id": "DEV-04",
-      "category_id": "design_user_interface",
-      "level": "not_observable",
-      "confidence": 0.37,
-      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the part that stores data in transit and its history that touches it. This is a declared blind spot, not a low rating.",
+      "category_id": "security_permissions",
+      "level": "l3",
+      "confidence": 0.77,
+      "rationale": "26 changes deal with who may see or do what, for example a check before data is shown, and 11 of them add a check that did not exist before. In 9 of them the reasoning is set out in the task discussion.",
       "evidence": [
         {
-          "kind": "issue",
-          "title": "Fault report: behaviour in the part that stores data in transit and its history after an update",
-          "timestamp": "2025-02-07T20:26:46.047Z",
-          "url": "https://example.org/demo/nifi/issue/dev-04-design_user_interface-1"
+          "kind": "commit",
+          "title": "fix: the part that stores data in transit and its history, correct the order in which changes are applied",
+          "timestamp": "2025-11-18T09:34:58.036Z",
+          "url": "https://example.org/demo/nifi/commit/dev-04-security_permissions-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores data in transit and its history: new behaviour behind a setting",
+          "timestamp": "2026-01-14T03:02:19.320Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-04-security_permissions-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the part that stores data in transit and its history",
+          "timestamp": "2026-06-01T00:43:15.776Z",
+          "url": "https://example.org/demo/nifi/review/dev-04-security_permissions-3"
         }
       ],
-      "blind_spots": "whether the result was tested with the people who use it",
+      "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "study": {
+        "direction": "raise",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-04-build_dependencies",
+      "developer_id": "DEV-04",
+      "category_id": "build_dependencies",
+      "level": "l2",
+      "confidence": 0.62,
+      "rationale": "14 changes are in build and configuration files, and 5 of them update a library or a setting that several parts depend on. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the part that stores data in transit and its history, stop the error when a processor is configured without a required property",
+          "timestamp": "2025-11-28T19:39:33.747Z",
+          "url": "https://example.org/demo/nifi/commit/dev-04-build_dependencies-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores data in transit and its history: rework after review",
+          "timestamp": "2026-06-19T04:38:24.976Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-04-build_dependencies-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the part that stores data in transit and its history usable with the keyboard only",
+          "timestamp": "2026-08-29T19:01:42.382Z",
+          "url": "https://example.org/demo/nifi/issue/dev-04-build_dependencies-3"
+        }
+      ],
+      "blind_spots": "whether the build ran cleanly in the set-ups of other users",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -857,30 +959,80 @@
       }
     },
     {
-      "id": "assess-DEV-04-migrate_existing_data",
+      "id": "assess-DEV-04-design_user_interface",
       "developer_id": "DEV-04",
-      "category_id": "migrate_existing_data",
-      "level": "l5",
-      "confidence": 0.94,
-      "rationale": "This person wrote 25 of the steps that move existing data to a new shape, including 10 that had to run while the cluster stayed available. This is the person others turn to here: 14 of the changes in this area were read and approved by them.",
+      "category_id": "design_user_interface",
+      "level": "not_observable",
+      "confidence": 0.37,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the part that stores data in transit and its history that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the part that stores data in transit and its history after an update",
+          "timestamp": "2025-02-07T20:26:46.047Z",
+          "url": "https://example.org/demo/nifi/issue/dev-04-design_user_interface-1"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-internationalisation",
+      "developer_id": "DEV-04",
+      "category_id": "internationalisation",
+      "level": "not_observable",
+      "confidence": 0.41,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the part that stores data in transit and its history that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make the part that stores data in transit and its history usable with the keyboard only",
+          "timestamp": "2026-09-24T23:16:26.491Z",
+          "url": "https://example.org/demo/nifi/issue/dev-04-internationalisation-1"
+        }
+      ],
+      "blind_spots": "whether the translations were checked by people who speak the language",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-04-data_persistence",
+      "developer_id": "DEV-04",
+      "category_id": "data_persistence",
+      "level": "l5",
+      "confidence": 0.89,
+      "rationale": "13 changes touch how data is stored or queried, and 7 of them are steps that move existing data to a new shape. This is the person others turn to here: 3 of the changes in this area were read and approved by them.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the part that stores data in transit and its history, stop the error when a processor is configured without a required property",
+          "timestamp": "2026-01-04T02:56:21.815Z",
+          "url": "https://example.org/demo/nifi/commit/dev-04-data_persistence-1"
+        },
         {
           "kind": "pull_request",
           "title": "the part that stores data in transit and its history: new behaviour behind a setting",
-          "timestamp": "2026-05-10T23:48:33.451Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-04-migrate_existing_data-1"
+          "timestamp": "2026-08-21T07:14:49.559Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-04-data_persistence-2"
         },
         {
           "kind": "review",
           "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2026-07-09T06:25:29.712Z",
-          "url": "https://example.org/demo/nifi/review/dev-04-migrate_existing_data-2"
+          "timestamp": "2025-02-28T18:56:35.244Z",
+          "url": "https://example.org/demo/nifi/review/dev-04-data_persistence-3"
         },
         {
           "kind": "issue",
-          "title": "Fault report: behaviour in the part that stores data in transit and its history after an update",
-          "timestamp": "2025-05-31T21:36:31.334Z",
-          "url": "https://example.org/demo/nifi/issue/dev-04-migrate_existing_data-3"
+          "title": "Request: make the part that stores data in transit and its history usable with the keyboard only",
+          "timestamp": "2025-12-01T04:45:28.055Z",
+          "url": "https://example.org/demo/nifi/issue/dev-04-data_persistence-4"
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
@@ -891,31 +1043,77 @@
       }
     },
     {
-      "id": "assess-DEV-04-object_oriented_modelling",
+      "id": "assess-DEV-04-software_design",
       "developer_id": "DEV-04",
-      "category_id": "object_oriented_modelling",
+      "category_id": "software_design",
       "level": "l4",
-      "confidence": 0.93,
-      "rationale": "In 23 changes the names and the cut of the parts were revised, not just their contents. 8 other people later built on this work, and this person read and approved 14 of their changes.",
+      "confidence": 0.89,
+      "rationale": "In 27 changes an existing structure was replaced rather than worked around, and 16 of those were later built on by somebody else. 13 other people later built on this work, and this person read and approved 7 of their changes.",
       "evidence": [
         {
           "kind": "commit",
           "title": "refactor: the part that stores data in transit and its history, pull the repeated part into one place",
-          "timestamp": "2025-06-27T18:59:54.618Z",
-          "url": "https://example.org/demo/nifi/commit/dev-04-object_oriented_modelling-1"
+          "timestamp": "2026-03-25T17:53:22.368Z",
+          "url": "https://example.org/demo/nifi/commit/dev-04-software_design-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores data in transit and its history: rework after review",
+          "timestamp": "2026-05-13T01:35:38.989Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-04-software_design-2"
         },
         {
           "kind": "review",
-          "title": "Review of somebody else's change in the part that stores data in transit and its history",
-          "timestamp": "2025-05-22T09:10:13.148Z",
-          "url": "https://example.org/demo/nifi/review/dev-04-object_oriented_modelling-2"
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-04-20T01:39:12.953Z",
+          "url": "https://example.org/demo/nifi/review/dev-04-software_design-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the part that stores data in transit and its history after an update",
+          "timestamp": "2026-04-07T05:39:19.471Z",
+          "url": "https://example.org/demo/nifi/issue/dev-04-software_design-4"
         }
       ],
-      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
       "study": {
         "direction": "raise",
         "delta": 2,
         "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-04-technical_communication",
+      "developer_id": "DEV-04",
+      "category_id": "technical_communication",
+      "level": "l3",
+      "confidence": 0.76,
+      "rationale": "In 25 discussions or change notes this person explained why something behaves as it does, and in 15 of them the explanation names the reason. In 12 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the part that stores data in transit and its history, stop the error when a processor is configured without a required property",
+          "timestamp": "2025-02-20T02:42:35.266Z",
+          "url": "https://example.org/demo/nifi/commit/dev-04-technical_communication-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the part that stores data in transit and its history: new behaviour behind a setting",
+          "timestamp": "2026-06-22T07:44:53.806Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-04-technical_communication-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the part that stores data in transit and its history usable with the keyboard only",
+          "timestamp": "2025-12-04T15:49:49.518Z",
+          "url": "https://example.org/demo/nifi/issue/dev-04-technical_communication-3"
+        }
+      ],
+      "blind_spots": "explanations given in meetings or chat rather than in the project",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
       }
     },
     {
@@ -959,46 +1157,6 @@
       }
     },
     {
-      "id": "assess-DEV-06-ict_debugging_tools",
-      "developer_id": "DEV-06",
-      "category_id": "ict_debugging_tools",
-      "level": "l2",
-      "confidence": 0.61,
-      "rationale": "In 6 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. None of this work was sent back for rework.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "fix: the canvas on which users build flows, correct the order in which changes are applied",
-          "timestamp": "2026-04-14T00:42:44.019Z",
-          "url": "https://example.org/demo/nifi/commit/dev-06-ict_debugging_tools-1"
-        },
-        {
-          "kind": "pull_request",
-          "title": "the canvas on which users build flows: rework after review",
-          "timestamp": "2025-08-27T22:24:40.604Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-06-ict_debugging_tools-2"
-        },
-        {
-          "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2026-05-13T23:42:39.073Z",
-          "url": "https://example.org/demo/nifi/review/dev-06-ict_debugging_tools-3"
-        },
-        {
-          "kind": "issue",
-          "title": "Fault report: behaviour in the canvas on which users build flows after an update",
-          "timestamp": "2026-01-09T16:59:37.631Z",
-          "url": "https://example.org/demo/nifi/issue/dev-06-ict_debugging_tools-4"
-        }
-      ],
-      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
-      "study": {
-        "direction": "lower",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
       "id": "assess-DEV-06-debug_software",
       "developer_id": "DEV-06",
       "category_id": "debug_software",
@@ -1033,43 +1191,27 @@
       }
     },
     {
-      "id": "assess-DEV-06-design_patterns",
+      "id": "assess-DEV-06-code_review",
       "developer_id": "DEV-06",
-      "category_id": "design_patterns",
+      "category_id": "code_review",
       "level": "l2",
-      "confidence": 0.64,
-      "rationale": "In 17 changes an existing structure was replaced rather than worked around, and 8 of those were later built on by somebody else. None of this work was sent back for rework.",
+      "confidence": 0.72,
+      "rationale": "3 reviews of other people's changes carry a suggestion or a stated reason, and in 1 of them the author changed the work before it was accepted. None of this work was sent back for rework.",
       "evidence": [
         {
-          "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2025-03-12T10:59:36.075Z",
-          "url": "https://example.org/demo/nifi/review/dev-06-design_patterns-1"
-        }
-      ],
-      "blind_spots": "design decisions taken in a meeting and never written down in the project",
-      "study": {
-        "direction": "lower",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
-      "id": "assess-DEV-06-concurrent_programming",
-      "developer_id": "DEV-06",
-      "category_id": "concurrent_programming",
-      "level": "not_observable",
-      "confidence": 0.34,
-      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the canvas on which users build flows that touches it. This is a declared blind spot, not a low rating.",
-      "evidence": [
+          "kind": "pull_request",
+          "title": "the canvas on which users build flows: rework after review",
+          "timestamp": "2025-02-04T18:33:15.301Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-06-code_review-1"
+        },
         {
           "kind": "issue",
-          "title": "Fault report: behaviour in the canvas on which users build flows after an update",
-          "timestamp": "2025-12-06T13:01:57.939Z",
-          "url": "https://example.org/demo/nifi/issue/dev-06-concurrent_programming-1"
+          "title": "Request: make the canvas on which users build flows usable with the keyboard only",
+          "timestamp": "2025-05-22T11:11:19.600Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-code_review-2"
         }
       ],
-      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "blind_spots": "review remarks made in meetings or chat that never reached the project",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1117,41 +1259,45 @@
       }
     },
     {
-      "id": "assess-DEV-06-design_user_interface",
+      "id": "assess-DEV-06-security_permissions",
       "developer_id": "DEV-06",
-      "category_id": "design_user_interface",
-      "level": "l4",
-      "confidence": 0.91,
-      "rationale": "6 changes are on the screens themselves, 3 of them on dialogs in which users configure a processor. 2 other people later built on this work, and this person read and approved 13 of their changes.",
+      "category_id": "security_permissions",
+      "level": "not_observable",
+      "confidence": 0.43,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the canvas on which users build flows that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
-        {
-          "kind": "commit",
-          "title": "fix: the canvas on which users build flows, stop the error when a processor is configured without a required property",
-          "timestamp": "2026-09-16T18:11:50.620Z",
-          "url": "https://example.org/demo/nifi/commit/dev-06-design_user_interface-1"
-        },
-        {
-          "kind": "pull_request",
-          "title": "the canvas on which users build flows: new behaviour behind a setting",
-          "timestamp": "2025-08-09T10:30:20.830Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-06-design_user_interface-2"
-        },
-        {
-          "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2026-01-30T18:49:46.289Z",
-          "url": "https://example.org/demo/nifi/review/dev-06-design_user_interface-3"
-        },
         {
           "kind": "issue",
           "title": "Fault report: behaviour in the canvas on which users build flows after an update",
-          "timestamp": "2025-03-14T02:59:55.374Z",
-          "url": "https://example.org/demo/nifi/issue/dev-06-design_user_interface-4"
+          "timestamp": "2026-07-19T15:31:56.980Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-security_permissions-1"
         }
       ],
-      "blind_spots": "whether the result was tested with the people who use it",
+      "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
       "study": {
-        "direction": "raise",
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-build_dependencies",
+      "developer_id": "DEV-06",
+      "category_id": "build_dependencies",
+      "level": "not_observable",
+      "confidence": 0.38,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the canvas on which users build flows that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the canvas on which users build flows after an update",
+          "timestamp": "2026-07-04T01:11:21.044Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-build_dependencies-1"
+        }
+      ],
+      "blind_spots": "whether the build ran cleanly in the set-ups of other users",
+      "study": {
+        "direction": "lower",
         "delta": 1,
         "veracity": "correct"
       }
@@ -1197,18 +1343,98 @@
       }
     },
     {
-      "id": "assess-DEV-06-migrate_existing_data",
+      "id": "assess-DEV-06-design_user_interface",
       "developer_id": "DEV-06",
-      "category_id": "migrate_existing_data",
+      "category_id": "design_user_interface",
+      "level": "l4",
+      "confidence": 0.91,
+      "rationale": "6 changes are on the screens themselves, 3 of them on dialogs in which users configure a processor. 2 other people later built on this work, and this person read and approved 13 of their changes.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the canvas on which users build flows, stop the error when a processor is configured without a required property",
+          "timestamp": "2026-09-16T18:11:50.620Z",
+          "url": "https://example.org/demo/nifi/commit/dev-06-design_user_interface-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the canvas on which users build flows: new behaviour behind a setting",
+          "timestamp": "2025-08-09T10:30:20.830Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-06-design_user_interface-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-01-30T18:49:46.289Z",
+          "url": "https://example.org/demo/nifi/review/dev-06-design_user_interface-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the canvas on which users build flows after an update",
+          "timestamp": "2025-03-14T02:59:55.374Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-design_user_interface-4"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-internationalisation",
+      "developer_id": "DEV-06",
+      "category_id": "internationalisation",
+      "level": "l2",
+      "confidence": 0.63,
+      "rationale": "10 changes deal with translations or the formatting of dates and numbers, and 6 of them move text that was written into the code into the translation files. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the canvas on which users build flows, pull the repeated part into one place",
+          "timestamp": "2026-07-04T09:02:48.800Z",
+          "url": "https://example.org/demo/nifi/commit/dev-06-internationalisation-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the canvas on which users build flows: new behaviour behind a setting",
+          "timestamp": "2025-10-16T14:03:33.215Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-06-internationalisation-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the canvas on which users build flows",
+          "timestamp": "2025-03-16T08:26:22.382Z",
+          "url": "https://example.org/demo/nifi/review/dev-06-internationalisation-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the canvas on which users build flows usable with the keyboard only",
+          "timestamp": "2025-06-05T00:20:14.102Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-internationalisation-4"
+        }
+      ],
+      "blind_spots": "whether the translations were checked by people who speak the language",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-data_persistence",
+      "developer_id": "DEV-06",
+      "category_id": "data_persistence",
       "level": "not_observable",
-      "confidence": 0.37,
+      "confidence": 0.28,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the canvas on which users build flows that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "Fault report: behaviour in the canvas on which users build flows after an update",
-          "timestamp": "2026-04-27T04:19:11.982Z",
-          "url": "https://example.org/demo/nifi/issue/dev-06-migrate_existing_data-1"
+          "title": "Request: make the canvas on which users build flows usable with the keyboard only",
+          "timestamp": "2026-09-09T21:55:18.438Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-data_persistence-1"
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
@@ -1219,37 +1445,71 @@
       }
     },
     {
-      "id": "assess-DEV-06-object_oriented_modelling",
+      "id": "assess-DEV-06-software_design",
       "developer_id": "DEV-06",
-      "category_id": "object_oriented_modelling",
+      "category_id": "software_design",
       "level": "l2",
-      "confidence": 0.67,
-      "rationale": "In 9 changes the names and the cut of the parts were revised, not just their contents. None of this work was sent back for rework.",
+      "confidence": 0.62,
+      "rationale": "In 7 changes an existing structure was replaced rather than worked around, and 5 of those were later built on by somebody else. None of this work was sent back for rework.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "refactor: the canvas on which users build flows, pull the repeated part into one place",
-          "timestamp": "2025-09-23T20:06:00.979Z",
-          "url": "https://example.org/demo/nifi/commit/dev-06-object_oriented_modelling-1"
+          "title": "fix: the canvas on which users build flows, correct the order in which changes are applied",
+          "timestamp": "2025-03-29T22:40:15.482Z",
+          "url": "https://example.org/demo/nifi/commit/dev-06-software_design-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the canvas on which users build flows: new behaviour behind a setting",
+          "timestamp": "2025-05-02T07:34:26.089Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-06-software_design-2"
         },
         {
           "kind": "review",
           "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2025-11-11T12:39:58.900Z",
-          "url": "https://example.org/demo/nifi/review/dev-06-object_oriented_modelling-2"
+          "timestamp": "2025-11-06T01:06:54.991Z",
+          "url": "https://example.org/demo/nifi/review/dev-06-software_design-3"
         },
         {
           "kind": "issue",
-          "title": "Request: make the canvas on which users build flows usable with the keyboard only",
-          "timestamp": "2025-10-18T16:36:37.007Z",
-          "url": "https://example.org/demo/nifi/issue/dev-06-object_oriented_modelling-3"
+          "title": "Fault report: behaviour in the canvas on which users build flows after an update",
+          "timestamp": "2026-06-02T05:50:03.948Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-software_design-4"
         }
       ],
-      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
       "study": {
         "direction": "lower",
         "delta": 1,
         "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-06-technical_communication",
+      "developer_id": "DEV-06",
+      "category_id": "technical_communication",
+      "level": "l2",
+      "confidence": 0.61,
+      "rationale": "In 14 discussions or change notes this person explained why something behaves as it does, and in 6 of them the explanation names the reason. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the canvas on which users build flows",
+          "timestamp": "2026-04-21T03:56:46.868Z",
+          "url": "https://example.org/demo/nifi/review/dev-06-technical_communication-1"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the canvas on which users build flows usable with the keyboard only",
+          "timestamp": "2025-01-27T10:09:35.992Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-technical_communication-2"
+        }
+      ],
+      "blind_spots": "explanations given in meetings or chat rather than in the project",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
       }
     },
     {
@@ -1293,34 +1553,6 @@
       }
     },
     {
-      "id": "assess-DEV-07-ict_debugging_tools",
-      "developer_id": "DEV-07",
-      "category_id": "ict_debugging_tools",
-      "level": "l3",
-      "confidence": 0.82,
-      "rationale": "In 7 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. In 3 of them the reasoning is set out in the task discussion.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "refactor: the processors and the shared services they use, pull the repeated part into one place",
-          "timestamp": "2026-04-13T00:32:57.686Z",
-          "url": "https://example.org/demo/nifi/commit/dev-07-ict_debugging_tools-1"
-        },
-        {
-          "kind": "pull_request",
-          "title": "the processors and the shared services they use: new behaviour behind a setting",
-          "timestamp": "2025-07-03T21:03:36.211Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-07-ict_debugging_tools-2"
-        }
-      ],
-      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
-      "study": {
-        "direction": "raise",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
       "id": "assess-DEV-07-debug_software",
       "developer_id": "DEV-07",
       "category_id": "debug_software",
@@ -1355,65 +1587,37 @@
       }
     },
     {
-      "id": "assess-DEV-07-design_patterns",
+      "id": "assess-DEV-07-code_review",
       "developer_id": "DEV-07",
-      "category_id": "design_patterns",
+      "category_id": "code_review",
       "level": "l3",
-      "confidence": 0.79,
-      "rationale": "In 7 changes an existing structure was replaced rather than worked around, and 4 of those were later built on by somebody else. In 3 of them the reasoning is set out in the task discussion.",
+      "confidence": 0.86,
+      "rationale": "25 reviews of other people's changes carry a suggestion or a stated reason, and in 17 of them the author changed the work before it was accepted. In 14 of them the reasoning is set out in the task discussion.",
       "evidence": [
         {
-          "kind": "pull_request",
-          "title": "the processors and the shared services they use: rework after review",
-          "timestamp": "2026-05-22T05:16:16.176Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-07-design_patterns-1"
+          "kind": "commit",
+          "title": "fix: the processors and the shared services they use, correct the order in which changes are applied",
+          "timestamp": "2026-04-28T19:58:22.377Z",
+          "url": "https://example.org/demo/nifi/commit/dev-07-code_review-1"
         },
         {
           "kind": "review",
           "title": "Review of somebody else's change in the processors and the shared services they use",
-          "timestamp": "2026-02-15T08:06:10.725Z",
-          "url": "https://example.org/demo/nifi/review/dev-07-design_patterns-2"
+          "timestamp": "2025-12-14T09:11:02.399Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-code_review-2"
         },
         {
           "kind": "issue",
           "title": "Request: make the processors and the shared services they use usable with the keyboard only",
-          "timestamp": "2026-03-20T10:15:33.387Z",
-          "url": "https://example.org/demo/nifi/issue/dev-07-design_patterns-3"
+          "timestamp": "2026-09-04T12:17:27.009Z",
+          "url": "https://example.org/demo/nifi/issue/dev-07-code_review-3"
         }
       ],
-      "blind_spots": "design decisions taken in a meeting and never written down in the project",
+      "blind_spots": "review remarks made in meetings or chat that never reached the project",
       "study": {
         "direction": "raise",
         "delta": 1,
         "veracity": "correct"
-      }
-    },
-    {
-      "id": "assess-DEV-07-concurrent_programming",
-      "developer_id": "DEV-07",
-      "category_id": "concurrent_programming",
-      "level": "l2",
-      "confidence": 0.62,
-      "rationale": "14 changes touch the places where two people can act at the same time, for example two processors writing to the same queue. None of this work was sent back for rework.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "refactor: the processors and the shared services they use, pull the repeated part into one place",
-          "timestamp": "2026-07-10T23:55:01.505Z",
-          "url": "https://example.org/demo/nifi/commit/dev-07-concurrent_programming-1"
-        },
-        {
-          "kind": "issue",
-          "title": "Fault report: behaviour in the processors and the shared services they use after an update",
-          "timestamp": "2025-02-19T19:52:56.427Z",
-          "url": "https://example.org/demo/nifi/issue/dev-07-concurrent_programming-2"
-        }
-      ],
-      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
-      "study": {
-        "direction": "lower",
-        "delta": 2,
-        "veracity": "incorrect"
       }
     },
     {
@@ -1451,33 +1655,73 @@
       }
     },
     {
-      "id": "assess-DEV-07-design_user_interface",
+      "id": "assess-DEV-07-security_permissions",
       "developer_id": "DEV-07",
-      "category_id": "design_user_interface",
-      "level": "l3",
-      "confidence": 0.76,
-      "rationale": "24 changes are on the screens themselves, 13 of them on dialogs in which users configure a processor. In 10 of them the reasoning is set out in the task discussion.",
+      "category_id": "security_permissions",
+      "level": "l2",
+      "confidence": 0.71,
+      "rationale": "26 changes deal with who may see or do what, for example a check before data is shown, and 17 of them add a check that did not exist before. None of this work was sent back for rework.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "fix: the processors and the shared services they use, stop the error when a processor is configured without a required property",
-          "timestamp": "2025-12-21T01:51:48.796Z",
-          "url": "https://example.org/demo/nifi/commit/dev-07-design_user_interface-1"
+          "title": "fix: the processors and the shared services they use, correct the order in which changes are applied",
+          "timestamp": "2026-07-29T15:10:35.231Z",
+          "url": "https://example.org/demo/nifi/commit/dev-07-security_permissions-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the processors and the shared services they use: new behaviour behind a setting",
+          "timestamp": "2025-11-15T04:22:22.385Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-07-security_permissions-2"
         },
         {
           "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2026-06-12T06:23:28.340Z",
-          "url": "https://example.org/demo/nifi/review/dev-07-design_user_interface-2"
+          "title": "Review of somebody else's change in the processors and the shared services they use",
+          "timestamp": "2026-06-06T18:47:54.102Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-security_permissions-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make the processors and the shared services they use usable with the keyboard only",
+          "timestamp": "2025-02-22T12:51:01.828Z",
+          "url": "https://example.org/demo/nifi/issue/dev-07-security_permissions-4"
+        }
+      ],
+      "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-07-build_dependencies",
+      "developer_id": "DEV-07",
+      "category_id": "build_dependencies",
+      "level": "l3",
+      "confidence": 0.85,
+      "rationale": "18 changes are in build and configuration files, and 10 of them update a library or a setting that several parts depend on. In 8 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "the processors and the shared services they use: rework after review",
+          "timestamp": "2025-03-08T12:32:21.976Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-07-build_dependencies-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the processors and the shared services they use",
+          "timestamp": "2025-06-29T23:01:12.679Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-build_dependencies-2"
         },
         {
           "kind": "issue",
           "title": "Fault report: behaviour in the processors and the shared services they use after an update",
-          "timestamp": "2026-06-17T22:54:28.028Z",
-          "url": "https://example.org/demo/nifi/issue/dev-07-design_user_interface-3"
+          "timestamp": "2025-07-22T19:29:30.510Z",
+          "url": "https://example.org/demo/nifi/issue/dev-07-build_dependencies-3"
         }
       ],
-      "blind_spots": "whether the result was tested with the people who use it",
+      "blind_spots": "whether the build ran cleanly in the set-ups of other users",
       "study": {
         "direction": "raise",
         "delta": 1,
@@ -1525,24 +1769,104 @@
       }
     },
     {
-      "id": "assess-DEV-07-migrate_existing_data",
+      "id": "assess-DEV-07-design_user_interface",
       "developer_id": "DEV-07",
-      "category_id": "migrate_existing_data",
+      "category_id": "design_user_interface",
       "level": "l3",
-      "confidence": 0.78,
-      "rationale": "This person wrote 10 of the steps that move existing data to a new shape, including 4 that had to run while the cluster stayed available. In 3 of them the reasoning is set out in the task discussion.",
+      "confidence": 0.76,
+      "rationale": "24 changes are on the screens themselves, 13 of them on dialogs in which users configure a processor. In 10 of them the reasoning is set out in the task discussion.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "fix: the processors and the shared services they use, correct the order in which changes are applied",
-          "timestamp": "2025-06-11T00:39:24.897Z",
-          "url": "https://example.org/demo/nifi/commit/dev-07-migrate_existing_data-1"
+          "title": "fix: the processors and the shared services they use, stop the error when a processor is configured without a required property",
+          "timestamp": "2025-12-21T01:51:48.796Z",
+          "url": "https://example.org/demo/nifi/commit/dev-07-design_user_interface-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-06-12T06:23:28.340Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-design_user_interface-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the processors and the shared services they use after an update",
+          "timestamp": "2026-06-17T22:54:28.028Z",
+          "url": "https://example.org/demo/nifi/issue/dev-07-design_user_interface-3"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-internationalisation",
+      "developer_id": "DEV-07",
+      "category_id": "internationalisation",
+      "level": "l2",
+      "confidence": 0.65,
+      "rationale": "10 changes deal with translations or the formatting of dates and numbers, and 4 of them move text that was written into the code into the translation files. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the processors and the shared services they use, stop the error when a processor is configured without a required property",
+          "timestamp": "2025-12-24T22:38:38.039Z",
+          "url": "https://example.org/demo/nifi/commit/dev-07-internationalisation-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the processors and the shared services they use: rework after review",
+          "timestamp": "2026-01-10T23:55:39.311Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-07-internationalisation-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-04-15T06:30:30.000Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-internationalisation-3"
         },
         {
           "kind": "issue",
           "title": "Request: make the processors and the shared services they use usable with the keyboard only",
-          "timestamp": "2026-07-14T12:08:17.429Z",
-          "url": "https://example.org/demo/nifi/issue/dev-07-migrate_existing_data-2"
+          "timestamp": "2026-01-09T17:01:05.974Z",
+          "url": "https://example.org/demo/nifi/issue/dev-07-internationalisation-4"
+        }
+      ],
+      "blind_spots": "whether the translations were checked by people who speak the language",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-data_persistence",
+      "developer_id": "DEV-07",
+      "category_id": "data_persistence",
+      "level": "l3",
+      "confidence": 0.8,
+      "rationale": "20 changes touch how data is stored or queried, and 11 of them are steps that move existing data to a new shape. In 9 of them the reasoning is set out in the task discussion.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "fix: the processors and the shared services they use, stop the error when a processor is configured without a required property",
+          "timestamp": "2025-08-24T12:31:39.282Z",
+          "url": "https://example.org/demo/nifi/commit/dev-07-data_persistence-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "the processors and the shared services they use: new behaviour behind a setting",
+          "timestamp": "2025-08-21T04:17:24.812Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-07-data_persistence-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-03-20T18:53:31.905Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-data_persistence-3"
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
@@ -1553,39 +1877,73 @@
       }
     },
     {
-      "id": "assess-DEV-07-object_oriented_modelling",
+      "id": "assess-DEV-07-software_design",
       "developer_id": "DEV-07",
-      "category_id": "object_oriented_modelling",
-      "level": "l2",
-      "confidence": 0.69,
-      "rationale": "In 10 changes the names and the cut of the parts were revised, not just their contents. None of this work was sent back for rework.",
+      "category_id": "software_design",
+      "level": "l3",
+      "confidence": 0.84,
+      "rationale": "In 11 changes an existing structure was replaced rather than worked around, and 4 of those were later built on by somebody else. In 3 of them the reasoning is set out in the task discussion.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "fix: the processors and the shared services they use, correct the order in which changes are applied",
-          "timestamp": "2026-03-11T22:22:12.441Z",
-          "url": "https://example.org/demo/nifi/commit/dev-07-object_oriented_modelling-1"
+          "title": "refactor: the processors and the shared services they use, pull the repeated part into one place",
+          "timestamp": "2025-07-17T11:05:24.199Z",
+          "url": "https://example.org/demo/nifi/commit/dev-07-software_design-1"
         },
         {
           "kind": "pull_request",
-          "title": "the processors and the shared services they use: new behaviour behind a setting",
-          "timestamp": "2026-01-22T03:07:29.089Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-07-object_oriented_modelling-2"
+          "title": "the processors and the shared services they use: rework after review",
+          "timestamp": "2026-08-03T13:46:56.662Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-07-software_design-2"
         },
         {
           "kind": "review",
-          "title": "Review of somebody else's change in the processors and the shared services they use",
-          "timestamp": "2025-06-18T21:12:02.686Z",
-          "url": "https://example.org/demo/nifi/review/dev-07-object_oriented_modelling-3"
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-07-15T08:55:42.033Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-software_design-3"
         },
         {
           "kind": "issue",
           "title": "Request: make the processors and the shared services they use usable with the keyboard only",
-          "timestamp": "2026-08-25T07:47:43.347Z",
-          "url": "https://example.org/demo/nifi/issue/dev-07-object_oriented_modelling-4"
+          "timestamp": "2026-07-02T22:09:11.864Z",
+          "url": "https://example.org/demo/nifi/issue/dev-07-software_design-4"
         }
       ],
-      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "study": {
+        "direction": "raise",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-07-technical_communication",
+      "developer_id": "DEV-07",
+      "category_id": "technical_communication",
+      "level": "l2",
+      "confidence": 0.68,
+      "rationale": "In 16 discussions or change notes this person explained why something behaves as it does, and in 5 of them the explanation names the reason. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "the processors and the shared services they use: rework after review",
+          "timestamp": "2025-03-26T22:50:46.932Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-07-technical_communication-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in the processors and the shared services they use",
+          "timestamp": "2025-08-13T19:05:08.416Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-technical_communication-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in the processors and the shared services they use after an update",
+          "timestamp": "2025-05-14T01:25:44.220Z",
+          "url": "https://example.org/demo/nifi/issue/dev-07-technical_communication-3"
+        }
+      ],
+      "blind_spots": "explanations given in meetings or chat rather than in the project",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1633,46 +1991,6 @@
       }
     },
     {
-      "id": "assess-DEV-09-ict_debugging_tools",
-      "developer_id": "DEV-09",
-      "category_id": "ict_debugging_tools",
-      "level": "l1",
-      "confidence": 0.46,
-      "rationale": "In 5 task discussions this person described how they narrowed a fault down, naming the log output or the stack trace they worked from. The approach was set by someone else in each case.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "fix: a number of small areas, stop the error when a processor is configured without a required property",
-          "timestamp": "2026-02-09T06:51:42.482Z",
-          "url": "https://example.org/demo/nifi/commit/dev-09-ict_debugging_tools-1"
-        },
-        {
-          "kind": "pull_request",
-          "title": "a number of small areas: new behaviour behind a setting",
-          "timestamp": "2026-03-18T07:39:10.514Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-09-ict_debugging_tools-2"
-        },
-        {
-          "kind": "review",
-          "title": "Review of somebody else's change in a number of small areas",
-          "timestamp": "2025-08-10T16:15:57.099Z",
-          "url": "https://example.org/demo/nifi/review/dev-09-ict_debugging_tools-3"
-        },
-        {
-          "kind": "issue",
-          "title": "Request: make a number of small areas usable with the keyboard only",
-          "timestamp": "2026-02-06T00:44:33.837Z",
-          "url": "https://example.org/demo/nifi/issue/dev-09-ict_debugging_tools-4"
-        }
-      ],
-      "blind_spots": "which tools were used on their own machine, since only the result of the search reaches the records",
-      "study": {
-        "direction": "lower",
-        "delta": 2,
-        "veracity": "incorrect"
-      }
-    },
-    {
       "id": "assess-DEV-09-debug_software",
       "developer_id": "DEV-09",
       "category_id": "debug_software",
@@ -1707,49 +2025,21 @@
       }
     },
     {
-      "id": "assess-DEV-09-design_patterns",
+      "id": "assess-DEV-09-code_review",
       "developer_id": "DEV-09",
-      "category_id": "design_patterns",
-      "level": "l1",
-      "confidence": 0.47,
-      "rationale": "In 5 changes an existing structure was replaced rather than worked around, and 3 of those were later built on by somebody else. The approach was set by someone else in each case.",
-      "evidence": [
-        {
-          "kind": "commit",
-          "title": "fix: a number of small areas, stop the error when a processor is configured without a required property",
-          "timestamp": "2026-09-10T09:52:01.385Z",
-          "url": "https://example.org/demo/nifi/commit/dev-09-design_patterns-1"
-        },
-        {
-          "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2026-07-26T15:30:44.472Z",
-          "url": "https://example.org/demo/nifi/review/dev-09-design_patterns-2"
-        }
-      ],
-      "blind_spots": "design decisions taken in a meeting and never written down in the project",
-      "study": {
-        "direction": "lower",
-        "delta": 1,
-        "veracity": "correct"
-      }
-    },
-    {
-      "id": "assess-DEV-09-concurrent_programming",
-      "developer_id": "DEV-09",
-      "category_id": "concurrent_programming",
+      "category_id": "code_review",
       "level": "not_observable",
-      "confidence": 0.38,
+      "confidence": 0.41,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in a number of small areas that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "Request: make a number of small areas usable with the keyboard only",
-          "timestamp": "2025-10-16T10:22:10.754Z",
-          "url": "https://example.org/demo/nifi/issue/dev-09-concurrent_programming-1"
+          "title": "Fault report: behaviour in a number of small areas after an update",
+          "timestamp": "2025-09-07T07:40:46.127Z",
+          "url": "https://example.org/demo/nifi/issue/dev-09-code_review-1"
         }
       ],
-      "blind_spots": "whether the chosen approach holds under real load, which no record here measures",
+      "blind_spots": "review remarks made in meetings or chat that never reached the project",
       "study": {
         "direction": "lower",
         "delta": 1,
@@ -1791,33 +2081,55 @@
       }
     },
     {
-      "id": "assess-DEV-09-design_user_interface",
+      "id": "assess-DEV-09-security_permissions",
       "developer_id": "DEV-09",
-      "category_id": "design_user_interface",
-      "level": "l2",
-      "confidence": 0.62,
-      "rationale": "6 changes are on the screens themselves, 4 of them on dialogs in which users configure a processor. None of this work was sent back for rework.",
+      "category_id": "security_permissions",
+      "level": "not_observable",
+      "confidence": 0.32,
+      "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in a number of small areas that touches it. This is a declared blind spot, not a low rating.",
+      "evidence": [
+        {
+          "kind": "issue",
+          "title": "Request: make a number of small areas usable with the keyboard only",
+          "timestamp": "2026-07-02T04:04:26.614Z",
+          "url": "https://example.org/demo/nifi/issue/dev-09-security_permissions-1"
+        }
+      ],
+      "blind_spots": "security checks done outside the project, and whether the rules hold in every set-up",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-build_dependencies",
+      "developer_id": "DEV-09",
+      "category_id": "build_dependencies",
+      "level": "l1",
+      "confidence": 0.5,
+      "rationale": "5 changes are in build and configuration files, and 2 of them update a library or a setting that several parts depend on. The approach was set by someone else in each case.",
       "evidence": [
         {
           "kind": "pull_request",
-          "title": "a number of small areas: rework after review",
-          "timestamp": "2026-01-01T22:04:24.318Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-09-design_user_interface-1"
+          "title": "a number of small areas: new behaviour behind a setting",
+          "timestamp": "2026-09-12T05:26:58.566Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-09-build_dependencies-1"
         },
         {
           "kind": "review",
-          "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2025-02-02T08:04:12.408Z",
-          "url": "https://example.org/demo/nifi/review/dev-09-design_user_interface-2"
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2025-04-27T16:09:15.423Z",
+          "url": "https://example.org/demo/nifi/review/dev-09-build_dependencies-2"
         },
         {
           "kind": "issue",
           "title": "Fault report: behaviour in a number of small areas after an update",
-          "timestamp": "2026-09-24T09:04:06.627Z",
-          "url": "https://example.org/demo/nifi/issue/dev-09-design_user_interface-3"
+          "timestamp": "2025-04-08T13:47:25.592Z",
+          "url": "https://example.org/demo/nifi/issue/dev-09-build_dependencies-3"
         }
       ],
-      "blind_spots": "whether the result was tested with the people who use it",
+      "blind_spots": "whether the build ran cleanly in the set-ups of other users",
       "study": {
         "direction": "lower",
         "delta": 2,
@@ -1859,18 +2171,86 @@
       }
     },
     {
-      "id": "assess-DEV-09-migrate_existing_data",
+      "id": "assess-DEV-09-design_user_interface",
       "developer_id": "DEV-09",
-      "category_id": "migrate_existing_data",
+      "category_id": "design_user_interface",
+      "level": "l2",
+      "confidence": 0.62,
+      "rationale": "6 changes are on the screens themselves, 4 of them on dialogs in which users configure a processor. None of this work was sent back for rework.",
+      "evidence": [
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: rework after review",
+          "timestamp": "2026-01-01T22:04:24.318Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-09-design_user_interface-1"
+        },
+        {
+          "kind": "review",
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-02-02T08:04:12.408Z",
+          "url": "https://example.org/demo/nifi/review/dev-09-design_user_interface-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in a number of small areas after an update",
+          "timestamp": "2026-09-24T09:04:06.627Z",
+          "url": "https://example.org/demo/nifi/issue/dev-09-design_user_interface-3"
+        }
+      ],
+      "blind_spots": "whether the result was tested with the people who use it",
+      "study": {
+        "direction": "lower",
+        "delta": 2,
+        "veracity": "incorrect"
+      }
+    },
+    {
+      "id": "assess-DEV-09-internationalisation",
+      "developer_id": "DEV-09",
+      "category_id": "internationalisation",
+      "level": "l1",
+      "confidence": 0.49,
+      "rationale": "4 changes deal with translations or the formatting of dates and numbers, and 3 of them move text that was written into the code into the translation files. The approach was set by someone else in each case.",
+      "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: a number of small areas, pull the repeated part into one place",
+          "timestamp": "2025-04-11T08:41:11.672Z",
+          "url": "https://example.org/demo/nifi/commit/dev-09-internationalisation-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: rework after review",
+          "timestamp": "2025-07-09T13:02:50.728Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-09-internationalisation-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2026-01-19T05:21:23.934Z",
+          "url": "https://example.org/demo/nifi/review/dev-09-internationalisation-3"
+        }
+      ],
+      "blind_spots": "whether the translations were checked by people who speak the language",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-data_persistence",
+      "developer_id": "DEV-09",
+      "category_id": "data_persistence",
       "level": "not_observable",
       "confidence": 0.4,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in a number of small areas that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "Request: make a number of small areas usable with the keyboard only",
-          "timestamp": "2025-05-19T20:11:00.090Z",
-          "url": "https://example.org/demo/nifi/issue/dev-09-migrate_existing_data-1"
+          "title": "Fault report: behaviour in a number of small areas after an update",
+          "timestamp": "2025-05-19T13:57:15.295Z",
+          "url": "https://example.org/demo/nifi/issue/dev-09-data_persistence-1"
         }
       ],
       "blind_spots": "whether the migration ran cleanly on the production data, which is not recorded here",
@@ -1881,33 +2261,61 @@
       }
     },
     {
-      "id": "assess-DEV-09-object_oriented_modelling",
+      "id": "assess-DEV-09-software_design",
       "developer_id": "DEV-09",
-      "category_id": "object_oriented_modelling",
+      "category_id": "software_design",
       "level": "l1",
-      "confidence": 0.57,
-      "rationale": "In 5 changes the names and the cut of the parts were revised, not just their contents. The approach was set by someone else in each case.",
+      "confidence": 0.5,
+      "rationale": "In 4 changes an existing structure was replaced rather than worked around, and 2 of those were later built on by somebody else. The approach was set by someone else in each case.",
       "evidence": [
         {
           "kind": "commit",
           "title": "fix: a number of small areas, correct the order in which changes are applied",
-          "timestamp": "2025-11-30T11:13:31.842Z",
-          "url": "https://example.org/demo/nifi/commit/dev-09-object_oriented_modelling-1"
+          "timestamp": "2026-02-19T09:39:07.341Z",
+          "url": "https://example.org/demo/nifi/commit/dev-09-software_design-1"
         },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2025-04-25T04:09:46.746Z",
+          "url": "https://example.org/demo/nifi/review/dev-09-software_design-2"
+        }
+      ],
+      "blind_spots": "design decisions taken in a meeting or on a whiteboard and never written down in the project",
+      "study": {
+        "direction": "lower",
+        "delta": 1,
+        "veracity": "correct"
+      }
+    },
+    {
+      "id": "assess-DEV-09-technical_communication",
+      "developer_id": "DEV-09",
+      "category_id": "technical_communication",
+      "level": "l1",
+      "confidence": 0.54,
+      "rationale": "In 4 discussions or change notes this person explained why something behaves as it does, and in 2 of them the explanation names the reason. The approach was set by someone else in each case.",
+      "evidence": [
         {
           "kind": "pull_request",
           "title": "a number of small areas: rework after review",
-          "timestamp": "2026-02-03T19:49:17.948Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-09-object_oriented_modelling-2"
+          "timestamp": "2025-12-04T12:40:01.413Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-09-technical_communication-1"
         },
         {
           "kind": "review",
           "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2025-07-08T08:04:45.104Z",
-          "url": "https://example.org/demo/nifi/review/dev-09-object_oriented_modelling-3"
+          "timestamp": "2026-08-17T04:31:08.070Z",
+          "url": "https://example.org/demo/nifi/review/dev-09-technical_communication-2"
+        },
+        {
+          "kind": "issue",
+          "title": "Request: make a number of small areas usable with the keyboard only",
+          "timestamp": "2026-08-11T03:28:36.505Z",
+          "url": "https://example.org/demo/nifi/issue/dev-09-technical_communication-3"
         }
       ],
-      "blind_spots": "modelling work done on a whiteboard before any code was written",
+      "blind_spots": "explanations given in meetings or chat rather than in the project",
       "study": {
         "direction": "lower",
         "delta": 1,

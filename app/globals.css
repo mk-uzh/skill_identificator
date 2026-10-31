@@ -2095,3 +2095,121 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
 .lvtile--na[aria-checked="true"] { border-style: solid; background: var(--grey-100, #ececea); }
 .dec__adjust .lvtile--na { margin-left: 2px; }
 @media (max-width: 900px) { .scale { grid-template-columns: repeat(3, minmax(0, 1fr)); } .lvtile--na { margin-left: 0; } }
+
+/* ---------- responsive: last word, after every width rule above ---------- */
+.ovwrap { overflow-x: auto; }
+.intro > *, .ovgrid > *, .t2grid > *, .shell--3 > * { min-width: 0; }
+
+@media (max-width: 1280px) {
+  .shell--3 { grid-template-columns: 230px minmax(0, 1fr); gap: 32px; }
+  .shell--3 > .side { grid-column: 1 / -1; position: static; max-height: none; overflow: visible; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: start; }
+  .t2grid { grid-template-columns: minmax(0, 1fr) 340px; gap: 22px; }
+  .intro { gap: 32px; grid-template-columns: minmax(0, 1fr) 400px; }
+}
+
+@media (max-width: 1180px) {
+  .intro, .ovgrid, .t2grid { grid-template-columns: minmax(0, 1fr); }
+  .intro__side, .ovgrid__side, .t2grid__side { position: static; padding-top: 0; }
+  .side { max-height: none; overflow: visible; }
+  .topbar__inner, .fh__in, .bbar__in, .page, .page--intro { padding-left: 28px; padding-right: 28px; }
+  .fh { margin-left: -28px; margin-right: -28px; }
+  .phases { display: none; }
+}
+
+@media (max-width: 900px) {
+  .shell, .shell--3 { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .shell--3 > .side { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; }
+  .rail .steps2 { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; padding-bottom: 6px; }
+  .rail .steps2 button { white-space: nowrap; width: auto; }
+  .rail__hint { margin-left: 0; }
+  .fh__in { gap: 10px 16px; }
+  .fh__phase { min-width: 0; }
+  .cmp, .cols2, .flow3, .stats, .stats--3, .about__body { grid-template-columns: minmax(0, 1fr); }
+  .scale { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lvtile--na { margin-left: 0; }
+}
+
+@media (max-width: 700px) {
+  .topbar__inner, .fh__in, .bbar__in, .page, .page--intro { padding-left: 16px; padding-right: 16px; }
+  .fh { margin-left: -16px; margin-right: -16px; }
+  .page { padding-top: 16px; }
+  .page .card { padding: 20px 18px; overflow-x: auto; }
+  .page .lede { font-size: 16px; }
+  .projsel span { display: none; }
+  .brand { font-size: 17px; }
+  .ev li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .ev time { justify-self: start; }
+  .bbar__in { gap: 10px; }
+  .bbar__text { font-size: 13px; }
+  .bbar .btn { padding-left: 16px; padding-right: 16px; }
+  .fh__who b { font-size: 19px; }
+  .seg { flex-wrap: wrap; }
+  .study-banner, .banner { font-size: 12px; }
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 1180px) {
+  /* Task 2 on one column: what the system proposes, then your decision, then the records. */
+  .t2grid__main, .t2grid__side { display: contents; }
+  .t2grid__main > .card:nth-child(1) { order: 1; }
+  .t2grid__side > .card:nth-child(1) { order: 2; }
+  .t2grid__main > .card:nth-child(2) { order: 3; }
+  .t2grid__side > :not(:first-child) { order: 4; }
+  .t2grid { gap: 18px; }
+}
+
+@media (max-width: 700px) {
+  /* compact sticky header: person and the demo button on one row */
+  .fh { margin-bottom: 14px; }
+  .fh__in { flex-wrap: nowrap; padding-top: 8px; padding-bottom: 8px; gap: 10px; }
+  .fh__phase, .pseg { display: none; }
+  .fh__who { min-width: 0; flex: 1; }
+  .fh__who span { white-space: nowrap; }
+  .fh__right .btn { padding: 8px 12px; font-size: 13px; min-height: 36px; }
+
+  /* bottom bar: two full-width buttons, the counter is already in the list above */
+  .bbar__in { padding-bottom: calc(12px + env(safe-area-inset-bottom)); gap: 10px; flex-wrap: wrap; }
+  .bbar__text { display: none; }
+  .bbar__go { flex: 1; flex-wrap: wrap; }
+  .bbar__go .btn { flex: 1; justify-content: center; }
+  .page--flow { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+
+  /* thumbs: comfortable targets, and no zoom on focus in iOS (16px) */
+  .btn, .seg button, .steps2 button, .dec__opt, .projsel select { min-height: 44px; }
+  input[type="text"], textarea, select { font-size: 16px; }
+  .field input, textarea { padding-top: 12px; padding-bottom: 12px; }
+  .lvtile { min-height: 86px; }
+  .dec__adjust .lvtile small { display: block; font-size: 11px; }
+  .rail .steps2 button { min-height: 44px; }
+  .checkbox input { width: 22px; height: 22px; }
+
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats--3 { grid-template-columns: minmax(0, 1fr); }
+  .page h1.title { font-size: clamp(26px, 8vw, 34px); }
+  .pill big { font-size: 17px; }
+  .page .card, .page .flow3__i { border-radius: 16px; }
+  .hero { padding-top: 8px; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .fh { position: static; }
+  .bbar__in { padding-top: 8px; padding-bottom: 8px; }
+  .page--flow { padding-bottom: 80px; }
+}
+
+@media (max-width: 700px) {
+  .fh { margin: -16px -16px 14px; }
+  .projsel select { font-size: 16px; }
+  .brand { padding: 10px 0; }
+  .linkbtn { padding: 12px 0; }
+  .page--narrow2 { padding-left: 16px; padding-right: 16px; }
+}
+
+/* ---- Screen-size scaling (desktop only): smaller screens render slightly
+   smaller so the layout is not oversized on laptops. Phones/tablets (<=1180)
+   are untouched. ---- */
+@media (min-width: 1181px) and (max-width: 1439px) { html { zoom: 0.82; } }
+@media (min-width: 1440px) and (max-width: 1679px) { html { zoom: 0.88; } }
+@media (min-width: 1680px) and (max-width: 1919px) { html { zoom: 0.95; } }
+@media (min-width: 1920px) { html { zoom: 1; } }

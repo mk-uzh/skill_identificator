@@ -71,11 +71,9 @@ export function LevelGuide({
  * long as no model produces the value, this guide is what gives it meaning —
  * and it says plainly that it is about the records, not about the person.
  */
-export function ConfidenceGuide({ open = false }: { open?: boolean }) {
-  return (
-    <details className="guide" open={open}>
-      <summary>What confidence means</summary>
-      <div className="guide__body">
+export function ConfidenceGuide({ open = false, bare = false }: { open?: boolean; bare?: boolean }) {
+  const body = (
+      <>
         <table className="lvtab">
           <tbody>
             <tr>
@@ -102,7 +100,13 @@ export function ConfidenceGuide({ open = false }: { open?: boolean }) {
           The figure says how certain the system is about its own reading of the records. It says
           nothing about how good the person is.
         </p>
-      </div>
+      </>
+  );
+  if (bare) return body;
+  return (
+    <details className="guide" open={open}>
+      <summary>What confidence means</summary>
+      <div className="guide__body">{body}</div>
     </details>
   );
 }

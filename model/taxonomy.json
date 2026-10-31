@@ -1,10 +1,18 @@
 {
-  "taxonomy_version": "2.0",
-  "esco_version": "ESCO v1.2.0, occupation 'software developer'",
-  "esco_retrieved_at": "2026-10-25",
-  "uri_status": "PLACEHOLDER - the concept URIs below are local identifiers, not resolvable ESCO URIs. Replace them with the real skill URIs before any result is reported.",
+  "taxonomy_version": "3.0",
+  "status": "ADOPTED for the study. Version 2 (10 categories) is kept as model/taxonomy.v2.json for reference.",
+  "derived_from": "open coding of 120 evidence units (pipeline/data/silver/samples/sample_n120_seed42.*) and the ESCO profile of 'software developer'",
+  "esco_version": "ESCO API record of occupation 'software developer' (code 2512.3), read 2026-10-27",
+  "esco_occupation_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+  "uri_status": "ESCO skill URIs are copied from the ESCO API record where the concept exists there. Entries with uri null are local (no ESCO counterpart) or still to be added. Replace remaining placeholders before any result is reported.",
+  "source_values": {
+    "esco-essential": "essential skill or knowledge of the ESCO profile",
+    "esco-optional": "optional skill or knowledge of the ESCO profile",
+    "local": "added from the data, no counterpart in the ESCO profile",
+    "e-cf-proposed": "e-CF competence suggested as a counterpart; the mapping is a proposal"
+  },
   "level_scale": {
-    "source": "European e-Competence Framework, EN 16234-1, five levels",
+    "source": "Five levels as in the European e-Competence Framework (EN 16234-1). The descriptions are our own wording for repository records.",
     "ordered": [
       "l1",
       "l2",
@@ -28,8 +36,58 @@
       "l4": "Builds shared pieces others rely on",
       "l5": "The reference, sets the approach",
       "not_observable": "Records show nothing about it"
+    },
+    "unit_level_guide": {
+      "l1": "Is the unit mechanical or cosmetic, needing no judgement? (a label or string, a style value, a config default, a version, wiring the ticket dictated, a one-line follow-up to someone else's change, a bare question or vague worry from a reviewer)",
+      "l2": "Does the change alter behaviour and complete an ordinary task alone (a bug fix, a small feature, a test, a concrete correct review suggestion), even if only a few lines? It stands as it is, without a substantive rework.",
+      "l3": "Does the unit show WHY, or restructure instead of patching? (a) the person states a cause or gives a reasoned explanation in their own words (commit message, comment, code comment); (b) the person restructures existing code (refactor, removal of an obsolete concept across files, moving work to where it belongs); (c) a reviewer diagnoses a problem and hands over a concrete fix. A reason that appears only in the ticket text does not count.",
+      "l4": "Did the person create, or substantially extend, a shared piece (service, API, library, model) that several other parts of the software rely on, and is it backed by tests or a human review that accepted it? A new method on an API used by one or two callers is not l4. Without a test and a human review the highest level is l3.",
+      "l5": "Not assignable from a single unit. It can only come from the pattern across units: others turn to this person, the person sets the approach.",
+      "not_observable": "The unit holds nothing the person wrote or did about this competence (a verdict alone such as APPROVED, LGTM or 'tested', ticket text by someone else, a version bump, generated files)."
     }
   },
+  "coding_rules": [
+    {
+      "id": "R1",
+      "text": "Evidence is what the person did or wrote: commits, code, own comments, review comments, verdict. The ticket text is context, never evidence, and especially not for reviewers."
+    },
+    {
+      "id": "R2",
+      "text": "A reviewer unit with a verdict alone (APPROVED, LGTM, tested) is not observable. In the sample this is 44 of 63 reviewer units."
+    },
+    {
+      "id": "R3",
+      "text": "An author unit with no human review recorded is rated from the content. Autonomy through acceptance cannot be judged; mark it and lower the confidence (9 of 57 author units)."
+    },
+    {
+      "id": "R4",
+      "text": "Review rounds (comments, changes requested) do not lower a level by themselves. Iteration is normal. A second commit that corrects the first is noted. A bare CHANGES_REQUESTED does not decide it; only a rework that clearly changed the substance keeps a unit at l1."
+    },
+    {
+      "id": "R5",
+      "text": "At most two categories per unit, the main one first. Each category needs its own verbatim quote of at most 200 characters from the unit text."
+    },
+    {
+      "id": "R6",
+      "text": "Volume is not ability. Translation bundles and generated files inflate file counts (units 8, 48, 75). Judge what the change does."
+    },
+    {
+      "id": "R7",
+      "text": "l5 is never assigned at unit level."
+    },
+    {
+      "id": "R8",
+      "text": "Same ticket, different people: the units are rated independently (units 3 and 29, 11 and 40, 28 and 54, 96 and 114, 49 and 93)."
+    },
+    {
+      "id": "R9",
+      "text": "For a reviewer unit the category is the technical area the comments are about, code_review only if they are general. When a change fits several categories, the main one is the one the person's own commit message or comment is about."
+    },
+    {
+      "id": "R10",
+      "text": "Between two levels take the lower one, except that a short functional fix is never moved down to l1: l1 is only for mechanical or cosmetic changes."
+    }
+  ],
   "groups": [
     {
       "key": "testing",
@@ -53,7 +111,7 @@
     },
     {
       "key": "architecture",
-      "label": "Architecture and design",
+      "label": "Architecture, design and communication",
       "order": 5
     }
   ],
@@ -63,354 +121,389 @@
       "group": "testing",
       "label": "develop automated software tests",
       "plain": "Writing small programs that check the software after a change",
-      "description": "Writing small programs that check the software after a change",
       "order": 1,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      "definition": "Writing or maintaining automated tests: unit, integration, end-to-end or web-component tests, including the set-up they need.",
+      "include": "Test files in the change; own comments about test cases; tests added together with a fix.",
+      "exclude": "Saying 'tested' after trying a change by hand (that is review, level 1). A test file that only appears because a generator or tool added it.",
+      "e_cf_counterpart": "B.3 Testing (e-CF levels e-1 to e-4)",
+      "observed_in_sample": {
+        "units": 9,
+        "levels": {
+          "l2": 5,
+          "l3": 4
+        }
       },
       "concepts": [
         {
-          "uri": "urn:devskill:esco-pending:dev_automated_tests",
+          "uri": null,
           "label": "develop automated software tests",
-          "source": "esco-pending",
-          "path_patterns": [
-            "test/",
-            "src/test/",
-            "e2e/",
-            "*Test.java",
-            "*.spec.ts"
-          ],
-          "text_patterns": [
-            "test",
-            "junit",
-            "assertion",
-            "regression",
-            "selenium",
-            "coverage"
-          ]
+          "source": "local",
+          "note": "not linked to the ESCO profile of software developer (the project taxonomy also has a software tester role); e-CF B.3 Testing exists"
         }
-      ]
-    },
-    {
-      "key": "ict_debugging_tools",
-      "group": "testing",
-      "label": "ICT debugging tools",
-      "plain": "Using the tools that help locate a fault",
-      "description": "Using the tools that help locate a fault",
-      "order": 2,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
-      },
-      "concepts": [
-        {
-          "uri": "urn:devskill:esco-pending:ict_debugging_tools",
-          "label": "ICT debugging tools",
-          "source": "esco-pending",
-          "path_patterns": [
-            "debug/",
-            "tools/"
-          ],
-          "text_patterns": [
-            "debug",
-            "profiler",
-            "stack trace",
-            "breakpoint",
-            "log level",
-            "heap dump"
-          ]
-        }
-      ]
+      ],
+      "description": "Writing small programs that check the software after a change"
     },
     {
       "key": "debug_software",
-      "group": "backend",
+      "group": "testing",
       "label": "debug software",
       "plain": "Working out why something broke, not just hiding the symptom",
-      "description": "Working out why something broke, not just hiding the symptom",
-      "order": 3,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      "order": 2,
+      "definition": "Finding the cause of a fault and fixing it: null guards with the cause stated, wrong conditions, regressions, reading stack traces and logs, using breakpoints.",
+      "include": "Fix commits where the cause is visible in code or in own text; own comments naming the cause; debugging steps in own comments.",
+      "exclude": "Cosmetic changes (design_user_interface), version bumps (build_dependencies), a stack trace that only appears in the ticket text written by someone else.",
+      "e_cf_counterpart": "C.4 Problem Management (proposal)",
+      "observed_in_sample": {
+        "units": 12,
+        "levels": {
+          "l2": 7,
+          "l3": 5
+        }
       },
       "concepts": [
         {
-          "uri": "urn:devskill:esco-pending:debug_software",
+          "uri": "http://data.europa.eu/esco/skill/2522a6ce-3202-4ac8-9f5b-b9cb5a3a83a1",
           "label": "debug software",
-          "source": "esco-pending",
-          "path_patterns": [
-            "src/main/"
-          ],
-          "text_patterns": [
-            "root cause",
-            "regression",
-            "fix",
-            "npe",
-            "race",
-            "reproduce"
-          ]
+          "source": "esco-essential",
+          "note": "skill"
+        },
+        {
+          "uri": "http://data.europa.eu/esco/skill/6014921e-1d25-4039-adc2-04852d61880e",
+          "label": "ICT debugging tools",
+          "source": "esco-essential",
+          "note": "knowledge, merged into this category"
         }
-      ]
+      ],
+      "description": "Working out why something broke, not just hiding the symptom"
     },
     {
-      "key": "design_patterns",
-      "group": "backend",
-      "label": "use software design patterns",
-      "plain": "Building in shapes other developers recognise and can extend",
-      "description": "Building in shapes other developers recognise and can extend",
-      "order": 4,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      "key": "code_review",
+      "group": "testing",
+      "label": "review other people's code",
+      "plain": "Looking at someone else's change and giving reasons for what should change",
+      "order": 3,
+      "definition": "Giving feedback on someone else's change: concrete suggestions, questions about design or risk, handing over a fix, asking for a change with a reason.",
+      "include": "Review comments and verdicts that carry content: a suggestion, a question about the logic, a stated reason.",
+      "exclude": "A verdict alone (APPROVED, LGTM): not observable. The ticket text, which someone else wrote.",
+      "e_cf_counterpart": "none identified",
+      "observed_in_sample": {
+        "units": 17,
+        "levels": {
+          "l1": 6,
+          "l2": 8,
+          "l3": 3
+        }
       },
       "concepts": [
         {
-          "uri": "urn:devskill:esco-pending:design_patterns",
-          "label": "use software design patterns",
-          "source": "esco-pending",
-          "path_patterns": [
-            "src/main/"
-          ],
-          "text_patterns": [
-            "factory",
-            "builder",
-            "strategy",
-            "refactor",
-            "abstraction",
-            "interface"
-          ]
+          "uri": null,
+          "label": "review other people's code",
+          "source": "local",
+          "note": "no counterpart in the ESCO profile of software developer"
         }
-      ]
-    },
-    {
-      "key": "concurrent_programming",
-      "group": "backend",
-      "label": "use concurrent programming",
-      "plain": "Making sure two people acting at once do not corrupt each other's work",
-      "description": "Making sure two people acting at once do not corrupt each other's work",
-      "order": 5,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
-      },
-      "concepts": [
-        {
-          "uri": "urn:devskill:esco-pending:concurrent_programming",
-          "label": "use concurrent programming",
-          "source": "esco-pending",
-          "path_patterns": [
-            "src/main/"
-          ],
-          "text_patterns": [
-            "thread",
-            "lock",
-            "concurrent",
-            "synchronized",
-            "optimistic",
-            "deadlock"
-          ]
-        }
-      ]
+      ],
+      "description": "Looking at someone else's change and giving reasons for what should change"
     },
     {
       "key": "integrate_components",
       "group": "backend",
       "label": "integrate system components",
       "plain": "Joining separate parts of the software so they work together",
-      "description": "Joining separate parts of the software so they work together",
-      "order": 6,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      "order": 4,
+      "definition": "Connecting components, tools or external systems: LTI, Microsoft integration, import and export, links between assignments and gradebook, exposing a method on an API.",
+      "include": "Changes that touch the seam between two parts; standards-based interfaces; import/export paths.",
+      "exclude": "Changes inside one component with no interface involved.",
+      "e_cf_counterpart": "B.2 Component Integration (e-CF levels e-2 to e-4)",
+      "observed_in_sample": {
+        "units": 10,
+        "levels": {
+          "l1": 1,
+          "l2": 4,
+          "l3": 4,
+          "l4": 1
+        }
       },
       "concepts": [
         {
-          "uri": "urn:devskill:esco-pending:integrate_components",
+          "uri": "http://data.europa.eu/esco/skill/ed8de897-adbe-4f0e-b4d2-534953e64c72",
           "label": "integrate system components",
-          "source": "esco-pending",
-          "path_patterns": [
-            "api/",
-            "service/",
-            "integration/"
-          ],
-          "text_patterns": [
-            "integration",
-            "endpoint",
-            "api",
-            "contract",
-            "adapter",
-            "webservice"
-          ]
+          "source": "esco-optional",
+          "note": "skill"
         }
-      ]
+      ],
+      "description": "Joining separate parts of the software so they work together"
+    },
+    {
+      "key": "security_permissions",
+      "group": "backend",
+      "label": "security and permissions",
+      "plain": "Deciding who may see or do what, and making the software enforce it",
+      "order": 5,
+      "definition": "Roles, permissions and access rules: default permissions, checks before data is shown, limiting a list to the user's own groups, not relying on permission set-up by accident.",
+      "include": "Permission registration, authorisation checks, group or role filters.",
+      "exclude": "Legal knowledge about security (ESCO 'ICT security legislation' is a different thing).",
+      "e_cf_counterpart": "none identified",
+      "observed_in_sample": {
+        "units": 5,
+        "levels": {
+          "l2": 4,
+          "l3": 1
+        }
+      },
+      "concepts": [
+        {
+          "uri": null,
+          "label": "security and permissions",
+          "source": "local",
+          "note": "ESCO has 'ICT security legislation' (optional knowledge), which is about law, not about enforcing access"
+        }
+      ],
+      "description": "Deciding who may see or do what, and making the software enforce it"
+    },
+    {
+      "key": "build_dependencies",
+      "group": "backend",
+      "label": "build, dependencies and configuration",
+      "plain": "Keeping the software buildable: libraries, versions, settings",
+      "order": 6,
+      "definition": "Maven and workflow files, library and server versions, properties and defaults, shared dependency management.",
+      "include": "pom.xml, workflow files, property defaults, remarks about dependencies in review.",
+      "exclude": "Code changes that happen to need a new library.",
+      "e_cf_counterpart": "B.4 Solution Deployment (proposal)",
+      "observed_in_sample": {
+        "units": 6,
+        "levels": {
+          "l1": 4,
+          "l2": 1,
+          "l3": 1
+        }
+      },
+      "concepts": [
+        {
+          "uri": "http://data.europa.eu/esco/skill/9d2e926f-53d9-41f5-98f3-19dfaa687f3f",
+          "label": "tools for software configuration management",
+          "source": "esco-essential",
+          "note": "knowledge"
+        },
+        {
+          "uri": "http://data.europa.eu/esco/skill/0d168770-4d9c-4096-b048-a6577818d306",
+          "label": "Apache Maven",
+          "source": "esco-optional",
+          "note": "knowledge"
+        }
+      ],
+      "description": "Keeping the software buildable: libraries, versions, settings"
+    },
+    {
+      "key": "javascript",
+      "group": "frontend",
+      "label": "JavaScript (frontend code)",
+      "plain": "The browser-side code: scripts, web components, templates",
+      "order": 7,
+      "definition": "Logic in JavaScript, web components and page templates: sorting, feature detection, error handling in the browser.",
+      "include": "JavaScript, Lit web components, JSP or template logic.",
+      "exclude": "Pure styling (design_user_interface).",
+      "e_cf_counterpart": "B.1 Application Development (e-CF levels e-1 to e-3)",
+      "observed_in_sample": {
+        "units": 11,
+        "levels": {
+          "l1": 3,
+          "l2": 7,
+          "l3": 1
+        }
+      },
+      "concepts": [
+        {
+          "uri": "http://data.europa.eu/esco/skill/3cd569a2-4f88-4c1e-9995-8dce8c5e51a7",
+          "label": "JavaScript",
+          "source": "esco-optional",
+          "note": "knowledge"
+        }
+      ],
+      "description": "The browser-side code: scripts, web components, templates"
     },
     {
       "key": "design_user_interface",
       "group": "frontend",
       "label": "design user interface",
-      "plain": "The visible part: buttons, forms, tables",
-      "description": "The visible part: buttons, forms, tables",
-      "order": 7,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
-      },
-      "concepts": [
-        {
-          "uri": "urn:devskill:esco-pending:design_user_interface",
-          "label": "design user interface",
-          "source": "esco-pending",
-          "path_patterns": [
-            "webapp/",
-            "ui/",
-            "*.jsp",
-            "*.vue",
-            "css/"
-          ],
-          "text_patterns": [
-            "ui",
-            "form",
-            "dialog",
-            "accessibility",
-            "layout",
-            "screen reader"
-          ]
-        }
-      ]
-    },
-    {
-      "key": "javascript",
-      "group": "frontend",
-      "label": "JavaScript",
-      "plain": "The language the browser part is written in",
-      "description": "The language the browser part is written in",
+      "plain": "The visible part: buttons, forms, tables, colours",
       "order": 8,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      "definition": "How the interface looks and behaves: styling, visual markers, defaults for display, accessibility, usability suggestions.",
+      "include": "CSS and SCSS, visual markers, display defaults, usability remarks.",
+      "exclude": "Script logic (javascript).",
+      "e_cf_counterpart": "none identified",
+      "observed_in_sample": {
+        "units": 6,
+        "levels": {
+          "l1": 4,
+          "l2": 2
+        }
       },
       "concepts": [
         {
-          "uri": "urn:devskill:esco-pending:javascript",
-          "label": "JavaScript",
-          "source": "esco-pending",
-          "path_patterns": [
-            "*.js",
-            "*.ts",
-            "webapp/js/"
-          ],
-          "text_patterns": [
-            "javascript",
-            "dom",
-            "event handler",
-            "bundle",
-            "typescript"
-          ]
+          "uri": "http://data.europa.eu/esco/skill/fd33c66c-70c4-40e6-b87c-5495bd3bf26e",
+          "label": "design user interface",
+          "source": "esco-optional",
+          "note": "skill"
         }
-      ]
+      ],
+      "description": "The visible part: buttons, forms, tables, colours"
     },
     {
-      "key": "migrate_existing_data",
-      "group": "data",
-      "label": "migrate existing data",
-      "plain": "Changing how information is stored without losing any of it",
-      "description": "Changing how information is stored without losing any of it",
+      "key": "internationalisation",
+      "group": "frontend",
+      "label": "internationalisation",
+      "plain": "Making the software work in several languages and number formats",
       "order": 9,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      "definition": "Translation bundles, hard-coded text, locale-aware parsing and formatting, one central place for locale logic.",
+      "include": "Property bundles, locale handling, hard-coded labels.",
+      "exclude": "Translation files that only inflate a file count in a large change.",
+      "e_cf_counterpart": "none identified",
+      "observed_in_sample": {
+        "units": 4,
+        "levels": {
+          "l1": 2,
+          "l2": 1,
+          "l3": 1
+        }
       },
       "concepts": [
         {
-          "uri": "urn:devskill:esco-pending:migrate_existing_data",
-          "label": "migrate existing data",
-          "source": "esco-pending",
-          "path_patterns": [
-            "db/",
-            "migration/",
-            "*.sql"
-          ],
-          "text_patterns": [
-            "migration",
-            "schema",
-            "sql",
-            "index",
-            "backfill",
-            "constraint"
-          ]
+          "uri": null,
+          "label": "internationalisation",
+          "source": "local",
+          "note": "no counterpart in the ESCO profile of software developer"
         }
-      ]
+      ],
+      "description": "Making the software work in several languages and number formats"
     },
     {
-      "key": "object_oriented_modelling",
-      "group": "architecture",
-      "label": "object-oriented modelling",
-      "plain": "Deciding how the parts of the software are cut and named",
-      "description": "Deciding how the parts of the software are cut and named",
+      "key": "data_persistence",
+      "group": "data",
+      "label": "data and persistence",
+      "plain": "Storing information in the database, and changing how it is stored without losing any",
       "order": 10,
-      "anchors": {
-        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
-        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
-        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
-        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
-        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
-        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      "definition": "SQL, ORM mapping, id generation, paging in SQL, schema and permission scripts for several database dialects, migration of existing data.",
+      "include": "SQL files, Hibernate or JPA code, questions about upgrade scripts.",
+      "exclude": "Business logic that only calls a repository.",
+      "e_cf_counterpart": "none identified",
+      "observed_in_sample": {
+        "units": 5,
+        "levels": {
+          "l2": 2,
+          "l3": 3
+        }
       },
       "concepts": [
         {
-          "uri": "urn:devskill:esco-pending:object_oriented_modelling",
-          "label": "object-oriented modelling",
-          "source": "esco-pending",
-          "path_patterns": [
-            "src/main/"
-          ],
-          "text_patterns": [
-            "model",
-            "entity",
-            "domain",
-            "inheritance",
-            "cohesion",
-            "coupling"
-          ]
+          "uri": "http://data.europa.eu/esco/skill/020918ef-4b55-47c1-8430-ab7b8f6a7377",
+          "label": "migrate existing data",
+          "source": "esco-optional",
+          "note": "skill"
+        },
+        {
+          "uri": null,
+          "label": "use query languages",
+          "source": "esco-optional",
+          "note": "listed on the ESCO portal page, not in the API record read here; URI still to be added"
         }
-      ]
+      ],
+      "description": "Storing information in the database, and changing how it is stored without losing any"
+    },
+    {
+      "key": "software_design",
+      "group": "architecture",
+      "label": "software design and refactoring",
+      "plain": "Deciding how the parts of the software are cut, named and kept apart",
+      "order": 11,
+      "definition": "Structure: dependency injection, central services, model classes, removing dead concepts, refactoring for legibility; thread-safety choices as a part of structure.",
+      "include": "New classes or services that others now use; removal of obsolete concepts; injection and wiring.",
+      "exclude": "Size alone: a change in many files is not design (translation bundles inflate counts).",
+      "e_cf_counterpart": "A.6 Application Design (proposal)",
+      "observed_in_sample": {
+        "units": 8,
+        "levels": {
+          "l1": 1,
+          "l2": 2,
+          "l3": 3,
+          "l4": 2
+        }
+      },
+      "concepts": [
+        {
+          "uri": "http://data.europa.eu/esco/skill/2b7a79e5-84d8-4880-be66-3d9bb05bea17",
+          "label": "use software design patterns",
+          "source": "esco-essential",
+          "note": "skill"
+        },
+        {
+          "uri": "http://data.europa.eu/esco/skill/5be3d306-6cf1-4b49-aa1d-01651dd4ba4c",
+          "label": "object-oriented modelling",
+          "source": "esco-optional",
+          "note": "knowledge"
+        },
+        {
+          "uri": "http://data.europa.eu/esco/skill/25b291b5-8245-4d9d-b391-86a8a31d7109",
+          "label": "use concurrent programming",
+          "source": "esco-optional",
+          "note": "skill, 2 observations in 120 units"
+        }
+      ],
+      "description": "Deciding how the parts of the software are cut, named and kept apart"
+    },
+    {
+      "key": "technical_communication",
+      "group": "architecture",
+      "label": "explain decisions in writing",
+      "plain": "Saying why something is the way it is, so others can follow",
+      "order": 12,
+      "definition": "Explaining behaviour or decisions in discussion comments or change notes: why it is by design, what the code does, why a commit was reverted.",
+      "include": "Own discussion comments with a reason; own change notes.",
+      "exclude": "Commit titles; one-word replies.",
+      "e_cf_counterpart": "B.5 Documentation Production (e-CF levels e-1 to e-3)",
+      "observed_in_sample": {
+        "units": 5,
+        "levels": {
+          "l2": 2,
+          "l3": 3
+        }
+      },
+      "concepts": [
+        {
+          "uri": "http://data.europa.eu/esco/skill/04dfd9fb-e0cf-40f6-96c6-9d2280c4347e",
+          "label": "provide technical documentation",
+          "source": "esco-essential",
+          "note": "skill"
+        }
+      ],
+      "description": "Saying why something is the way it is, so others can follow"
+    }
+  ],
+  "dropped_or_merged": [
+    {
+      "v2_key": "ict_debugging_tools",
+      "into": "debug_software",
+      "why": "one observation in 120 units; a part of debugging"
+    },
+    {
+      "v2_key": "concurrent_programming",
+      "into": "software_design",
+      "why": "2 of 120 units; about 3% of all units mention concurrency terms; kept as a concept"
+    },
+    {
+      "v2_key": "object_oriented_modelling",
+      "into": "software_design",
+      "why": "not separable from design patterns in the data"
+    },
+    {
+      "v2_key": "design_patterns",
+      "into": "software_design",
+      "why": "renamed"
+    },
+    {
+      "v2_key": "migrate_existing_data",
+      "into": "data_persistence",
+      "why": "widened to SQL, mapping and migration"
     }
   ]
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 export type RailItem = {
   id: string;
   label: string;
@@ -18,10 +20,19 @@ export function Rail({
   hint: string;
   onJump: (index: number) => void;
 }) {
+  const listRef = useRef<HTMLOListElement>(null);
+
+  // On narrow screens the list is a row you swipe; keep the current competence in view.
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia("(max-width: 900px)").matches) return;
+    const current = listRef.current?.querySelector<HTMLElement>(".cur");
+    current?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  }, [items]);
+
   return (
     <nav className="rail" aria-label="Competences">
       <h2 className="rail__title">{title}</h2>
-      <ol className="steps2">
+      <ol className="steps2" ref={listRef}>
         {items.map((item, i) => (
           <li key={item.id}>
             <button

@@ -1,0 +1,416 @@
+{
+  "taxonomy_version": "2.0",
+  "esco_version": "ESCO v1.2.0, occupation 'software developer'",
+  "esco_retrieved_at": "2026-10-25",
+  "uri_status": "PLACEHOLDER - the concept URIs below are local identifiers, not resolvable ESCO URIs. Replace them with the real skill URIs before any result is reported.",
+  "level_scale": {
+    "source": "European e-Competence Framework, EN 16234-1, five levels",
+    "ordered": [
+      "l1",
+      "l2",
+      "l3",
+      "l4",
+      "l5"
+    ],
+    "non_level": "not_observable",
+    "anchors": {
+      "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+      "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+      "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+      "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+      "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+      "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+    },
+    "anchors_short": {
+      "l1": "Mechanical or cosmetic change, approach set by others",
+      "l2": "Finishes ordinary tasks alone, no substantial rework",
+      "l3": "Finds the cause or restructures, and explains why",
+      "l4": "Builds shared pieces others rely on",
+      "l5": "The reference, sets the approach",
+      "not_observable": "Records show nothing about it"
+    }
+  },
+  "groups": [
+    {
+      "key": "testing",
+      "label": "Testing and quality assurance",
+      "order": 1
+    },
+    {
+      "key": "backend",
+      "label": "Backend development",
+      "order": 2
+    },
+    {
+      "key": "frontend",
+      "label": "Frontend development",
+      "order": 3
+    },
+    {
+      "key": "data",
+      "label": "Data and persistence",
+      "order": 4
+    },
+    {
+      "key": "architecture",
+      "label": "Architecture and design",
+      "order": 5
+    }
+  ],
+  "categories": [
+    {
+      "key": "dev_automated_tests",
+      "group": "testing",
+      "label": "develop automated software tests",
+      "plain": "Writing small programs that check the software after a change",
+      "description": "Writing small programs that check the software after a change",
+      "order": 1,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:dev_automated_tests",
+          "label": "develop automated software tests",
+          "source": "esco-pending",
+          "path_patterns": [
+            "test/",
+            "src/test/",
+            "e2e/",
+            "*Test.java",
+            "*.spec.ts"
+          ],
+          "text_patterns": [
+            "test",
+            "junit",
+            "assertion",
+            "regression",
+            "selenium",
+            "coverage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "ict_debugging_tools",
+      "group": "testing",
+      "label": "ICT debugging tools",
+      "plain": "Using the tools that help locate a fault",
+      "description": "Using the tools that help locate a fault",
+      "order": 2,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:ict_debugging_tools",
+          "label": "ICT debugging tools",
+          "source": "esco-pending",
+          "path_patterns": [
+            "debug/",
+            "tools/"
+          ],
+          "text_patterns": [
+            "debug",
+            "profiler",
+            "stack trace",
+            "breakpoint",
+            "log level",
+            "heap dump"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "debug_software",
+      "group": "backend",
+      "label": "debug software",
+      "plain": "Working out why something broke, not just hiding the symptom",
+      "description": "Working out why something broke, not just hiding the symptom",
+      "order": 3,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:debug_software",
+          "label": "debug software",
+          "source": "esco-pending",
+          "path_patterns": [
+            "src/main/"
+          ],
+          "text_patterns": [
+            "root cause",
+            "regression",
+            "fix",
+            "npe",
+            "race",
+            "reproduce"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "design_patterns",
+      "group": "backend",
+      "label": "use software design patterns",
+      "plain": "Building in shapes other developers recognise and can extend",
+      "description": "Building in shapes other developers recognise and can extend",
+      "order": 4,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:design_patterns",
+          "label": "use software design patterns",
+          "source": "esco-pending",
+          "path_patterns": [
+            "src/main/"
+          ],
+          "text_patterns": [
+            "factory",
+            "builder",
+            "strategy",
+            "refactor",
+            "abstraction",
+            "interface"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "concurrent_programming",
+      "group": "backend",
+      "label": "use concurrent programming",
+      "plain": "Making sure two people acting at once do not corrupt each other's work",
+      "description": "Making sure two people acting at once do not corrupt each other's work",
+      "order": 5,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:concurrent_programming",
+          "label": "use concurrent programming",
+          "source": "esco-pending",
+          "path_patterns": [
+            "src/main/"
+          ],
+          "text_patterns": [
+            "thread",
+            "lock",
+            "concurrent",
+            "synchronized",
+            "optimistic",
+            "deadlock"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "integrate_components",
+      "group": "backend",
+      "label": "integrate system components",
+      "plain": "Joining separate parts of the software so they work together",
+      "description": "Joining separate parts of the software so they work together",
+      "order": 6,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:integrate_components",
+          "label": "integrate system components",
+          "source": "esco-pending",
+          "path_patterns": [
+            "api/",
+            "service/",
+            "integration/"
+          ],
+          "text_patterns": [
+            "integration",
+            "endpoint",
+            "api",
+            "contract",
+            "adapter",
+            "webservice"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "design_user_interface",
+      "group": "frontend",
+      "label": "design user interface",
+      "plain": "The visible part: buttons, forms, tables",
+      "description": "The visible part: buttons, forms, tables",
+      "order": 7,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:design_user_interface",
+          "label": "design user interface",
+          "source": "esco-pending",
+          "path_patterns": [
+            "webapp/",
+            "ui/",
+            "*.jsp",
+            "*.vue",
+            "css/"
+          ],
+          "text_patterns": [
+            "ui",
+            "form",
+            "dialog",
+            "accessibility",
+            "layout",
+            "screen reader"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "javascript",
+      "group": "frontend",
+      "label": "JavaScript",
+      "plain": "The language the browser part is written in",
+      "description": "The language the browser part is written in",
+      "order": 8,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:javascript",
+          "label": "JavaScript",
+          "source": "esco-pending",
+          "path_patterns": [
+            "*.js",
+            "*.ts",
+            "webapp/js/"
+          ],
+          "text_patterns": [
+            "javascript",
+            "dom",
+            "event handler",
+            "bundle",
+            "typescript"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "migrate_existing_data",
+      "group": "data",
+      "label": "migrate existing data",
+      "plain": "Changing how information is stored without losing any of it",
+      "description": "Changing how information is stored without losing any of it",
+      "order": 9,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:migrate_existing_data",
+          "label": "migrate existing data",
+          "source": "esco-pending",
+          "path_patterns": [
+            "db/",
+            "migration/",
+            "*.sql"
+          ],
+          "text_patterns": [
+            "migration",
+            "schema",
+            "sql",
+            "index",
+            "backfill",
+            "constraint"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "object_oriented_modelling",
+      "group": "architecture",
+      "label": "object-oriented modelling",
+      "plain": "Deciding how the parts of the software are cut and named",
+      "description": "Deciding how the parts of the software are cut and named",
+      "order": 10,
+      "anchors": {
+        "l1": "Mechanical or cosmetic changes inside something that already existed. The approach was set by someone else.",
+        "l2": "Completes ordinary tasks in this area on their own, and the work stands without substantial rework.",
+        "l3": "Gets to the cause of a problem or restructures instead of patching the symptom, and explains why.",
+        "l4": "Builds shared pieces that several other parts of the software rely on, backed by tests or an accepted review.",
+        "l5": "The person others turn to in this area. Sets the approach the project follows and corrects the direction of other people's work.",
+        "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
+      },
+      "concepts": [
+        {
+          "uri": "urn:devskill:esco-pending:object_oriented_modelling",
+          "label": "object-oriented modelling",
+          "source": "esco-pending",
+          "path_patterns": [
+            "src/main/"
+          ],
+          "text_patterns": [
+            "model",
+            "entity",
+            "domain",
+            "inheritance",
+            "cohesion",
+            "coupling"
+          ]
+        }
+      ]
+    }
+  ]
+}
