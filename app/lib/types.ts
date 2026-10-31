@@ -30,11 +30,11 @@ export const SKILL_LEVEL_SHORT: Record<SkillLevel, string> = {
 };
 
 export const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
-  l1: "Has touched it",
-  l2: "Works on its own",
-  l3: "Goes beneath the symptom",
-  l4: "Others build on it",
-  l5: "Is the reference",
+  l1: "Follows a given approach",
+  l2: "Completes routine tasks alone",
+  l3: "Solves and explains the cause",
+  l4: "Others rely on it",
+  l5: "Sets the approach for others",
   not_observable: "Not observable",
 };
 

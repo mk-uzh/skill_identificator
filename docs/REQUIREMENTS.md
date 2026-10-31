@@ -52,12 +52,14 @@ Five levels plus n/o (not observable), based on the European e-Competence Framew
 
 | Level | Name | Meaning |
 |---|---|---|
-| l1 | Has touched it | Mechanical or cosmetic change, approach set by others |
-| l2 | Works on its own | Finishes ordinary tasks alone, no substantial rework |
-| l3 | Goes beneath the symptom | Finds the cause or restructures, and explains why |
-| l4 | Others build on it | Builds shared pieces others rely on |
-| l5 | Is the reference | The reference, sets the approach |
+| l1 | Follows a given approach | Small, mechanical change; others set the approach |
+| l2 | Completes routine tasks alone | Own approach, routine task in a known pattern, no substantial rework |
+| l3 | Solves and explains the cause | Own approach, non-routine task; finds the cause or restructures, and explains why |
+| l4 | Others rely on it | Builds shared pieces others rely on |
+| l5 | Sets the approach for others | Others turn to the person; the approach the project follows |
 | n/o | Not observable | Records show nothing about it |
+
+**Levels describe behaviour, not the person.** Each level answers the same three questions, taken from the e-CF: who sets the approach (autonomy), how complex the task is (complexity), and who relies on the result (influence). A level is evidence for one competence in the records, never a label such as beginner or expert.
 
 The e-CF itself defines levels only up to e-3 or e-4 for most build competences, so l4 and l5 go beyond it.
 

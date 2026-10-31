@@ -30,11 +30,11 @@
       "not_observable": "These records show nothing about this competence. It is information in itself, not a gap in your judgement."
     },
     "anchors_short": {
-      "l1": "Mechanical or cosmetic change, approach set by others",
-      "l2": "Finishes ordinary tasks alone, no substantial rework",
+      "l1": "Small, mechanical change; others set the approach",
+      "l2": "Routine task alone, no substantial rework",
       "l3": "Finds the cause or restructures, and explains why",
       "l4": "Builds shared pieces others rely on",
-      "l5": "The reference, sets the approach",
+      "l5": "Sets the approach others follow",
       "not_observable": "Records show nothing about it"
     },
     "unit_level_guide": {

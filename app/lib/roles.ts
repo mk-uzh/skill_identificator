@@ -9,7 +9,7 @@
 //    and the ones it does not measure are named, so a high match can never be
 //    read as "fits the role";
 //  - a competence counts as demonstrated from level 2 up. Level 1 means the
-//    person has touched it with the approach set by someone else, and
+//    person follows an approach set by someone else, and
 //    "not observable" says the records are silent — neither is evidence of
 //    being able to carry the work.
 // ---------------------------------------------------------------------------
