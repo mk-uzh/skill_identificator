@@ -1,0 +1,89 @@
+# API model id (Anthropic). Scoring stays in score.py, not here.
+model: claude-sonnet-5-5
+# Thinking depth for the API: low | medium | high | xhigh | max
+effort: medium
+# Shorter calls that only rewrite study texts after scoring
+texts_effort: low
+
+# USD per million tokens (for run cost log). Update if pricing changes.
+pricing:
+  input_per_mtok: 3.0
+  output_per_mtok: 15.0
+  cache_write_per_mtok: 3.75
+  cache_read_per_mtok: 0.30
+
+study_developers:
+  - DEV-01
+  - DEV-02
+  - DEV-04
+  - DEV-06
+  - DEV-07
+  - DEV-09
+
+# Seed for classify.py --limit (stratified across study_developers × role).
+sample:
+  seed: 42
+
+competences:
+  - dev_automated_tests
+  - debug_software
+  - code_review
+  - integrate_components
+  - security_permissions
+  - build_dependencies
+  - javascript
+  - design_user_interface
+  - internationalisation
+  - data_persistence
+  - software_design
+  - technical_communication
+
+scoring:
+  # How the person-level is taken from unit levels
+  # peak = use the highest usable unit level (then apply l4/l5 gates)
+  # min_support = for l3+, require at least min_units_ge3 units at that peak
+  level_mode: peak
+  min_units_ge3: 1
+  # Drop a lone weak l4 to l3 unless enough support
+  l4_min_peak: 2
+  l4_min_ge3: 3
+  # Promote l4 to l5 only with repeated support
+  l5_min_peak: 3
+  l5_min_reviewer_units: 5
+  # limited units (e.g. author without review) never raise the person level alone
+  limited_raises_level: false
+
+# Variants compared by score.py (overrides merged onto scoring)
+sensitivity:
+  - name: baseline_peak
+    level_mode: peak
+    min_units_ge3: 1
+    l4_min_peak: 2
+    l4_min_ge3: 3
+  - name: peak_l4_stricter
+    level_mode: peak
+    min_units_ge3: 1
+    l4_min_peak: 3
+    l4_min_ge3: 4
+  - name: min2_ge3
+    level_mode: min_support
+    min_units_ge3: 2
+    l4_min_peak: 2
+    l4_min_ge3: 3
+  - name: min2_ge3_l4_stricter
+    level_mode: min_support
+    min_units_ge3: 2
+    l4_min_peak: 3
+    l4_min_ge3: 4
+
+projects:
+  sakai:
+    organization_id: sakai
+    github_owner: sakaiproject
+    github_repo: sakai
+    jira_base: https://sakaiproject.atlassian.net/browse
+  nifi:
+    organization_id: nifi
+    github_owner: apache
+    github_repo: nifi
+    jira_base: https://issues.apache.org/jira/browse

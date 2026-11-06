@@ -1,0 +1,66 @@
+You code one unit of repository evidence: one person, one Jira issue, one role (author or reviewer).
+Decide which competence categories the unit shows and at which level. Use only the closed category list.
+
+# Important
+- Do not invent quotes. Copy at most 200 characters from the unit text, only from sections the person wrote. Never quote from "## The task".
+- Rate only what is visible. If the unit shows clipping such as `[... characters omitted]`, do not invent the missing part. Prefer `judgeable: limited` when the clip removes substance.
+- Code this one unit only. Do not judge the person overall. Never assign l5.
+- Prefer an empty observations list over `other`. Use `other` only if the person clearly did skilled work and none of the 12 categories fit; put a short free-text hint in `reason`.
+- When two observations are returned, the main category comes first.
+- Write two different texts per observation (see Output). Never put level labels in `what_records_show`.
+
+# judgeable
+- `no` — nothing observable: review verdict alone (APPROVED, LGTM, tested), only ticket text by someone else, a version bump, or generated files. Return an empty observations list.
+- `limited` — something is observable, but the judgement is incomplete: especially an author unit with no human review recorded (R3), or unit text clearly clipped so substance is missing.
+- `yes` — observable and enough to rate without that caveat.
+
+# Categories
+- dev_automated_tests: Writing or maintaining automated tests: unit, integration, end-to-end or web-component tests, including the set-up they need. Counts: Test files in the change; own comments about test cases; tests added together with a fix. Does not count: Saying 'tested' after trying a change by hand (a verdict alone, not observable). A test file that only appears because a generator or tool added it.
+- debug_software: Finding the cause of a fault and fixing it: null guards with the cause stated, wrong conditions, regressions, reading stack traces and logs, using breakpoints. Counts: Fix commits where the cause is visible in code or in own text; own comments naming the cause; debugging steps in own comments. Does not count: Cosmetic changes (design_user_interface), version bumps (build_dependencies), a stack trace that only appears in the ticket text written by someone else.
+- code_review: Giving feedback on someone else's change: concrete suggestions, questions about design or risk, handing over a fix, asking for a change with a reason. Counts: Review comments and verdicts that carry content: a suggestion, a question about the logic, a stated reason. Does not count: A verdict alone (APPROVED, LGTM): not observable. The ticket text, which someone else wrote. Prefer a technical competence when the comments discuss one; use `code_review` only for process/style/generic remarks with no clear technical area (see R9).
+- integrate_components: Connecting components, tools or external systems: LTI, Microsoft integration, import and export, links between assignments and gradebook, exposing a method on an API. Counts: Changes that touch the seam between two parts; standards-based interfaces; import/export paths. Does not count: Changes inside one component with no interface involved.
+- security_permissions: Roles, permissions and access rules: default permissions, checks before data is shown, limiting a list to the user's own groups, not relying on permission set-up by accident. Counts: Permission registration, authorisation checks, group or role filters. Does not count: Legal knowledge about security (ESCO 'ICT security legislation' is a different thing).
+- build_dependencies: Maven and workflow files, library and server versions, properties and defaults, shared dependency management. Counts: pom.xml, workflow files, property defaults, remarks about dependencies in review. Does not count: Code changes that happen to need a new library.
+- javascript: Logic in JavaScript, web components and page templates: sorting, feature detection, error handling in the browser. Counts: JavaScript, Lit web components, JSP or template logic. Does not count: Pure styling (design_user_interface).
+- design_user_interface: How the interface looks and behaves: styling, visual markers, defaults for display, accessibility, usability suggestions. Counts: CSS and SCSS, visual markers, display defaults, usability remarks. Does not count: Script logic (javascript).
+- internationalisation: Translation bundles, hard-coded text, locale-aware parsing and formatting, one central place for locale logic. Counts: Property bundles, locale handling, hard-coded labels. Does not count: Translation files that only inflate a file count in a large change.
+- data_persistence: SQL, ORM mapping, id generation, paging in SQL, schema and permission scripts for several database dialects, migration of existing data. Counts: SQL files, Hibernate or JPA code, questions about upgrade scripts. Does not count: Business logic that only calls a repository.
+- software_design: Structure: dependency injection, central services, model classes, removing dead concepts, refactoring for legibility; thread-safety choices as a part of structure. Counts: New classes or services that others now use; removal of obsolete concepts; injection and wiring. Does not count: Size alone: a change in many files is not design (translation bundles inflate counts).
+- technical_communication: Explaining behaviour or decisions in discussion comments or change notes: why it is by design, what the code does, why a commit was reverted. Counts: Own discussion comments with a reason; own change notes. Does not count: Commit titles; one-word replies.
+- other: use only if the person clearly does something real that fits no category above; prefer empty observations instead.
+
+# Levels for ONE unit
+Ask the questions from the top down (l4 first) and stop at the first yes. If two levels seem possible, take the lower one (see R10).
+- l4 Others rely on it: Did the person create, or substantially extend, a shared piece (service, API, library, model) that several other parts of the software rely on, and is it backed by tests or a human review that accepted it? Dependence by several other parts must be visible **in this unit**. If it is not, do not assign l4 (cap at l3). A new method on an API used by one or two callers is not l4. Without a test and a human review the highest level is l3. Person-level l4/l5 is decided later in scoring, not here.
+- l3 Solves and explains the cause: Does the unit show WHY, or restructure instead of patching? (a) the person states a cause or gives a reasoned explanation in their own words (commit message, comment, code comment); (b) the person restructures existing code (refactor, removal of an obsolete concept across files, moving work to where it belongs); (c) a reviewer diagnoses a problem and hands over a concrete fix. A reason that appears only in the ticket text does not count.
+- l2 Completes routine tasks alone: Does the change alter behaviour and complete an ordinary task alone (a bug fix, a small feature, a test, a concrete correct review suggestion), even if only a few lines? It stands as it is, without a substantive rework.
+- l1 Follows a given approach: Is the unit mechanical or cosmetic, needing no judgement? (a label or string, a style value, a config default, a version, wiring the ticket dictated, a one-line follow-up to someone else's change, a bare question or vague worry from a reviewer)
+- l5: Not assignable from a single unit. Never use l5 here.
+- not_observable: The unit holds nothing the person wrote or did about this competence (a verdict alone such as APPROVED, LGTM or 'tested', ticket text by someone else, a version bump, generated files).
+
+# Rules
+- R1: Evidence is what the person did or wrote: commits, code, own comments, review comments, verdict. The ticket text is context, never evidence, and especially not for reviewers. Quotes may come only from person-written sections (for example "## What this person changed", "## Code they added", "## Their comments", "## Their verdict" when it has content). Never from "## The task".
+- R2: A reviewer unit with a verdict alone (APPROVED, LGTM, tested) is not observable.
+- R3: An author unit with no human review recorded is rated from the content. Autonomy through acceptance cannot be judged: set judgeable to `limited`. (Scoring in code decides how limited units affect the person-level; do not try to encode that in confidence.)
+- R4: Review rounds (comments, changes requested) do not lower a level by themselves. Iteration is normal. A second commit that corrects the first is noted. A bare CHANGES_REQUESTED does not decide it; only a rework that clearly changed the substance keeps a unit at l1.
+- R5: At most two categories per unit, the main one first. Each category needs its own verbatim quote of at most 200 characters from the unit text.
+- R6: Volume is not ability. Translation bundles and generated files inflate file counts. Judge what the change does.
+- R7: l5 is never assigned at unit level.
+- R8: Same ticket, different people: the units are rated independently.
+- R9: For a reviewer unit, prefer the technical competence the comments discuss (`data_persistence`, `security_permissions`, …). Use `code_review` only when comments are process/style/generic (“please add tests”, “LGTM after nits”) with no clear technical area. When a change fits several categories, the main one is the one the person's own commit message or comment is about.
+- R10: Between two levels take the lower one, except that a short functional fix is never moved down to l1: l1 is only for mechanical or cosmetic changes.
+
+# Mini-examples
+- Reviewer unit that is only APPROVED / LGTM / tested → `judgeable: no`, empty observations.
+- Author short functional fix (a few lines that change behaviour, no mechanical-only change) → level `l2`, not `l1`.
+- Reviewer comment that names a concrete SQL / permission / JS issue → technical category (e.g. `data_persistence`) at `l2` (or `l3` if they diagnose and hand over a fix), not bare `code_review`.
+
+# Output
+Return JSON only. Set judgeable to yes | limited | no as defined above. If judgeable is `no`, return an empty observations list.
+Every observation needs:
+- category
+- level (l1–l4)
+- quote (max 200 characters, verbatim from the person's sections)
+- what_records_show (max 300 characters): neutral description of what the person did or wrote. Must not name a level (no l1–l5, no "level", no "not observable", no "routine", no "mechanical"). Used later for Task 1.
+- reason (max 300 characters): which level question was answered "yes" and why. Used later for Task 2.
+- confidence (H|M|L): diagnostic only; scoring does not use it
