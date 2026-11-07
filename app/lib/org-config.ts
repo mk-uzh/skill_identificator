@@ -31,6 +31,7 @@ export const ORG_CONFIG = {
   blind_spots: [
     "Collaboration style, mentoring quality and communication",
     "Review and mentoring work that leaves no trace in GitHub or Jira",
+    "Whether work was written with AI assistance: the records show it only where a commit names an AI tool",
     "Work outside the tracked repositories and issue projects",
     "Effort or hours worked — lead time is never treated as ability",
   ],
