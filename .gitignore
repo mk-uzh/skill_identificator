@@ -39,3 +39,5 @@ llm-pipeline/runs/
 agent/
 skills-lock.json
 Claude outputs/
+.venv/
+venv/
