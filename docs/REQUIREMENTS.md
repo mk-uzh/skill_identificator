@@ -39,7 +39,7 @@ Built in two directions. Top-down from ESCO (occupation *software developer*, ES
 | 4 | integrate system components | ESCO optional |
 | 5 | security and permissions | local |
 | 6 | build, dependencies and configuration | ESCO essential and optional |
-| 7 | JavaScript (frontend code) | ESCO optional |
+| 7 | frontend logic (browser-side code) | ESCO optional |
 | 8 | design user interface | ESCO optional |
 | 9 | internationalisation | local |
 | 10 | data and persistence | ESCO optional |

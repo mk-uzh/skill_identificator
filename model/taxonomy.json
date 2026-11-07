@@ -295,13 +295,13 @@
       "description": "Keeping the software buildable: libraries, versions, settings"
     },
     {
-      "key": "javascript",
+      "key": "frontend_logic",
       "group": "frontend",
-      "label": "JavaScript (frontend code)",
+      "label": "frontend logic",
       "plain": "The browser-side code: scripts, web components, templates",
       "order": 7,
-      "definition": "Logic in JavaScript, web components and page templates: sorting, feature detection, error handling in the browser.",
-      "include": "JavaScript, Lit web components, JSP or template logic.",
+      "definition": "Logic that runs in the browser: scripts, web components and page templates, for example sorting, feature detection, error handling.",
+      "include": "Browser-side scripts, web components, JSP or template logic.",
       "exclude": "Pure styling (design_user_interface).",
       "e_cf_counterpart": "B.1 Application Development (e-CF levels e-1 to e-3)",
       "observed_in_sample": {
@@ -330,7 +330,7 @@
       "order": 8,
       "definition": "How the interface looks and behaves: styling, visual markers, defaults for display, accessibility, usability suggestions.",
       "include": "CSS and SCSS, visual markers, display defaults, usability remarks.",
-      "exclude": "Script logic (javascript).",
+      "exclude": "Script logic (frontend_logic).",
       "e_cf_counterpart": "none identified",
       "observed_in_sample": {
         "units": 6,

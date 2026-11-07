@@ -2,7 +2,7 @@
   "taxonomy_version": "3.0",
   "organization_id": "demo-project-nifi",
   "computed_at": "2026-10-25T00:00:00.000Z",
-  "config_hash": "0a41fe73ee73c916",
+  "config_hash": "e2fc97dc1bad047e",
   "generated_by": "tools/make-demo-assessments.mjs",
   "data_status": "PLACEHOLDER - generated demo content, not pipeline output",
   "assessments": [
@@ -193,39 +193,39 @@
       }
     },
     {
-      "id": "assess-DEV-01-javascript",
+      "id": "assess-DEV-01-frontend_logic",
       "developer_id": "DEV-01",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "l3",
-      "confidence": 0.82,
-      "rationale": "11 of the changes are in the browser part of the software, spread over 5 different screens.",
+      "confidence": 0.79,
+      "rationale": "38 of the changes are in the browser part of the software, spread over 19 different screens.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "fix: the engine that runs a data flow, correct the order in which changes are applied",
-          "timestamp": "2025-04-12T12:40:23.623Z",
-          "url": "https://example.org/demo/nifi/commit/dev-01-javascript-1"
+          "title": "fix: the engine that runs a data flow, stop the error when a processor is configured without a required property",
+          "timestamp": "2025-07-31T00:58:30.968Z",
+          "url": "https://example.org/demo/nifi/commit/dev-01-frontend_logic-1"
         },
         {
           "kind": "pull_request",
           "title": "the engine that runs a data flow: new behaviour behind a setting",
-          "timestamp": "2026-02-16T15:10:31.705Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-01-javascript-2"
+          "timestamp": "2025-06-28T04:11:53.876Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-01-frontend_logic-2"
         },
         {
           "kind": "review",
-          "title": "Review of somebody else's change in the engine that runs a data flow",
-          "timestamp": "2025-07-09T06:42:07.970Z",
-          "url": "https://example.org/demo/nifi/review/dev-01-javascript-3"
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2026-01-29T10:22:37.015Z",
+          "url": "https://example.org/demo/nifi/review/dev-01-frontend_logic-3"
         },
         {
           "kind": "issue",
           "title": "Fault report: behaviour in the engine that runs a data flow after an update",
-          "timestamp": "2025-12-12T21:18:01.048Z",
-          "url": "https://example.org/demo/nifi/issue/dev-01-javascript-4"
+          "timestamp": "2025-10-26T11:26:15.336Z",
+          "url": "https://example.org/demo/nifi/issue/dev-01-frontend_logic-4"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
@@ -583,21 +583,21 @@
       }
     },
     {
-      "id": "assess-DEV-02-javascript",
+      "id": "assess-DEV-02-frontend_logic",
       "developer_id": "DEV-02",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "not_observable",
-      "confidence": 0.34,
+      "confidence": 0.4,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of flow definitions that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
           "title": "Request: make the import and export of flow definitions usable with the keyboard only",
-          "timestamp": "2025-11-01T09:04:34.195Z",
-          "url": "https://example.org/demo/nifi/issue/dev-02-javascript-1"
+          "timestamp": "2025-08-04T18:28:05.399Z",
+          "url": "https://example.org/demo/nifi/issue/dev-02-frontend_logic-1"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
@@ -967,21 +967,21 @@
       }
     },
     {
-      "id": "assess-DEV-04-javascript",
+      "id": "assess-DEV-04-frontend_logic",
       "developer_id": "DEV-04",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "not_observable",
-      "confidence": 0.31,
+      "confidence": 0.3,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the part that stores data in transit and its history that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "Request: make the part that stores data in transit and its history usable with the keyboard only",
-          "timestamp": "2026-07-30T17:21:22.125Z",
-          "url": "https://example.org/demo/nifi/issue/dev-04-javascript-1"
+          "title": "Fault report: behaviour in the part that stores data in transit and its history after an update",
+          "timestamp": "2026-02-03T12:08:34.118Z",
+          "url": "https://example.org/demo/nifi/issue/dev-04-frontend_logic-1"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
@@ -1345,40 +1345,40 @@
       }
     },
     {
-      "id": "assess-DEV-06-javascript",
+      "id": "assess-DEV-06-frontend_logic",
       "developer_id": "DEV-06",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "l4",
-      "confidence": 0.88,
-      "rationale": "13 of the changes are in the browser part of the software, spread over 4 different screens.",
+      "confidence": 0.86,
+      "rationale": "5 of the changes are in the browser part of the software, spread over 3 different screens.",
       "evidence": [
         {
           "kind": "commit",
           "title": "fix: the canvas on which users build flows, stop the error when a processor is configured without a required property",
-          "timestamp": "2025-03-09T14:39:29.060Z",
-          "url": "https://example.org/demo/nifi/commit/dev-06-javascript-1"
+          "timestamp": "2026-06-27T23:23:54.163Z",
+          "url": "https://example.org/demo/nifi/commit/dev-06-frontend_logic-1"
         },
         {
           "kind": "pull_request",
           "title": "the canvas on which users build flows: rework after review",
-          "timestamp": "2025-02-16T17:52:24.421Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-06-javascript-2"
+          "timestamp": "2026-05-24T23:08:37.013Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-06-frontend_logic-2"
         },
         {
           "kind": "review",
-          "title": "Review of somebody else's change in the canvas on which users build flows",
-          "timestamp": "2026-03-10T11:40:13.999Z",
-          "url": "https://example.org/demo/nifi/review/dev-06-javascript-3"
+          "title": "Review: asked for rework before this was accepted",
+          "timestamp": "2025-11-11T09:07:57.813Z",
+          "url": "https://example.org/demo/nifi/review/dev-06-frontend_logic-3"
         },
         {
           "kind": "issue",
           "title": "Fault report: behaviour in the canvas on which users build flows after an update",
-          "timestamp": "2025-09-09T14:44:59.029Z",
-          "url": "https://example.org/demo/nifi/issue/dev-06-javascript-4"
+          "timestamp": "2026-02-04T04:00:08.770Z",
+          "url": "https://example.org/demo/nifi/issue/dev-06-frontend_logic-4"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
-      "level_reason": "3 other people later built on this work, and the person read and approved 2 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
+      "level_reason": "2 other people later built on this work, and the person read and approved 14 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -1783,39 +1783,39 @@
       }
     },
     {
-      "id": "assess-DEV-07-javascript",
+      "id": "assess-DEV-07-frontend_logic",
       "developer_id": "DEV-07",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "l3",
       "confidence": 0.85,
-      "rationale": "16 of the changes are in the browser part of the software, spread over 10 different screens.",
+      "rationale": "25 of the changes are in the browser part of the software, spread over 10 different screens.",
       "evidence": [
         {
           "kind": "commit",
           "title": "fix: the processors and the shared services they use, stop the error when a processor is configured without a required property",
-          "timestamp": "2025-03-31T20:58:36.081Z",
-          "url": "https://example.org/demo/nifi/commit/dev-07-javascript-1"
+          "timestamp": "2026-07-01T06:55:09.532Z",
+          "url": "https://example.org/demo/nifi/commit/dev-07-frontend_logic-1"
         },
         {
           "kind": "pull_request",
           "title": "the processors and the shared services they use: rework after review",
-          "timestamp": "2025-02-16T11:28:08.846Z",
-          "url": "https://example.org/demo/nifi/pull_request/dev-07-javascript-2"
+          "timestamp": "2025-12-29T07:52:18.121Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-07-frontend_logic-2"
         },
         {
           "kind": "review",
           "title": "Review: asked for rework before this was accepted",
-          "timestamp": "2025-03-27T02:24:31.978Z",
-          "url": "https://example.org/demo/nifi/review/dev-07-javascript-3"
+          "timestamp": "2025-06-04T03:47:31.557Z",
+          "url": "https://example.org/demo/nifi/review/dev-07-frontend_logic-3"
         },
         {
           "kind": "issue",
           "title": "Fault report: behaviour in the processors and the shared services they use after an update",
-          "timestamp": "2025-07-07T02:38:27.639Z",
-          "url": "https://example.org/demo/nifi/issue/dev-07-javascript-4"
+          "timestamp": "2025-08-01T20:42:34.019Z",
+          "url": "https://example.org/demo/nifi/issue/dev-07-frontend_logic-4"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
@@ -2203,33 +2203,39 @@
       }
     },
     {
-      "id": "assess-DEV-09-javascript",
+      "id": "assess-DEV-09-frontend_logic",
       "developer_id": "DEV-09",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "l2",
-      "confidence": 0.64,
-      "rationale": "6 of the changes are in the browser part of the software, spread over 2 different screens.",
+      "confidence": 0.67,
+      "rationale": "7 of the changes are in the browser part of the software, spread over 3 different screens.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "fix: a number of small areas, stop the error when a processor is configured without a required property",
-          "timestamp": "2025-06-14T05:48:00.248Z",
-          "url": "https://example.org/demo/nifi/commit/dev-09-javascript-1"
+          "title": "refactor: a number of small areas, pull the repeated part into one place",
+          "timestamp": "2026-09-09T12:08:48.215Z",
+          "url": "https://example.org/demo/nifi/commit/dev-09-frontend_logic-1"
+        },
+        {
+          "kind": "pull_request",
+          "title": "a number of small areas: rework after review",
+          "timestamp": "2025-06-23T12:43:09.905Z",
+          "url": "https://example.org/demo/nifi/pull_request/dev-09-frontend_logic-2"
         },
         {
           "kind": "review",
           "title": "Review of somebody else's change in a number of small areas",
-          "timestamp": "2026-02-28T20:59:47.062Z",
-          "url": "https://example.org/demo/nifi/review/dev-09-javascript-2"
+          "timestamp": "2025-01-25T18:25:02.343Z",
+          "url": "https://example.org/demo/nifi/review/dev-09-frontend_logic-3"
         },
         {
           "kind": "issue",
           "title": "Request: make a number of small areas usable with the keyboard only",
-          "timestamp": "2025-08-06T03:34:09.964Z",
-          "url": "https://example.org/demo/nifi/issue/dev-09-javascript-3"
+          "timestamp": "2025-05-29T04:11:21.592Z",
+          "url": "https://example.org/demo/nifi/issue/dev-09-frontend_logic-4"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",

@@ -50,7 +50,7 @@ const INCORRECT = new Set([
   "DEV-04::software_design",
   "DEV-04::dev_automated_tests",
   "DEV-06::dev_automated_tests",
-  "DEV-06::javascript",
+  "DEV-06::frontend_logic",
   "DEV-06::technical_communication",
   "DEV-07::dev_automated_tests",
   "DEV-07::data_persistence",
@@ -117,8 +117,8 @@ const BLIND = {
     "security checks done outside the project, and whether the rules hold in every set-up",
   build_dependencies:
     "whether the build ran cleanly in the set-ups of other users",
-  javascript:
-    "knowledge of the language beyond what this project happens to need",
+  frontend_logic:
+    "knowledge of browser-side development beyond what this project happens to need",
   design_user_interface:
     "whether the result was tested with the people who use it",
   internationalisation:
@@ -145,7 +145,7 @@ const NARRATIVE = {
     "{a} changes deal with who may see or do what, for example a check before data is shown, and {b} of them add a check that did not exist before.",
   build_dependencies:
     "{a} changes are in build and configuration files, and {b} of them update a library or a setting that several parts depend on.",
-  javascript:
+  frontend_logic:
     "{a} of the changes are in the browser part of the software, spread over {b} different screens.",
   design_user_interface:
     "{a} changes are on the screens themselves, {b} of them on forms that teachers fill in.",

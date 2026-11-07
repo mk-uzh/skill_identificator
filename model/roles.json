@@ -14,7 +14,7 @@
         "software_design",
         "integrate_components",
         "design_user_interface",
-        "javascript",
+        "frontend_logic",
         "technical_communication"
       ],
       "essential_not_measured": [
@@ -42,7 +42,7 @@
       "label": "ICT application developer",
       "essential_measured": [
         "design_user_interface",
-        "javascript",
+        "frontend_logic",
         "software_design",
         "debug_software",
         "integrate_components"

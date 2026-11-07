@@ -2,7 +2,7 @@
   "taxonomy_version": "3.0",
   "organization_id": "demo-project",
   "computed_at": "2026-10-25T00:00:00.000Z",
-  "config_hash": "304b5ac84ffd2244",
+  "config_hash": "803509d16867d0e6",
   "generated_by": "tools/make-demo-assessments.mjs",
   "data_status": "PLACEHOLDER - generated demo content, not pipeline output",
   "assessments": [
@@ -211,39 +211,27 @@
       }
     },
     {
-      "id": "assess-DEV-01-javascript",
+      "id": "assess-DEV-01-frontend_logic",
       "developer_id": "DEV-01",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "l3",
-      "confidence": 0.74,
-      "rationale": "30 of the changes are in the browser part of the software, spread over 18 different screens.",
+      "confidence": 0.81,
+      "rationale": "12 of the changes are in the browser part of the software, spread over 4 different screens.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "refactor: the course tools, pull the repeated part into one place",
-          "timestamp": "2026-08-14T08:05:10.654Z",
-          "url": "https://example.org/demo/commit/dev-01-javascript-1"
+          "title": "fix: the course tools, stop the error when a marking scheme is attached",
+          "timestamp": "2026-06-30T13:48:51.849Z",
+          "url": "https://example.org/demo/commit/dev-01-frontend_logic-1"
         },
         {
           "kind": "pull_request",
           "title": "the course tools: rework after review",
-          "timestamp": "2025-08-20T20:07:10.423Z",
-          "url": "https://example.org/demo/pull_request/dev-01-javascript-2"
-        },
-        {
-          "kind": "review",
-          "title": "Review of somebody else's change in the course tools",
-          "timestamp": "2025-11-10T20:40:41.996Z",
-          "url": "https://example.org/demo/review/dev-01-javascript-3"
-        },
-        {
-          "kind": "issue",
-          "title": "Request: make the course tools usable with a screen reader",
-          "timestamp": "2026-09-05T17:56:57.927Z",
-          "url": "https://example.org/demo/issue/dev-01-javascript-4"
+          "timestamp": "2026-05-12T14:44:00.042Z",
+          "url": "https://example.org/demo/pull_request/dev-01-frontend_logic-2"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
@@ -589,21 +577,21 @@
       }
     },
     {
-      "id": "assess-DEV-02-javascript",
+      "id": "assess-DEV-02-frontend_logic",
       "developer_id": "DEV-02",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "not_observable",
-      "confidence": 0.31,
+      "confidence": 0.41,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the import and export of course material that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "Fault report: behaviour in the import and export of course material after an update",
-          "timestamp": "2025-04-04T16:22:11.638Z",
-          "url": "https://example.org/demo/issue/dev-02-javascript-1"
+          "title": "Request: make the import and export of course material usable with a screen reader",
+          "timestamp": "2026-03-24T11:24:18.687Z",
+          "url": "https://example.org/demo/issue/dev-02-frontend_logic-1"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
@@ -979,21 +967,21 @@
       }
     },
     {
-      "id": "assess-DEV-04-javascript",
+      "id": "assess-DEV-04-frontend_logic",
       "developer_id": "DEV-04",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "not_observable",
-      "confidence": 0.43,
+      "confidence": 0.42,
       "rationale": "Nothing in the records of this person speaks to this competence. There is no change, no review and no task discussion in the part that stores course material and marks that touches it. This is a declared blind spot, not a low rating.",
       "evidence": [
         {
           "kind": "issue",
-          "title": "Request: make the part that stores course material and marks usable with a screen reader",
-          "timestamp": "2026-06-02T17:32:35.027Z",
-          "url": "https://example.org/demo/issue/dev-04-javascript-1"
+          "title": "Fault report: behaviour in the part that stores course material and marks after an update",
+          "timestamp": "2025-07-25T09:00:05.641Z",
+          "url": "https://example.org/demo/issue/dev-04-frontend_logic-1"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "Proposed as not observable because the records hold nothing about this competence. This is a declared blind spot, not a low rating.",
       "study": {
         "direction": "lower",
@@ -1351,40 +1339,34 @@
       }
     },
     {
-      "id": "assess-DEV-06-javascript",
+      "id": "assess-DEV-06-frontend_logic",
       "developer_id": "DEV-06",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "l4",
-      "confidence": 0.91,
-      "rationale": "17 of the changes are in the browser part of the software, spread over 12 different screens.",
+      "confidence": 0.92,
+      "rationale": "11 of the changes are in the browser part of the software, spread over 4 different screens.",
       "evidence": [
         {
           "kind": "commit",
-          "title": "refactor: the screens teachers see, pull the repeated part into one place",
-          "timestamp": "2026-03-24T11:44:59.554Z",
-          "url": "https://example.org/demo/commit/dev-06-javascript-1"
+          "title": "fix: the screens teachers see, correct the order in which changes are applied",
+          "timestamp": "2026-03-26T00:43:48.318Z",
+          "url": "https://example.org/demo/commit/dev-06-frontend_logic-1"
         },
         {
           "kind": "pull_request",
           "title": "the screens teachers see: rework after review",
-          "timestamp": "2026-09-08T21:57:47.934Z",
-          "url": "https://example.org/demo/pull_request/dev-06-javascript-2"
-        },
-        {
-          "kind": "review",
-          "title": "Review of somebody else's change in the screens teachers see",
-          "timestamp": "2025-08-27T10:18:25.217Z",
-          "url": "https://example.org/demo/review/dev-06-javascript-3"
+          "timestamp": "2026-07-12T20:25:54.796Z",
+          "url": "https://example.org/demo/pull_request/dev-06-frontend_logic-2"
         },
         {
           "kind": "issue",
-          "title": "Fault report: behaviour in the screens teachers see after an update",
-          "timestamp": "2026-02-09T18:10:58.881Z",
-          "url": "https://example.org/demo/issue/dev-06-javascript-4"
+          "title": "Request: make the screens teachers see usable with a screen reader",
+          "timestamp": "2025-01-26T19:12:41.867Z",
+          "url": "https://example.org/demo/issue/dev-06-frontend_logic-3"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
-      "level_reason": "10 other people later built on this work, and the person read and approved 9 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
+      "level_reason": "3 other people later built on this work, and the person read and approved 2 of their changes. Nothing shows the person setting the approach for the whole area, so the top level, \"Sets the approach for others\", is not supported.",
       "study": {
         "direction": "raise",
         "delta": 2,
@@ -1741,33 +1723,33 @@
       }
     },
     {
-      "id": "assess-DEV-07-javascript",
+      "id": "assess-DEV-07-frontend_logic",
       "developer_id": "DEV-07",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "l3",
-      "confidence": 0.85,
-      "rationale": "19 of the changes are in the browser part of the software, spread over 8 different screens.",
+      "confidence": 0.79,
+      "rationale": "8 of the changes are in the browser part of the software, spread over 4 different screens.",
       "evidence": [
+        {
+          "kind": "commit",
+          "title": "refactor: the quiz tool and the gradebook, pull the repeated part into one place",
+          "timestamp": "2026-05-18T11:30:07.212Z",
+          "url": "https://example.org/demo/commit/dev-07-frontend_logic-1"
+        },
         {
           "kind": "pull_request",
           "title": "the quiz tool and the gradebook: new behaviour behind a setting",
-          "timestamp": "2025-03-08T17:12:33.610Z",
-          "url": "https://example.org/demo/pull_request/dev-07-javascript-1"
+          "timestamp": "2025-06-20T06:21:38.100Z",
+          "url": "https://example.org/demo/pull_request/dev-07-frontend_logic-2"
         },
         {
           "kind": "review",
           "title": "Review of somebody else's change in the quiz tool and the gradebook",
-          "timestamp": "2026-02-26T04:43:27.396Z",
-          "url": "https://example.org/demo/review/dev-07-javascript-2"
-        },
-        {
-          "kind": "issue",
-          "title": "Fault report: behaviour in the quiz tool and the gradebook after an update",
-          "timestamp": "2025-03-23T14:04:29.282Z",
-          "url": "https://example.org/demo/issue/dev-07-javascript-3"
+          "timestamp": "2025-07-30T18:34:45.133Z",
+          "url": "https://example.org/demo/review/dev-07-frontend_logic-3"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "The person chose the approach and the task discussion sets out the reasoning, not only the fix. Nothing shows others building on the work, so the next level, \"Others rely on it\", is not supported.",
       "study": {
         "direction": "raise",
@@ -2131,27 +2113,39 @@
       }
     },
     {
-      "id": "assess-DEV-09-javascript",
+      "id": "assess-DEV-09-frontend_logic",
       "developer_id": "DEV-09",
-      "category_id": "javascript",
+      "category_id": "frontend_logic",
       "level": "l2",
-      "confidence": 0.69,
+      "confidence": 0.61,
       "rationale": "6 of the changes are in the browser part of the software, spread over 4 different screens.",
       "evidence": [
         {
           "kind": "commit",
           "title": "fix: a number of small areas, stop the error when a marking scheme is attached",
-          "timestamp": "2025-11-05T08:38:14.258Z",
-          "url": "https://example.org/demo/commit/dev-09-javascript-1"
+          "timestamp": "2025-03-23T20:54:48.175Z",
+          "url": "https://example.org/demo/commit/dev-09-frontend_logic-1"
         },
         {
           "kind": "pull_request",
           "title": "a number of small areas: rework after review",
-          "timestamp": "2025-08-16T12:15:16.574Z",
-          "url": "https://example.org/demo/pull_request/dev-09-javascript-2"
+          "timestamp": "2026-06-06T14:29:31.613Z",
+          "url": "https://example.org/demo/pull_request/dev-09-frontend_logic-2"
+        },
+        {
+          "kind": "review",
+          "title": "Review of somebody else's change in a number of small areas",
+          "timestamp": "2026-09-02T00:47:24.980Z",
+          "url": "https://example.org/demo/review/dev-09-frontend_logic-3"
+        },
+        {
+          "kind": "issue",
+          "title": "Fault report: behaviour in a number of small areas after an update",
+          "timestamp": "2025-04-14T12:45:01.521Z",
+          "url": "https://example.org/demo/issue/dev-09-frontend_logic-4"
         }
       ],
-      "blind_spots": "knowledge of the language beyond what this project happens to need",
+      "blind_spots": "knowledge of browser-side development beyond what this project happens to need",
       "level_reason": "The person finished ordinary tasks on their own and none of the work was sent back for rework. Nothing shows the cause being explained, so the next level, \"Solves and explains the cause\", is not supported.",
       "study": {
         "direction": "lower",

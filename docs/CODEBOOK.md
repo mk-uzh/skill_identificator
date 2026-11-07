@@ -20,7 +20,7 @@ Derived from open coding of 120 evidence units (`pipeline/data/sakai/silver/samp
 | 4 | `integrate_components` | Backend development | esco-optional | 10 |
 | 5 | `security_permissions` | Backend development | local | 5 |
 | 6 | `build_dependencies` | Backend development | esco-essential, esco-optional | 6 |
-| 7 | `javascript` | Frontend development | esco-optional | 11 |
+| 7 | `frontend_logic` | Frontend development | esco-optional | 11 |
 | 8 | `design_user_interface` | Frontend development | esco-optional | 6 |
 | 9 | `internationalisation` | Frontend development | local | 4 |
 | 10 | `data_persistence` | Data and persistence | esco-optional | 5 |
@@ -77,10 +77,10 @@ No category fitted two units (99 and 105, generic backend logic). They stay as `
 - **ESCO / e-CF.** tools for software configuration management (esco-essential); Apache Maven (esco-optional). e-CF: B.4 Solution Deployment (proposal).
 - **Sample units.** 14, 81, 102, 106, 118
 
-### 7. JavaScript (frontend code) (`javascript`)
+### 7. frontend logic (`frontend_logic`)
 
-- **Definition.** Logic in JavaScript, web components and page templates: sorting, feature detection, error handling in the browser.
-- **Counts as evidence.** JavaScript, Lit web components, JSP or template logic.
+- **Definition.** Logic that runs in the browser: scripts, web components and page templates, for example sorting, feature detection, error handling.
+- **Counts as evidence.** Browser-side scripts, Lit web components, JSP or template logic.
 - **Does not count.** Pure styling (design_user_interface).
 - **ESCO / e-CF.** JavaScript (esco-optional). e-CF: B.1 Application Development (e-CF levels e-1 to e-3).
 - **Sample units.** 3, 24, 43, 104, 110
@@ -89,7 +89,7 @@ No category fitted two units (99 and 105, generic backend logic). They stay as `
 
 - **Definition.** How the interface looks and behaves: styling, visual markers, defaults for display, accessibility, usability suggestions.
 - **Counts as evidence.** CSS and SCSS, visual markers, display defaults, usability remarks.
-- **Does not count.** Script logic (javascript).
+- **Does not count.** Script logic (frontend_logic).
 - **ESCO / e-CF.** design user interface (esco-optional). e-CF: none identified.
 - **Sample units.** 19, 45, 56, 63, 78
 

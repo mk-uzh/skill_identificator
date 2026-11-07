@@ -35,7 +35,7 @@
        "integrate_components",
        "security_permissions",
        "build_dependencies",
-       "javascript",
+       "frontend_logic",
        "design_user_interface",
        "internationalisation",
        "data_persistence",
