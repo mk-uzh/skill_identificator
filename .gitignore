@@ -41,3 +41,7 @@ skills-lock.json
 Claude outputs/
 .venv/
 venv/
+
+# archived test material, never commit
+study-data/_archive_test_sessions/
+study-data/_archive_demo/

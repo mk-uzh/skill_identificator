@@ -1,0 +1,90 @@
+{
+  "project": "sakai",
+  "computed_at": "2026-11-07T17:58:11+00:00",
+  "people": [
+    {
+      "id": "DEV-01",
+      "label": "DEV-01",
+      "role": "428 changes · 436 reviews of other people's work",
+      "tenure": "active January 2025 to October 2026",
+      "profile": "Most changes are in the areas Assignments, Tests & Quizzes (Samigo) and Gradebook.",
+      "evidence": [
+        "428 changes, the first one in January 2025, the last one in October 2026",
+        "Reviewed 436 pull requests by other people",
+        "412 of the changes are linked to a task in the tracker",
+        "21 of 511 own pull requests were sent back for rework at least once",
+        "Changes touch 65 different areas"
+      ]
+    },
+    {
+      "id": "DEV-02",
+      "label": "DEV-02",
+      "role": "186 changes · 304 reviews of other people's work",
+      "tenure": "active January 2025 to August 2026",
+      "profile": "Most changes are in the areas Tests & Quizzes (Samigo), Microsoft Integration and Gradebook.",
+      "evidence": [
+        "186 changes, the first one in January 2025, the last one in August 2026",
+        "Reviewed 304 pull requests by other people",
+        "186 of the changes are linked to a task in the tracker",
+        "1 of 297 own pull requests were sent back for rework at least once",
+        "Changes touch 39 different areas"
+      ]
+    },
+    {
+      "id": "DEV-04",
+      "label": "DEV-04",
+      "role": "155 changes · 593 reviews of other people's work",
+      "tenure": "active January 2025 to August 2026",
+      "profile": "Most changes are in the areas Tests & Quizzes (Samigo), Global and Gradebook.",
+      "evidence": [
+        "155 changes, the first one in January 2025, the last one in August 2026",
+        "Reviewed 593 pull requests by other people",
+        "141 of the changes are linked to a task in the tracker",
+        "14 of 305 own pull requests were sent back for rework at least once",
+        "Changes touch 45 different areas"
+      ]
+    },
+    {
+      "id": "DEV-06",
+      "label": "DEV-06",
+      "role": "128 changes · 1 review of other people's work",
+      "tenure": "active January 2025 to October 2026",
+      "profile": "Most changes are in the areas Master, Kernel and Gradebook.",
+      "evidence": [
+        "128 changes, the first one in January 2025, the last one in October 2026",
+        "Reviewed 1 pull request by other people",
+        "91 of the changes are linked to a task in the tracker",
+        "1 of 132 own pull requests were sent back for rework at least once",
+        "Changes touch 12 different areas"
+      ]
+    },
+    {
+      "id": "DEV-07",
+      "label": "DEV-07",
+      "role": "96 changes · 99 reviews of other people's work",
+      "tenure": "active January 2025 to September 2026",
+      "profile": "Most changes are in the areas Conversations, Web Components and Rubrics.",
+      "evidence": [
+        "96 changes, the first one in January 2025, the last one in September 2026",
+        "Reviewed 99 pull requests by other people",
+        "96 of the changes are linked to a task in the tracker",
+        "2 of 99 own pull requests were sent back for rework at least once",
+        "Changes touch 29 different areas"
+      ]
+    },
+    {
+      "id": "DEV-09",
+      "label": "DEV-09",
+      "role": "46 changes · 11 reviews of other people's work",
+      "tenure": "active January 2025 to October 2026",
+      "profile": "Most changes are in the areas Site Info, Gradebook and Assignments.",
+      "evidence": [
+        "46 changes, the first one in January 2025, the last one in October 2026",
+        "Reviewed 11 pull requests by other people",
+        "45 of the changes are linked to a task in the tracker",
+        "2 of 58 own pull requests were sent back for rework at least once",
+        "Changes touch 16 different areas"
+      ]
+    }
+  ]
+}

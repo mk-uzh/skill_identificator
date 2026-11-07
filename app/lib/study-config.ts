@@ -5,11 +5,12 @@
 // any more — they come from model/taxonomy.json through lib/taxonomy.ts, so
 // the UI and the inference cannot drift apart.
 //
-// The people below are demo data standing in for a public open-source project
-// until the real pipeline output is wired in. Identifiers are pseudonyms by
-// design: the study never shows a real name.
+// People are loaded from study-data/people*.json (real counts from the silver
+// tables). Identifiers are pseudonyms by design: the study never shows a real name.
 // ---------------------------------------------------------------------------
 
+import rawPeopleSakai from "../../study-data/people.json";
+import rawPeopleNifi from "../../study-data/people.nifi.json";
 import { getScriptedAssessments, type EvidenceItem } from "./assessments";
 import {
   CATEGORIES,
@@ -25,183 +26,28 @@ export const STUDY_TITLE = "DevSkill – Team Skill Matrix Study";
 
 export { CATEGORIES, CATEGORY_GROUPS, groupedCategories, LEVEL_ANCHORS, LEVEL_ANCHORS_SHORT };
 
-const WINDOW = "active January 2025 to October 2026";
+// People come from study-data/people*.json, written by llm-pipeline/people.py
+// from the silver tables. Nothing about a person is typed in by hand.
+function loadPeople(raw: unknown, label: string): Developer[] {
+  const file = raw as { people?: unknown };
+  if (!Array.isArray(file?.people) || file.people.length === 0) {
+    throw new Error(`[study-config] ${label}.people must be a non-empty array`);
+  }
+  return file.people.map((p: Record<string, unknown>, i: number) => {
+    for (const key of ["id", "label", "role", "tenure", "profile"]) {
+      if (typeof p[key] !== "string" || !(p[key] as string).trim()) {
+        throw new Error(`[study-config] ${label}.people[${i}].${key} must be a non-empty string`);
+      }
+    }
+    if (!Array.isArray(p.evidence) || !p.evidence.every((e) => typeof e === "string")) {
+      throw new Error(`[study-config] ${label}.people[${i}].evidence must be an array of strings`);
+    }
+    return p as unknown as Developer;
+  });
+}
 
-const SAKAI_DEVELOPERS: Developer[] = [
-  {
-    id: "DEV-01",
-    label: "Max",
-    role: "212 changes · 41 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Works across the course tools: announcements, the calendar and the area where teachers put materials. Often picks up faults that cross several of them.",
-    evidence: [
-      "212 changes, the last one in October 2026",
-      "Read and approved the work of 41 other people",
-      "83 of the changes are linked to a task in the tracker",
-      "Nothing in the part that stores data",
-    ],
-  },
-  {
-    id: "DEV-02",
-    label: "Timo",
-    role: "47 changes · 3 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Works almost only on importing and exporting course material. A narrow area, and mostly alone in it.",
-    evidence: [
-      "47 changes, the last one in August 2026",
-      "Read the work of 3 other people",
-      "Nine of their own changes were sent back for rework",
-      "No work on the screens teachers see",
-    ],
-  },
-  {
-    id: "DEV-04",
-    label: "Simon",
-    role: "168 changes · 52 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Builds the part that stores things: how course material and marks are kept, and the steps that move existing data to a new shape.",
-    evidence: [
-      "168 changes, the last one in October 2026",
-      "Wrote 22 of the 29 migration steps in the window",
-      "Read and approved the work of 52 other people",
-      "Rarely touches the browser part",
-    ],
-  },
-  {
-    id: "DEV-06",
-    label: "Lena",
-    role: "94 changes · 11 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Works on the screens teachers see, in particular the forms and whether they can be used with a screen reader.",
-    evidence: [
-      "94 changes, the last one in September 2026",
-      "Carried out the accessibility review of the forms",
-      "Read the work of 11 other people",
-      "No work on the part that stores data",
-    ],
-  },
-  {
-    id: "DEV-07",
-    label: "Jonas",
-    role: "148 changes · 37 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Works almost entirely on two parts of the platform: the tool teachers use to build quizzes, and the gradebook where marks are recorded. Both the screens and the logic behind them.",
-    evidence: [
-      "148 changes, the last one in October 2026",
-      "Read and approved the work of 37 other people",
-      "None of their own changes were sent back for rework",
-      "61 of the changes are linked to a task in the tracker",
-    ],
-  },
-  {
-    id: "DEV-09",
-    label: "Nora",
-    role: "39 changes · 2 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "New in the project. Small fixes spread over many areas, almost always with somebody else's review before they are accepted.",
-    evidence: [
-      "39 changes, the first one in March 2026",
-      "Spread over nine different parts of the software",
-      "14 of their own changes were sent back for rework",
-      "Read the work of 2 other people",
-    ],
-  },
-];
-
-// Same six slots and the same numbers as above, so the study script is
-// identical; only the area the people work in is a NiFi one.
-const NIFI_DEVELOPERS: Developer[] = [
-  {
-    id: "DEV-01",
-    label: "Anna",
-    role: "212 changes · 41 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Works on the engine that runs a data flow: how work is scheduled, how data moves from one step to the next and how failures are handled. Often picks up faults that cross several of these.",
-    evidence: [
-      "212 changes, the last one in October 2026",
-      "Read and approved the work of 41 other people",
-      "83 of the changes are linked to a task in the tracker",
-      "Nothing in the part that stores data",
-    ],
-  },
-  {
-    id: "DEV-02",
-    label: "Luca",
-    role: "47 changes · 3 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Works almost only on importing and exporting flow definitions. A narrow area, and mostly alone in it.",
-    evidence: [
-      "47 changes, the last one in August 2026",
-      "Read the work of 3 other people",
-      "Nine of their own changes were sent back for rework",
-      "No work on the canvas users see",
-    ],
-  },
-  {
-    id: "DEV-04",
-    label: "Elias",
-    role: "168 changes · 52 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Builds the part that stores data while it is in transit and keeps its history, and the steps that move existing stored data to a new shape.",
-    evidence: [
-      "168 changes, the last one in October 2026",
-      "Wrote 22 of the 29 migration steps in the window",
-      "Read and approved the work of 52 other people",
-      "Rarely touches the browser part",
-    ],
-  },
-  {
-    id: "DEV-06",
-    label: "Mira",
-    role: "94 changes · 11 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Works on the canvas where users build flows, in particular the dialogs in which a processor is configured and whether they can be used with the keyboard only.",
-    evidence: [
-      "94 changes, the last one in September 2026",
-      "Carried out the accessibility review of the dialogs",
-      "Read the work of 11 other people",
-      "No work on the part that stores data",
-    ],
-  },
-  {
-    id: "DEV-07",
-    label: "Noah",
-    role: "148 changes · 37 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "Works almost entirely on two parts of the platform: the processors that handle the data, and the shared services they use. Both the screens and the logic behind them.",
-    evidence: [
-      "148 changes, the last one in October 2026",
-      "Read and approved the work of 37 other people",
-      "None of their own changes were sent back for rework",
-      "61 of the changes are linked to a task in the tracker",
-    ],
-  },
-  {
-    id: "DEV-09",
-    label: "Sara",
-    role: "39 changes · 2 reviews of other people's work",
-    tenure: WINDOW,
-    profile:
-      "New in the project. Small fixes spread over many areas, almost always with somebody else's review before they are accepted.",
-    evidence: [
-      "39 changes, the first one in March 2026",
-      "Spread over nine different parts of the software",
-      "14 of their own changes were sent back for rework",
-      "Read the work of 2 other people",
-    ],
-  },
-];
+const SAKAI_DEVELOPERS: Developer[] = loadPeople(rawPeopleSakai, "people.json");
+const NIFI_DEVELOPERS: Developer[] = loadPeople(rawPeopleNifi, "people.nifi.json");
 
 const DEVELOPERS_BY_PROJECT: Record<ProjectId, Developer[]> = {
   sakai: SAKAI_DEVELOPERS,

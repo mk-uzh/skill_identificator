@@ -1,0 +1,90 @@
+{
+  "project": "nifi",
+  "computed_at": "2026-11-07T17:58:11+00:00",
+  "people": [
+    {
+      "id": "DEV-01",
+      "label": "DEV-01",
+      "role": "470 changes · 519 reviews of other people's work",
+      "tenure": "active January 2025 to September 2026",
+      "profile": "Most changes are in the areas Extensions, Core Framework and Flow Versioning.",
+      "evidence": [
+        "470 changes, the first one in January 2025, the last one in September 2026",
+        "Reviewed 519 pull requests by other people",
+        "470 of the changes are linked to a task in the tracker",
+        "92 of 475 own pull requests were sent back for rework at least once",
+        "Changes touch 11 different areas"
+      ]
+    },
+    {
+      "id": "DEV-02",
+      "label": "DEV-02",
+      "role": "307 changes · 940 reviews of other people's work",
+      "tenure": "active January 2025 to September 2026",
+      "profile": "Most changes are in the areas Core Framework, Extensions and Tools and Build.",
+      "evidence": [
+        "307 changes, the first one in January 2025, the last one in September 2026",
+        "Reviewed 940 pull requests by other people",
+        "307 of the changes are linked to a task in the tracker",
+        "16 of 311 own pull requests were sent back for rework at least once",
+        "Changes touch 12 different areas"
+      ]
+    },
+    {
+      "id": "DEV-04",
+      "label": "DEV-04",
+      "role": "70 changes · 94 reviews of other people's work",
+      "tenure": "active January 2025 to September 2026",
+      "profile": "Most changes are in the areas Core UI and Core Framework.",
+      "evidence": [
+        "70 changes, the first one in January 2025, the last one in September 2026",
+        "Reviewed 94 pull requests by other people",
+        "70 of the changes are linked to a task in the tracker",
+        "27 of 86 own pull requests were sent back for rework at least once",
+        "Changes touch 2 different areas"
+      ]
+    },
+    {
+      "id": "DEV-06",
+      "label": "DEV-06",
+      "role": "66 changes · 62 reviews of other people's work",
+      "tenure": "active January 2025 to September 2026",
+      "profile": "Most changes are in the areas Core Framework, Extensions and Core UI.",
+      "evidence": [
+        "66 changes, the first one in January 2025, the last one in September 2026",
+        "Reviewed 62 pull requests by other people",
+        "65 of the changes are linked to a task in the tracker",
+        "24 of 121 own pull requests were sent back for rework at least once",
+        "Changes touch 4 different areas"
+      ]
+    },
+    {
+      "id": "DEV-07",
+      "label": "DEV-07",
+      "role": "40 changes · 27 reviews of other people's work",
+      "tenure": "active January 2025 to September 2026",
+      "profile": "Most changes are in the area Extensions.",
+      "evidence": [
+        "40 changes, the first one in January 2025, the last one in September 2026",
+        "Reviewed 27 pull requests by other people",
+        "40 of the changes are linked to a task in the tracker",
+        "2 of 41 own pull requests were sent back for rework at least once",
+        "Changes touch 1 different areas"
+      ]
+    },
+    {
+      "id": "DEV-09",
+      "label": "DEV-09",
+      "role": "35 changes · 31 reviews of other people's work",
+      "tenure": "active January 2025 to August 2026",
+      "profile": "Most changes are in the areas Core UI and NiFi Registry.",
+      "evidence": [
+        "35 changes, the first one in January 2025, the last one in August 2026",
+        "Reviewed 31 pull requests by other people",
+        "35 of the changes are linked to a task in the tracker",
+        "14 of 35 own pull requests were sent back for rework at least once",
+        "Changes touch 2 different areas"
+      ]
+    }
+  ]
+}
