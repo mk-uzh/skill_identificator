@@ -4,6 +4,9 @@ import { getAssessment, type EvidenceItem } from "@/lib/assessments";
 import { useProject } from "@/lib/project-context";
 import { CATEGORIES } from "@/lib/taxonomy";
 
+/** Examples shown at once; the rest sits behind "Show more". */
+const VISIBLE_EXAMPLES = 3;
+
 const KIND_LABEL: Record<string, string> = {
   commit: "Commit",
   pull_request: "Proposal",
@@ -39,30 +42,52 @@ export function EvidencePanel({
     return <p className="small muted">No records for this competence.</p>;
   }
 
+  const items = assessment.evidence;
+  const first = items.slice(0, VISIBLE_EXAMPLES);
+  const rest = items.slice(VISIBLE_EXAMPLES);
+  const renderItem = (item: EvidenceItem, i: number) => (
+    <li key={item.url + ":" + i}>
+      <span className={"tag tag--" + item.kind}>{KIND_LABEL[item.kind] ?? item.kind}</span>
+      <span className="ev__main">
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noreferrer"
+          onClick={() => onEvidenceOpen?.(item.url)}
+        >
+          {item.title}
+        </a>
+        {item.note && <span className="ev__note">{item.note}</span>}
+      </span>
+      {item.timestamp ? (
+        <time dateTime={item.timestamp}>
+          {new Date(item.timestamp).toLocaleDateString("en-GB", {
+            month: "short",
+            year: "numeric",
+          })}
+        </time>
+      ) : (
+        <span />
+      )}
+    </li>
+  );
+
   return (
     <div>
       <p className="sum">{assessment.rationale}</p>
-      <ul className="ev">
-        {assessment.evidence.map((item: EvidenceItem) => (
-          <li key={item.url}>
-            <span className={"tag tag--" + item.kind}>{KIND_LABEL[item.kind] ?? item.kind}</span>
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => onEvidenceOpen?.(item.url)}
-            >
-              {item.title}
-            </a>
-            <time dateTime={item.timestamp}>
-              {new Date(item.timestamp).toLocaleDateString("en-GB", {
-                month: "short",
-                year: "numeric",
-              })}
-            </time>
-          </li>
-        ))}
-      </ul>
+      {items.length > 0 && (
+        <>
+          <ul className="ev">{first.map(renderItem)}</ul>
+          {rest.length > 0 && (
+            <details className="ev-more">
+              <summary>
+                Show {rest.length} more {rest.length === 1 ? "example" : "examples"}
+              </summary>
+              <ul className="ev">{rest.map((item, i) => renderItem(item, i + VISIBLE_EXAMPLES))}</ul>
+            </details>
+          )}
+        </>
+      )}
       {assessment.blind_spots && (
         <p className="blind">Not visible here: {assessment.blind_spots}.</p>
       )}

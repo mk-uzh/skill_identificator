@@ -87,7 +87,10 @@ export type Matrix = Record<string, Record<string, SkillLevel | null>>;
 export interface SuggestionEvidence {
   kind: "commit" | "pull_request" | "review" | "issue";
   title: string;
-  timestamp: string;
+  /** Missing when the source has no date; the date is then not shown. */
+  timestamp?: string;
+  /** One short sentence on what this record shows (one per coded unit). */
+  note?: string;
   url: string;
 }
 

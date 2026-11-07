@@ -1858,6 +1858,12 @@ kbd { font: inherit; font-size: 12px; border: 1px solid var(--line); border-bott
 .ev a { color: var(--ink); text-decoration: none; border-bottom: 1px solid #c9cec2; }
 .ev a:hover { border-color: var(--ink); }
 .ev time { color: var(--ink-3); font-size: 14px; white-space: nowrap; }
+.ev__main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ev__note { color: var(--ink-2); font-size: 15px; line-height: 1.45; }
+.ev-more { margin-top: 2px; }
+.ev-more > summary { cursor: pointer; padding: 12px 0; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 14px; font-weight: 600; }
+.ev-more > summary:hover { color: var(--ink); }
+.ev-more[open] > summary { margin-bottom: 0; }
 .blind { margin: 14px 0 0; font-size: 14px; color: var(--ink-3); }
 
 /* ---------- level tiles ---------- */

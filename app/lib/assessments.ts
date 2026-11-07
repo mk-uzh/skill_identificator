@@ -19,7 +19,10 @@ export type EvidenceKind = (typeof EVIDENCE_KINDS)[number];
 export interface EvidenceItem {
   kind: EvidenceKind;
   title: string;
-  timestamp: string;
+  /** Optional: some records have no date. The UI then shows none. */
+  timestamp?: string;
+  /** Optional: one short sentence on what this record shows. */
+  note?: string;
   url: string;
 }
 
@@ -95,9 +98,18 @@ function validateEvidenceItem(raw: unknown, label: string): EvidenceItem {
     );
   }
   assertString(raw.title, `${label}.title`);
-  assertString(raw.timestamp, `${label}.timestamp`);
-  if (Number.isNaN(Date.parse(raw.timestamp))) {
-    throw new AssessmentsSchemaError(`${label}.timestamp must be a valid ISO timestamp`);
+  let timestamp: string | undefined;
+  if (raw.timestamp !== undefined) {
+    assertString(raw.timestamp, `${label}.timestamp`);
+    if (Number.isNaN(Date.parse(raw.timestamp))) {
+      throw new AssessmentsSchemaError(`${label}.timestamp must be a valid ISO timestamp`);
+    }
+    timestamp = raw.timestamp;
+  }
+  let note: string | undefined;
+  if (raw.note !== undefined) {
+    assertString(raw.note, `${label}.note`);
+    note = raw.note;
   }
   assertString(raw.url, `${label}.url`);
   try {
@@ -106,12 +118,10 @@ function validateEvidenceItem(raw: unknown, label: string): EvidenceItem {
   } catch {
     throw new AssessmentsSchemaError(`${label}.url must be an absolute URL`);
   }
-  return {
-    kind: raw.kind,
-    title: raw.title,
-    timestamp: raw.timestamp,
-    url: raw.url,
-  };
+  const item: EvidenceItem = { kind: raw.kind, title: raw.title, url: raw.url };
+  if (timestamp !== undefined) item.timestamp = timestamp;
+  if (note !== undefined) item.note = note;
+  return item;
 }
 
 function validateStudy(raw: unknown, label: string): StudyScriptMeta {
@@ -156,7 +166,8 @@ function validateAssessment(raw: unknown, index: number): Assessment {
     throw new AssessmentsSchemaError(`${label}.confidence must be between 0.0 and 1.0`);
   }
   assertString(raw.rationale, `${label}.rationale`);
-  if (!Array.isArray(raw.evidence) || raw.evidence.length === 0) {
+  // "not observable" cells have no records to show; every other level needs at least one.
+  if (!Array.isArray(raw.evidence) || (raw.evidence.length === 0 && raw.level !== "not_observable")) {
     throw new AssessmentsSchemaError(`${label}.evidence must be a non-empty array`);
   }
   const evidence = raw.evidence.map((item, i) =>
