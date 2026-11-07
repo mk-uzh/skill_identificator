@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import difflib
 import json
 import random
 import re
@@ -101,22 +102,77 @@ def call_anthropic(
     return parse_json_reply("".join(parts)), usage
 
 
-def keep_verified(obs: list, text: str, competences: set[str] | None = None) -> tuple[list, int]:
-    """Keep observations with a real person-section quote and neutral what_records_show."""
+# Reasons for which one more try with feedback is worth the cost.
+RETRYABLE_CODES = {
+    "quote_not_found",
+    "no_quote",
+    "what_empty",
+    "what_has_level_words",
+    "reason_empty",
+    "level_invalid",
+}
+
+
+def repair_quote(quote: str, allowed: str) -> str | None:
+    """If `quote` is a near-miss copy of the person's text, return the exact stretch from it.
+
+    Typical near-misses: changed punctuation or quotes, a dropped word, markup characters.
+    The stored quote is always a real substring of the person's own sections.
+    """
+    if len(quote) < 12 or not allowed:
+        return None
+    sm = difflib.SequenceMatcher(None, allowed, quote, autojunk=False)
+    blocks = [b for b in sm.get_matching_blocks() if b.size > 0]
+    if not blocks:
+        return None
+    if sum(b.size for b in blocks) < 0.9 * len(quote):
+        return None
+    first, last = blocks[0], blocks[-1]
+    start = max(0, first.a - first.b)
+    end = min(len(allowed), last.a + last.size + (len(quote) - (last.b + last.size)))
+    if end - start > 1.25 * len(quote) + 10:
+        return None
+    repaired = allowed[start:end].strip()
+    return repaired[:200] if len(repaired) >= 12 else None
+
+
+def keep_verified(
+    obs: list, text: str, competences: set[str] | None = None
+) -> tuple[list, list[dict]]:
+    """Keep observations with a real person-section quote and neutral what_records_show.
+
+    Returns (kept, dropped). Every dropped observation is described with a reason code,
+    so nothing disappears without a trace. A near-miss quote is repaired to the exact text.
+    """
     allowed = norm(person_text(text))
-    kept = []
-    dropped = 0
+    kept: list[dict] = []
+    dropped: list[dict] = []
+
+    def drop(o, code: str) -> None:
+        d = o if isinstance(o, dict) else {}
+        dropped.append(
+            {
+                "category": d.get("category"),
+                "level": d.get("level"),
+                "code": code,
+                "quote": norm(str(d.get("quote") or ""))[:120],
+            }
+        )
+
     for o in obs:
         if not isinstance(o, dict):
-            dropped += 1
+            drop(o, "not_dict")
             continue
         cat = o.get("category")
-        if not cat or cat == "other" or (competences is not None and cat not in competences):
-            dropped += 1
+        if cat == "other":
+            drop(o, "category_other")
+            continue
+        if not cat or (competences is not None and cat not in competences):
+            drop(o, "category_invalid")
             continue
         level = str(o.get("level") or "").strip().lower()
         if level not in VALID_LEVELS:
-            dropped += 1
+            drop(o, "level_invalid")
             continue
         quote = norm(o.get("quote", ""))
         if len(quote) > 200:
@@ -127,17 +183,29 @@ def keep_verified(obs: list, text: str, competences: set[str] | None = None) -> 
         reason = norm(o.get("reason") or "")
         if len(reason) > 300:
             reason = reason[:300]
-        # Fallback if older replies only had reason: keep quote-based neutral stub empty
-        if not what or has_level_words(what):
-            dropped += 1
+        if not what:
+            drop(o, "what_empty")
+            continue
+        if has_level_words(what):
+            drop(o, "what_has_level_words")
             continue
         if not reason:
-            dropped += 1
+            drop(o, "reason_empty")
             continue
+        repaired = False
+        if not quote:
+            drop(o, "no_quote")
+            continue
+        if quote not in allowed:
+            fixed = repair_quote(quote, allowed)
+            if fixed is None:
+                drop(o, "quote_not_found")
+                continue
+            quote, repaired = fixed, True
         conf = str(o.get("confidence") or "M").strip().upper()
         if conf not in VALID_CONF:
             conf = "M"
-        o = {
+        entry = {
             **o,
             "category": cat,
             "level": level,
@@ -146,11 +214,39 @@ def keep_verified(obs: list, text: str, competences: set[str] | None = None) -> 
             "reason": reason,
             "confidence": conf,  # diagnostic only; scoring ignores this
         }
-        if quote and quote in allowed:
-            kept.append(o)
-        else:
-            dropped += 1
+        if repaired:
+            entry["quote_repaired"] = True
+        kept.append(entry)
     return kept[:2], dropped
+
+
+def retry_message(unit_message: str, fixable: list[dict]) -> str:
+    """Ask once more, naming exactly what the code check rejected."""
+    lines = []
+    for d in fixable:
+        cat = d.get("category") or "an observation"
+        code = d["code"]
+        if code in ("quote_not_found", "no_quote"):
+            lines.append(
+                f"- {cat}: the quote was not found word for word in the person's own sections. "
+                "Copy one short stretch (under 200 characters) exactly as it appears, character "
+                "for character. No ellipses, no changed punctuation."
+            )
+        elif code == "what_has_level_words":
+            lines.append(
+                f"- {cat}: what_records_show must only describe what the records show, without "
+                "judging words such as routine, mechanical, simple, or level names."
+            )
+        elif code == "level_invalid":
+            lines.append(f"- {cat}: level must be one of l1, l2, l3, l4.")
+        else:
+            lines.append(f"- {cat}: what_records_show and reason must both be filled in.")
+    return (
+        unit_message
+        + "\n\nYour previous reply was partly rejected by a code check:\n"
+        + "\n".join(lines)
+        + "\nReply again with the complete JSON object in the same format, correcting only these points."
+    )
 
 
 def resolve_judgeable(raw: str | None, kept: list, role: str, has_review: str) -> str:
@@ -335,6 +431,9 @@ def main() -> None:
     skipped_empty = 0
     n_new = 0
     n_dropped_quotes = 0
+    n_retried = 0
+    n_recovered = 0
+    dropped_by_code: Counter = Counter()
     usage_totals = {
         "input_tokens": 0,
         "output_tokens": 0,
@@ -398,7 +497,39 @@ def main() -> None:
                 usage_totals[k] += usage.get(k, 0) or 0
 
             kept, dropped = keep_verified(res.get("observations") or [], text, competences)
-            n_dropped_quotes += dropped
+            retried = False
+            fixable = [d for d in dropped if d["code"] in RETRYABLE_CODES]
+            if fixable and len(kept) < 2:
+                retried = True
+                n_retried += 1
+                try:
+                    res2, usage2 = call_anthropic(
+                        model,
+                        instructions,
+                        retry_message(unit_message, fixable),
+                        effort=str(cfg.get("effort", "medium")),
+                    )
+                    for k in usage_totals:
+                        usage_totals[k] += usage2.get(k, 0) or 0
+                    kept2, _ = keep_verified(res2.get("observations") or [], text, competences)
+                    have = {o["category"] for o in kept}
+                    for o in kept2:
+                        if o["category"] not in have and len(kept) < 2:
+                            o["recovered_on_retry"] = True
+                            kept.append(o)
+                            have.add(o["category"])
+                            n_recovered += 1
+                except Exception as e:
+                    print(f"{eid} retry failed: {e}", file=sys.stderr)
+            have_cats = {o["category"] for o in kept}
+            dropped = [
+                d
+                for d in dropped
+                if d["code"] != "category_other" and d.get("category") not in have_cats
+            ]
+            for d in dropped:
+                dropped_by_code[d["code"]] += 1
+            n_dropped_quotes += sum(1 for d in dropped if d["code"] in ("quote_not_found", "no_quote"))
             judgeable = resolve_judgeable(
                 res.get("judgeable"), kept, unit["role"], unit["has_review"]
             )
@@ -410,7 +541,11 @@ def main() -> None:
                 "has_review": unit["has_review"],
                 "judgeable": judgeable,
                 "observations": kept,
-                "dropped_unverified_quotes": dropped,
+                "dropped_unverified_quotes": sum(
+                    1 for d in dropped if d["code"] in ("quote_not_found", "no_quote")
+                ),
+                "dropped_observations": dropped,
+                "retried": retried,
                 "model": model,
                 "prompt_hash": prompt_hash,
                 "usage": usage,
@@ -430,6 +565,9 @@ def main() -> None:
         "skipped_empty": skipped_empty,
         "skipped_privacy": skipped_privacy,
         "unverified_quotes_dropped": n_dropped_quotes,
+        "observations_dropped_by_reason": dict(dropped_by_code),
+        "units_retried": n_retried,
+        "observations_recovered_on_retry": n_recovered,
         "usage": usage_totals,
         "estimated_cost_usd": cost,
         "pricing": pricing,

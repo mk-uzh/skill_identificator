@@ -100,7 +100,36 @@ def item(kind: str, title: str, ts: str | None, url: str, note: str | None = Non
     return out
 
 
-def evidence_for_unit(meta: dict, proj: dict, ix: dict) -> list[dict]:
+_HINT_STOP = {
+    "update", "updated", "change", "changed", "changes", "added", "adds", "this", "that",
+    "with", "from", "into", "were", "when", "which", "also", "only", "more", "other",
+    "their", "person", "records", "show", "shows", "fixed", "files", "file", "code",
+}
+
+
+def _tokens(text: str) -> set[str]:
+    return set(re.findall(r"[a-z][a-z0-9_]{3,}", (text or "").lower())) - _HINT_STOP
+
+
+def _pick_by_hint(rows: list[dict], text_of, hint: str, when_of) -> dict | None:
+    """The row whose title shares most words with the hint; newest wins a tie.
+
+    One issue can hold several changes (two commits, two pull requests). The unit's
+    own sentence says which change it is about, so the link must follow that sentence.
+    """
+    ordered = sorted(rows, key=lambda r: when_of(r) or "", reverse=True)
+    if not ordered:
+        return None
+    h = _tokens(hint)
+    if not h:
+        return ordered[0]
+    return max(ordered, key=lambda r: len(_tokens(text_of(r)) & h))
+
+
+_PR_IN_SUBJECT = re.compile(r"\(#(\d+)\)\s*$")
+
+
+def evidence_for_unit(meta: dict, proj: dict, ix: dict, hint: str = "") -> list[dict]:
     """Build commit/PR/review/issue links with titles from silver."""
     owner, repo = proj["github_owner"], proj["github_repo"]
     jira = proj["jira_base"].rstrip("/")
@@ -108,13 +137,13 @@ def evidence_for_unit(meta: dict, proj: dict, ix: dict) -> list[dict]:
     items: list[dict] = []
 
     if role == "author":
-        commits = sorted(
+        c = _pick_by_hint(
             ix["commit"].get((dev, issue), []),
-            key=lambda c: c.get("authored_at") or "",
-            reverse=True,
+            lambda x: x.get("subject") or "",
+            hint,
+            lambda x: x.get("authored_at"),
         )
-        if commits:
-            c = commits[0]
+        if c:
             items.append(
                 item(
                     "commit",
@@ -123,13 +152,18 @@ def evidence_for_unit(meta: dict, proj: dict, ix: dict) -> list[dict]:
                     f"https://github.com/{owner}/{repo}/commit/{c['sha']}",
                 )
             )
-        prs = sorted(
-            ix["pr"].get(issue, []),
-            key=lambda p: p.get("created_at") or "",
-            reverse=True,
-        )
-        if prs:
-            p = prs[0]
+        prs = ix["pr"].get(issue, [])
+        p = None
+        if c:
+            # The commit subject usually ends in "(#1234)": that is its own pull request.
+            m = _PR_IN_SUBJECT.search(c.get("subject") or "")
+            if m:
+                p = next((x for x in prs if str(x.get("pr_number")) == m.group(1)), None)
+        if p is None:
+            p = _pick_by_hint(
+                prs, lambda x: x.get("title") or "", hint, lambda x: x.get("created_at")
+            )
+        if p:
             items.append(
                 item(
                     "pull_request",
@@ -139,13 +173,16 @@ def evidence_for_unit(meta: dict, proj: dict, ix: dict) -> list[dict]:
                 )
             )
     else:
-        reviews = sorted(
+        pr_title = {
+            str(x.get("pr_number")): x.get("title") or "" for x in ix["pr"].get(issue, [])
+        }
+        r = _pick_by_hint(
             ix["review"].get((dev, issue), []),
-            key=lambda r: r.get("submitted_at") or "",
-            reverse=True,
+            lambda x: pr_title.get(str(x.get("pr_number")), ""),
+            hint,
+            lambda x: x.get("submitted_at"),
         )
-        if reviews:
-            r = reviews[0]
+        if r:
             items.append(
                 item(
                     "review",
@@ -187,10 +224,10 @@ _KIND_RANK = {"commit": 0, "review": 1, "pull_request": 2, "issue": 3}
 
 
 def evidence_item_for_unit(
-    meta: dict, proj: dict, ix: dict, what_records_show: str
+    meta: dict, proj: dict, ix: dict, what_records_show: str, quote: str = ""
 ) -> dict | None:
     """One evidence row per unit: primary link + short note from what_records_show."""
-    links = evidence_for_unit(meta, proj, ix)
+    links = evidence_for_unit(meta, proj, ix, hint=f"{what_records_show} {quote}")
     if not links:
         return None
     primary = min(links, key=lambda e: _KIND_RANK.get(e["kind"], 9))
@@ -350,6 +387,8 @@ def fallback_texts(cat: str, cell: dict) -> tuple[str, str, str]:
     parts = []
     for o in notes:
         w = (o.get("what_records_show") or "").strip()
+        # The unit sentences say "The reviewer ..." for the person's own review comment.
+        w = re.sub(r"^The reviewer\b", "The person, as reviewer,", w)
         if w and not has_level_words(w):
             parts.append(w)
     if not parts and notes:
@@ -358,14 +397,25 @@ def fallback_texts(cat: str, cell: dict) -> tuple[str, str, str]:
             parts.append(f"The records include: «{q}»")
     n = int(cell.get("n_units") or len(all_obs) or 0)
     if parts:
-        body = " ".join(parts)
+        shown = parts[:3]
+        body = " ".join(shown)
         rationale = f"Across {n} units, {body[0].lower() + body[1:]}" if n > 1 else body
+        if n > len(shown):
+            rationale += f" {n - len(shown)} more units are recorded for this competence."
     else:
         rationale = (
             f"Of the units linked to this competence, {n} carry a coded observation."
         )
 
+    _DATA_REMARK = re.compile(
+        r"task text|ticket text|is missing|clipped|cut off|judgement is limited|unit is|"
+        r"context is incomplete",
+        re.I,
+    )
+
     def scrub(r: str) -> str:
+        # Remarks about the data itself are for us, not for the reader.
+        r = " ".join(x for x in re.split(r"(?<=[.!?])\s+", r) if not _DATA_REMARK.search(x))
         r = re.sub(r"\bl[1-5][a-c]?\b", "", r, flags=re.I)
         r = re.sub(r"\bnot\s*l[1-5]\b:?", "", r, flags=re.I)
         r = re.sub(r"\b(clipped|borderline|thin l4)\b", "", r, flags=re.I)
@@ -464,6 +514,7 @@ def build_profiles(
                     proj,
                     ix,
                     o.get("what_records_show") or "",
+                    o.get("quote") or "",
                 )
                 if row:
                     evid.append(row)
@@ -533,22 +584,37 @@ def call_polish(model: str, instructions: str, user: str, effort: str) -> tuple[
     return parse_json_reply("".join(parts)), usage
 
 
-def polish_ok(rationale: str, level_reason: str) -> bool:
+def polish_reject_reason(rationale: str, level_reason: str) -> str | None:
+    """None if both texts are acceptable, else a plain description of what is wrong."""
     if not rationale.strip() or not level_reason.strip():
-        return False
+        return "rationale and level_reason must both be filled in"
     if has_level_words(rationale):
-        return False
+        return (
+            "the rationale contains judging or level words (for example routine, mechanical, "
+            "simple, not observable); describe only what the records show"
+        )
     if _BULLETS.search(rationale) or _BULLETS.search(level_reason):
-        return False
+        return "no bullet points or numbered lists; write flowing sentences"
     if has_internal_jargon(level_reason):
-        return False
-    if len(rationale) > 1200 or len(level_reason) > 900:
-        return False
-    # level_reason should be a short paragraph (roughly 2–3 sentences)
-    sentences = [s for s in re.split(r"[.!?]+", level_reason) if s.strip()]
+        return (
+            "the level_reason contains internal codes or words (l1 to l5, Not l3, borderline, "
+            "clipped); use the level titles instead"
+        )
+    if len(rationale) > 1200:
+        return (
+            f"the rationale has {len(rationale)} characters; keep it under about 110 words "
+            "and group similar units with a count"
+        )
+    if len(level_reason) > 900:
+        return f"the level_reason has {len(level_reason)} characters; keep it to 2 or 3 short sentences"
+    sentences = [x for x in re.split(r"[.!?]+", level_reason) if x.strip()]
     if len(sentences) < 2 or len(sentences) > 4:
-        return False
-    return True
+        return f"the level_reason has {len(sentences)} sentences; it needs 2 or 3"
+    return None
+
+
+def polish_ok(rationale: str, level_reason: str) -> bool:
+    return polish_reject_reason(rationale, level_reason) is None
 
 
 def cell_pack(profile: dict) -> dict:
@@ -627,18 +693,27 @@ def polish_texts(profiles: list[dict], cfg: dict) -> dict:
         )
 
         got = None
-        for attempt in range(2):
+        last_reject = ""
+        for attempt in range(3):
             try:
-                res, usage = call_polish(model, instructions, user, effort)
+                msg = user
+                if last_reject:
+                    msg += (
+                        f"\n\nYour previous answer was rejected by a code check: {last_reject}. "
+                        "Write both texts again and fix exactly this."
+                    )
+                res, usage = call_polish(model, instructions, msg, effort)
                 for k in usage_totals:
                     usage_totals[k] += usage.get(k, 0) or 0
                 rat = norm(res.get("rationale") or "")
                 lr = norm(res.get("level_reason") or "")
-                if polish_ok(rat, lr):
+                last_reject = polish_reject_reason(rat, lr) or ""
+                if not last_reject:
                     got = {"rationale": rat, "level_reason": lr}
                     break
                 print(
-                    f"polish reject {p['developer_id']}/{p['category_id']} attempt {attempt+1}",
+                    f"polish reject {p['developer_id']}/{p['category_id']} "
+                    f"attempt {attempt+1}: {last_reject}",
                     file=sys.stderr,
                 )
             except Exception as e:
@@ -656,6 +731,7 @@ def polish_texts(profiles: list[dict], cfg: dict) -> dict:
             n_polished += 1
         else:
             p["texts_source"] = "fallback"
+            p["texts_reject_reason"] = last_reject or "call failed"
             n_fallback += 1
         p.pop("_cell_obs", None)
 
