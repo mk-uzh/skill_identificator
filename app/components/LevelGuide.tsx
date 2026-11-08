@@ -80,24 +80,24 @@ export function ConfidenceGuide({ open = false, bare = false }: { open?: boolean
               <td className="nowrap">
                 <span className="dot dot--hi" /> 80–100 %
               </td>
-              <td>Several records point the same way, and none point against it</td>
+              <td>Most of the person&apos;s own changes were looked at by a reviewer, and the records were clear enough to judge</td>
             </tr>
             <tr>
               <td className="nowrap">
                 <span className="dot dot--mid" /> 60–79 %
               </td>
-              <td>The records point one way, but there are few of them</td>
+              <td>Part of the work was reviewed, or some of the records were hard to judge</td>
             </tr>
             <tr>
               <td className="nowrap">
                 <span className="dot dot--low" /> under 60 %
               </td>
-              <td>Thin or conflicting evidence. Read it as a question, not a suggestion</td>
+              <td>Little was reviewed, or most records were hard to judge. Read it as a question, not a suggestion</td>
             </tr>
           </tbody>
         </table>
         <p className="small muted" style={{ marginBottom: 0 }}>
-          The figure says how certain the system is about its own reading of the records. It says
+          The figure says how well the records support the reading, not how much work there is. It says
           nothing about how good the person is.
         </p>
       </>

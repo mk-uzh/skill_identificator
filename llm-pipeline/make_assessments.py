@@ -4,13 +4,18 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from datetime import datetime, timezone
+
+from collections import defaultdict
 
 from common import (
     candidate_path,
     load_config,
     profiles_path,
     project_cfg,
+    read_csv,
+    silver_dir,
     taxonomy_version,
 )
 
@@ -18,7 +23,59 @@ SKILL_LEVELS = {"l1", "l2", "l3", "l4", "l5", "not_observable"}
 EVIDENCE_KINDS = {"commit", "pull_request", "review", "issue"}
 
 
-def clean_evidence(items: list) -> list[dict]:
+_SHA = re.compile(r"/commit/([0-9a-f]{40})")
+_PULL = re.compile(r"/pull/(\d+)")
+MAX_LABELLED = 6
+
+
+def involvement_index(project: str) -> dict:
+    """Who else worked on an issue, from silver only: commit authors, PR authors, reviewers."""
+    d = silver_dir(project)
+    commits = [c for c in read_csv(d / "slv_commit.csv") if c.get("is_merge", "0") != "1"]
+    prs = read_csv(d / "slv_pull_request.csv")
+    reviews = [r for r in read_csv(d / "slv_review.csv") if r.get("is_bot") != "1"]
+    pr_issue = {str(p["pr_number"]): p.get("issue_key") for p in prs}
+    people: dict[str, dict[str, set]] = defaultdict(lambda: defaultdict(set))
+    for c in commits:
+        if c.get("issue_key") and c.get("dev_id"):
+            people[c["issue_key"]][c["dev_id"]].add("author")
+    for p in prs:
+        if p.get("issue_key") and p.get("author_dev_id"):
+            people[p["issue_key"]][p["author_dev_id"]].add("author")
+    for r in reviews:
+        issue = pr_issue.get(str(r.get("pr_number")))
+        if issue and r.get("reviewer_dev_id"):
+            people[issue][r["reviewer_dev_id"]].add("reviewer")
+    return {
+        "people": people,
+        "sha_issue": {c["sha"]: c.get("issue_key") for c in commits},
+        "pr_issue": pr_issue,
+    }
+
+
+def involved_for(url: str, own_dev: str, ix: dict, study: set) -> list[dict]:
+    """Other people on the same issue. Study people carry their label, all others are anonymous."""
+    m = _SHA.search(url)
+    issue = ix["sha_issue"].get(m.group(1)) if m else None
+    if not issue:
+        m = _PULL.search(url)
+        issue = ix["pr_issue"].get(m.group(1)) if m else None
+    if not issue:
+        return []
+    out = []
+    for dev, roles in sorted(ix["people"].get(issue, {}).items()):
+        if dev == own_dev:
+            continue
+        role = "author" if "author" in roles else "reviewer"
+        row = {"role": role}
+        if dev in study:
+            row["label"] = dev
+        out.append(row)
+    out.sort(key=lambda r: (r.get("label") is None, r.get("label") or "", r["role"]))
+    return out[:MAX_LABELLED + 4]
+
+
+def clean_evidence(items: list, own_dev: str = "", ix: dict | None = None, study: set | None = None) -> list[dict]:
     """Drop epoch placeholder dates; keep real timestamps and optional notes."""
     out = []
     for e in items or []:
@@ -33,6 +90,10 @@ def clean_evidence(items: list) -> list[dict]:
         note = (e.get("note") or "").strip()
         if note:
             row["note"] = note[:300]
+        if ix is not None:
+            inv = involved_for(e["url"], own_dev, ix, study or set())
+            if inv:
+                row["involved"] = inv
         out.append(row)
     return out
 
@@ -70,6 +131,9 @@ def validate(file_obj: dict) -> None:
             for ek in ("title", "url"):
                 if not e.get(ek):
                     raise SystemExit(f"{label}.evidence[{j}] missing {ek}")
+            for k, inv in enumerate(e.get("involved") or []):
+                if inv.get("role") not in ("author", "reviewer"):
+                    raise SystemExit(f"{label}.evidence[{j}].involved[{k}] bad role")
             ts = e.get("timestamp")
             if ts is not None and (
                 not str(ts).strip() or str(ts).startswith("1970-01-01")
@@ -93,6 +157,7 @@ def main() -> None:
     data = json.loads(src.read_text(encoding="utf-8"))
     profiles = data["profiles"]
     allow = set(cfg["study_developers"])
+    inv_ix = involvement_index(args.project)
 
     assessments = []
     for p in profiles:
@@ -108,7 +173,7 @@ def main() -> None:
                 "rationale": p["rationale"],
                 "level_reason": p["level_reason"],
                 "blind_spots": p["blind_spots"],
-                "evidence": clean_evidence(p.get("evidence") or []),
+                "evidence": clean_evidence(p.get("evidence") or [], p["developer_id"], inv_ix, allow),
             }
         )
 

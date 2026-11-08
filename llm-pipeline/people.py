@@ -44,6 +44,13 @@ def build(project: str) -> list[dict]:
             sent_back[pr_author[r["pr_number"]]].add(r["pr_number"])
     own_prs = Counter(p["author_dev_id"] for p in prs)
 
+    # Team context per area (counts only; context, never a measure of ability, MR19)
+    area_commits: dict[str, Counter] = defaultdict(Counter)
+    for c in commits:
+        for a in set(comps.get(c["issue_key"], [])):
+            area_commits[a][c["dev_id"]] += 1
+    active = {c["dev_id"] for c in commits if c["dev_id"]}
+
     out = []
     for dev in people:
         mine = sorted((c for c in commits if c["dev_id"] == dev), key=lambda c: c["authored_at"])
@@ -65,6 +72,15 @@ def build(project: str) -> list[dict]:
             facts.append(f"{len(sent_back[dev])} of {own_prs[dev]} own pull requests were sent back for rework at least once")
         if areas:
             facts.append(f"Changes touch {len(areas)} different areas")
+        if top:
+            facts.append(f"{len(active)} people made changes in this project in the same period")
+        for a in top[:2]:
+            by_dev = area_commits[a]
+            share = round(100 * by_dev[dev] / sum(by_dev.values()))
+            facts.append(
+                f"In the area {a}, {len(by_dev)} people made changes; "
+                f"{max(share, 1)} % of the changes there are this person's"
+            )
         profile = (f"Most changes are in the area{'s' if len(top) > 1 else ''} {join(top)}." if top
                    else "The records link few changes to a named area.")
         out.append({

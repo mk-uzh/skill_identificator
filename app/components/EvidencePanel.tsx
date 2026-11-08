@@ -14,6 +14,20 @@ const KIND_LABEL: Record<string, string> = {
   issue: "Task",
 };
 
+/** "Also involved: DEV-02 (review), 2 more people (changes)". Context only, not a measure of ability. */
+function involvedText(involved: EvidenceItem["involved"]): string | null {
+  if (!involved || involved.length === 0) return null;
+  const role = (r: string) => (r === "author" ? "changes" : "review");
+  const named = involved.filter((p) => p.label).map((p) => `${p.label} (${role(p.role)})`);
+  const anon = involved.filter((p) => !p.label);
+  const parts = [...named];
+  for (const r of ["author", "reviewer"] as const) {
+    const n = anon.filter((p) => p.role === r).length;
+    if (n > 0) parts.push(`${n} more ${n === 1 ? "person" : "people"} (${role(r)})`);
+  }
+  return `Also involved in this task: ${parts.join(", ")}`;
+}
+
 /**
  * What the records show for one developer and one competence.
  *
@@ -58,6 +72,9 @@ export function EvidencePanel({
           {item.title}
         </a>
         {item.note && <span className="ev__note">{item.note}</span>}
+        {involvedText(item.involved) && (
+          <span className="ev__note">{involvedText(item.involved)}</span>
+        )}
       </span>
       {item.timestamp ? (
         <time dateTime={item.timestamp}>

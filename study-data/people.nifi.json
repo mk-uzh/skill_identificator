@@ -1,6 +1,6 @@
 {
   "project": "nifi",
-  "computed_at": "2026-11-07T17:58:11+00:00",
+  "computed_at": "2026-11-08T23:22:03+00:00",
   "people": [
     {
       "id": "DEV-01",
@@ -13,7 +13,10 @@
         "Reviewed 519 pull requests by other people",
         "470 of the changes are linked to a task in the tracker",
         "92 of 475 own pull requests were sent back for rework at least once",
-        "Changes touch 11 different areas"
+        "Changes touch 11 different areas",
+        "129 people made changes in this project in the same period",
+        "In the area Extensions, 54 people made changes; 23 % of the changes there are this person's",
+        "In the area Core Framework, 33 people made changes; 17 % of the changes there are this person's"
       ]
     },
     {
@@ -27,7 +30,10 @@
         "Reviewed 940 pull requests by other people",
         "307 of the changes are linked to a task in the tracker",
         "16 of 311 own pull requests were sent back for rework at least once",
-        "Changes touch 12 different areas"
+        "Changes touch 12 different areas",
+        "129 people made changes in this project in the same period",
+        "In the area Core Framework, 33 people made changes; 36 % of the changes there are this person's",
+        "In the area Extensions, 54 people made changes; 30 % of the changes there are this person's"
       ]
     },
     {
@@ -41,7 +47,10 @@
         "Reviewed 94 pull requests by other people",
         "70 of the changes are linked to a task in the tracker",
         "27 of 86 own pull requests were sent back for rework at least once",
-        "Changes touch 2 different areas"
+        "Changes touch 2 different areas",
+        "129 people made changes in this project in the same period",
+        "In the area Core UI, 19 people made changes; 34 % of the changes there are this person's",
+        "In the area Core Framework, 33 people made changes; 6 % of the changes there are this person's"
       ]
     },
     {
@@ -55,7 +64,10 @@
         "Reviewed 62 pull requests by other people",
         "65 of the changes are linked to a task in the tracker",
         "24 of 121 own pull requests were sent back for rework at least once",
-        "Changes touch 4 different areas"
+        "Changes touch 4 different areas",
+        "129 people made changes in this project in the same period",
+        "In the area Core Framework, 33 people made changes; 18 % of the changes there are this person's",
+        "In the area Extensions, 54 people made changes; 3 % of the changes there are this person's"
       ]
     },
     {
@@ -69,7 +81,9 @@
         "Reviewed 27 pull requests by other people",
         "40 of the changes are linked to a task in the tracker",
         "2 of 41 own pull requests were sent back for rework at least once",
-        "Changes touch 1 different areas"
+        "Changes touch 1 different areas",
+        "129 people made changes in this project in the same period",
+        "In the area Extensions, 54 people made changes; 1 % of the changes there are this person's"
       ]
     },
     {
@@ -83,7 +97,10 @@
         "Reviewed 31 pull requests by other people",
         "35 of the changes are linked to a task in the tracker",
         "14 of 35 own pull requests were sent back for rework at least once",
-        "Changes touch 2 different areas"
+        "Changes touch 2 different areas",
+        "129 people made changes in this project in the same period",
+        "In the area Core UI, 19 people made changes; 6 % of the changes there are this person's",
+        "In the area NiFi Registry, 18 people made changes; 3 % of the changes there are this person's"
       ]
     }
   ]

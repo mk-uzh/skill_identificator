@@ -1,6 +1,6 @@
 {
   "project": "sakai",
-  "computed_at": "2026-11-07T17:58:11+00:00",
+  "computed_at": "2026-11-08T23:22:02+00:00",
   "people": [
     {
       "id": "DEV-01",
@@ -13,7 +13,10 @@
         "Reviewed 436 pull requests by other people",
         "412 of the changes are linked to a task in the tracker",
         "21 of 511 own pull requests were sent back for rework at least once",
-        "Changes touch 65 different areas"
+        "Changes touch 65 different areas",
+        "29 people made changes in this project in the same period",
+        "In the area Assignments, 18 people made changes; 29 % of the changes there are this person's",
+        "In the area Tests & Quizzes (Samigo), 15 people made changes; 29 % of the changes there are this person's"
       ]
     },
     {
@@ -27,7 +30,10 @@
         "Reviewed 304 pull requests by other people",
         "186 of the changes are linked to a task in the tracker",
         "1 of 297 own pull requests were sent back for rework at least once",
-        "Changes touch 39 different areas"
+        "Changes touch 39 different areas",
+        "29 people made changes in this project in the same period",
+        "In the area Tests & Quizzes (Samigo), 15 people made changes; 16 % of the changes there are this person's",
+        "In the area Microsoft Integration, 3 people made changes; 86 % of the changes there are this person's"
       ]
     },
     {
@@ -41,7 +47,10 @@
         "Reviewed 593 pull requests by other people",
         "141 of the changes are linked to a task in the tracker",
         "14 of 305 own pull requests were sent back for rework at least once",
-        "Changes touch 45 different areas"
+        "Changes touch 45 different areas",
+        "29 people made changes in this project in the same period",
+        "In the area Tests & Quizzes (Samigo), 15 people made changes; 9 % of the changes there are this person's",
+        "In the area Global, 4 people made changes; 62 % of the changes there are this person's"
       ]
     },
     {
@@ -49,13 +58,16 @@
       "label": "DEV-06",
       "role": "128 changes · 1 review of other people's work",
       "tenure": "active January 2025 to October 2026",
-      "profile": "Most changes are in the areas Master, Kernel and Gradebook.",
+      "profile": "Most changes are in the areas Master, Kernel and DelegatedAccess.",
       "evidence": [
         "128 changes, the first one in January 2025, the last one in October 2026",
         "Reviewed 1 pull request by other people",
         "91 of the changes are linked to a task in the tracker",
         "1 of 132 own pull requests were sent back for rework at least once",
-        "Changes touch 12 different areas"
+        "Changes touch 12 different areas",
+        "29 people made changes in this project in the same period",
+        "In the area Master, 2 people made changes; 99 % of the changes there are this person's",
+        "In the area Kernel, 10 people made changes; 11 % of the changes there are this person's"
       ]
     },
     {
@@ -69,7 +81,10 @@
         "Reviewed 99 pull requests by other people",
         "96 of the changes are linked to a task in the tracker",
         "2 of 99 own pull requests were sent back for rework at least once",
-        "Changes touch 29 different areas"
+        "Changes touch 29 different areas",
+        "29 people made changes in this project in the same period",
+        "In the area Conversations, 3 people made changes; 55 % of the changes there are this person's",
+        "In the area Web Components, 9 people made changes; 36 % of the changes there are this person's"
       ]
     },
     {
@@ -83,7 +98,10 @@
         "Reviewed 11 pull requests by other people",
         "45 of the changes are linked to a task in the tracker",
         "2 of 58 own pull requests were sent back for rework at least once",
-        "Changes touch 16 different areas"
+        "Changes touch 16 different areas",
+        "29 people made changes in this project in the same period",
+        "In the area Site Info, 10 people made changes; 16 % of the changes there are this person's",
+        "In the area Gradebook, 13 people made changes; 7 % of the changes there are this person's"
       ]
     }
   ]

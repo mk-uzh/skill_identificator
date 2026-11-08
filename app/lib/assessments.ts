@@ -23,6 +23,8 @@ export interface EvidenceItem {
   timestamp?: string;
   /** Optional: one short sentence on what this record shows. */
   note?: string;
+  /** Optional: other people on the same task. Label only for study people, others anonymous. */
+  involved?: { label?: string; role: "author" | "reviewer" }[];
   url: string;
 }
 
@@ -111,6 +113,22 @@ function validateEvidenceItem(raw: unknown, label: string): EvidenceItem {
     assertString(raw.note, `${label}.note`);
     note = raw.note;
   }
+  let involved: EvidenceItem["involved"];
+  if (raw.involved !== undefined) {
+    if (!Array.isArray(raw.involved)) {
+      throw new AssessmentsSchemaError(`${label}.involved must be an array`);
+    }
+    involved = raw.involved.map((x: unknown, k: number) => {
+      assertObject(x, `${label}.involved[${k}]`);
+      if (x.role !== "author" && x.role !== "reviewer") {
+        throw new AssessmentsSchemaError(`${label}.involved[${k}].role must be "author" or "reviewer"`);
+      }
+      if (x.label !== undefined) assertString(x.label, `${label}.involved[${k}].label`);
+      return x.label !== undefined
+        ? { label: x.label as string, role: x.role }
+        : { role: x.role };
+    });
+  }
   assertString(raw.url, `${label}.url`);
   try {
     // eslint-disable-next-line no-new
@@ -121,6 +139,7 @@ function validateEvidenceItem(raw: unknown, label: string): EvidenceItem {
   const item: EvidenceItem = { kind: raw.kind, title: raw.title, url: raw.url };
   if (timestamp !== undefined) item.timestamp = timestamp;
   if (note !== undefined) item.note = note;
+  if (involved && involved.length > 0) item.involved = involved;
   return item;
 }
 

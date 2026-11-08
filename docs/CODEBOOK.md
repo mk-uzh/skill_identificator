@@ -165,6 +165,14 @@ A first test of these definitions (rated blind by a model on the 120 sample unit
 - **R9.** For a reviewer unit the category is the technical area the comments are about, code_review only if they are general. When a change fits several categories, the main one is the one the person's own commit message or comment is about.
 - **R10.** Between two levels take the lower one, except that a short functional fix is never moved down to l1: l1 is only for mechanical or cosmetic changes.
 
+## Context shown next to the records (study tool)
+
+- **Who else worked on a task.** Under each record the tool lists the other people on the same task (commit authors, pull request authors, reviewers without bots), taken from silver. People of the study carry their label (DEV-xx), all others are anonymous ("2 more people"). Roles are "changes" and "review".
+- **Team context on the person card.** Number of people active in the project in the same period; for the person's two main areas, how many people worked there and the person's share of the changes. These are counts used as context only, never as a measure of ability (MR19), and there is no ranking and no level of other people.
+- **Same in both tasks.** Both additions appear in Task 1 and Task 2. The pipeline did not see them when it classified the units.
+- **Explanation of the proposal (Task 2 only).** The panel "How the proposal is made" describes the method: units read one by one, level = highest judgeable level, no counting, no l5, confidence from review rate and share of judgeable units. It describes the system's method also for proposals that were changed on purpose, so it belongs to the debriefing (Methods 3.7) and to the ethics application. Opening it is logged (`rationale_open`, `panel: how_proposal_is_made`).
+- **Not built.** Follow-up tasks and issue links: bronze holds them (about half of the Sakai issues, a fifth of the NiFi issues), but the choice of which link types count as "building on" was left out, and missing links would not mean that no follow-up existed. A mark "this record decides the level" was left out because the record list is the same in both tasks and the marked records would contradict the changed proposals.
+
 ## Not decided yet
 
 - Decided (08.11.2026): taxonomy 3.0 stays unchanged. In the open coding of the NiFi units, persistence, security and integration were assigned to the existing categories `data_persistence`, `security_permissions` and `integrate_components`. No new category was found, so the agreement check is not repeated.

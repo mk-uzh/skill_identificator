@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { EvidencePanel } from "@/components/EvidencePanel";
 import { ConfidenceGuide } from "@/components/LevelGuide";
+import { HowProposalIsMade } from "@/components/HowProposalIsMade";
 import { RatingPanel } from "@/components/RatingPanel";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { BottomBar } from "@/components/BottomBar";
@@ -661,6 +662,15 @@ export default function Task2Page() {
           <PersonLine developer={developer} />
 
           <aside className="side">
+            <HowProposalIsMade
+              onToggle={(open) =>
+                logger.log(open ? "rationale_open" : "rationale_close", {
+                  devId,
+                  categoryId: category.id,
+                  meta: { block, task: 2, panel: "how_proposal_is_made" },
+                })
+              }
+            />
             <details className="acc">
               <summary>What confidence means</summary>
               <ConfidenceGuide bare />
