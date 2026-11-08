@@ -146,7 +146,7 @@ questions from the top down and stop at the first yes. Between two levels take t
 - **l3, solves and explains the cause.** Does the unit show WHY, or restructure instead of patching? (a) the person states a cause or gives a reasoned explanation in their own words (commit message, comment, code comment); (b) the person restructures existing code (refactor, removal of an obsolete concept across files, moving work to where it belongs); (c) a reviewer diagnoses a problem and hands over a concrete fix. A reason that appears only in the ticket text does not count.
 - **l2, completes routine tasks alone.** Does the change alter behaviour and complete an ordinary task alone (a bug fix, a small feature, a test, a concrete correct review suggestion), even if only a few lines? It stands as it is, without a substantive rework.
 - **l1, follows a given approach.** Is the unit mechanical or cosmetic, needing no judgement? (a label or string, a style value, a config default, a version, wiring the ticket dictated, a one-line follow-up to someone else's change, a bare question or vague worry from a reviewer)
-- **l5.** Not assignable from a single unit. It can only come from the pattern across units: others turn to this person, the person sets the approach.
+- **l5.** Not assignable from a single unit, and not assigned automatically for persons either. The definition (others turn to this person, the person sets the approach) needs evidence that other people adopted the approach. Commits and reviews rarely show that, and a count of units would only measure volume (design principle MR19). l5 therefore stays on the scale, so that participants can set it themselves, but the pipeline caps persons at l4. This is a stated limit of the data source.
 
 The e-CF defines levels only up to e-3 or e-4 for most build competences (B.1 up to e-3, B.2 and B.3 up to e-4). l4 and l5 here therefore go beyond what the e-CF foresees for these competences. This has to be stated in the thesis.
 
@@ -167,6 +167,6 @@ A first test of these definitions (rated blind by a model on the 120 sample unit
 
 ## Not decided yet
 
-- Whether l5 stays on the scale for persons. It can only arise from aggregation.
+- Decided: l5 stays on the scale but is not assigned from records (see l5 above). Open as an outlook: a search for explicit evidence that others adopt a person's approach (for example a reviewer citing the person's guide), checked by hand.
 - Whether `other` should be kept in the classifier output or whether a unit with no fitting category is simply left without a category.
 - ESCO URI for `use query languages` (portal only) and a source for the e-CF counterparts marked as proposal.

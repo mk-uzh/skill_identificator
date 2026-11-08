@@ -26,7 +26,7 @@ The meta-requirements (MR) are the result of the expert interviews. They are kep
 | MR16 | Support development and rotation decisions | no | Out of scope. The occupation block on the summary page is a first hint only. |
 | MR17 | Available inside the decision tools | no | Stand-alone web app. Out of scope. |
 | MR18 | Validate against an independent reference | planned | Agreement check against a reference set coded by the researcher. Not done yet. |
-| MR19 | No volume or lead time as ability | yes | Stated as a blind spot; counts appear only as context. |
+| MR19 | No volume or lead time as ability | yes | Stated as a blind spot; counts appear only as context. In the scoring no level depends on a number of units or tickets: l5 is not assigned from records, a single well-supported l4 unit is enough for l4, and confidence rests on evidence quality only. Counting variants exist as a sensitivity analysis. |
 | MR20 | Separate from performance review, and say so | yes | Permanent banner, pseudonyms, no write to any personnel system. |
 | MR21 | Minimal processing, restricted access, data stays in jurisdiction | partly | Public data only, names and e-mail addresses removed, pseudonyms in the tool, local storage. The classification calls an external model API, so for real organisations a model in their own jurisdiction is needed. |
 | MR22 | Measures chosen so that optimising does not degrade work | no | Discussed in the thesis, not built. |
@@ -55,7 +55,7 @@ MR15 and MR18 have no design principle. MR15 is explained under "Not realised"; 
 | DP | Weakening | Why |
 |---|---|---|
 | DP1 | Links in the demo data point to placeholder addresses until the gold layer produces real ones. | The thesis needs a working instrument first; the contract is the result file. |
-| DP2 | Confidence in the demo data is generated, not computed from evidence. | Real confidence comes from the gold layer. |
+| DP2 | (resolved) Confidence in the demo data was generated. | The real data now carries a confidence computed in code from evidence quality: the share of the person's own changes accepted after a review, and the share of units that could be judged without restriction. Volume does not enter. |
 | DP3 | At submit, cells still at the suggested level with no explicit accept are logged as accepted unchanged. | Avoids blocking the finish; still needs an explicit submit. |
 | DP4 | Notes are stored with the research log; no workflow sends them back to the result file. | Contestation for the study instrument; write-back is out of scope. |
 | DP5 | Storage is local; hosting for real organisations is not fixed. The classification uses an external model API. | Only public data is used in the study. |
