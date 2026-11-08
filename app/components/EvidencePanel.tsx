@@ -7,6 +7,13 @@ import { CATEGORIES } from "@/lib/taxonomy";
 /** Examples shown at once; the rest sits behind "Show more". */
 const VISIBLE_EXAMPLES = 3;
 
+const KIND_HELP: Record<string, string> = {
+  commit: "A saved change to the code, with a short note from the person who made it",
+  pull_request: "A proposal to add a change to the project. Others look at it and can ask for rework",
+  review: "A check of someone else's proposal, with comments or an approval",
+  issue: "A task or fault report in the project's tracker, with the discussion around it",
+};
+
 const KIND_LABEL: Record<string, string> = {
   commit: "Commit",
   pull_request: "Proposal",
@@ -61,7 +68,7 @@ export function EvidencePanel({
   const rest = items.slice(VISIBLE_EXAMPLES);
   const renderItem = (item: EvidenceItem, i: number) => (
     <li key={item.url + ":" + i}>
-      <span className={"tag tag--" + item.kind}>{KIND_LABEL[item.kind] ?? item.kind}</span>
+      <span className={"tag tag--" + item.kind} title={KIND_HELP[item.kind]}>{KIND_LABEL[item.kind] ?? item.kind}</span>
       <span className="ev__main">
         <a
           href={item.url}
@@ -94,6 +101,16 @@ export function EvidencePanel({
       <p className="sum">{assessment.rationale}</p>
       {items.length > 0 && (
         <>
+          <details className="ev-legend">
+            <summary>What do Commit, Proposal, Review and Task mean?</summary>
+            <ul>
+              {Object.keys(KIND_LABEL).map((k) => (
+                <li key={k}>
+                  <b>{KIND_LABEL[k]}</b>: {KIND_HELP[k]}.
+                </li>
+              ))}
+            </ul>
+          </details>
           <ul className="ev">{first.map(renderItem)}</ul>
           {rest.length > 0 && (
             <details className="ev-more">

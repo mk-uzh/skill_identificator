@@ -1,5 +1,6 @@
 "use client";
 
+import { EvidencePanel } from "@/components/EvidencePanel";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BottomBar } from "@/components/BottomBar";
@@ -15,6 +16,7 @@ import { developerOrder, systemHref } from "@/lib/study-flow";
 import {
   SKILL_LEVEL_LABELS,
   SKILL_LEVEL_SHORT,
+  SKILL_LEVEL_VALUE,
   type Matrix,
   type SkillLevel,
 } from "@/lib/types";
@@ -33,6 +35,8 @@ export default function OverviewPage() {
   const [matrix, setMatrix] = useState<Matrix>(emptyMatrix);
   const [sel, setSel] = useState<{ devId: string; categoryId: string } | null>(null);
   const [ready, setReady] = useState(false);
+  const [sortBy, setSortBy] = useState<string | null>(null);
+  const [highlight, setHighlight] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const startedAt = useRef<string>(nowIsoMs());
@@ -76,6 +80,13 @@ export default function OverviewPage() {
     }
     return n;
   }, [matrix, people]);
+
+  const valueOf = (devId: string, categoryId: string) => {
+    const level = matrix[devId]?.[categoryId] ?? null;
+    return level ? SKILL_LEVEL_VALUE[level] : null;
+  };
+  const maxOf = (devId: string) =>
+    Math.max(0, ...CATEGORIES.map((c) => valueOf(devId, c.id) ?? 0));
 
   function change(level: SkillLevel) {
     if (!sel) return;
@@ -147,6 +158,29 @@ export default function OverviewPage() {
 
       <div className="ovgrid">
       <div className="card">
+        <div className="ovtools" role="group" aria-label="Order and highlight">
+          <span className="small muted">Order competences by</span>
+          <button type="button" className={"btn btn--sm btn--ghost" + (sortBy === null ? " is-on" : "")} onClick={() => setSortBy(null)}>
+            Default
+          </button>
+          {people.map((person) => (
+            <button
+              key={person.id}
+              type="button"
+              className={"btn btn--sm btn--ghost" + (sortBy === person.id ? " is-on" : "")}
+              onClick={() => {
+                setSortBy(person.id);
+                logger.log("cell_open", { devId: person.id, meta: { screen: "overview", action: "sort" } });
+              }}
+            >
+              {person.label}
+            </button>
+          ))}
+          <label className="checkbox ovtools__hl">
+            <input type="checkbox" checked={highlight} onChange={(e) => setHighlight(e.target.checked)} />
+            <span>Mark each person&apos;s highest level</span>
+          </label>
+        </div>
         <div className="ovwrap">
           <table className="ovmatrix">
             <thead>
@@ -158,7 +192,13 @@ export default function OverviewPage() {
               </tr>
             </thead>
             <tbody>
-              {groupedCategories().map(({ group, items }) => (
+              {groupedCategories().map(({ group, items: unsorted }) => {
+                const items = sortBy
+                  ? [...unsorted].sort(
+                      (a, b) => (valueOf(sortBy, b.id) ?? 0) - (valueOf(sortBy, a.id) ?? 0),
+                    )
+                  : unsorted;
+                return (
                 <Fragment key={group.id}>
                   <tr className="ovmatrix__group">
                     <td colSpan={people.length + 1}>{group.label}</td>
@@ -179,15 +219,23 @@ export default function OverviewPage() {
                                 value ? SKILL_LEVEL_LABELS[value] : "not rated"
                               }`}
                               className={
-                                "lv ovcell " +
-                                (value ? `lv--${value}` : "lv--na") +
-                                (active ? " lv--on" : "")
+                                "ovbar " +
+                                (value ? `ovbar--${value}` : "ovbar--na") +
+                                (active ? " ovbar--on" : "") +
+                                (highlight && (valueOf(person.id, category.id) ?? 0) > 0 &&
+                                valueOf(person.id, category.id) === maxOf(person.id)
+                                  ? " ovbar--top"
+                                  : "")
                               }
                               onClick={() =>
                                 setSel({ devId: person.id, categoryId: category.id })
                               }
                             >
-                              {value ? SKILL_LEVEL_SHORT[value] : "–"}
+                              <span
+                                className="ovbar__fill"
+                                style={{ width: `${(value ? SKILL_LEVEL_VALUE[value] ?? 0 : 0) * 20}%` }}
+                              />
+                              <span className="ovbar__txt">{value ? SKILL_LEVEL_SHORT[value] : "–"}</span>
                             </button>
                           </td>
                         );
@@ -195,7 +243,8 @@ export default function OverviewPage() {
                     </tr>
                   ))}
                 </Fragment>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -203,16 +252,33 @@ export default function OverviewPage() {
 
       <div className="ovgrid__side">
       {sel && selCategory ? (
+        <>
         <div className="card">
           <h3>
             {people.find((p) => p.id === sel.devId)?.label ?? sel.devId}: {selCategory.label}
           </h3>
+          {selCategory.description && <p className="small muted">{selCategory.description}</p>}
           <RatingPanel
             name={selCategory.label}
             value={matrix[sel.devId]?.[sel.categoryId] ?? null}
             onChange={change}
           />
         </div>
+        <div className="card">
+          <h3>What the records show</h3>
+          <EvidencePanel
+            devId={sel.devId}
+            categoryId={sel.categoryId}
+            onEvidenceOpen={() =>
+              logger.log("evidence_open", {
+                devId: sel.devId,
+                categoryId: sel.categoryId,
+                meta: { screen: "overview", task: 1 },
+              })
+            }
+          />
+        </div>
+        </>
       ) : (
         <div className="card">
           <h3>Pick a cell</h3>

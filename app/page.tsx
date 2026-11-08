@@ -20,6 +20,7 @@ export default function IntroPage() {
   const { project } = useProject();
   const [code, setCode] = useState("");
   const [consent, setConsent] = useState(false);
+  const [terms, setTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -30,7 +31,7 @@ export default function IntroPage() {
       const response = await fetch("/api/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ participantCode: code.trim(), consent, project }),
+        body: JSON.stringify({ participantCode: code.trim(), consent, terms, project }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Unknown error");
@@ -136,6 +137,18 @@ export default function IntroPage() {
             You get the code from the study team.
           </p>
         </div>
+        <div className="terms" role="note">
+          <h4>{ORG_CONFIG.terms.heading}</h4>
+          <ul>
+            {ORG_CONFIG.terms.points.map((p) => (
+              <li key={p}>{p}</li>
+            ))}
+          </ul>
+        </div>
+        <label className="checkbox">
+          <input type="checkbox" checked={terms} onChange={(e) => setTerms(e.target.checked)} />
+          <span>{ORG_CONFIG.terms.confirm}</span>
+        </label>
         <label className="checkbox">
           <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
           <span>
@@ -154,7 +167,7 @@ export default function IntroPage() {
           <button
             type="button"
             className="btn"
-            disabled={!code.trim() || !consent || busy}
+            disabled={!code.trim() || !consent || !terms || busy}
             onClick={start}
           >
             {busy ? "Starting …" : "Start →"}

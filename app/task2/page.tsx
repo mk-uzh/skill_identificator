@@ -499,6 +499,15 @@ export default function Task2Page() {
       state: i === ci ? "current" : (decisions[k] ?? "open") !== "open" ? "done" : "todo",
     };
   });
+  const nextDiff = (() => {
+    for (let j = ci + 1; j < steps.length; j += 1) {
+      const kj = suggestionKey(devId, steps[j]);
+      const s = suggestionMap.get(kj);
+      const mine = task1Matrix[devId]?.[steps[j]] ?? null;
+      if (s && s.suggested !== mine && (decisions[kj] ?? "open") === "open") return j;
+    }
+    return -1;
+  })();
   const nextLabel = !lastStep ? "Next competence →" : lastPerson ? "Finish →" : "Next person →";
   const decided = decision !== "open";
   const pos = (level: SkillLevel | null) => {
@@ -701,6 +710,19 @@ export default function Task2Page() {
         >
           {nextLabel}
         </button>
+        {nextDiff > 0 && (
+          <button
+            type="button"
+            className="btn btn--ghost"
+            disabled={busy}
+            onClick={() => {
+              logger.log("cell_open", { devId, categoryId: steps[nextDiff], meta: { via: "next_difference", block, task: 2 } });
+              setCi(nextDiff);
+            }}
+          >
+            Next difference →
+          </button>
+        )}
       </BottomBar>
     </div>
   );

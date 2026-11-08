@@ -38,6 +38,17 @@ export const ORG_CONFIG = {
   /** DP5 / DP3 — permanent banner copy. */
   banner:
     "This profile is not used for performance review, remuneration or promotion. The decision rests with the person using it.",
+  /** Terms of use shown on the start page; the participant confirms them before starting. */
+  terms: {
+    heading: "Terms of use",
+    points: [
+      "This tool shows what public project records contain. It is not an assessment of a person.",
+      "Its result must not be used as a basis for a performance review, pay or promotion.",
+      "What the records do not show stays unknown. The decision always rests with the person using it.",
+    ],
+    confirm:
+      "I have read the terms of use. If a tool like this were used, I would not regard its result as a basis for a performance review, pay or promotion.",
+  },
   /** DP2 — level anchors, taken from the taxonomy so there is one wording. */
   level_anchors: LEVEL_ANCHORS,
 };

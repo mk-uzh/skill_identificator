@@ -351,6 +351,14 @@ export default function SummaryPage() {
                     </td>
                     <td>
                       {fit.demonstrated} of {fit.measured}
+                      {fit.demonstrated > 0 && (
+                        <span className="small muted" style={{ display: "block" }}>
+                          {fit.role.essential_measured
+                            .filter((id) => !fit.missing.includes(id))
+                            .map(labelOf)
+                            .join(", ")}
+                        </span>
+                      )}
                     </td>
                     <td className="muted">
                       {[...fit.missing.map(labelOf), ...fit.role.essential_not_measured].join(", ")}

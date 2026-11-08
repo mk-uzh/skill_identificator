@@ -207,6 +207,8 @@ export interface StudySession {
   createdAt: string;
   userAgent: string;
   consent: boolean;
+  /** The participant confirmed the terms of use (no basis for performance review, pay or promotion). */
+  termsAccepted?: boolean;
   /** Project the case study was run on (sakai or nifi). */
   project?: string;
   /** Taxonomy / inference config hash from assessments.json */

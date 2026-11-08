@@ -2223,3 +2223,37 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
 
 .card--why { background: var(--g100); }
 .why-sys { margin: 0; font-size: 16px; line-height: 1.55; }
+
+/* ---------- terms of use (start page) ---------- */
+.terms { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0 12px; background: #fff; }
+.terms h4 { margin: 0 0 6px; font-size: 14px; }
+.terms ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink-2); }
+.terms li + li { margin-top: 4px; }
+
+/* ---------- record labels legend ---------- */
+.ev-legend { margin: 0 0 8px; font-size: 13px; color: var(--ink-3); }
+.ev-legend > summary { cursor: pointer; }
+.ev-legend ul { margin: 6px 0 0; padding-left: 18px; }
+
+/* ---------- overview bars ---------- */
+.ovbar { position: relative; width: 120px; height: 34px; border: 0; border-radius: 10px; background: #eceae4; overflow: hidden; cursor: pointer; padding: 0; font: inherit; }
+.ovbar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--l3); transition: width .15s; }
+.ovbar--l1 .ovbar__fill { background: var(--l1); }
+.ovbar--l2 .ovbar__fill { background: var(--l2); }
+.ovbar--l3 .ovbar__fill { background: var(--l3); }
+.ovbar--l4 .ovbar__fill { background: var(--l4); }
+.ovbar--l5 .ovbar__fill { background: var(--l5); }
+.ovbar--not_observable .ovbar__fill, .ovbar--na .ovbar__fill { width: 0 !important; }
+.ovbar__txt { position: relative; font-weight: 600; font-size: 13px; color: var(--ink); mix-blend-mode: normal; }
+.ovbar--on { outline: 2px solid var(--ink); outline-offset: 1px; }
+.ovbar--top { box-shadow: 0 0 0 2px #f2b84b; }
+.ovtools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.ovtools .is-on { background: var(--ink); color: #fff; }
+.ovtools__hl { margin-left: auto; font-size: 13px; }
+.ovtools__hl input { width: 18px; height: 18px; }
+.ovbar--l1 .ovbar__fill { background: #cdd2c4; }
+.ovbar--l2 .ovbar__fill { background: #bcd89a; }
+.ovbar--l3 .ovbar__fill { background: #9fcb6a; }
+.ovbar--l4 .ovbar__fill { background: #7fb83f; }
+.ovbar--l5 .ovbar__fill { background: #5d9420; }
+.ovbar--l5 .ovbar__txt { color: #fff; }

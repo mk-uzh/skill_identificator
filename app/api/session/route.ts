@@ -16,6 +16,7 @@ export async function POST(request: Request) {
       participantCode?: string;
       condition?: string;
       consent?: boolean;
+      terms?: boolean;
       project?: string;
     };
 
@@ -27,6 +28,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Consent missing" }, { status: 400 });
     }
 
+    if (!body.terms) {
+      return NextResponse.json({ error: "Terms of use not confirmed" }, { status: 400 });
+    }
+
     const project = parseProject(body.project);
     const assessments = getAssessments(project);
     const session: StudySession = {
@@ -36,6 +41,7 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
       userAgent: request.headers.get("user-agent") ?? "unknown",
       consent: true,
+      termsAccepted: true,
       project,
       config_hash: assessments.config_hash,
       snapshot_hash: assessments.config_hash,
