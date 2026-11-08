@@ -248,31 +248,23 @@ def usable_for_level(obs: list[dict], sc: dict) -> list[dict]:
 
 
 def evidence_confidence(obs: list[dict]) -> tuple[float, dict]:
-    """Confidence from evidence structure only (not model H/M/L)."""
+    """Confidence from the quality of the evidence, never from how much of it there is.
+
+    Two inputs: how many of the person's own changes were accepted after a review
+    (review_rate), and how many units could be judged without restriction
+    (share_judgeable). Design principle MR19: volume is not ability.
+    """
     if not obs:
-        return 0.9, {"n_units": 0, "n_issues": 0, "review_rate": None}
-    n = len(obs)
-    n_issues = len({o.get("issue_key") for o in obs if o.get("issue_key")})
+        return 0.9, {"review_rate": None, "share_judgeable": None}
     authors = [o for o in obs if o.get("role") == "author"]
     if authors:
         reviewed = sum(1 for o in authors if str(o.get("has_review", "1")) not in ("0", ""))
         review_rate = reviewed / len(authors)
     else:
         review_rate = 1.0
-    conf = round(
-        max(
-            0.15,
-            min(
-                0.95,
-                0.30
-                + 0.25 * min(n, 4) / 4
-                + 0.25 * min(n_issues, 3) / 3
-                + 0.20 * review_rate,
-            ),
-        ),
-        2,
-    )
-    return conf, {"n_units": n, "n_issues": n_issues, "review_rate": round(review_rate, 2)}
+    share_judgeable = sum(1 for o in obs if o.get("judgeable", "yes") == "yes") / len(obs)
+    conf = round(max(0.15, min(0.95, 0.35 + 0.45 * review_rate + 0.15 * share_judgeable)), 2)
+    return conf, {"review_rate": round(review_rate, 2), "share_judgeable": round(share_judgeable, 2)}
 
 
 def score_cell(obs: list[dict], sc: dict) -> dict:
@@ -283,7 +275,7 @@ def score_cell(obs: list[dict], sc: dict) -> dict:
         "n_units": 0,
         "level_rule": "no observations",
         "acceptance_uncertain": False,
-        "confidence_breakdown": {"n_units": 0, "n_issues": 0, "review_rate": None},
+        "confidence_breakdown": {"review_rate": None, "share_judgeable": None},
         "model_confidence_diagnostic": [],
         "cell_obs": [],
     }
@@ -322,13 +314,7 @@ def score_cell(obs: list[dict], sc: dict) -> dict:
 
     if base == 4 and support_peak < sc["l4_min_peak"] and support_ge3 < sc["l4_min_ge3"]:
         base, rule = 3, "thin l4 support -> l3"
-    elif (
-        base == 4
-        and len({o["issue_key"] for o in raising if LEVEL_NUM.get(o["level"]) == 4})
-        >= sc["l5_min_peak"]
-        and sum(1 for o in raising if o.get("role") == "reviewer") >= sc["l5_min_reviewer_units"]
-    ):
-        base, rule = 5, "l5: repeated l4 + reviewer support"
+    # No promotion to l5: it is not observable from commits and reviews (MR19, no counting).
 
     authors = [o for o in obs if o.get("role") == "author"]
     uncertain = bool(authors) and (
@@ -794,8 +780,6 @@ def run_sensitivity(
                         "min_units_ge3",
                         "l4_min_peak",
                         "l4_min_ge3",
-                        "l5_min_peak",
-                        "l5_min_reviewer_units",
                         "limited_raises_level",
                     )
                     if k in sc

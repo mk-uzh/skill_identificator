@@ -44,27 +44,27 @@ scoring:
   # min_support = for l3+, require at least min_units_ge3 units at that peak
   level_mode: peak
   min_units_ge3: 1
-  # Drop a lone weak l4 to l3 unless enough support
-  l4_min_peak: 2
-  l4_min_ge3: 3
-  # Promote l4 to l5 only with repeated support
-  l5_min_peak: 3
-  l5_min_reviewer_units: 5
+  # No counting rules (design principle MR19: volume is not ability).
+  # 1 = a single supported l4 unit is enough. l5 is never assigned from records.
+  l4_min_peak: 1
+  l4_min_ge3: 1
   # limited units (e.g. author without review) never raise the person level alone
   limited_raises_level: false
 
 # Variants compared by score.py (overrides merged onto scoring)
+# Sensitivity variants below use counting rules ON PURPOSE, to show how much the
+# levels would change if volume mattered. They are an analysis, not the result.
 sensitivity:
   - name: baseline_peak
     level_mode: peak
     min_units_ge3: 1
-    l4_min_peak: 2
-    l4_min_ge3: 3
+    l4_min_peak: 1
+    l4_min_ge3: 1
   - name: peak_l4_stricter
     level_mode: peak
     min_units_ge3: 1
-    l4_min_peak: 3
-    l4_min_ge3: 4
+    l4_min_peak: 2
+    l4_min_ge3: 3
   - name: min2_ge3
     level_mode: min_support
     min_units_ge3: 2
