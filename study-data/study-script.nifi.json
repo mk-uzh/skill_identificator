@@ -2,7 +2,7 @@
   "project": "nifi",
   "seed": 42,
   "share": 0.25,
-  "computed_at": "2026-11-08T22:39:17+00:00",
+  "computed_at": "2026-11-08T22:46:11+00:00",
   "assessments_hash": "2380291b395212e2",
   "versions": {
     "A": [
@@ -12,8 +12,8 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "At «Others rely on it», the records show the person reviewing other people's Iceberg changes and catching real defects: duplicate schema field IDs in nested records, an element ID of 0 that is not strictly positive, and a likely copy/paste error in timestamp partition-key conversion. They backed these findings with Iceberg's uniqueness requirement, a concrete code suggestion that separates timestamptz from timestamp, and an explanation of why the existing test only checking file and record counts would miss the error. The records do not yet reach «Sets the approach for others», because they show correctness feedback on individual changes and no case of the person defining a method or standard that others then follow.",
-        "source": "model"
+        "level_reason": "The records support «Others rely on it». The records show two reviews the person wrote on Iceberg-related changes. They do not yet support «Sets the approach for others».",
+        "source": "fallback"
       },
       {
         "developer_id": "DEV-01",
@@ -21,7 +21,7 @@
         "true_level": "l3",
         "shown_level": "l2",
         "direction": "lower",
-        "level_reason": "The records show a large group of short, behaviour-changing fixes such as null guards, condition changes and log or message changes, and reviewers approved many of them, which fits «Completes routine tasks alone». The person also explains causes in some fixes and reviews, for example the dropped parameters in inherited contexts and the QUIC exclusion that stopped working after the reactor-netty 1.3.1 change. However, in many of the fixes no cause is stated in the person's own words, so the records do not yet show «Solves and explains the cause» as the usual pattern.",
+        "level_reason": "The records support «Completes routine tasks alone» because a large group of the 121 units are short fixes, such as null guards, condition changes and log or message changes, that reviewers approved without the person stating a cause. Some work already shows causal reasoning, like tracing the QUIC ClassNotFoundException to an outdated exclusion. That reasoning is not yet consistent across the records, so «Solves and explains the cause» is not reached.",
         "source": "model"
       },
       {
@@ -30,7 +30,7 @@
         "true_level": "l4",
         "shown_level": "l3",
         "direction": "lower",
-        "level_reason": "The records fit «Solves and explains the cause» because the person fixed concrete problems across many integration units and, as reviewer, diagnosed specific causes such as SOCKS proxy handling, line separators, SNMP engine IDs and an AWS ACL header, often with a suggested fix. The person also built shared pieces like the database password provider API, used by the DBCP data source and the AWS, GCP and Azure providers, and added OAuth2 to Azure Event Hubs. The records do not yet support «Others rely on it», since they show these shared APIs being created and extended but give no evidence that other people depend on the person's judgment or work as a standing resource.",
+        "level_reason": "At the level «Solves and explains the cause», the records show concrete diagnosis and explanation: as reviewer, the person pinpointed problems such as SOCKS proxy handling and an AWS ACL header, often with a suggested fix, and in several authentication units explained the cause in their own words. They also built a shared database password provider API with tests and review. The records do not yet reach «Others rely on it», because they do not show other people depending on this work.",
         "source": "model"
       },
       {
@@ -39,7 +39,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records support «Others rely on it» because the person made working changes to shared SQL handling: UpdateDatabaseTable now quotes column, catalog, schema and table names through the JDBC enquoteIdentifier method, and CaptureChangeMySQL now uses a single query on qualified table names, which a reviewer accepted. The person also reviewed PutSQL, where they asked for a pointer to the SQL error code documentation and noted that the PostgreSQL driver reports error code 0, so others draw on their knowledge. They do not yet support «Sets the approach for others», because the records show these as individual changes and review comments, not as an approach that the person defined for others to follow.",
+        "level_reason": "At «Others rely on it», the records show SQL changes that other developers can build on: manual identifier quoting in UpdateDatabaseTable was replaced with the JDBC enquoteIdentifier helper, and a reviewer accepted a single qualified-table query in CaptureChangeMySQL. Review comments on PutSQL also point to error-code documentation. These changes do not yet show the person setting an approach that others adopt, which «Sets the approach for others» requires.",
         "source": "model"
       },
       {
@@ -48,7 +48,7 @@
         "true_level": "l3",
         "shown_level": "l2",
         "direction": "lower",
-        "level_reason": "The records fit «Completes routine tasks alone» because the person authored many bug fixes on their own, and many were approved by a reviewer. About 20 of them were short fixes such as null guards, default values and a restored service descriptor, with little stated cause. They do not yet show «Solves and explains the cause» as the usual pattern: although about 40 units do state a cause, as in the redirect handler that skipped the context path and the lists that could be immutable, the records also include many fixes with no stated cause and some reviews that only pointed out incomplete fixes or asked questions.",
+        "level_reason": "The records fit «Completes routine tasks alone» because many fixes were authored and approved on their own, such as the Kafka verify method and the mutable list copy for flow synchronization. The person also stated causes in about 40 of 74 units, which is close to the next level. They do not yet fully support «Solves and explains the cause», because about 20 other fixes were short guards and defaults with little stated cause, and some reviews only raised questions.",
         "source": "model"
       },
       {
@@ -57,7 +57,7 @@
         "true_level": "l3",
         "shown_level": "l2",
         "direction": "lower",
-        "level_reason": "The records show the person reviewing user-facing design in all ten units and giving concrete suggestions on their own, such as new label wording, showing a count of process groups instead of '(shared)', renaming properties and proposing a bullet list in place of a table. That fits «Completes routine tasks alone». It does not yet reach «Solves and explains the cause», because most reviews are wording and layout suggestions, and only on NIFI-15546 did the person trace a problem to its cause (a CSS class that was never defined) and explain it, which is a single case in the records.",
+        "level_reason": "The records fit «Completes routine tasks alone» because the person reviewed user-facing design in all ten units and regularly gave concrete fixes, such as showing a count of process groups instead of '(shared)' and renaming properties. They also spotted a CSS class that was never defined and proposed a fix. They do not yet fit «Solves and explains the cause», since most remarks suggest changes to labels, names or layout rather than tracing a problem to its root.",
         "source": "model"
       },
       {
@@ -66,7 +66,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records fit «Others rely on it» because in twelve reviews the person diagnosed real causes and often proposed fixes, such as the double completion in NgRx effects, the side effect in an option-computing method and the viewport regression during search navigation. The person also fixed the editors and the wizard verification and stated the causes in comments and the commit message, so other people can lean on this work. The records do not yet reach «Sets the approach for others», because the work consists of single diagnoses, fixes and small cleanups, and nothing shows the person defining a shared approach that others follow.",
+        "level_reason": "The records fit «Others rely on it» because the person's reviews diagnose real causes and often propose fixes, such as a double completion in NgRx effects, a side effect inside an option-computing method, and a viewport regression during search navigation. Their author fixes also state causes in comments and commit messages. Nothing here shows them setting an approach that others adopt, so «Sets the approach for others» is not yet supported.",
         "source": "model"
       },
       {
@@ -75,7 +75,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records show reviews in which the person caught real authorization and sanitization gaps, such as the missing Parameter Context check, the 'unsafe:' prefix behaviour of DomSanitizer, and an incomplete cluster fix confirmed in a running cluster, and the person also authored two security-related changes. This is work that others depend on to get changes right, which fits «Others rely on it». The records show the person fixing and flagging individual problems, but not defining a shared approach that others adopt, so they do not yet support «Sets the approach for others».",
+        "level_reason": "At «Others rely on it», the records show reviews that others can build on: the person spotted that proposed properties can carry parameter references, so the Parameter Context also needs authorizing, and verified a cluster fix in a running system. They also authored security checks of their own. Nothing yet shows them setting the approach for others, which «Sets the approach for others» would require.",
         "source": "model"
       },
       {
@@ -84,7 +84,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records support «Others rely on it» because, as author, the person usually named the cause in a commit message or code comment and changed the underlying logic, for example the race between a connector GET and working-context recreation, and the stale classloader after classpath changes. As reviewer, the person also traced causes in other people's changes, so teammates can depend on both the fixes and the reviews. The records do not yet support «Sets the approach for others», because they show sound fixes and reviews of individual problems rather than an approach that other people adopt, and in six fixes the cause was not explained in the person's own words.",
+        "level_reason": "At «Others rely on it», the records show fixes where the person, as author, named the cause and changed the underlying logic, such as the race between a connector GET and working-context recreation, and a stale classloader after classpath changes. Reviews also traced causes in other people's changes. This does not yet reach «Sets the approach for others», because six fixes came with no explanation of cause and one review only suggested an alternative method.",
         "source": "model"
       },
       {
@@ -93,7 +93,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "At «Others rely on it», the records show a reviewer whose comparison of two data-generation approaches was the stated reason for approving the change: it explained which workload each one suits, and it named DuplicateFlowFile for pushing a downstream flow at higher rates. That is judgment others can lean on when deciding. The records hold only this one review and show no guidance that steers how others should approach such work, so they do not yet support «Sets the approach for others».",
+        "level_reason": "At the level «Others rely on it», the review on NIFI-16379 shows the person guiding a decision that others could act on. As reviewer, they explained which workload each generation approach suits, repository load testing or pushing a downstream flow at the highest rate, and named DuplicateFlowFile as the alternative, using that as their reason for approving. The records show one review and no wider practice, so they do not yet support «Sets the approach for others».",
         "source": "model"
       },
       {
@@ -102,7 +102,7 @@
         "true_level": "l3",
         "shown_level": "l2",
         "direction": "lower",
-        "level_reason": "The records fit «Completes routine tasks alone» because the person fixed failures on their own across many different processors, including Google Drive, SMB, Kafka and S3, and the fixes were scoped and checked, such as catching an SMB NullPointerException only when it came from the expected stack frame. The cause was often written down in a code comment or commit message, but in several units it appeared only in the ticket. That is why the records do not yet support «Solves and explains the cause» as a steady pattern, even though the reviews trace some causes and one review reported a regression without a fix.",
+        "level_reason": "At «Completes routine tasks alone», the records show 17 authored debugging fixes across many connectors, such as Google Drive, SMB and Kafka, each one finished without help. Several carry a code comment or commit message naming the cause, like the Shared Drive root returning a generic name. The cause was often stated only in the ticket, and one review reported a regression without a fix, so the work does not yet consistently reach «Solves and explains the cause».",
         "source": "model"
       },
       {
@@ -111,7 +111,7 @@
         "true_level": "l2",
         "shown_level": "l3",
         "direction": "raise",
-        "level_reason": "The records fit «Solves and explains the cause» because the person fixed the property visibility in the connection service by tying the SSL Context Service to the SSL and SASL_SSL protocols and the Kerberos properties to the GSSAPI mechanism. In a review, the person also explained why extra validation was not needed: the Authentication Strategy already hides irrelevant properties, so validation would only warn about hidden ones with no effect. The records do not yet support «Others rely on it», because they show no sign that other people depend on this person's work or judgment as a standing source.",
+        "level_reason": "At the level «Solves and explains the cause», the records show the person fixing the visibility of SSL and Kerberos properties with dependsOn conditions, and explaining in a review why extra validation was pointless: hidden properties tied to the Authentication Strategy would only trigger warnings with no effect. The records do not yet reach «Others rely on it», since they show no one else depending on this judgment or work.",
         "source": "model"
       },
       {
@@ -120,7 +120,7 @@
         "true_level": "l2",
         "shown_level": "l1",
         "direction": "lower",
-        "level_reason": "The records show one small bug fix in which the person wrapped the construction of the regular expression in a try/catch block, so that an invalid pattern such as '[' returns no match instead of breaking the search input, and a reviewer accepted it. This is a narrow, clearly defined change that follows a standard error-handling approach, which fits «Follows a given approach». A single fix of this size does not yet show routine tasks being completed alone across several pieces of work, so the records do not yet support «Completes routine tasks alone».",
+        "level_reason": "At the «Follows a given approach» level, the records show one small, well-defined bug fix: the regular expression in the extension creation dialog filter is now built inside a try/catch, so an invalid pattern such as '[' returns no match instead of breaking the search input. A reviewer accepted it. That is a single narrow change, so it does not yet show the repeated, independent work expected at «Completes routine tasks alone».",
         "source": "model"
       },
       {
@@ -129,7 +129,7 @@
         "true_level": "l3",
         "shown_level": "l2",
         "direction": "lower",
-        "level_reason": "The records show the person writing and extending specs on their own, such as the illegal bracket query case in the camel-case search spec and the coverage of true/false string coercion, defaults and saved values across several components, which fits «Completes routine tasks alone». The review that proposed a replacement regression test does show some insight into a flawed spec. However, the records do not yet show the person tracing a problem to its root cause and explaining it, which «Solves and explains the cause» would require.",
+        "level_reason": "The records show routine test work done alone: a case for an illegal bracket query in the camel-case search spec, and new or extended specs covering true/false string coercion, defaults and saved values across several components and utilities. That fits «Completes routine tasks alone». They do not yet reach «Solves and explains the cause», because the review comment flags a weak spec but does not trace a defect to its root cause.",
         "source": "model"
       }
     ],
@@ -140,7 +140,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records fit «Others rely on it» because the person's tests are something teammates build on: well over a hundred units added unit, integration and system tests with fixes and features, along with reusable test helpers and a test processor, and about a dozen units stabilised flaky tests with bounded waits, polling helpers and a controllable time supplier, often with a comment naming the cause. They do not yet show «Sets the approach for others», because the review work consists of diagnosing individual test problems and supplying code, such as replacing an empty-string test with a missing-attribute case, and asking for added coverage, rather than defining a testing approach that others follow.",
+        "level_reason": "At «Others rely on it», the records show tests that colleagues can build on: new unit, integration and system tests alongside fixes, shared helpers, and flaky tests fixed with named causes. In one review the person also corrected a mislabelled null-subject test and supplied replacement code. The records do not yet reach «Sets the approach for others», because they show good tests and reviews, not a testing approach that others are guided to follow.",
         "source": "model"
       },
       {
@@ -149,7 +149,7 @@
         "true_level": "l2",
         "shown_level": "l1",
         "direction": "lower",
-        "level_reason": "The records fit «Follows a given approach» because each piece of work is a small, well-defined change in existing code: a regex fix so parameter auto-complete accepts the period character, a navigation handler with template wiring and spec tests in the registry client table, and a title binding so the full filename shows on hover. In the review, the person also proposed a concrete descriptor using the built-in data size validator with a '64 MB' default, which shows they can apply established patterns. The records do not yet support «Completes routine tasks alone» because they show no task that the person took from an open problem to a finished result without a pattern or direction already in place.",
+        "level_reason": "The records fit «Follows a given approach»: the regex change in the language service fixed a single, clearly bounded problem, and the documentation navigation was added with a handler, an output event and spec tests. The review comment also offered a concrete descriptor, using the built-in validator with a '64 MB' default. They do not yet reach «Completes routine tasks alone», because no record shows a routine task carried through independently from start to finish.",
         "source": "model"
       },
       {
@@ -158,7 +158,7 @@
         "true_level": "l3",
         "shown_level": "l2",
         "direction": "lower",
-        "level_reason": "The records show six authored changes that each deliver a focused fix alone, such as the credential-type check in the Google service-account strategy with a clear error message and a validator, and the 3-line asset-reference validation in the synchronous parameter context update. The reviews also show careful work on authorization, headers and encryption, which fits «Completes routine tasks alone». The records do not yet show «Solves and explains the cause» because the changes are mostly described by what was added, not by a written explanation of a root cause, and the one review that explains a cause (the unchecked port in X-Forwarded-Host) is a single case.",
+        "level_reason": "At «Completes routine tasks alone», the records show small, well-scoped changes finished without help. One adds a credential-type check with a pointed error message, and another is a 3-line asset-reference validation call placed beside existing validation. This does not yet reach «Solves and explains the cause», because the review of the forwarded-host port is the only record that explains a cause, and the authored changes do not.",
         "source": "model"
       },
       {
@@ -167,7 +167,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records show 140 reviews, and in about a dozen the person explained why a change was wrong or unnecessary and often proposed a concrete fix, such as showing that a validator already handled Expression Language or narrowing a rule's scope. Most other reviews gave specific suggestions with short reasons on naming, logging, tests and structure, which is why others rely on this person's reviews to catch problems and improve changes, matching «Others rely on it». The records do not yet show the person setting an approach that others adopt, so they do not support «Sets the approach for others».",
+        "level_reason": "The records fit «Others rely on it»: across 140 reviews, the person regularly gave concrete fixes with short reasons, and in about a dozen explained why a change was wrong or unnecessary. On NIFI-14141 they verified by reverting that the validator already handled Expression Language. They do not yet reach «Sets the approach for others», because the records show strong feedback on individual changes, not a standard or method that others adopt.",
         "source": "model"
       },
       {
@@ -176,7 +176,7 @@
         "true_level": "l4",
         "shown_level": "l3",
         "direction": "lower",
-        "level_reason": "The records fit «Solves and explains the cause» because the person fixed unstable tests by waiting on asynchronous state, explained one fix with a code comment, and as reviewer explained why tests were inadequate or brittle and proposed alternatives. They also added shared test infrastructure, such as the embedded database module with a common base class, and moved many JDBC tests onto it. They do not yet reach «Others rely on it», because the records show this shared set-up being adopted by several test classes but give no clear evidence that other people depend on the person's work as a standard they must follow.",
+        "level_reason": "The records support «Solves and explains the cause» because the person fixed unstable tests by waiting on asynchronous state, one with an explanatory code comment, and as reviewer explained why tests were inadequate or brittle. They also built shared database test set-up, moving many JDBC tests onto it. They do not yet support «Others rely on it», because the records show no evidence that other people's work depends on these judgements.",
         "source": "model"
       },
       {
@@ -185,7 +185,7 @@
         "true_level": "l3",
         "shown_level": "l2",
         "direction": "lower",
-        "level_reason": "The records show steady, independent work on documentation and review: the person updated guide examples, links and a PR template, wrote guide sections, and approved or corrected other changes with short reasons. Several records also give causes, such as why comma-separated X-Forwarded-Host values are unsupported and why the .html link extension is correct, which fits «Completes routine tasks alone» well. The records do not yet support «Solves and explains the cause», because the explanations mostly sit in documentation and review settings and do not show the person tracing and resolving a problem of their own from start to finish.",
+        "level_reason": "The records fit «Completes routine tasks alone»: across 23 units of documentation and review work, the person updated guide examples, links and a PR template, and wrote guide sections on their own. They also gave reasons in several discussions and reviews, such as why .html links stay. They have not yet reached «Solves and explains the cause», because most of this explaining concerns documentation and review choices rather than diagnosing causes of defects.",
         "source": "model"
       },
       {
@@ -194,7 +194,7 @@
         "true_level": "l2",
         "shown_level": "l1",
         "direction": "lower",
-        "level_reason": "The records place the work at «Follows a given approach»: each change applies a well-defined fix such as regenerating package-lock.json to repair a failing CI run, running npm audit fix to move qs, express, js-cookie and brace-expansion to newer versions, or removing stale dependency references from LICENSE files and project.json. The changes were reviewed or approved, which fits work done within an established method. The records do not yet support «Completes routine tasks alone», because they show no case where the person chose the approach independently or handled a task from start to finish without that guidance.",
+        "level_reason": "The records show dependency work done by following established routines: regenerating package-lock.json after it drifted from package.json, running npm audit fix, and removing stale entries from LICENSE and project.json files. These changes were reviewed or approved, which fits «Follows a given approach». They do not yet support «Completes routine tasks alone», because the records show no case of the person handling a task independently without review.",
         "source": "model"
       },
       {
@@ -203,7 +203,7 @@
         "true_level": "l3",
         "shown_level": "l2",
         "direction": "lower",
-        "level_reason": "The records show seven authored fixes across different areas, such as merging duplicate allowable values, treating an unconfigured secret as unset, and refreshing stale load balance clients after a node reconnects with a changed address. Each was completed alone and addressed a clear, bounded problem, and the reviews flagged real faults like a faulty version comparison and a possible null dereference, which fits «Completes routine tasks alone». They do not yet reach «Solves and explains the cause» because the causes are named in only some of the records, with several relying on a code comment or commit message, and the work is not shown consistently tracing a problem to its root and explaining it.",
+        "level_reason": "The records support «Completes routine tasks alone» because the person fixed several bugs as author without help, such as keeping duplicate allowable values in merged cluster responses and replacing stale load balance clients after a node reconnected. Some fixes come with a stated cause, for example that an unconfigured secret looked configured. They do not yet support «Solves and explains the cause», because the explanations are only given in some records, not consistently.",
         "source": "model"
       },
       {
@@ -212,7 +212,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records show eight reviews in which the person caught concrete issues that others then acted on, such as questioning a RuntimeException catch in a cleanup path and explaining why a general Exception fits cleanup-and-rethrow, asking for a leftover FIXME to be resolved, and suggesting a lower log level. They also checked for data-loss patterns and raised a concern about asset sizes growing from a few MB to multi-GB, so their approvals are something others can rely on, which fits «Others rely on it». The records do not yet fit «Sets the approach for others», because the feedback is mostly requests for small, local changes on individual changes and does not lay out an approach or standard that others are asked to follow more broadly.",
+        "level_reason": "The records place this work at «Others rely on it»: the person's reviews are trusted to catch real issues, such as questioning a RuntimeException catch in a cleanup path and explaining why a general Exception fits cleanup-and-rethrow. They also reliably flagged smaller points, like a leftover FIXME and a warning log that should be info. The records do not yet reach «Sets the approach for others», since the reviews respond to individual changes and do not establish a shared way of working.",
         "source": "model"
       },
       {
@@ -221,7 +221,7 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The record is a review on NIFI-16232 in which the reviewer spotted that the replicated FlowFile-listing request in a cluster needs data-read permission, while flow updates need only component read and write permission, and then asked for an internal queue-count operation and a test with a user who lacks that permission. Catching a gap the author missed and steering the change toward a safer fix is what makes this «Others rely on it»: the work is trusted as a check on other people's changes. Nothing in the records yet shows the person defining an approach that others adopt as a standard, which is why it does not reach «Sets the approach for others».",
+        "level_reason": "At «Others rely on it», the review on NIFI-16232 shows the person catching a permission gap that the author had missed: the replicated FlowFile-listing request in a cluster needs data-read permission, which a standalone update does not. They also asked for an internal queue-count operation and a test with a user lacking that permission. This is not yet «Sets the approach for others», because the records show one review of one change, not a method that others adopt.",
         "source": "model"
       },
       {
@@ -230,8 +230,8 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records show two reviews where the person explained why a client is orphaned from the queue, argued that closing it is the real fix rather than a nack, and gave concrete test and code suggestions in NIFI-15483, which is the kind of input others can rely on at «Others rely on it». They do not yet reach «Sets the approach for others», because the reviews comment on individual changes and do not show the person defining an approach that others then follow.",
-        "source": "model"
+        "level_reason": "The records support «Others rely on it». The records show two reviews written by the person, as reviewer. They do not yet support «Sets the approach for others».",
+        "source": "fallback"
       },
       {
         "developer_id": "DEV-07",
@@ -239,7 +239,7 @@
         "true_level": "l4",
         "shown_level": "l3",
         "direction": "lower",
-        "level_reason": "The records fit «Solves and explains the cause» because the person's largest change moved the Get and Put SMB processors onto a shared client provider service, so that List, Fetch, Get and Put now use one abstraction, and the person also removed duplicated or obsolete code in four other changes. As reviewer, the person explained the cause of a concurrency problem with partition assignment in onTrigger and gave reasons for removing obsolete routing. The records do not yet show «Others rely on it», because nothing in them shows other people depending on the person's work or relying on the person's judgement as a standard.",
+        "level_reason": "The records support «Solves and explains the cause» because the largest change moved the Get and Put SMB processors onto a shared client provider service, so the List, Fetch, Get and Put processors now use one abstraction. As a reviewer, the person also explained a concurrency problem with partition assignment in onTrigger and proposed concrete fixes. They do not yet support «Others rely on it», because nothing shows other people depending on this work.",
         "source": "model"
       },
       {
@@ -248,7 +248,7 @@
         "true_level": "l2",
         "shown_level": "l3",
         "direction": "raise",
-        "level_reason": "The records support «Solves and explains the cause» because the person fixed concrete problems and gave the reason behind each fix: DESIGN.md was moved to .prettierignore with a comment about the YAML front matter problem, an Nx upgrade review explained that version 21.1.6 applies only to CDK/Material and not to the Angular core, and a patch upgrade was judged low-risk because it stays within the same minor and includes security hardening commits. They do not yet support «Others rely on it» because the records show changes that went through review and reviews of other people's work, but no sign yet that others depend on this person's work or judgment as a standing point of reference.",
+        "level_reason": "The records fit «Solves and explains the cause» because the person traced problems to their source and said why. One review showed that an Angular version in a commit message applied only to CDK/Material, not the core, and another change added DESIGN.md to .prettierignore with a note about the YAML front matter problem. They do not yet support «Others rely on it», since nothing shows other people depending on this work.",
         "source": "model"
       },
       {
@@ -257,7 +257,7 @@
         "true_level": "l2",
         "shown_level": "l3",
         "direction": "raise",
-        "level_reason": "The review on NIFI-14319 shows the reviewer finding a specific problem, duplicated header components, and proposing a fix: generalize the fd-header and move it into the shared library. They also pointed to how tables elsewhere are standalone components with inputs and asked for unused configs and files to be removed, which fits «Solves and explains the cause». The record is a single review and does not show others depending on this work, so it does not yet support «Others rely on it».",
+        "level_reason": "The review on NIFI-14319 fits «Solves and explains the cause»: the reviewer spotted that header components were duplicated and explained the fix, which was to generalize the fd-header and move it into the shared library. They also pointed to how tables elsewhere are built as standalone components with inputs. The records do not yet reach «Others rely on it», because they show one review and no sign that others depend on this guidance.",
         "source": "model"
       }
     ]

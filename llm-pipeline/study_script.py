@@ -37,6 +37,7 @@ from common import (
 )
 
 SHARE = 0.25
+MAX_WORDS = 85  # the normal level reasons are about 70 words (max 97); keep both kinds alike
 SEED = 42
 
 
@@ -102,6 +103,9 @@ def reject_reason(text: str, shown: str, nxt: str | None) -> str | None:
         return f"it must name «{LEVEL_LABELS[shown]}» exactly"
     if nxt and f"«{LEVEL_LABELS[nxt]}»" not in text:
         return f"it must name the next level «{LEVEL_LABELS[nxt]}» exactly"
+    words = len(text.split())
+    if words > MAX_WORDS:
+        return f"it has {words} words; it needs at most {MAX_WORDS}"
     if re.search(r"(could|may|might) (be|have been) (wrong|incorrect)|on purpose|deliberate(ly)?\b|not (really )?sure", text, re.I):
         return "it must not say that the level could be wrong or chosen on purpose"
     return None

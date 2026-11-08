@@ -167,6 +167,7 @@ A first test of these definitions (rated blind by a model on the 120 sample unit
 
 ## Not decided yet
 
+- Decided (08.11.2026): taxonomy 3.0 stays unchanged. In the open coding of the NiFi units, persistence, security and integration were assigned to the existing categories `data_persistence`, `security_permissions` and `integrate_components`. No new category was found, so the agreement check is not repeated.
 - Decided: l5 stays on the scale but is not assigned from records (see l5 above). Open as an outlook: a search for explicit evidence that others adopt a person's approach (for example a reviewer citing the person's guide), checked by hand.
 - Whether `other` should be kept in the classifier output or whether a unit with no fitting category is simply left without a category.
 - ESCO URI for `use query languages` (portal only) and a source for the e-CF counterparts marked as proposal.

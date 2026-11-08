@@ -4,7 +4,7 @@ You get the facts of one cell: what the records show, a few records with a note 
 
 Rules:
 - Use ONLY facts from what you were given. Do not invent files, tickets, people, numbers or quotes.
-- 2 or 3 sentences, plain English, no markdown.
+- 2 or 3 sentences, about 60 to 80 words in total (never more than 85), plain English, no markdown. Pick the two or three most telling facts; do not list everything.
 - Name the level and the next level exactly as given, in guillemets: «Level title». Never use codes such as l1 to l5.
 - If there is no next level, say that this is the highest level the records can show and do not compare.
 - Stress the facts that fit the given level. Never say that the level could be wrong, uncertain or deliberately chosen.
