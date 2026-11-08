@@ -2,35 +2,48 @@ import { getAssessments } from "./assessments";
 import { DEFAULT_PROJECT, type ProjectId } from "./project";
 import { emptyMatrix } from "./matrix";
 import { signalsFromEvidence } from "./org-config";
+import { wrongCellsFor } from "./study-script";
 import type { AiSuggestion, Matrix, SkillLevel } from "./types";
 
 /**
  * Builds Task-2 suggestions from data/assessments.json (absolute levels).
  * One suggestion per developer × display category.
  */
-export function buildSuggestionsFromAssessments(project: ProjectId = DEFAULT_PROJECT): AiSuggestion[] {
-  return getAssessments(project).assessments.map((assessment) => ({
-    devId: assessment.developer_id,
-    categoryId: assessment.category_id,
-    suggested: assessment.level,
-    direction: assessment.study?.direction ?? "raise",
-    confidence: assessment.confidence,
-    rationale: assessment.rationale,
-    levelReason: assessment.level_reason,
-    evidence: assessment.evidence,
-    signals: signalsFromEvidence(assessment.evidence),
-    veracity: assessment.study?.veracity ?? "correct",
-  }));
+export function buildSuggestionsFromAssessments(
+  project: ProjectId = DEFAULT_PROJECT,
+  participantCode?: string,
+): AiSuggestion[] {
+  const wrong = wrongCellsFor(participantCode, project);
+  return getAssessments(project).assessments.map((assessment) => {
+    const off = wrong.get(`${assessment.developer_id}::${assessment.category_id}`);
+    return {
+      devId: assessment.developer_id,
+      categoryId: assessment.category_id,
+      suggested: off ? off.shown_level : assessment.level,
+      direction: off ? off.direction : assessment.study?.direction ?? "raise",
+      confidence: assessment.confidence,
+      rationale: assessment.rationale,
+      levelReason: off ? off.level_reason : assessment.level_reason,
+      evidence: assessment.evidence,
+      signals: signalsFromEvidence(assessment.evidence),
+      veracity: off ? "incorrect" : assessment.study?.veracity ?? "correct",
+    };
+  });
 }
 
 /** Prefill matrix for Task 2 — every cell set to the inferred level from the file. */
-export function assessmentsToMatrix(project: ProjectId = DEFAULT_PROJECT): Matrix {
+export function assessmentsToMatrix(
+  project: ProjectId = DEFAULT_PROJECT,
+  participantCode?: string,
+): Matrix {
   const matrix = emptyMatrix();
+  const wrong = wrongCellsFor(participantCode, project);
   for (const assessment of getAssessments(project).assessments) {
     if (!matrix[assessment.developer_id]) {
       matrix[assessment.developer_id] = {};
     }
-    matrix[assessment.developer_id][assessment.category_id] = assessment.level as SkillLevel;
+    const off = wrong.get(`${assessment.developer_id}::${assessment.category_id}`);
+    matrix[assessment.developer_id][assessment.category_id] = (off ? off.shown_level : assessment.level) as SkillLevel;
   }
   return matrix;
 }

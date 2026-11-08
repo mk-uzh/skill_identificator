@@ -85,6 +85,7 @@ export async function GET(request: Request) {
       participant_id: s.participantCode,
       condition: s.condition,
       project: s.project ?? "sakai",
+      study_version: s.variant ?? "",
       created_at: s.createdAt,
       config_hash: s.config_hash ?? "",
       snapshot_hash: s.snapshot_hash ?? "",

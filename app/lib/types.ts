@@ -219,6 +219,8 @@ export interface StudySession {
    * first block. Derived from the participant code, stored for the analysis.
    */
   devOrder?: string[];
+  /** Study version (A or B) that decides which proposals are deliberately wrong. */
+  variant?: "A" | "B";
   /**
    * Set when the run was cut short from the prototype shortcut. Such a
    * session is NOT a participant run: most cells were never seen, and the

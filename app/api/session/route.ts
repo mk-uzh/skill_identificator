@@ -4,6 +4,7 @@ import { getAssessments } from "@/lib/assessments";
 import { readSession, saveSession } from "@/lib/store";
 import { parseProject } from "@/lib/project";
 import { developerOrder } from "@/lib/study-flow";
+import { versionFor } from "@/lib/study-script";
 import type { StudySession } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -39,6 +40,7 @@ export async function POST(request: Request) {
       config_hash: assessments.config_hash,
       snapshot_hash: assessments.config_hash,
       devOrder: developerOrder(participantCode),
+      variant: versionFor(participantCode),
     };
 
     await saveSession(session);

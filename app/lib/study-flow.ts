@@ -31,7 +31,7 @@ export const PERSONS_PER_PARTICIPANT = 3;
 export const BLOCK_COUNT = Math.min(PERSONS_PER_PARTICIPANT, DEVELOPERS.length);
 
 /** FNV-1a. Deterministic so a reload cannot reshuffle the order. */
-function hashCode(seed: string): number {
+export function hashCode(seed: string): number {
   let h = 0x811c9dc5;
   for (let i = 0; i < seed.length; i += 1) {
     h ^= seed.charCodeAt(i);

@@ -1,0 +1,265 @@
+{
+  "project": "sakai",
+  "seed": 42,
+  "share": 0.25,
+  "computed_at": "2026-11-08T22:39:12+00:00",
+  "assessments_hash": "2f5768d1240cf396",
+  "versions": {
+    "A": [
+      {
+        "developer_id": "DEV-01",
+        "category_id": "data_persistence",
+        "true_level": "l4",
+        "shown_level": "l3",
+        "direction": "lower",
+        "level_reason": "The records fit «Solves and explains the cause» because the person fixed slow and failing queries by adding a composite calendar index, moving audit log paging into SQL and preloading authorization in one query, and also explained causes in reviews, such as how Hibernate bulk deletes differ from queued entity removals in a unique-constraint violation. They do not yet support «Others rely on it», because the records show the person migrating services such as Polls and Tags and giving review advice, but nothing shows other people depending on this person's work or judgment as a standard they follow.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-01",
+        "category_id": "dev_automated_tests",
+        "true_level": "l3",
+        "shown_level": "l4",
+        "direction": "raise",
+        "level_reason": "The records show tests added alongside fixes and features across 104 units of work, plus changes that others can build on: shared Playwright helpers that replaced the Cypress suite, Mockito MockedStatic test classes in place of PowerMock, and a CI step that runs locale-dependent tests under the ES locale. Documentation such as the comment on the comma as a thousands separator and the class comment on the tag service's transactional design also helps others work with this code, which fits «Others rely on it». The records do not yet show the person defining a testing approach that others are expected to follow, so they do not reach «Sets the approach for others».",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-01",
+        "category_id": "integrate_components",
+        "true_level": "l3",
+        "shown_level": "l2",
+        "direction": "lower",
+        "level_reason": "The records show steady, independent work on changes where Sakai tools and external systems meet, including smaller fixes and feature changes across LTI, SCORM, Samigo and import, which fits «Completes routine tasks alone». The person also gave reasons for changes, such as why published imports create announcement and calendar events or why a grade is pushed to the Gradebook, but these explanations describe design choices and do not trace a fault back to its cause. That is why the records do not yet support «Solves and explains the cause».",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-02",
+        "category_id": "data_persistence",
+        "true_level": "l2",
+        "shown_level": "l3",
+        "direction": "raise",
+        "level_reason": "The records fit «Solves and explains the cause» because the fixes name the specific Oracle problem behind each failure: NOW replaced with CURRENT_TIMESTAMP, FETCH FIRST 1 ROWS ONLY used in place of LIMIT, and a named sequence generator (GB_COMMENT_S) used instead of the default AUTO strategy. Review comments that warn code will not work on Oracle and point to the MySQL script show the same understanding of why things break. They do not yet support «Others rely on it», because nothing in them shows other people depending on this person's judgement or work as a standing resource.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-02",
+        "category_id": "frontend_logic",
+        "true_level": "l3",
+        "shown_level": "l4",
+        "direction": "raise",
+        "level_reason": "The records fit «Others rely on it» because the person's fixes in scripts, templates and components are small, approved by reviewers, and keep behaviour working for others, such as the feature detection and fallbacks that stop components failing in iOS and Android webviews, with code comments naming the cause. They do not yet support «Sets the approach for others» because the review comments are a few code suggestions and one bare question, and nothing shows the person defining a pattern or direction that others adopt.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-02",
+        "category_id": "integrate_components",
+        "true_level": "l3",
+        "shown_level": "l4",
+        "direction": "raise",
+        "level_reason": "The records show 18 changes, mostly in the Microsoft integration and where tools meet Gradebook, and many were approved by reviewers. The person added shared service methods that several call sites now use, such as the team name check reused by auto-config, the site synchronization controller and the synchronization service, so other code relies on this work and this fits «Others rely on it». The records do not yet show the person deciding an approach that others then follow, which is what «Sets the approach for others» would need.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-04",
+        "category_id": "code_review",
+        "true_level": "l2",
+        "shown_level": "l3",
+        "direction": "raise",
+        "level_reason": "The records fit «Solves and explains the cause» because the reviews give concrete fixes along with reasons, for example that a pretty-print call runs on every request regardless of log level and so must be wrapped in an `if` until the slf4j 2 migration, and that a log statement should pass the exception and site id. They do not yet support «Others rely on it» because they show a reviewer making suggestions and asking questions, with no evidence that other people depend on this work or look to it as a standard.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-04",
+        "category_id": "dev_automated_tests",
+        "true_level": "l3",
+        "shown_level": "l2",
+        "direction": "lower",
+        "level_reason": "The records show the person fixing a flaky web-component test, migrating tests to a newer fetch-mock API, and reworking entitybroker and FormatHelper tests to use Spring configuration, which fits «Completes routine tasks alone». About ten other units add or adjust tests alongside fixes, and the review comments on mocking and test set-up are given with reasons and alternatives. They do not yet fit «Solves and explains the cause», because many of the review remarks are shorter suggestions or questions about test set-up, and the fixes are mostly described by what was changed rather than by a clearly explained root cause.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-04",
+        "category_id": "security_permissions",
+        "true_level": "l3",
+        "shown_level": "l4",
+        "direction": "raise",
+        "level_reason": "The records fit «Others rely on it» because the person's permission and access-check work is something other contributors depend on: as author, they reverted a Samigo change and argued for an all-groups permission matching the assignments tool, and as reviewer they steered checks such as dropping a redundant super user check and questioning an allow-all permission as too wide. These are consistent, hands-on corrections that others can build on. They do not yet support «Sets the approach for others», because the reviews are mostly targeted suggestions or short questions on single changes, and the records do not show the person defining a wider approach that others adopt.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-07",
+        "category_id": "code_review",
+        "true_level": "l2",
+        "shown_level": "l1",
+        "direction": "lower",
+        "level_reason": "The records fit «Follows a given approach» because the reviews are short and tied to the change in front of the reviewer: a code suggestion with no explanation, a concern that a change touches too many components for QA to test, and a question about why negative rowIds are inverted and added to max. These comments react to existing code and give no fix or wider plan. They do not yet support «Completes routine tasks alone» because none of them shows the person settling a task from start to finish, since the questions stay open and the suggestion comes without reasoning.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-07",
+        "category_id": "security_permissions",
+        "true_level": "l3",
+        "shown_level": "l4",
+        "direction": "raise",
+        "level_reason": "The records place the work at «Others rely on it» because the person's reviews explain how authz group overrides lock child permissions and why top-level folder permissions dominate, and they raise a sharp question about scope checking across sites. The person also changed permission handling in the grades controller and added permission checks that other code and users depend on. The records do not yet reach «Sets the approach for others», because they show explaining, questioning and fixing within existing designs rather than defining an approach that others adopt.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-07",
+        "category_id": "software_design",
+        "true_level": "l4",
+        "shown_level": "l3",
+        "direction": "lower",
+        "level_reason": "The records fit «Solves and explains the cause» because the person fixed problems at their source: duplicated site-list code went into one shared controller helper, a shared SchedulingService was added in the kernel, and review comments asked for logic to move into a shared service or base class with reasons such as keeping database logic in one place. They do not yet support «Others rely on it», because the records show the person's own changes and review suggestions, but nothing showing that other people depend on this work or turn to the person for it.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-09",
+        "category_id": "design_user_interface",
+        "true_level": "l2",
+        "shown_level": "l1",
+        "direction": "lower",
+        "level_reason": "The records fit «Follows a given approach» because each of the seven interface changes applies a defined pattern, such as a CSS class, an icon class, a Bootstrap class or an SCSS rule, to a specific, clearly described problem, like the rubric modal placement, the missing flag icons or the blank disabled checkboxes. Reviewers approved the changes where approval is recorded, which shows the approach was applied correctly. They do not yet support «Completes routine tasks alone», because the records show no case of the person independently choosing the method and carrying a routine task through from start to finish.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-09",
+        "category_id": "software_design",
+        "true_level": "l4",
+        "shown_level": "l3",
+        "direction": "lower",
+        "level_reason": "The records fit «Solves and explains the cause» because both changes deal with a specific problem and its source: the copy permission fix extended the shared EntityTransferrer interface and implemented it across many tool producers, and the import display change added one helper in SiteAction that both import flows reuse. The three pull requests with review comments and approvals show the work was explained and checked by others. They do not yet support «Others rely on it», because nothing in them shows other people or teams depending on this work.",
+        "source": "model"
+      }
+    ],
+    "B": [
+      {
+        "developer_id": "DEV-01",
+        "category_id": "frontend_logic",
+        "true_level": "l3",
+        "shown_level": "l4",
+        "direction": "raise",
+        "level_reason": "The records fit «Others rely on it» because the person explained causes and reworked the logic behind problems in about twenty of 124 units, such as why mouse drag broke once handles became buttons, how to restore reply nesting after date sorting, and how to load Commons data in one fetch. They also restructured pagination, dialogs and sorting, and traced faults to their causes as a reviewer. What the records do not yet show for «Sets the approach for others» is the person defining a shared way of working for others to follow, since most other units are small fixes and additions and the reviewer comments are mostly questions and suggestions.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-01",
+        "category_id": "internationalisation",
+        "true_level": "l4",
+        "shown_level": "l3",
+        "direction": "lower",
+        "level_reason": "The records show the person fixing locale problems at their source: the shared UserSortNameComparator now takes a locale, a SakaiCollators helper was added and tested for Spanish, Swedish and US ordering, and gradebook CSV handling was moved into one UTF-8 helper. In reviews the person also explained why code would fail, for example hard-coded English breaking non-English locales, a broad catch hiding configuration errors and producing a PDF in the wrong language, and browser guessing when UTF-8 is not assumed. This fits «Solves and explains the cause», but the records do not yet show other people depending on this work as a standard they rely on, which is what «Others rely on it» would need.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-01",
+        "category_id": "security_permissions",
+        "true_level": "l3",
+        "shown_level": "l2",
+        "direction": "lower",
+        "level_reason": "The records fit «Completes routine tasks alone» because the person added guards and permission checks across many areas, such as announcements, forums, roster and LTI token validation, and most of those changes were approved without rework. In reviews the person also spotted concrete gaps, like the missing maintainer check in deleteTool, and named the cases that would bypass a check. They do not yet reach «Solves and explains the cause» because the written explanations are limited to a few code comments and review notes, and the records do not show a traced root cause for a failure that is then written up as a full account of why it happened and how the fix addresses it.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-02",
+        "category_id": "design_user_interface",
+        "true_level": "l2",
+        "shown_level": "l3",
+        "direction": "raise",
+        "level_reason": "The records show the person fixing display problems as author, such as the Roster photos in list mode and the missing Gradebook extra credit icon, and each fix targets the specific styling rule behind the problem, which fits «Solves and explains the cause». Reviewers approved most of these changes, and the person's few review comments were short and about details. The records do not yet show other people depending on this work, which «Others rely on it» would require.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-02",
+        "category_id": "dev_automated_tests",
+        "true_level": "l2",
+        "shown_level": "l3",
+        "direction": "raise",
+        "level_reason": "The records fit «Solves and explains the cause» because in both changes the person found why a test failed and fixed it at that point: the InstantUtilTest was adjusted together with the utility fix for the Windows error, and a default-locale setting in the CSVReaderTest stopped the calendar import tests failing under a Spanish locale. The locale change was two lines in one test file and was approved in review. They do not yet support «Others rely on it», because the records show only two small fixes to existing tests and nothing that other people build on or depend on.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-02",
+        "category_id": "security_permissions",
+        "true_level": "l2",
+        "shown_level": "l1",
+        "direction": "lower",
+        "level_reason": "The records fit «Follows a given approach» because each change applies an existing permission pattern in a narrow place, such as passing a group id to the assignment lookup, passing group and site ids to the category definitions call, or adding the roster view-profile permission to the photo check, and the group-scoping changes follow the group-based model the grading service already uses. The work stays within that established model and mostly takes the form of small, targeted edits, for example the one-line change in the category definitions call. They do not yet support «Completes routine tasks alone», because the records do not show the person independently owning a whole routine task from start to finish, and the changes are tied to the approach already in place and reviewed by others.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-04",
+        "category_id": "build_dependencies",
+        "true_level": "l3",
+        "shown_level": "l4",
+        "direction": "raise",
+        "level_reason": "The records show build and dependency work that other people's code depends on: a shared momentjs version constant used across modules, scripts that work out which npm packages are really deployed, and the opensearch-ssl-config dependency that the reindex plugin needs and without which Sakai would not start. As reviewer, the person also pointed out scopes already defined in the master or corporate pom, which helps others keep builds consistent, so this fits «Others rely on it». The records do not yet reach «Sets the approach for others», because the work is mostly done as fixes and upgrades, and the review remarks are short hints and questions rather than a method or standard that others are asked to follow.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-04",
+        "category_id": "data_persistence",
+        "true_level": "l4",
+        "shown_level": "l3",
+        "direction": "lower",
+        "level_reason": "The records fit «Solves and explains the cause» because the person carried out three large migrations from generic-dao to JPA and Spring repositories, wrote a migration guide, explained which forum permission cleanup case to run first and why, and in seven of twelve reviews named a cause or cost, such as Oracle IN-list batching or a heavy site save, and suggested a fix. They do not yet support «Others rely on it» because the other five reviews were short pointers or a bare question, and the records show no sign of other people depending on this person's judgment on persistence code.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-04",
+        "category_id": "design_user_interface",
+        "true_level": "l3",
+        "shown_level": "l4",
+        "direction": "raise",
+        "level_reason": "The records support «Others rely on it» because, as reviewer, the person repeatedly gave concrete CSS guidance that others could act on: they explained why a fixed rubric modal offset fails on smaller screens and proposed a centering fix, proposed theme variables to replace a change that broke the cascade, and advised against !important with its maintainability costs. They also made changes of their own to layouts and styling. The records do not yet support «Sets the approach for others», because the advice appears as comments on individual changes and does not show the person defining a shared approach that others follow.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-07",
+        "category_id": "frontend_logic",
+        "true_level": "l3",
+        "shown_level": "l2",
+        "direction": "lower",
+        "level_reason": "The records show steady, independent work at «Completes routine tasks alone»: the person made small fixes in roster, conversations, grades and rubrics components and restructured the profile sidebar by moving the calendar into its own offcanvas panel, and in many reviews gave concrete suggestions such as null guards, optional chaining and shouldUpdate placement. The reviews also explain causes, for example why a boolean attribute cannot hold the string \"false\" and why two separate Date.now() calls create a timing flaw. But these explanations appear mostly in reviews of other people's code, while the person's own changes are mainly small fixes and a sidebar restructuring, so the records do not yet show the person solving and explaining a cause in their own work consistently enough for «Solves and explains the cause».",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-07",
+        "category_id": "integrate_components",
+        "true_level": "l4",
+        "shown_level": "l3",
+        "direction": "lower",
+        "level_reason": "The records fit «Solves and explains the cause» because the person connected separate parts of the system across many changes, such as the LTI token service with its bearer interceptor and auth controller, and the event observer that creates assignment tasks for users added to a site. The person also explained the reasoning behind a choice: a banner was shown instead of creating a gradebook item, to avoid duplicating grading data in the topic and the archive. The records do not yet support «Others rely on it», because they show these changes being made and approved but give no sign that other people depend on the person's work.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-07",
+        "category_id": "internationalisation",
+        "true_level": "l2",
+        "shown_level": "l3",
+        "direction": "raise",
+        "level_reason": "The records fit «Solves and explains the cause» because the fix for the close buttons names the actual cause, a missing bundle key (sit_close_page) where the existing key is sit_closepage, and corrects the two template references so the aria-label resolves and the warning stops. The same pattern shows in the search button and notifications changes, which replace hard-coded or missing text with bundle lookups and add entries in several languages. They do not yet support «Others rely on it» because the records show the person fixing issues and giving review comments on hard-coded labels, but nothing shows other contributors depending on this person's work as a standard or a go-to source for internationalisation.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-09",
+        "category_id": "frontend_logic",
+        "true_level": "l3",
+        "shown_level": "l2",
+        "direction": "lower",
+        "level_reason": "The records show many small, well-scoped fixes to web components, Velocity and JSP templates and scripts, such as hiding rubric statistics from students and giving the Grader submission log an empty-array fallback, and several were approved in review, which fits «Completes routine tasks alone». The records do not yet fit «Solves and explains the cause» because most of these changes are stated as what was changed, with little written account of why the problem happened. The one review that traces a cause outside the change, an instructor=\"true\" line on the sakai-rubric-student component, is a single instance and not a steady pattern.",
+        "source": "model"
+      },
+      {
+        "developer_id": "DEV-09",
+        "category_id": "security_permissions",
+        "true_level": "l2",
+        "shown_level": "l3",
+        "direction": "raise",
+        "level_reason": "The records show a fix in the Lessons file access service (SAK-50993) that adds an availability check so hidden, unavailable resources are denied, plus a helper that handles collections (folder ids ending with the separator) separately, and the change was completed and its review accepted. This fits «Solves and explains the cause» because the change addresses why hidden resources were reachable and treats folders as a distinct case. It does not yet reach «Others rely on it» because the records contain only this one change and show nothing that other people depend on or build on.",
+        "source": "model"
+      }
+    ]
+  }
+}

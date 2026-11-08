@@ -80,8 +80,8 @@ export async function POST(request: Request) {
 
       // Suggestions from assessments.json — synchronous, no heavy compute.
       const project = parseProject(session.project);
-      const suggestions = buildSuggestionsFromAssessments(project);
-      const prefill = assessmentsToMatrix(project);
+      const suggestions = buildSuggestionsFromAssessments(project, session.participantCode);
+      const prefill = assessmentsToMatrix(project, session.participantCode);
       return NextResponse.json({
         ok: true,
         suggestions,
