@@ -2,7 +2,7 @@
   "project": "sakai",
   "seed": 42,
   "share": 0.25,
-  "computed_at": "2026-11-08T22:44:37+00:00",
+  "computed_at": "2026-11-08T22:48:23+00:00",
   "assessments_hash": "2f5768d1240cf396",
   "versions": {
     "A": [
@@ -140,8 +140,8 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records support «Others rely on it». The records cover 124 units of browser-side work. They do not yet support «Sets the approach for others».",
-        "source": "fallback"
+        "level_reason": "The records fit «Others rely on it»: in about twenty of 124 units the person explained causes or reworked logic, such as why mouse drag broke once handles became buttons and how reply nesting is restored after date sorting. Review comments also traced faults to their causes, including DST handling in a date picker. Most other work is small fixes, and nothing yet shows the person setting an approach that others follow, which «Sets the approach for others» would require.",
+        "source": "model"
       },
       {
         "developer_id": "DEV-01",

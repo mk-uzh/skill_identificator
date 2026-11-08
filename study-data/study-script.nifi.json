@@ -2,7 +2,7 @@
   "project": "nifi",
   "seed": 42,
   "share": 0.25,
-  "computed_at": "2026-11-08T22:46:11+00:00",
+  "computed_at": "2026-11-08T22:48:35+00:00",
   "assessments_hash": "2380291b395212e2",
   "versions": {
     "A": [
@@ -12,8 +12,8 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records support «Others rely on it». The records show two reviews the person wrote on Iceberg-related changes. They do not yet support «Sets the approach for others».",
-        "source": "fallback"
+        "level_reason": "At the «Others rely on it» level, the records show review work that others can build on: on one change the person caught duplicate field IDs in nested records and cited Iceberg's uniqueness requirement, and on another they found a likely copy/paste error, supplied a corrected code suggestion, and explained why the existing test missed it. These are specific, well-supported catches. Nothing yet shows the person defining an approach that others follow, which «Sets the approach for others» would require.",
+        "source": "model"
       },
       {
         "developer_id": "DEV-01",
@@ -230,8 +230,8 @@
         "true_level": "l3",
         "shown_level": "l4",
         "direction": "raise",
-        "level_reason": "The records support «Others rely on it». The records show two reviews written by the person, as reviewer. They do not yet support «Sets the approach for others».",
-        "source": "fallback"
+        "level_reason": "The reviews on NIFI-15935 and NIFI-15483 show work that others can build on: the reviewer explained why a client stays orphaned from the queue, argued that closing it is the real fix rather than a nack, and gave concrete test and code suggestions. That fits «Others rely on it». The records show feedback on individual changes, not an approach that other people adopt as a standard, so they do not yet support «Sets the approach for others».",
+        "source": "model"
       },
       {
         "developer_id": "DEV-07",
