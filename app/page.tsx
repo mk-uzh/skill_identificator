@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { InfoTip } from "@/components/InfoTip";
-import { LevelGuide } from "@/components/LevelGuide";
+import { CompetenceGuide, LevelGuide } from "@/components/LevelGuide";
 import { clientSession } from "@/lib/client-session";
 import { ORG_CONFIG } from "@/lib/org-config";
 import { projectInfo } from "@/lib/project";
@@ -13,22 +13,19 @@ import { BLOCK_COUNT, ownHref } from "@/lib/study-flow";
 
 function CompetenceTerm() {
   return (
-    <InfoTip term={String(CATEGORIES.length)} label="The competences" wide>
-      <span className="tipbody">
-        {CATEGORIES.map((c) => (
-          <span key={c.id} className="tipbody__p">
-            <b style={{ display: "inline", marginTop: 0 }}>{c.label}</b>
-            {c.plain ? <span className="muted">: {c.plain}</span> : null}
-          </span>
-        ))}
-      </span>
+    <InfoTip
+      term={<b><i>{CATEGORIES.length} competences</i></b>}
+      label="The competences"
+      wide
+    >
+      <CompetenceGuide />
     </InfoTip>
   );
 }
 
-function LevelTerm() {
+function LevelTerm({ text = "level" }: { text?: string }) {
   return (
-    <InfoTip term="level" label="The levels" wide>
+    <InfoTip term={<b><i>{text}</i></b>} label="The levels" wide>
       <LevelGuide bare />
       <span className="tipbody__p" style={{ marginTop: 8 }}>
         <b>n/o, not observable.</b> The records show nothing about this competence. That is
@@ -76,8 +73,8 @@ export default function IntroPage() {
         <p className="crumb">Study on assessing skills from public project records</p>
         <h1 className="title title--xl">Read the records. Rate what they show.</h1>
         <p className="lede">
-          You will look at {BLOCK_COUNT} developers of {projectInfo(project).full} and say, for
-          each of <CompetenceTerm /> competences, how far their work reaches. No technical
+          You will look at {BLOCK_COUNT} developers of {projectInfo(project).full} and say,
+          for each of the <CompetenceTerm />, how far their work reaches, based on <LevelTerm text="levels" />. No technical
           knowledge needed.
         </p>
       </section>
@@ -88,7 +85,7 @@ export default function IntroPage() {
           <h3>Task 1: rate on your own</h3>
           <p>
             You see {BLOCK_COUNT} developers, one after the other. For each of the{" "}
-            <CompetenceTerm /> competences you read what the public records show (changes,
+            <CompetenceTerm /> you read what the public records show (changes,
             reviews, tasks) and pick the <LevelTerm /> you think fits. An overview then shows all your
             ratings side by side, and you can still correct them there.
           </p>

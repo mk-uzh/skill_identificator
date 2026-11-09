@@ -2321,3 +2321,6 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
 .tip__pop { max-height: 70vh; overflow: auto; }
 .intro .hero .lede { max-width: none; }
 .h3-inline { margin-top: 44px; }
+
+.cmptab__group td { padding-top: 12px; font-size: 12px; font-weight: 600; color: var(--ink-3); text-transform: none; }
+.cmptab__n { width: 28px; color: var(--ink-3); font-weight: 600; }

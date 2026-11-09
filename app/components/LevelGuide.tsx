@@ -1,6 +1,8 @@
 "use client";
 
-import { LEVEL_ANCHORS, LEVEL_ANCHORS_SHORT } from "@/lib/taxonomy";
+import { Fragment } from "react";
+
+import { groupedCategories, LEVEL_ANCHORS, LEVEL_ANCHORS_SHORT } from "@/lib/taxonomy";
 import {
   ORDERED_LEVELS,
   SKILL_LEVEL_LABELS,
@@ -108,5 +110,31 @@ export function ConfidenceGuide({ open = false, bare = false }: { open?: boolean
       <summary>What confidence means</summary>
       <div className="guide__body">{body}</div>
     </details>
+  );
+}
+
+/** The competences in their groups, each with one plain sentence. Same look as the level guide. */
+export function CompetenceGuide() {
+  return (
+    <table className="lvtab cmptab">
+      <tbody>
+        {groupedCategories().map(({ group, items }) => (
+          <Fragment key={group.id}>
+            <tr className="cmptab__group">
+              <td colSpan={2}>{group.label}</td>
+            </tr>
+            {items.map((c, i) => (
+              <tr key={c.id}>
+                <td className="cmptab__n">{i + 1}</td>
+                <td>
+                  <b>{c.label}</b>
+                  <div className="small muted">{c.plain}</div>
+                </td>
+              </tr>
+            ))}
+          </Fragment>
+        ))}
+      </tbody>
+    </table>
   );
 }
