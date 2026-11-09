@@ -7,6 +7,29 @@ import { BottomBar } from "@/components/BottomBar";
 import { clientSession } from "@/lib/client-session";
 import { cloneMatrix, coalesceMatrix } from "@/lib/matrix";
 import { futureWork, labelOf, roleFits } from "@/lib/roles";
+import { InfoTip } from "@/components/InfoTip";
+
+/** How an occupation is matched against the final assessment. Content for an InfoTip. */
+function OccupationInfo() {
+  return (
+    <span className="tipbody">
+      <span className="tipbody__p">
+        ESCO, the European skills classification, lists for every occupation the competences it
+        regards as essential.
+      </span>
+      <span className="tipbody__p">
+        For each occupation we count how many of those essential competences this study measures
+        and your final assessment puts at level 2 or higher. Level 1 and not observable do not
+        count. The occupation with the highest share is shown as the closest.
+      </span>
+      <span className="tipbody__p">
+        Essential competences the study does not measure are listed as &ldquo;nothing in the
+        records about&rdquo;. So a high match never means that the person fits the role. It shows
+        what the records demonstrate, not what the person is capable of.
+      </span>
+    </span>
+  );
+}
 import { useProject } from "@/lib/project-context";
 import { CATEGORIES } from "@/lib/study-config";
 import { BLOCK_COUNT, developerOrder, ownHref } from "@/lib/study-flow";
@@ -70,7 +93,6 @@ export default function SummaryPage() {
           setTask2(t2);
           setOutcomes((data.outcomes as SuggestionOutcome[]) ?? clientSession.getOutcomes());
           setShortened(Boolean(data.prototypeSkip));
-          setTab(developerOrder(clientSession.getParticipantCode() ?? "")[0] ?? "all");
           return;
         }
       } catch {
@@ -229,7 +251,12 @@ export default function SummaryPage() {
           </p>
 
           <div className="card">
-            <h3>Closest occupation per person</h3>
+            <h3>
+              Closest occupation per person
+              <InfoTip label="How the closest occupation is found" wide>
+                <OccupationInfo />
+              </InfoTip>
+            </h3>
             <table className="clean">
               <thead>
                 <tr>
@@ -333,7 +360,12 @@ export default function SummaryPage() {
           </div>
 
           <div className="card">
-            <h3>Which occupation do the records match?</h3>
+            <h3>
+              Which occupation do the records match?
+              <InfoTip label="How the occupations are matched" wide>
+                <OccupationInfo />
+              </InfoTip>
+            </h3>
             <table className="clean">
               <thead>
                 <tr>
@@ -372,6 +404,29 @@ export default function SummaryPage() {
             </p>
           </div>
 
+          <h3 className="h3-inline">
+            What the levels suggest for future work
+            <InfoTip label="How the three groups are formed" wide>
+              <span className="tipbody">
+                <span className="tipbody__p">
+                  The groups are read straight off your final levels, nothing else is added:
+                </span>
+                <b>Ready to take on</b>
+                <span className="tipbody__p">competences at level 4 or above.</span>
+                <b>Would grow into</b>
+                <span className="tipbody__p">competences at level 3.</span>
+                <b>Needs a conversation first</b>
+                <span className="tipbody__p">
+                  competences that are not observable: the records say nothing about them, so only a
+                  conversation can tell.
+                </span>
+                <span className="tipbody__p">
+                  It is a reading of the records, not a forecast, and it says nothing about what the
+                  person wants or is able to do.
+                </span>
+              </span>
+            </InfoTip>
+          </h3>
           <div className="stats stats--3">
             <div className="stat stat--text">
               <span>Ready to take on</span>

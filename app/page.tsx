@@ -62,19 +62,40 @@ export default function IntroPage() {
       <div className="flow3">
         <div className="card flow3__i">
           <span className="flow3__n">1</span>
-          <h3>Rate on your own</h3>
-          <p>One competence at a time. You read what the person did, then pick a level.</p>
+          <h3>Task 1: rate on your own</h3>
+          <p>
+            You see {BLOCK_COUNT} developers, one after the other. For each of the{" "}
+            {CATEGORIES.length} competences you read what the public records show (changes,
+            reviews, tasks) and pick the level you think fits. An overview then shows all your
+            ratings side by side, and you can still correct them there.
+          </p>
         </div>
         <div className="card flow3__i">
           <span className="flow3__n">2</span>
-          <h3>Compare</h3>
-          <p>The same people again, now with a suggested level. Accept it, adjust it or keep yours.</p>
+          <h3>Task 2: compare with the system</h3>
+          <p>
+            The same developers again, with the same records. For every competence the system
+            proposes a level with a short reason and a confidence. You accept it, adjust it or keep
+            your own answer.
+          </p>
         </div>
         <div className="card flow3__i">
           <span className="flow3__n">3</span>
-          <h3>Answer four questions</h3>
-          <p>A short wrap-up about how it felt.</p>
+          <h3>Summary and four questions</h3>
+          <p>
+            A summary shows what changed between your answers and the proposals, and which
+            occupations the records match. Four short questions about how it felt close the study.
+          </p>
         </div>
+      </div>
+
+      <div className="card">
+        <h3>About {projectInfo(project).label}</h3>
+        <p>{projectInfo(project).background}</p>
+        <p className="small muted" style={{ marginBottom: 0 }}>
+          The developers appear under pseudonyms. You do not need to know the project or the
+          people: judge only what the records show.
+        </p>
       </div>
 
       <div className="card">
@@ -96,6 +117,19 @@ export default function IntroPage() {
           <b>n/o, not observable.</b> The records show nothing about this competence. That is
           information, not a gap in your judgement.
         </p>
+        <details className="about about--flat">
+          <summary>
+            <span className="about__name">The {CATEGORIES.length} competences</span>
+            <span className="about__text">What you rate for every developer</span>
+          </summary>
+          <div className="about__body">
+            <ul className="sumlist">
+              {CATEGORIES.map((c) => (
+                <li key={c.id}>{c.label}</li>
+              ))}
+            </ul>
+          </div>
+        </details>
         <details className="about about--flat">
           <summary>
             <span className="about__name">Where the records come from</span>

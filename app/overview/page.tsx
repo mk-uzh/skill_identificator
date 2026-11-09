@@ -1,5 +1,6 @@
 "use client";
 
+import { FoldCard } from "@/components/FoldCard";
 import { EvidencePanel } from "@/components/EvidencePanel";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -270,8 +271,7 @@ export default function OverviewPage() {
             onChange={change}
           />
         </div>
-        <div className="card">
-          <h3>What the records show</h3>
+        <FoldCard title="What the records show">
           <EvidencePanel
             devId={sel.devId}
             categoryId={sel.categoryId}
@@ -283,7 +283,7 @@ export default function OverviewPage() {
               })
             }
           />
-        </div>
+        </FoldCard>
         </>
       ) : (
         <div className="card">

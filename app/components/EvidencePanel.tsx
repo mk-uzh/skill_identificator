@@ -96,11 +96,38 @@ export function EvidencePanel({
     </li>
   );
 
+  // The summary as short bullets: one sentence each, repeated sentences once.
+  const sentences = Array.from(
+    new Set(
+      assessment.rationale
+        .split(/(?<=[.!?])\s+/)
+        .map((s) => s.trim())
+        .filter(Boolean),
+    ),
+  );
+  const counts = Object.keys(KIND_LABEL)
+    .map((k) => [k, items.filter((e) => e.kind === k).length] as const)
+    .filter(([, n]) => n > 0)
+    .map(([k, n]) => `${n} ${KIND_LABEL[k].toLowerCase()}${n === 1 ? "" : "s"}`)
+    .join(", ");
+
   return (
     <div>
-      <p className="sum">{assessment.rationale}</p>
+      <ul className="sumlist sumlist--lg">
+        {sentences.map((s) => (
+          <li key={s}>{s}</li>
+        ))}
+      </ul>
       {items.length > 0 && (
-        <>
+        <details
+          className="ev-records"
+          onToggle={(e) => {
+            if ((e.currentTarget as HTMLDetailsElement).open) onEvidenceOpen?.("records");
+          }}
+        >
+          <summary>
+            Records ({counts})
+          </summary>
           <details className="ev-legend">
             <summary>What do Commit, Proposal, Review and Task mean?</summary>
             <ul>
@@ -120,7 +147,7 @@ export function EvidencePanel({
               <ul className="ev">{rest.map((item, i) => renderItem(item, i + VISIBLE_EXAMPLES))}</ul>
             </details>
           )}
-        </>
+        </details>
       )}
       {assessment.blind_spots && (
         <p className="blind">Not visible here: {assessment.blind_spots}.</p>

@@ -2222,7 +2222,7 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
 @media (min-width: 1920px) { html { zoom: 1; } }
 
 .card--why { background: var(--g100); }
-.why-sys { margin: 0; font-size: 16px; line-height: 1.55; }
+.why-sys { margin: 0; font-size: 19px; line-height: 1.5; letter-spacing: -0.01em; }
 
 /* ---------- terms of use (start page) ---------- */
 .terms { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0 12px; background: #fff; }
@@ -2295,3 +2295,21 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
 .ovb--dim:hover { opacity: .7; }
 .ovtools__opt { font-size: 13px; }
 .ovtools__opt input { width: 18px; height: 18px; }
+
+/* ---------- bullets, folded records, folded cards ---------- */
+.sumlist { margin: 0 0 10px; padding-left: 18px; font-size: 14px; color: var(--ink-2); }
+.sumlist li + li { margin-top: 4px; }
+.ev-records { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 8px; }
+.ev-records > summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.ev-records[open] > summary { margin-bottom: 8px; }
+.foldcard > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.foldcard > summary::-webkit-details-marker { display: none; }
+.foldcard > summary h3 { margin: 0; }
+.foldcard > summary::after { content: "+"; color: var(--ink-3); font-size: 20px; }
+.foldcard[open] > summary::after { content: "–"; }
+.foldcard__body { margin-top: 12px; }
+.h3-inline { margin: 18px 0 8px; }
+
+.sumlist--lg { font-size: 19px; line-height: 1.5; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 18px; padding-left: 22px; }
+.sumlist--lg li + li { margin-top: 6px; }
+.sumlist--lg li::marker { color: var(--g500); }

@@ -63,7 +63,11 @@ export function InfoTip({
         aria-label={label}
         aria-expanded={open}
         aria-controls={open ? id : undefined}
-        onClick={() => setPinned((p) => !p)}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setPinned((p) => !p);
+        }}
         onFocus={() => setHover(true)}
         onBlur={() => setHover(false)}
       >

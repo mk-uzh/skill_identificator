@@ -6,6 +6,7 @@ import { EvidencePanel } from "@/components/EvidencePanel";
 import { ConfidenceGuide } from "@/components/LevelGuide";
 import { HowProposalIsMade } from "@/components/HowProposalIsMade";
 import { InfoTip } from "@/components/InfoTip";
+import { FoldCard } from "@/components/FoldCard";
 import { CoverageBody } from "@/components/CoverageBody";
 import { LevelGuide } from "@/components/LevelGuide";
 import { RatingPanel } from "@/components/RatingPanel";
@@ -623,13 +624,21 @@ export default function Task2Page() {
             </div>
           )}
 
-          <div className="card">
-            <h3>
-              What the records show
+          <FoldCard
+            title="What the records show"
+            info={
               <InfoTip label="What is covered and what is not" wide>
                 <CoverageBody developer={developer} />
               </InfoTip>
-            </h3>
+            }
+            onOpen={() =>
+              logger.log("evidence_open", {
+                devId,
+                categoryId: category.id,
+                meta: { block, task: 2, via: "card" },
+              })
+            }
+          >
             <EvidencePanel
               devId={devId}
               categoryId={category.id}
@@ -641,7 +650,7 @@ export default function Task2Page() {
                 })
               }
             />
-          </div>
+          </FoldCard>
 
           </div>
 
