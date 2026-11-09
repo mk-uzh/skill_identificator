@@ -7,6 +7,9 @@ import { BottomBar } from "@/components/BottomBar";
 import { FlowBar } from "@/components/FlowBar";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { PersonLine } from "@/components/PersonLine";
+import { InfoTip } from "@/components/InfoTip";
+import { CoverageBody } from "@/components/CoverageBody";
+import { LevelGuide } from "@/components/LevelGuide";
 import { Rail, type RailItem } from "@/components/Rail";
 import { RatingPanel } from "@/components/RatingPanel";
 import { CellTracker } from "@/lib/cell-tracker";
@@ -262,7 +265,12 @@ export default function Task1Page() {
           <p className="lede">{category.plain}.</p>
 
           <div className="card">
-            <h3>What the records show</h3>
+            <h3>
+              What the records show
+              <InfoTip label="What is covered and what is not" wide>
+                <CoverageBody developer={developer} />
+              </InfoTip>
+            </h3>
             <EvidencePanel
               devId={devId}
               categoryId={selected}
@@ -277,7 +285,12 @@ export default function Task1Page() {
           </div>
 
           <div className="card">
-            <h3>Your level</h3>
+            <h3>
+              Your level
+              <InfoTip label="What the levels mean" wide>
+                <LevelGuide compact bare />
+              </InfoTip>
+            </h3>
             <RatingPanel
               name={category.label}
               value={currentLevel}

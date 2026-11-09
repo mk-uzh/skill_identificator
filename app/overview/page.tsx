@@ -35,7 +35,9 @@ export default function OverviewPage() {
   const [matrix, setMatrix] = useState<Matrix>(emptyMatrix);
   const [sel, setSel] = useState<{ devId: string; categoryId: string } | null>(null);
   const [ready, setReady] = useState(false);
-  const [sortBy, setSortBy] = useState<string | null>(null);
+  const [focus, setFocus] = useState<string | null>(null);
+  const [orderByFocus, setOrderByFocus] = useState(false);
+  const [hideNo, setHideNo] = useState(false);
   const [highlight, setHighlight] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -158,95 +160,99 @@ export default function OverviewPage() {
 
       <div className="ovgrid">
       <div className="card">
-        <div className="ovtools" role="group" aria-label="Order and highlight">
-          <span className="small muted">Order competences by</span>
-          <button type="button" className={"btn btn--sm btn--ghost" + (sortBy === null ? " is-on" : "")} onClick={() => setSortBy(null)}>
-            Default
+        <div className="ovtools" role="group" aria-label="Focus, order and filter">
+          <span className="small muted">Focus on</span>
+          <button type="button" className={"btn btn--sm btn--ghost" + (focus === null ? " is-on" : "")} onClick={() => { setFocus(null); setOrderByFocus(false); }}>
+            Everyone
           </button>
           {people.map((person) => (
             <button
               key={person.id}
               type="button"
-              className={"btn btn--sm btn--ghost" + (sortBy === person.id ? " is-on" : "")}
+              className={"btn btn--sm btn--ghost" + (focus === person.id ? " is-on" : "")}
               onClick={() => {
-                setSortBy(person.id);
-                logger.log("cell_open", { devId: person.id, meta: { screen: "overview", action: "sort" } });
+                setFocus(person.id);
+                logger.log("cell_open", { devId: person.id, meta: { screen: "overview", action: "focus" } });
               }}
             >
               {person.label}
             </button>
           ))}
-          <label className="checkbox ovtools__hl">
+        </div>
+        <div className="ovtools">
+          <label className="checkbox ovtools__opt">
+            <input
+              type="checkbox"
+              checked={orderByFocus}
+              disabled={focus === null}
+              onChange={(e) => setOrderByFocus(e.target.checked)}
+            />
+            <span>Highest level of the focused person first</span>
+          </label>
+          <label className="checkbox ovtools__opt">
             <input type="checkbox" checked={highlight} onChange={(e) => setHighlight(e.target.checked)} />
             <span>Mark each person&apos;s highest level</span>
           </label>
+          <label className="checkbox ovtools__opt">
+            <input type="checkbox" checked={hideNo} onChange={(e) => setHideNo(e.target.checked)} />
+            <span>Hide competences rated n/o</span>
+          </label>
         </div>
-        <div className="ovwrap">
-          <table className="ovmatrix">
-            <thead>
-              <tr>
-                <th className="ovmatrix__rowhead">Competence</th>
-                {people.map((person) => (
-                  <th key={person.id}>{person.label}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {groupedCategories().map(({ group, items: unsorted }) => {
-                const items = sortBy
-                  ? [...unsorted].sort(
-                      (a, b) => (valueOf(sortBy, b.id) ?? 0) - (valueOf(sortBy, a.id) ?? 0),
-                    )
-                  : unsorted;
-                return (
-                <Fragment key={group.id}>
-                  <tr className="ovmatrix__group">
-                    <td colSpan={people.length + 1}>{group.label}</td>
-                  </tr>
-                  {items.map((category) => (
-                    <tr key={category.id}>
-                      <td className="ovmatrix__rowhead">{category.label}</td>
+        <div className="ovchart">
+          {groupedCategories().map(({ group, items: unsorted }) => {
+            const shown = unsorted.filter((c) =>
+              hideNo
+                ? (focus ? [focus] : people.map((p) => p.id)).some((id) => (valueOf(id, c.id) ?? 0) > 0)
+                : true,
+            );
+            const items =
+              orderByFocus && focus
+                ? [...shown].sort((x, y) => (valueOf(focus, y.id) ?? 0) - (valueOf(focus, x.id) ?? 0))
+                : shown;
+            if (items.length === 0) return null;
+            return (
+              <Fragment key={group.id}>
+                <h4 className="ovchart__group">{group.label}</h4>
+                {items.map((category) => (
+                  <div className="ovrow" key={category.id}>
+                    <div className="ovrow__name">{category.label}</div>
+                    <div className="ovrow__bars">
                       {people.map((person) => {
                         const value = matrix[person.id]?.[category.id] ?? null;
-                        const active =
-                          sel?.devId === person.id && sel?.categoryId === category.id;
+                        const n = valueOf(person.id, category.id) ?? 0;
+                        const active = sel?.devId === person.id && sel?.categoryId === category.id;
+                        const top = highlight && n > 0 && n === maxOf(person.id);
                         return (
-                          <td key={person.id}>
-                            <button
-                              type="button"
-                              title={value ? SKILL_LEVEL_LABELS[value] : "not rated"}
-                              aria-label={`${person.label}, ${category.label}: ${
-                                value ? SKILL_LEVEL_LABELS[value] : "not rated"
-                              }`}
-                              className={
-                                "ovbar " +
-                                (value ? `ovbar--${value}` : "ovbar--na") +
-                                (active ? " ovbar--on" : "") +
-                                (highlight && (valueOf(person.id, category.id) ?? 0) > 0 &&
-                                valueOf(person.id, category.id) === maxOf(person.id)
-                                  ? " ovbar--top"
-                                  : "")
-                              }
-                              onClick={() =>
-                                setSel({ devId: person.id, categoryId: category.id })
-                              }
-                            >
-                              <span
-                                className="ovbar__fill"
-                                style={{ width: `${(value ? SKILL_LEVEL_VALUE[value] ?? 0 : 0) * 20}%` }}
-                              />
-                              <span className="ovbar__txt">{value ? SKILL_LEVEL_SHORT[value] : "–"}</span>
-                            </button>
-                          </td>
+                          <button
+                            key={person.id}
+                            type="button"
+                            title={value ? SKILL_LEVEL_LABELS[value] : "not rated"}
+                            aria-label={`${person.label}, ${category.label}: ${
+                              value ? SKILL_LEVEL_LABELS[value] : "not rated"
+                            }`}
+                            className={
+                              "ovb " +
+                              (value ? `ovb--${value}` : "ovb--na") +
+                              (active ? " ovb--on" : "") +
+                              (top ? " ovb--top" : "") +
+                              (focus && focus !== person.id ? " ovb--dim" : "")
+                            }
+                            onClick={() => setSel({ devId: person.id, categoryId: category.id })}
+                          >
+                            <span className="ovb__who">{person.label}</span>
+                            <span className="ovb__track">
+                              <span className="ovb__fill" style={{ width: `${n * 20}%` }} />
+                            </span>
+                            <span className="ovb__lv">{value ? SKILL_LEVEL_SHORT[value] : "–"}</span>
+                          </button>
                         );
                       })}
-                    </tr>
-                  ))}
-                </Fragment>
-                );
-              })}
-            </tbody>
-          </table>
+                    </div>
+                  </div>
+                ))}
+              </Fragment>
+            );
+          })}
         </div>
       </div>
 

@@ -114,7 +114,7 @@ export default function DonePage() {
       {busy && <LoadingSpinner fullPage label="Sending …" />}
       <p className="crumb">Last step</p>
       <h1 className="title">Four questions</h1>
-      <p className="lede">1 is the left end, 7 the right end.</p>
+      <p className="lede">1 is the left end, 5 the right end.</p>
 
       {QUESTIONS.map((question, qi) => (
         <div className="card" key={question.key}>
@@ -122,7 +122,7 @@ export default function DonePage() {
             {qi + 1}. {question.label}
           </h3>
           <div className="likert2" role="radiogroup" aria-label={question.label}>
-            {[1, 2, 3, 4, 5, 6, 7].map((value) => (
+            {[1, 2, 3, 4, 5].map((value) => (
               <button
                 key={value}
                 type="button"

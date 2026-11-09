@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { EvidencePanel } from "@/components/EvidencePanel";
 import { ConfidenceGuide } from "@/components/LevelGuide";
 import { HowProposalIsMade } from "@/components/HowProposalIsMade";
+import { InfoTip } from "@/components/InfoTip";
+import { CoverageBody } from "@/components/CoverageBody";
+import { LevelGuide } from "@/components/LevelGuide";
 import { RatingPanel } from "@/components/RatingPanel";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { BottomBar } from "@/components/BottomBar";
@@ -550,14 +553,35 @@ export default function Task2Page() {
           <div className="card">
             <div className="cmp">
               <div className="pill">
-                <small>You said</small>
+                <small>
+                  You said
+                  <InfoTip label="What the levels mean" wide>
+                    <LevelGuide compact bare />
+                  </InfoTip>
+                </small>
                 <big>
                   <i>{yourLevel ? SKILL_LEVEL_SHORT[yourLevel] : "–"}</i>
                   {yourLevel ? SKILL_LEVEL_LABELS[yourLevel] : "not set"}
                 </big>
               </div>
               <div className="pill pill--sys">
-                <small>The system proposes</small>
+                <small>
+                  The system proposes
+                  <InfoTip
+                    label="How the proposal is made"
+                    wide
+                    align="right"
+                    onToggle={(open) =>
+                      logger.log(open ? "rationale_open" : "rationale_close", {
+                        devId,
+                        categoryId: category.id,
+                        meta: { block, task: 2, panel: "how_proposal_is_made" },
+                      })
+                    }
+                  >
+                    <HowProposalIsMade />
+                  </InfoTip>
+                </small>
                 <big>
                   <i>{SKILL_LEVEL_SHORT[suggestion.suggested]}</i>
                   {SKILL_LEVEL_LABELS[suggestion.suggested]}
@@ -567,6 +591,9 @@ export default function Task2Page() {
                     <span style={{ width: `${confidencePct}%` }} className={confidenceClass(suggestion.confidence)} />
                   </span>
                   Confidence {confidencePct} %
+                  <InfoTip label="What confidence means" wide align="right">
+                    <ConfidenceGuide bare />
+                  </InfoTip>
                 </div>
               </div>
             </div>
@@ -597,7 +624,12 @@ export default function Task2Page() {
           )}
 
           <div className="card">
-            <h3>What the records show</h3>
+            <h3>
+              What the records show
+              <InfoTip label="What is covered and what is not" wide>
+                <CoverageBody developer={developer} />
+              </InfoTip>
+            </h3>
             <EvidencePanel
               devId={devId}
               categoryId={category.id}
@@ -670,21 +702,6 @@ export default function Task2Page() {
 
           <PersonLine developer={developer} />
 
-          <aside className="side">
-            <HowProposalIsMade
-              onToggle={(open) =>
-                logger.log(open ? "rationale_open" : "rationale_close", {
-                  devId,
-                  categoryId: category.id,
-                  meta: { block, task: 2, panel: "how_proposal_is_made" },
-                })
-              }
-            />
-            <details className="acc">
-              <summary>What confidence means</summary>
-              <ConfidenceGuide bare />
-            </details>
-          </aside>
           </div>
           </div>
 
