@@ -6,51 +6,51 @@ import { BottomBar } from "@/components/BottomBar";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { clientSession } from "@/lib/client-session";
 import { logger } from "@/lib/logger";
-import { VISIBILITY_LABELS, type VisibilityMode } from "@/lib/org-config";
-import type { SurveyAnswers, VisibilityPreference } from "@/lib/types";
+import type { SurveyAnswers } from "@/lib/types";
 
-const QUESTIONS: {
-  key: keyof Pick<
-    SurveyAnswers,
-    "confidenceTask1" | "confidenceTask2" | "trustInSystem" | "perceivedUsefulness"
-  >;
-  label: string;
-  ends: [string, string];
-}[] = [
-  {
-    key: "confidenceTask1",
-    label: "How confident were you in your assessment in Task 1?",
-    ends: ["very unsure", "very confident"],
-  },
-  {
-    key: "confidenceTask2",
-    label: "How confident were you in your assessment in Task 2?",
-    ends: ["very unsure", "very confident"],
-  },
-  {
-    key: "trustInSystem",
-    label: "How much did you trust the system's suggestions?",
-    ends: ["not at all", "completely"],
-  },
-  {
-    key: "perceivedUsefulness",
-    label: "How helpful did you find the support provided by the system?",
-    ends: ["not helpful at all", "very helpful"],
-  },
+type LikertKey = Exclude<
+  keyof SurveyAnswers,
+  "visibilityPreference" | "visibilityReason" | "comment"
+>;
+
+const AGREE: [string, string] = ["strongly disagree", "strongly agree"];
+
+const CONFIDENCE: { key: LikertKey; label: string }[] = [
+  { key: "confidenceTask1", label: "In Task 1 (my own ratings), I was confident in my assessments." },
+  { key: "confidenceTask2", label: "In Task 2 (after the proposals), I am confident in my final assessments." },
 ];
 
-const VISIBILITY_OPTIONS = Object.keys(VISIBILITY_LABELS) as VisibilityMode[];
+const MATRIX: { key: LikertKey; label: string }[] = [
+  { key: "usefulSpeed", label: "The system would help me judge expertise faster." },
+  { key: "usefulQuality", label: "The system would help me make better judgements of expertise." },
+  { key: "usefulWork", label: "The system would be useful in my work." },
+  { key: "relianceUnderstand", label: "I could understand why the system proposed what it did." },
+];
+
+const QUESTIONS = [...CONFIDENCE, ...MATRIX];
+
+const HELPED: [string, string][] = [
+  ["records", "The records (evidence)"],
+  ["level", "The proposed level"],
+  ["reason", "The reason the system gave"],
+  ["confidence", "The confidence shown"],
+  ["own", "My own first rating"],
+];
 
 export default function DonePage() {
   const router = useRouter();
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [answers, setAnswers] = useState<SurveyAnswers>({
-    trustInSystem: null,
     confidenceTask1: null,
     confidenceTask2: null,
-    perceivedUsefulness: null,
+    usefulSpeed: null,
+    usefulQuality: null,
+    usefulWork: null,
+    relianceUnderstand: null,
     visibilityPreference: null,
     visibilityReason: "",
+    helped: [],
+    helpedOther: "",
     comment: "",
   });
   const [sent, setSent] = useState(false);
@@ -67,18 +67,12 @@ export default function DonePage() {
   }, [router]);
 
   const likertComplete = QUESTIONS.every((q) => answers[q.key] != null);
-  const visibilityComplete =
-    answers.visibilityPreference != null && answers.visibilityReason.trim().length > 0;
-  const canSubmit = likertComplete && visibilityComplete && !busy;
+  const canSubmit = likertComplete && !busy;
 
   async function submit() {
     if (!sessionId || !canSubmit) return;
     setBusy(true);
-    logger.log("survey_submit", {
-      meta: {
-        visibilityPreference: answers.visibilityPreference,
-      },
-    });
+    logger.log("survey_submit");
     await logger.flush();
     try {
       await fetch("/api/submit", {
@@ -113,20 +107,45 @@ export default function DonePage() {
     <div className="page page--narrow2 page--flow">
       {busy && <LoadingSpinner fullPage label="Sending …" />}
       <p className="crumb">Last step</p>
-      <h1 className="title">Four questions</h1>
-      <p className="lede">1 is the left end, 5 the right end.</p>
+      <div className="cardhead">
+        <h1 className="title">A few questions</h1>
+      {process.env.NODE_ENV !== "production" && (
+        <button
+          type="button"
+          className="btn btn--ghost btn--sm"
+          onClick={() =>
+            setAnswers((a) => {
+              const r = () => 1 + Math.floor(Math.random() * 7);
+              return {
+                ...a,
+                confidenceTask1: r(),
+                confidenceTask2: r(),
+                usefulSpeed: r(),
+                usefulQuality: r(),
+                usefulWork: r(),
+                relianceUnderstand: r(),
+              };
+            })
+          }
+        >
+          Fill in randomly (testing only)
+        </button>
+      )}
+      </div>
+      <p className="lede">1 means strongly disagree, 7 means strongly agree.</p>
 
-      {QUESTIONS.map((question, qi) => (
+      {CONFIDENCE.map((question, qi) => (
         <div className="card" key={question.key}>
           <h3>
             {qi + 1}. {question.label}
           </h3>
-          <div className="likert2" role="radiogroup" aria-label={question.label}>
-            {[1, 2, 3, 4, 5].map((value) => (
+          <div className="likert7" role="radiogroup" aria-label={question.label}>
+            {[1, 2, 3, 4, 5, 6, 7].map((value) => (
               <button
                 key={value}
                 type="button"
                 role="radio"
+                data-v={value}
                 aria-checked={answers[question.key] === value}
                 onClick={() => setAnswers((a) => ({ ...a, [question.key]: value }))}
               >
@@ -135,45 +154,83 @@ export default function DonePage() {
             ))}
           </div>
           <div className="likert2__ends">
-            <span>{question.ends[0]}</span>
-            <span>{question.ends[1]}</span>
+            <span>{AGREE[0]}</span>
+            <span>{AGREE[1]}</span>
           </div>
         </div>
       ))}
 
       <div className="card">
-        <h3>Which visibility would you choose in your organisation, and why?</h3>
-        <select
-          id="visibilityPreference"
-          aria-label="Visibility preference"
-          value={answers.visibilityPreference ?? ""}
-          onChange={(e) =>
-            setAnswers((a) => ({
-              ...a,
-              visibilityPreference: (e.target.value || null) as VisibilityPreference,
-            }))
-          }
-        >
-          <option value="">Select …</option>
-          {VISIBILITY_OPTIONS.map((mode) => (
-            <option key={mode} value={mode}>
-              {VISIBILITY_LABELS[mode]}
-            </option>
+        <h3>3. How much do you agree?</h3>
+        <div className="mx" role="table" aria-label="Agreement">
+          <div className="mx__row mx__head" role="row">
+            <span />
+            <div className="mx__cells">
+              {[1, 2, 3, 4, 5, 6, 7].map((v) => (
+                <span key={v} role="columnheader">
+                  {v}
+                </span>
+              ))}
+            </div>
+          </div>
+          {MATRIX.map((row) => (
+            <div className="mx__row" role="row" key={row.key}>
+              <span className="mx__label" role="rowheader">
+                {row.label}
+              </span>
+              <div className="mx__cells" role="radiogroup" aria-label={row.label}>
+                {[1, 2, 3, 4, 5, 6, 7].map((v) => (
+                  <button
+                    key={v}
+                    type="button"
+                    role="radio"
+                    aria-label={`${row.label} ${v}`}
+                    aria-checked={answers[row.key] === v}
+                    className="mx__dot"
+                    onClick={() => setAnswers((a) => ({ ...a, [row.key]: v }))}
+                  />
+                ))}
+              </div>
+            </div>
           ))}
-        </select>
-        <textarea
-          id="visibilityReason"
-          aria-label="Reason"
-          rows={3}
+        </div>
+        <div className="mx__ends">
+          <span>1 = {AGREE[0]}</span>
+          <span>7 = {AGREE[1]}</span>
+        </div>
+      </div>
+
+      <div className="card">
+        <h3>4. What helped you decide in Task 2? Tick all that apply. Optional</h3>
+        {HELPED.map(([id, label]) => (
+          <label className="checkbox" key={id} style={{ marginTop: 8 }}>
+            <input
+              type="checkbox"
+              checked={(answers.helped ?? []).includes(id)}
+              onChange={(e) =>
+                setAnswers((a) => ({
+                  ...a,
+                  helped: e.target.checked
+                    ? [...(a.helped ?? []), id]
+                    : (a.helped ?? []).filter((x) => x !== id),
+                }))
+              }
+            />
+            <span>{label}</span>
+          </label>
+        ))}
+        <input
+          type="text"
+          aria-label="Other"
+          placeholder="Other"
           style={{ marginTop: 10 }}
-          value={answers.visibilityReason}
-          placeholder="Briefly, why this setting …"
-          onChange={(e) => setAnswers((a) => ({ ...a, visibilityReason: e.target.value }))}
+          value={answers.helpedOther ?? ""}
+          onChange={(e) => setAnswers((a) => ({ ...a, helpedOther: e.target.value }))}
         />
       </div>
 
       <div className="card">
-        <h3>Anything else? Optional</h3>
+        <h3>5. What was missing, or what bothered you? Optional</h3>
         <textarea
           id="comment"
           aria-label="Comments"
@@ -183,7 +240,7 @@ export default function DonePage() {
         />
       </div>
 
-      <BottomBar text={canSubmit ? "Ready to send" : `${answered} of ${QUESTIONS.length} rated, plus the visibility question`}>
+      <BottomBar text={canSubmit ? "Ready to send" : `${answered} of ${QUESTIONS.length} rated`}>
         <button type="button" className="btn" disabled={!canSubmit} onClick={submit}>
           {busy ? "Sending …" : "Submit"}
         </button>

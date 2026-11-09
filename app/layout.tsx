@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { StudyBanner } from "@/components/StudyBanner";
 import { Topbar } from "@/components/Topbar";
 import { ProjectProvider } from "@/lib/project-context";
 import { VisibilityProvider } from "@/lib/visibility-context";
@@ -21,7 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ProjectProvider>
           <VisibilityProvider>
             <Topbar />
-            <StudyBanner />
             <main>{children}</main>
           </VisibilityProvider>
         </ProjectProvider>

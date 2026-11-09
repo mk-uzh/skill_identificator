@@ -33,7 +33,7 @@ export const ORG_CONFIG = {
     "Review and mentoring work that leaves no trace in GitHub or Jira",
     "Whether work was written with AI assistance: the records show it only where a commit names an AI tool",
     "Work outside the tracked repositories and issue projects",
-    "Effort or hours worked — lead time is never treated as ability",
+    "Effort or hours worked, lead time is never treated as ability",
   ],
   /** DP5 / DP3 — permanent banner copy. */
   banner:

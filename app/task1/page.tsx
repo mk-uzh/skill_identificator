@@ -6,7 +6,6 @@ import { EvidencePanel } from "@/components/EvidencePanel";
 import { BottomBar } from "@/components/BottomBar";
 import { FlowBar } from "@/components/FlowBar";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { PersonLine } from "@/components/PersonLine";
 import { InfoTip } from "@/components/InfoTip";
 import { CoverageBody } from "@/components/CoverageBody";
 import { LevelGuide } from "@/components/LevelGuide";
@@ -242,6 +241,7 @@ export default function Task1Page() {
         personLabel={developer.label}
         personIndex={block}
         personCount={BLOCK_COUNT}
+        about={developer.profile}
         right={
           <button type="button" className="btn btn--ghost btn--sm" onClick={fillDefault}>
             Fill randomly (demo)
@@ -249,7 +249,7 @@ export default function Task1Page() {
         }
       />
 
-      <div className="shell shell--3">
+      <div className="shell">
         <Rail
           title={`Competences of ${developer.label}`}
           items={chips}
@@ -264,6 +264,7 @@ export default function Task1Page() {
           <h1 className="title">{category.label}</h1>
           <p className="lede">{category.plain}.</p>
 
+          <div className="t1cols">
           <div className="card">
             <h3>
               What the records show
@@ -302,10 +303,9 @@ export default function Task1Page() {
               </p>
             )}
           </div>
+          </div>
 
         </section>
-
-        <PersonLine developer={developer} />
       </div>
 
       <BottomBar

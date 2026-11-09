@@ -13,7 +13,6 @@ import { RatingPanel } from "@/components/RatingPanel";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { BottomBar } from "@/components/BottomBar";
 import { FlowBar } from "@/components/FlowBar";
-import { PersonLine } from "@/components/PersonLine";
 import { Rail, type RailItem } from "@/components/Rail";
 import { CellTracker } from "@/lib/cell-tracker";
 import { clientSession } from "@/lib/client-session";
@@ -529,6 +528,7 @@ export default function Task2Page() {
         personLabel={developer.label}
         personIndex={block}
         personCount={BLOCK_COUNT}
+        about={developer.profile}
         right={
           <button type="button" className="btn btn--ghost btn--sm" onClick={fillRandom}>
             Fill randomly (demo)
@@ -708,8 +708,6 @@ export default function Task2Page() {
               </p>
             )}
           </div>
-
-          <PersonLine developer={developer} />
 
           </div>
           </div>

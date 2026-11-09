@@ -64,12 +64,12 @@ export function SkillRadar({
   /** The summary carries its own table; off by default there. */
   withTable?: boolean;
 }) {
-  const size = 420;
+  const size = 460;
   const cx = size / 2;
   const cy = size / 2;
-  const maxR = 140;
+  const maxR = 190;
   /** Room on both sides for the competence names. */
-  const margin = 150;
+  const margin = 170;
   const n = CATEGORIES.length;
 
   const row1 = task1[developerId] ?? {};

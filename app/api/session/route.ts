@@ -5,7 +5,7 @@ import { readSession, saveSession } from "@/lib/store";
 import { parseProject } from "@/lib/project";
 import { developerOrder } from "@/lib/study-flow";
 import { versionFor } from "@/lib/study-script";
-import type { StudySession } from "@/lib/types";
+import type { ParticipantProfile, StudySession } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +18,7 @@ export async function POST(request: Request) {
       consent?: boolean;
       terms?: boolean;
       project?: string;
+      profile?: ParticipantProfile;
     };
 
     const participantCode = (body.participantCode ?? "").trim();
@@ -42,6 +43,7 @@ export async function POST(request: Request) {
       userAgent: request.headers.get("user-agent") ?? "unknown",
       consent: true,
       termsAccepted: true,
+      profile: body.profile,
       project,
       config_hash: assessments.config_hash,
       snapshot_hash: assessments.config_hash,

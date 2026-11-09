@@ -187,11 +187,27 @@ export type VisibilityPreference =
   | "self_only_plus_lead"
   | null;
 
+/** Background asked at the start (no identifying data). */
+export interface ParticipantProfile {
+  role: string;
+  roleOther?: string;
+  teamSize: string;
+  experienceYears: string;
+  codingExperience: string;
+  toolExperience: string;
+}
+
+/** All rating items use a seven-point scale (1 = strongly disagree, 7 = strongly agree). */
 export interface SurveyAnswers {
-  trustInSystem: number | null;
   confidenceTask1: number | null;
   confidenceTask2: number | null;
-  perceivedUsefulness: number | null;
+  usefulSpeed: number | null;
+  usefulQuality: number | null;
+  usefulWork: number | null;
+  relianceUnderstand: number | null;
+  /** What helped in Task 2 (multiple choice). */
+  helped?: string[];
+  helpedOther?: string;
   /** Which visibility regime the participant would choose in their org (DP6). */
   visibilityPreference: VisibilityPreference;
   /** Free-text rationale for the visibility choice. */
@@ -209,6 +225,8 @@ export interface StudySession {
   consent: boolean;
   /** The participant confirmed the terms of use (no basis for performance review, pay or promotion). */
   termsAccepted?: boolean;
+  /** Background of the participant, asked at the start. */
+  profile?: ParticipantProfile;
   /** Project the case study was run on (sakai or nifi). */
   project?: string;
   /** Taxonomy / inference config hash from assessments.json */

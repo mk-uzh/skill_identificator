@@ -12,6 +12,7 @@ export function FlowBar({
   personLabel,
   personIndex,
   personCount,
+  about,
   right,
 }: {
   /** "Task 1" or "Task 2". */
@@ -19,6 +20,8 @@ export function FlowBar({
   personLabel: string;
   personIndex: number;
   personCount: number;
+  /** Short background of the person being rated. */
+  about?: string;
   right?: React.ReactNode;
 }) {
   return (
@@ -30,6 +33,13 @@ export function FlowBar({
           <span>
             Person {personIndex + 1} of {personCount}
           </span>
+          {about && (
+            <InfoTip term="About this person" label={`About ${personLabel}`} wide>
+              <span className="tipbody">
+                <span className="tipbody__p">{about}</span>
+              </span>
+            </InfoTip>
+          )}
         </div>
         <ol className="pseg" aria-label={`Person ${personIndex + 1} of ${personCount}`}>
           {Array.from({ length: personCount }, (_, i) => (
