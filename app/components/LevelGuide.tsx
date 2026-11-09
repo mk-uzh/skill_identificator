@@ -115,6 +115,7 @@ export function ConfidenceGuide({ open = false, bare = false }: { open?: boolean
 
 /** The competences in their groups, each with one plain sentence. Same look as the level guide. */
 export function CompetenceGuide() {
+  let n = 0;
   return (
     <table className="lvtab cmptab">
       <tbody>
@@ -123,9 +124,9 @@ export function CompetenceGuide() {
             <tr className="cmptab__group">
               <td colSpan={2}>{group.label}</td>
             </tr>
-            {items.map((c, i) => (
+            {items.map((c) => (
               <tr key={c.id}>
-                <td className="cmptab__n">{i + 1}</td>
+                <td className="cmptab__n">{++n}</td>
                 <td>
                   <b>{c.label}</b>
                   <div className="small muted">{c.plain}</div>

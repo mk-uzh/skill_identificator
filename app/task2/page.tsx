@@ -348,62 +348,6 @@ export default function Task2Page() {
     return { finalMatrix, outcomes };
   }
 
-  /**
-   * Prototype shortcut, as in the design draft: finish task 2 now with what
-   * has been decided so far. Cells never seen keep the task 1 value and the
-   * session is flagged, so a shortened run cannot be mistaken for a real one.
-   */
-  async function skipToSummary() {
-    if (!sessionId || !devId) return;
-    setBusy(true);
-    setError(null);
-    const { finalMatrix, outcomes } = settleBlock(matrix);
-    // Only the competences actually shown become outcomes. Everything after
-    // the current step was never on screen, and writing a decision for it
-    // would invent data that looks exactly like a real one.
-    const seen = new Set(steps.slice(0, ci + 1));
-    const merged = clientSession
-      .getOutcomes()
-      .filter((o) => o.devId !== devId)
-      .concat(outcomes.filter((o) => seen.has(o.categoryId)));
-    const final = coalesceMatrix(finalMatrix, task1Matrix);
-    clientSession.setOutcomes(merged);
-    clientSession.setTask2(final);
-    clientSession.addElapsed(2, logger.elapsed());
-    logger.log("task_submit", { meta: { task: 2, block, devId, prototypeSkip: true } });
-    await logger.flush();
-    try {
-      const response = await fetch("/api/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sessionId,
-          task: 2,
-          matrix: final,
-          durationMs: clientSession.getElapsed(2),
-          startedAt: clientSession.getStart(2, startedAt.current),
-          suggestions: allSuggestions,
-          outcomes: merged,
-          interactions: tracker.current.buildTask2Rows({
-            sessionId,
-            participantId: participantId || "unknown",
-            matrix: developerMatrix(final, devId),
-            task1: task1Matrix,
-            suggestions: suggestionMap,
-            committedAt: nowIsoMs(),
-          }),
-          prototypeSkip: true,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error ?? "Saving failed");
-      router.push("/summary");
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Saving failed");
-      setBusy(false);
-    }
-  }
-
   async function advance() {
     if (!sessionId || !devId) return;
     if (ci < steps.length - 1) {
@@ -712,12 +656,6 @@ export default function Task2Page() {
           </div>
           </div>
 
-          <p className="proto">
-            <button type="button" className="linkbtn" disabled={busy} onClick={skipToSummary}>
-              Skip to summary (prototype only)
-            </button>{" "}
-            <span className="muted">Marks the session as a prototype run, excluded from the analysis.</span>
-          </p>
         </section>
       </div>
 
@@ -726,18 +664,10 @@ export default function Task2Page() {
         onBack={() => setCi(ci - 1)}
         backDisabled={ci === 0 || busy}
       >
-        <button
-          type="button"
-          className={"btn" + (decided ? "" : " btn--quiet")}
-          disabled={busy}
-          onClick={advance}
-        >
-          {nextLabel}
-        </button>
-        {nextDiff > 0 && (
+        {nextDiff > 0 ? (
           <button
             type="button"
-            className="btn btn--ghost"
+            className={"btn" + (decided ? "" : " btn--quiet")}
             disabled={busy}
             onClick={() => {
               logger.log("cell_open", { devId, categoryId: steps[nextDiff], meta: { via: "next_difference", block, task: 2 } });
@@ -745,6 +675,15 @@ export default function Task2Page() {
             }}
           >
             Next difference →
+          </button>
+        ) : (
+          <button
+            type="button"
+            className={"btn" + (decided ? "" : " btn--quiet")}
+            disabled={busy}
+            onClick={advance}
+          >
+            {nextLabel}
           </button>
         )}
       </BottomBar>

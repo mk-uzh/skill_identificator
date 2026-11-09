@@ -2433,3 +2433,13 @@ table.ovmatrix .ovmatrix__group td { text-align: left; }
 .mx__dot:hover { background: #ececea; }
 .mx__dot[aria-checked="true"] { background: #6d9a3c; border-color: #6d9a3c; box-shadow: inset 0 0 0 3px #fff; }
 .mx__ends { display: flex; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--ink-3); }
+
+/* intro steps: number and title in one row */
+.page .flow3__i { display: grid; grid-template-columns: 30px minmax(0, 1fr); column-gap: 12px; align-items: center; align-content: start; }
+.flow3__i h3 { margin: 0; }
+.flow3__i p { grid-column: 1 / -1; margin-top: 10px; }
+
+/* competence rail: group headings */
+.steps2__group { margin: 14px 12px 4px; font-size: 12px; font-weight: 600; color: var(--ink-3); letter-spacing: .01em; }
+.steps2 > .steps2__group:first-child { margin-top: 0; }
+@media (max-width: 900px) { .steps2__group { display: none; } }
