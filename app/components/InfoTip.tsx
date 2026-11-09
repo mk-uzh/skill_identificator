@@ -13,12 +13,15 @@ export function InfoTip({
   align = "left",
   wide = false,
   onToggle,
+  term,
 }: {
   label: string;
   children: React.ReactNode;
   align?: "left" | "right";
   wide?: boolean;
   onToggle?: (open: boolean) => void;
+  /** Show this text as an underlined term instead of the "i". */
+  term?: React.ReactNode;
 }) {
   const [hover, setHover] = useState(false);
   const [pinned, setPinned] = useState(false);
@@ -52,14 +55,14 @@ export function InfoTip({
 
   return (
     <span
-      className="tip"
+      className={"tip" + (term ? " tip--term" : "")}
       ref={ref}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <button
         type="button"
-        className="tip__btn"
+        className={term ? "tip__term" : "tip__btn"}
         aria-label={label}
         aria-expanded={open}
         aria-controls={open ? id : undefined}
@@ -71,7 +74,7 @@ export function InfoTip({
         onFocus={() => setHover(true)}
         onBlur={() => setHover(false)}
       >
-        i
+        {term ?? "i"}
       </button>
       {open && (
         <span

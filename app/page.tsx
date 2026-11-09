@@ -2,18 +2,41 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { InfoTip } from "@/components/InfoTip";
+import { LevelGuide } from "@/components/LevelGuide";
 import { clientSession } from "@/lib/client-session";
 import { ORG_CONFIG } from "@/lib/org-config";
 import { projectInfo } from "@/lib/project";
 import { useProject } from "@/lib/project-context";
-import { CATEGORIES, LEVEL_ANCHORS_SHORT } from "@/lib/study-config";
-import { LEVEL_SCALE_SOURCE } from "@/lib/taxonomy";
+import { CATEGORIES } from "@/lib/study-config";
 import { BLOCK_COUNT, ownHref } from "@/lib/study-flow";
-import {
-  ORDERED_LEVELS,
-  SKILL_LEVEL_LABELS,
-  SKILL_LEVEL_SHORT,
-} from "@/lib/types";
+
+function CompetenceTerm() {
+  return (
+    <InfoTip term={String(CATEGORIES.length)} label="The competences" wide>
+      <span className="tipbody">
+        {CATEGORIES.map((c) => (
+          <span key={c.id} className="tipbody__p">
+            <b style={{ display: "inline", marginTop: 0 }}>{c.label}</b>
+            {c.plain ? <span className="muted">: {c.plain}</span> : null}
+          </span>
+        ))}
+      </span>
+    </InfoTip>
+  );
+}
+
+function LevelTerm() {
+  return (
+    <InfoTip term="level" label="The levels" wide>
+      <LevelGuide bare />
+      <span className="tipbody__p" style={{ marginTop: 8 }}>
+        <b>n/o, not observable.</b> The records show nothing about this competence. That is
+        information, not a gap in your judgement.
+      </span>
+    </InfoTip>
+  );
+}
 
 export default function IntroPage() {
   const router = useRouter();
@@ -54,7 +77,7 @@ export default function IntroPage() {
         <h1 className="title title--xl">Read the records. Rate what they show.</h1>
         <p className="lede">
           You will look at {BLOCK_COUNT} developers of {projectInfo(project).full} and say, for
-          each of {CATEGORIES.length} competences, how far their work reaches. No technical
+          each of <CompetenceTerm /> competences, how far their work reaches. No technical
           knowledge needed.
         </p>
       </section>
@@ -65,8 +88,8 @@ export default function IntroPage() {
           <h3>Task 1: rate on your own</h3>
           <p>
             You see {BLOCK_COUNT} developers, one after the other. For each of the{" "}
-            {CATEGORIES.length} competences you read what the public records show (changes,
-            reviews, tasks) and pick the level you think fits. An overview then shows all your
+            <CompetenceTerm /> competences you read what the public records show (changes,
+            reviews, tasks) and pick the <LevelTerm /> you think fits. An overview then shows all your
             ratings side by side, and you can still correct them there.
           </p>
         </div>
@@ -96,40 +119,6 @@ export default function IntroPage() {
           The developers appear under pseudonyms. You do not need to know the project or the
           people: judge only what the records show.
         </p>
-      </div>
-
-      <div className="card">
-        <h3>The levels</h3>
-        <div className="scale scale--static">
-          {ORDERED_LEVELS.map((level) => (
-            <div key={level} className="lvtile lvtile--static">
-              <b>{SKILL_LEVEL_SHORT[level]}</b>
-              <small>{SKILL_LEVEL_LABELS[level]}</small>
-              <span className="lvtile__tip">{LEVEL_ANCHORS_SHORT[level]}</span>
-            </div>
-          ))}
-          <div className="lvtile lvtile--static lvtile--na">
-            <b>n/o</b>
-            <small>Nothing in the records</small>
-          </div>
-        </div>
-        <p className="meaning">
-          <b>n/o, not observable.</b> The records show nothing about this competence. That is
-          information, not a gap in your judgement.
-        </p>
-        <details className="about about--flat">
-          <summary>
-            <span className="about__name">The {CATEGORIES.length} competences</span>
-            <span className="about__text">What you rate for every developer</span>
-          </summary>
-          <div className="about__body">
-            <ul className="sumlist">
-              {CATEGORIES.map((c) => (
-                <li key={c.id}>{c.label}</li>
-              ))}
-            </ul>
-          </div>
-        </details>
         <details className="about about--flat">
           <summary>
             <span className="about__name">Where the records come from</span>
@@ -151,6 +140,7 @@ export default function IntroPage() {
           </div>
         </details>
       </div>
+
 
       </div>
 
