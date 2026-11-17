@@ -1,4 +1,4 @@
-"""Agreement between the gold standard (your coding in the xlsx, columns 'YOUR ...') and a model run.
+"""Agreement between the gold standard (your coding in the xlsx, columns 'AUTHOR ...') and a model run.
 
 Usage: python gld_02_agreement.py --gold llm-pipeline/runs/sakai_coding_sheet_n120_seed42.xlsx --run llm-pipeline/runs/sakai.jsonl --split all [--coder CLAUDE]
 
@@ -27,7 +27,7 @@ def kappa(a, b, labels, weights=None):
     return 1 - num / den if den else float("nan")
 
 
-def load_gold(path, split, prefix="YOUR"):
+def load_gold(path, split, prefix="AUTHOR"):
     ws = openpyxl.load_workbook(path, data_only=True)["Units"]
     h = [c.value for c in ws[1]]; ix = {n: i for i, n in enumerate(h)}
     g = {}
@@ -53,7 +53,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--gold", required=True); ap.add_argument("--run", required=True)
     ap.add_argument("--split", default="dev")
-    ap.add_argument("--coder", default="YOUR", choices=["YOUR", "CLAUDE"],
+    ap.add_argument("--coder", default="AUTHOR", choices=["AUTHOR", "CLAUDE"],
                     help="which columns of the sheet to treat as the reference (default: your own coding)")
     a = ap.parse_args()
     g, m = load_gold(a.gold, a.split, a.coder), load_run(a.run)

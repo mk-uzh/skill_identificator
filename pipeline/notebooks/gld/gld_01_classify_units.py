@@ -5,7 +5,7 @@ Usage:
   python gld_01_classify_units.py --provider anthropic --model <id> --split dev
   python gld_01_classify_units.py --provider openai    --model <id> --base-url <url> --split test
 
-Keys come from ANTHROPIC_API_KEY / OPENAI_API_KEY. Every run writes a manifest next to the output
+Keys come from ANTHROPIC_API_KEY. Every run writes a manifest next to the output
 (model, prompt hash, input hash, schema hash, temperature, timestamp). Quotes are verified in code:
 a quote that is not a substring of the unit text is flagged and the observation is dropped.
 """

@@ -59,7 +59,7 @@ def main() -> None:
     ws.title = "Units"
     head = [
         "evidence_id", "split", "dev_id", "role", "issue_key", "text",
-        "YOUR category 1", "YOUR level 1", "YOUR category 2", "YOUR level 2", "YOUR note",
+        "AUTHOR category 1", "AUTHOR level 1", "AUTHOR category 2", "AUTHOR level 2", "AUTHOR note",
     ]
     ws.append(head)
     for u in units:
@@ -76,7 +76,7 @@ def main() -> None:
     you = PatternFill("solid", fgColor="FFF2CC")
     for c in ws[1]:
         c.font = bold
-        c.fill = you if c.value.startswith("YOUR") else PatternFill()
+        c.fill = you if c.value.startswith("AUTHOR") else PatternFill()
     widths = {"A": 30, "B": 7, "C": 8, "D": 9, "E": 12, "F": 90, "G": 22, "H": 9, "I": 22, "J": 9,
               "K": 50}
     for col, w in widths.items():
@@ -97,7 +97,7 @@ def main() -> None:
 
     guide = wb.create_sheet("How to code")
     for line in [
-        "Reference coding (gold standard). Fill only the yellow 'YOUR ...' columns.",
+        "Reference coding (gold standard). Fill only the yellow 'AUTHOR ...' columns.",
         "Read the unit text, then pick the main competence and its level. A second competence is optional.",
         "Levels: l1 follows a given approach; l2 completes routine tasks alone; l3 solves and explains the cause; "
         "l4 others rely on it; n/o = nothing the person wrote or did about a competence. No l5 (see docs/CODEBOOK.md).",
