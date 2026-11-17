@@ -23,9 +23,10 @@ export function HowProposalIsMade() {
       </span>
       <b>How the confidence is set</b>
       <span className="tipbody__p">
-        The model is not asked for it. It is calculated from two things: how many of the
-        person&apos;s own changes were looked at by a reviewer, and how many pieces of work were
-        clear enough to judge. It does not depend on how much work there is.
+        The model is not asked for it. A fixed rule calculates it: 0.35 + 0.45 × (share of the
+        person&apos;s own changes that a reviewer looked at) + 0.15 × (share of pieces of work that
+        were clear enough to judge), kept between 0.15 and 0.95. Example: 0.35 + 0.45 × 0.5 +
+        0.15 × 0.75 = 0.69, shown as 69 %. It does not depend on how much work there is.
       </span>
       <b>What it cannot do</b>
       <span className="tipbody__p">

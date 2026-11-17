@@ -101,7 +101,7 @@ export default function Task2Page() {
     const stored = clientSession.getSuggestions();
     const code = clientSession.getParticipantCode() ?? "";
     const currentBlock = blockFromLocation();
-    const devIds = developerOrder(code);
+    const devIds = clientSession.getDevOrder() ?? developerOrder(code);
     const devId = devIds[currentBlock];
 
     if (!id) {
@@ -416,7 +416,7 @@ export default function Task2Page() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Saving failed");
       clientSession.setTask2(final);
-      router.push("/summary");
+      router.push("/questions");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Saving failed");
       setBusy(false);
@@ -565,6 +565,10 @@ export default function Task2Page() {
             <div className="card card--why">
               <h3>Why the system proposes this</h3>
               <p className="why-sys">{suggestion.levelReason}</p>
+              <p className="small muted" style={{ marginBottom: 0 }}>
+                How the level and the confidence come about is explained under the (i) next to
+                &ldquo;The system proposes&rdquo;.
+              </p>
             </div>
           )}
 

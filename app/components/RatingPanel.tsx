@@ -13,7 +13,8 @@ import {
  * the scale never has to be looked up elsewhere (DP2).
  *
  * "Not observable" is set apart on purpose: it is not a sixth, lower level
- * but the statement that the records say nothing (DP7).
+ * but the statement that the records say nothing (DP7). "I cannot judge this"
+ * is a second, different statement: there is something, but not enough to decide.
  */
 export function RatingPanel({
   name,
@@ -25,6 +26,7 @@ export function RatingPanel({
   onChange: (level: SkillLevel) => void;
 }) {
   const na = value === "not_observable";
+  const cj = value === "cannot_judge";
   return (
     <div>
       <div role="radiogroup" aria-label={`Level for ${name}`} className="scale">
@@ -52,6 +54,17 @@ export function RatingPanel({
           <b>n/o</b>
           <small>Nothing in the records</small>
         </button>
+        <button
+          type="button"
+          role="radio"
+          aria-checked={cj}
+          className="lvtile lvtile--na"
+          onClick={() => onChange("cannot_judge")}
+          title="There is something in the records, but you cannot say which level it shows"
+        >
+          <b>?</b>
+          <small>I cannot judge this</small>
+        </button>
       </div>
       <div className="meaning" aria-live="polite">
         {value ? (
@@ -59,11 +72,13 @@ export function RatingPanel({
             <b>{SKILL_LEVEL_LABELS[value]}.</b>{" "}
             {na
               ? "The records show nothing about this. That is information, not a gap in your judgement."
-              : LEVEL_ANCHORS_SHORT[value] + "."}
+              : cj
+                ? "There is something in the records, but not enough for you to say which level it shows. That is an answer too."
+                : LEVEL_ANCHORS_SHORT[value] + "."}
           </>
         ) : (
           <>
-            Pick the level the records support. Keys <kbd>1</kbd> to <kbd>5</kbd> work too.
+            Pick the level the records support.
           </>
         )}
       </div>

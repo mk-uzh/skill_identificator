@@ -7,11 +7,8 @@ import { useProject } from "@/lib/project-context";
 
 const PHASES: { label: string; paths: string[] }[] = [
   { label: "Start", paths: ["/"] },
-  { label: "Task 1", paths: ["/task1"] },
-  { label: "Overview", paths: ["/overview"] },
-  { label: "Task 2", paths: ["/task2"] },
-  { label: "Summary", paths: ["/summary"] },
-  { label: "Questions", paths: ["/done"] },
+  { label: "Task 1: Your assessment", paths: ["/task1", "/overview"] },
+  { label: "Task 2: Tool's proposal", paths: ["/task2", "/questions", "/summary", "/done"] },
 ];
 
 export function Topbar() {

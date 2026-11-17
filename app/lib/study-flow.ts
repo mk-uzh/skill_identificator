@@ -22,12 +22,13 @@
 // instead of being confounded with the people themselves.
 // ---------------------------------------------------------------------------
 
+import pool from "../../study-data/pool.json";
 import { DEVELOPERS } from "./study-config";
 
 /** "own" = participant rates alone, "system" = suggestions shown. */
 export type Phase = "own" | "system";
 
-export const PERSONS_PER_PARTICIPANT = 3;
+export const PERSONS_PER_PARTICIPANT = 1;
 export const BLOCK_COUNT = Math.min(PERSONS_PER_PARTICIPANT, DEVELOPERS.length);
 
 /** FNV-1a. Deterministic so a reload cannot reshuffle the order. */
@@ -51,13 +52,33 @@ function mulberry32(seed: number): () => number {
   };
 }
 
+/** Developers a participant of this project can be assigned to (see study-data/pool.json). */
+export function poolFor(project: string | null | undefined): string[] {
+  const entry = (pool as Record<string, unknown>)[project ?? ""];
+  return Array.isArray(entry) ? (entry as string[]) : (pool as { sakai: string[] }).sakai;
+}
+
 /**
- * Developer order for one participant. Derived from the participant code, so
- * it is stable across reloads, identical on client and server, and can be
- * reconstructed during analysis without reading the session file.
+ * Least-filled rule: the developer of the pool with the fewest participants so
+ * far gets the next one, ties broken by the fixed order of the pool. This keeps
+ * the number of ratings per developer within one of each other, which an
+ * assignment drawn at random cannot guarantee for a small sample.
+ */
+export function leastFilled(poolIds: string[], counts: Record<string, number>): string {
+  let best = poolIds[0];
+  for (const id of poolIds) {
+    if ((counts[id] ?? 0) < (counts[best] ?? 0)) best = id;
+  }
+  return best;
+}
+
+/**
+ * Fallback order for a session that has no stored assignment (old sessions,
+ * local tests). The real assignment is made by the server when the session is
+ * created and stored in the session, see app/api/session/route.ts.
  */
 export function developerOrder(participantCode: string): string[] {
-  const ids = DEVELOPERS.map((d) => d.id);
+  const ids = [...poolFor(null)];
   const random = mulberry32(hashCode(participantCode || "default"));
   for (let i = ids.length - 1; i > 0; i -= 1) {
     const j = Math.floor(random() * (i + 1));

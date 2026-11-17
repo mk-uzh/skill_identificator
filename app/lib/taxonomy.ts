@@ -56,8 +56,16 @@ export const CATEGORIES: Category[] = [...taxonomy.categories]
     order: c.order,
   }));
 
+/**
+ * "Cannot judge" is the participant's own answer and is never proposed by the
+ * system, so its wording lives here and not in model/taxonomy.json, which the
+ * classification reads.
+ */
+const CANNOT_JUDGE_ANCHOR =
+  "There is something in the records, but not enough for you to say which level it shows. That is an answer too.";
+
 export const LEVEL_ANCHORS: Record<SkillLevel, string> = (() => {
-  const anchors = taxonomy.level_scale.anchors;
+  const anchors = { ...taxonomy.level_scale.anchors, cannot_judge: CANNOT_JUDGE_ANCHOR } as Record<string, string>;
   const missing = SKILL_LEVELS.filter((level) => !anchors[level]);
   if (missing.length > 0) {
     throw new Error(

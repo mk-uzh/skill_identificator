@@ -30,9 +30,11 @@ export function FlowBar({
         <span className="fh__phase">{phase}</span>
         <div className="fh__who">
           <b>{personLabel}</b>
-          <span>
-            Person {personIndex + 1} of {personCount}
-          </span>
+          {personCount > 1 && (
+            <span>
+              Person {personIndex + 1} of {personCount}
+            </span>
+          )}
           {about && (
             <InfoTip term="About this person" label={`About ${personLabel}`} wide>
               <span className="tipbody">
@@ -41,6 +43,7 @@ export function FlowBar({
             </InfoTip>
           )}
         </div>
+        {personCount > 1 && (
         <ol className="pseg" aria-label={`Person ${personIndex + 1} of ${personCount}`}>
           {Array.from({ length: personCount }, (_, i) => (
             <li
@@ -50,6 +53,7 @@ export function FlowBar({
             />
           ))}
         </ol>
+        )}
         <div className="fh__right">
           <span className="fh__vis">
             Who can see this

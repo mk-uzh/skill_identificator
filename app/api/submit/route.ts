@@ -6,7 +6,7 @@ import {
   assessmentsToMatrix,
   buildSuggestionsFromAssessments,
 } from "@/lib/suggestions";
-import type { AiSuggestion, Matrix, SuggestionOutcome, SurveyAnswers } from "@/lib/types";
+import type { AiSuggestion, Matrix, SuggestionOutcome, SurveyAnswers, Task1Answers } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +20,7 @@ interface SubmitBody {
   outcomes?: SuggestionOutcome[];
   interactions?: CellInteractionRow[];
   survey?: SurveyAnswers;
+  survey1?: Task1Answers;
   /** Allow re-running Task 1 before Task 2 is finished (recalculates suggestions). */
   recalculate?: boolean;
   /** Prototype shortcut: the run was cut short and must not be analysed. */
@@ -41,6 +42,11 @@ export async function POST(request: Request) {
     const session = await readSession(body.sessionId);
     if (!session) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });
+    }
+
+    if (body.survey1) {
+      await updateSession(body.sessionId, { survey1: body.survey1 });
+      return NextResponse.json({ ok: true });
     }
 
     if (body.survey) {

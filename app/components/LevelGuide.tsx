@@ -9,6 +9,11 @@ import {
   SKILL_LEVEL_SHORT,
 } from "@/lib/types";
 
+const SOURCE_LEVELS =
+  "Source: five levels as in the European e-Competence Framework (EN 16234-1); the descriptions are in our own wording for repository records.";
+const SOURCE_COMPETENCES =
+  "Source: derived from open coding of 120 work records and the ESCO profile of \u201csoftware developer\u201d (ESCO v1.2.0); the list is specific to this study.";
+
 /**
  * DP2 — the anchors that make a level mean the same thing to every rater.
  *
@@ -30,13 +35,13 @@ export function LevelGuide({
   const table = (
         <table className="lvtab">
           <tbody>
-            {[...ORDERED_LEVELS, "not_observable" as const].map((level) => (
+            {[...ORDERED_LEVELS, "not_observable" as const, "cannot_judge" as const].map((level) => (
               <tr key={level}>
                 <td>
                   <span
                     className={
                       "lv lv--static " +
-                      (level === "not_observable" ? "lv--na" : `lv--${level}`)
+                      (level === "not_observable" || level === "cannot_judge" ? "lv--na" : `lv--${level}`)
                     }
                   >
                     {SKILL_LEVEL_SHORT[level]}
@@ -57,11 +62,22 @@ export function LevelGuide({
           </tbody>
         </table>
   );
-  if (bare) return table;
+  const source = <p className="small muted guide__src">{SOURCE_LEVELS}</p>;
+  if (bare) {
+    return (
+      <>
+        {table}
+        {source}
+      </>
+    );
+  }
   return (
     <details className="guide" open={open}>
       <summary>Level guide</summary>
-      <div className="guide__body">{table}</div>
+      <div className="guide__body">
+        {table}
+        {source}
+      </div>
     </details>
   );
 }
@@ -98,6 +114,22 @@ export function ConfidenceGuide({ open = false, bare = false }: { open?: boolean
             </tr>
           </tbody>
         </table>
+        <div className="small" style={{ marginBottom: 6 }}>
+          <b>How it is calculated.</b>
+          <div style={{ margin: "4px 0", fontVariantNumeric: "tabular-nums" }}>
+            confidence = 0.35 + 0.45 × <i>reviewed share</i> + 0.15 × <i>judgeable share</i>
+          </div>
+          <div className="muted">
+            <i>Reviewed share</i>: part of the person&apos;s own changes that a reviewer looked at.{" "}
+            <i>Judgeable share</i>: part of the pieces of work that were clear enough to judge.
+            The result is kept between 0.15 and 0.95. Where the records show nothing for a
+            competence, it is fixed at 0.90.
+          </div>
+          <div style={{ marginTop: 6 }}>
+            <b>Example.</b> 2 of 4 changes were reviewed (0.5) and 3 of 4 pieces were clear enough
+            to judge (0.75): 0.35 + 0.45 × 0.5 + 0.15 × 0.75 = 0.6875, shown as <b>69 %</b>.
+          </div>
+        </div>
         <p className="small muted" style={{ marginBottom: 0 }}>
           The figure says how well the records support the reading, not how much work there is. It says
           nothing about how good the person is.
@@ -117,6 +149,7 @@ export function ConfidenceGuide({ open = false, bare = false }: { open?: boolean
 export function CompetenceGuide() {
   let n = 0;
   return (
+    <>
     <table className="lvtab cmptab">
       <tbody>
         {groupedCategories().map(({ group, items }) => (
@@ -137,5 +170,7 @@ export function CompetenceGuide() {
         ))}
       </tbody>
     </table>
+    <p className="small muted guide__src">{SOURCE_COMPETENCES}</p>
+    </>
   );
 }

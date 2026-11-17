@@ -11,12 +11,12 @@
  * system to declare.
  */
 export const ORDERED_LEVELS = ["l1", "l2", "l3", "l4", "l5"] as const;
-export const SKILL_LEVELS = [...ORDERED_LEVELS, "not_observable"] as const;
+export const SKILL_LEVELS = [...ORDERED_LEVELS, "not_observable", "cannot_judge"] as const;
 export type SkillLevel = (typeof SKILL_LEVELS)[number];
 export type OrderedLevel = (typeof ORDERED_LEVELS)[number];
 
 export function isOrderedLevel(level: SkillLevel | null): level is OrderedLevel {
-  return level != null && level !== "not_observable";
+  return level != null && level !== "not_observable" && level !== "cannot_judge";
 }
 
 /** Short form for the level buttons. */
@@ -27,6 +27,7 @@ export const SKILL_LEVEL_SHORT: Record<SkillLevel, string> = {
   l4: "4",
   l5: "5",
   not_observable: "n/o",
+  cannot_judge: "?",
 };
 
 export const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
@@ -36,6 +37,7 @@ export const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
   l4: "Others rely on it",
   l5: "Sets the approach for others",
   not_observable: "Not observable",
+  cannot_judge: "Cannot judge",
 };
 
 /**
@@ -50,6 +52,7 @@ export const SKILL_LEVEL_VALUE: Record<SkillLevel, number | null> = {
   l4: 4,
   l5: 5,
   not_observable: null,
+  cannot_judge: null,
 };
 
 export interface Developer {
@@ -198,20 +201,36 @@ export interface ParticipantProfile {
 }
 
 /** All rating items use a seven-point scale (1 = strongly disagree, 7 = strongly agree). */
+export interface Task1Answers {
+  /** "I am confident that my ratings describe this developer correctly." */
+  sure: number | null;
+  /** "I would base a development conversation on these ratings." */
+  base: number | null;
+  /** "This task needed a lot of mental effort from me." */
+  effort: number | null;
+  /** Optional: what was missing in the records. */
+  missing: string;
+}
+
 export interface SurveyAnswers {
-  confidenceTask1: number | null;
-  confidenceTask2: number | null;
-  usefulSpeed: number | null;
-  usefulQuality: number | null;
-  usefulWork: number | null;
-  relianceUnderstand: number | null;
+  /** The same three items as after Task 1, asked again after Task 2. */
+  sure: number | null;
+  base: number | null;
+  effort: number | null;
+  /** Perceived usefulness, four items adapted from Venkatesh & Davis (2000). */
+  usefulPerformance: number | null;
+  usefulProductivity: number | null;
+  usefulEffectiveness: number | null;
+  usefulOverall: number | null;
+  /** Self-developed item (not part of the Davis scale). */
+  usefulConversation: number | null;
+  understandReasons: number | null;
+  foundNew: number | null;
+  checkedRecords: number | null;
   /** What helped in Task 2 (multiple choice). */
   helped?: string[];
   helpedOther?: string;
-  /** Which visibility regime the participant would choose in their org (DP6). */
-  visibilityPreference: VisibilityPreference;
-  /** Free-text rationale for the visibility choice. */
-  visibilityReason: string;
+  /** Optional: what was missing or bothered the participant. */
   comment: string;
 }
 
@@ -236,9 +255,11 @@ export interface StudySession {
   /**
    * Order in which this participant works through the developers. The study
    * is blocked per person, so this is also the block order: index 0 is the
-   * first block. Derived from the participant code, stored for the analysis.
+   * first block. Assigned by the server (least-filled rule), stored for the analysis.
    */
   devOrder?: string[];
+  /** How the developer was assigned: balanced by the least-filled rule, or set by the moderator. */
+  assignment?: "least_filled" | "manual";
   /** Study version (A or B) that decides which proposals are deliberately wrong. */
   variant?: "A" | "B";
   /**
@@ -261,5 +282,7 @@ export interface StudySession {
     suggestions: AiSuggestion[];
     outcomes: SuggestionOutcome[];
   };
+  /** Questions asked between Task 1 and Task 2. */
+  survey1?: Task1Answers;
   survey?: SurveyAnswers;
 }

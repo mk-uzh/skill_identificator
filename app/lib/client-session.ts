@@ -8,6 +8,7 @@ import type { AiSuggestion, Matrix, SuggestionOutcome } from "./types";
 
 const KEY_SESSION = "devskill.sessionId";
 const KEY_CODE = "devskill.participantCode";
+const KEY_DEVORDER = "devskill.devOrder";
 const KEY_TASK1 = "devskill.task1Matrix";
 const KEY_TASK2 = "devskill.task2Matrix";
 const KEY_SUGGESTIONS = "devskill.suggestions";
@@ -43,6 +44,9 @@ export const clientSession = {
   setSessionId: (id: string) => write(KEY_SESSION, id),
   getParticipantCode: () => read<string>(KEY_CODE),
   setParticipantCode: (code: string) => write(KEY_CODE, code),
+  /** Developer assigned by the server (least-filled rule); null for sessions without one. */
+  getDevOrder: () => read<string[]>(KEY_DEVORDER),
+  setDevOrder: (ids: string[]) => write(KEY_DEVORDER, ids),
   getTask1: () => read<Matrix>(KEY_TASK1),
   setTask1: (matrix: Matrix) => write(KEY_TASK1, matrix),
   getTask2: () => read<Matrix>(KEY_TASK2),
@@ -68,6 +72,7 @@ export const clientSession = {
     [
       KEY_SESSION,
       KEY_CODE,
+      KEY_DEVORDER,
       KEY_TASK1,
       KEY_TASK2,
       KEY_SUGGESTIONS,

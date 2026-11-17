@@ -56,7 +56,7 @@ export default function Task1Page() {
       return;
     }
     const currentBlock = blockFromLocation();
-    const devIds = developerOrder(code);
+    const devIds = clientSession.getDevOrder() ?? developerOrder(code);
 
     void fetch(`/api/session?sessionId=${encodeURIComponent(id)}`)
       .then((r) => r.json())
@@ -114,7 +114,7 @@ export default function Task1Page() {
     setCi(Math.max(0, Math.min(CATEGORIES.length - 1, next)));
   }
 
-  // 1-5 and N rate, arrow keys move. Not while typing in a field.
+  // Arrow keys move; levels are set by clicking. Not while typing in a field.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const el = e.target as HTMLElement | null;
@@ -122,8 +122,6 @@ export default function Task1Page() {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === "ArrowRight") go(ci + 1);
       else if (e.key === "ArrowLeft") go(ci - 1);
-      else if (/^[1-5]$/.test(e.key)) handleChange(selected ?? "", `l${e.key}` as SkillLevel);
-      else if (e.key.toLowerCase() === "n") handleChange(selected ?? "", "not_observable");
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);

@@ -4,6 +4,7 @@ import { FoldCard } from "@/components/FoldCard";
 import { EvidencePanel } from "@/components/EvidencePanel";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Task1Questions, emptyTask1, task1Complete } from "@/components/Survey";
 import { BottomBar } from "@/components/BottomBar";
 import { RatingPanel } from "@/components/RatingPanel";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
@@ -38,8 +39,11 @@ export default function OverviewPage() {
   const [ready, setReady] = useState(false);
   const [focus, setFocus] = useState<string | null>(null);
   const [orderByFocus, setOrderByFocus] = useState(false);
+  const [sortDir, setSortDir] = useState<"none" | "desc" | "asc">("none");
   const [hideNo, setHideNo] = useState(false);
   const [highlight, setHighlight] = useState(false);
+  const [survey1, setSurvey1] = useState(emptyTask1);
+  const [step, setStep] = useState<"main" | "questions">("main");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const startedAt = useRef<string>(nowIsoMs());
@@ -57,7 +61,7 @@ export default function OverviewPage() {
       return;
     }
     setSessionId(id);
-    setOrder(developerOrder(code));
+    setOrder(clientSession.getDevOrder() ?? developerOrder(code));
     setMatrix(cloneMatrix(task1));
     startedAt.current = nowIsoMs();
     logger.start(id, 1);
@@ -129,6 +133,16 @@ export default function OverviewPage() {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Saving failed");
+      await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, survey1 }),
+      });
+      try {
+        window.sessionStorage.setItem("devskill.survey1", JSON.stringify(survey1));
+      } catch {
+        /* storage may be blocked */
+      }
       clientSession.setTask1(matrix);
       clientSession.setSuggestions(data.suggestions ?? []);
       if (data.prefill) clientSession.setPrefill(data.prefill);
@@ -153,6 +167,8 @@ export default function OverviewPage() {
     <div className="page page--flow page--wide2">
       {busy && <LoadingSpinner fullPage label="Preparing Task 2 …" />}
 
+      {step === "main" && (
+      <>
       <p className="crumb">Between the two tasks</p>
       <h1 className="title">Your assessment so far</h1>
       <p className="lede">
@@ -161,6 +177,7 @@ export default function OverviewPage() {
 
       <div className="ovgrid">
       <div className="card">
+        {people.length > 1 && (
         <div className="ovtools" role="group" aria-label="Focus, order and filter">
           <span className="small muted">Focus on</span>
           <button type="button" className={"btn btn--sm btn--ghost" + (focus === null ? " is-on" : "")} onClick={() => { setFocus(null); setOrderByFocus(false); }}>
@@ -180,7 +197,9 @@ export default function OverviewPage() {
             </button>
           ))}
         </div>
+        )}
         <div className="ovtools">
+          {people.length > 1 && (
           <label className="checkbox ovtools__opt">
             <input
               type="checkbox"
@@ -190,9 +209,31 @@ export default function OverviewPage() {
             />
             <span>Highest level of the focused person first</span>
           </label>
+          )}
+          <span className="ovtools__sort" role="group" aria-label="Sort by level">
+            <span className="small muted">Sort by level</span>
+            <button
+              type="button"
+              className={"btn btn--sm btn--ghost" + (sortDir === "desc" ? " is-on" : "")}
+              aria-pressed={sortDir === "desc"}
+              title="Highest level first"
+              onClick={() => setSortDir(sortDir === "desc" ? "none" : "desc")}
+            >
+              ▼
+            </button>
+            <button
+              type="button"
+              className={"btn btn--sm btn--ghost" + (sortDir === "asc" ? " is-on" : "")}
+              aria-pressed={sortDir === "asc"}
+              title="Lowest level first"
+              onClick={() => setSortDir(sortDir === "asc" ? "none" : "asc")}
+            >
+              ▲
+            </button>
+          </span>
           <label className="checkbox ovtools__opt">
             <input type="checkbox" checked={highlight} onChange={(e) => setHighlight(e.target.checked)} />
-            <span>Mark each person&apos;s highest level</span>
+            <span>Mark the highest level</span>
           </label>
           <label className="checkbox ovtools__opt">
             <input type="checkbox" checked={hideNo} onChange={(e) => setHideNo(e.target.checked)} />
@@ -200,20 +241,29 @@ export default function OverviewPage() {
           </label>
         </div>
         <div className="ovchart">
-          {groupedCategories().map(({ group, items: unsorted }) => {
+          {(sortDir !== "none"
+            ? [{ group: { id: "all", label: "" }, items: groupedCategories().flatMap((g) => g.items) }]
+            : groupedCategories()
+          ).map(({ group, items: unsorted }) => {
             const shown = unsorted.filter((c) =>
               hideNo
                 ? (focus ? [focus] : people.map((p) => p.id)).some((id) => (valueOf(id, c.id) ?? 0) > 0)
                 : true,
             );
+            const sortId = focus ?? (people.length === 1 ? people[0].id : null);
+            const dir = sortDir !== "none" ? sortDir : orderByFocus && focus ? "desc" : "none";
             const items =
-              orderByFocus && focus
-                ? [...shown].sort((x, y) => (valueOf(focus, y.id) ?? 0) - (valueOf(focus, x.id) ?? 0))
+              dir !== "none" && sortId
+                ? [...shown].sort((x, y) =>
+                    dir === "desc"
+                      ? (valueOf(sortId, y.id) ?? 0) - (valueOf(sortId, x.id) ?? 0)
+                      : (valueOf(sortId, x.id) ?? 0) - (valueOf(sortId, y.id) ?? 0),
+                  )
                 : shown;
             if (items.length === 0) return null;
             return (
               <Fragment key={group.id}>
-                <h4 className="ovchart__group">{group.label}</h4>
+                {group.label && <h4 className="ovchart__group">{group.label}</h4>}
                 {items.map((category) => (
                   <div className="ovrow" key={category.id}>
                     <div className="ovrow__name">{category.label}</div>
@@ -232,7 +282,7 @@ export default function OverviewPage() {
                               value ? SKILL_LEVEL_LABELS[value] : "not rated"
                             }`}
                             className={
-                              "ovb " +
+                              "ovb " + (people.length === 1 ? "ovb--solo " : "") +
                               (value ? `ovb--${value}` : "ovb--na") +
                               (active ? " ovb--on" : "") +
                               (top ? " ovb--top" : "") +
@@ -240,7 +290,7 @@ export default function OverviewPage() {
                             }
                             onClick={() => setSel({ devId: person.id, categoryId: category.id })}
                           >
-                            <span className="ovb__who">{person.label}</span>
+                            {people.length > 1 && <span className="ovb__who">{person.label}</span>}
                             <span className="ovb__track">
                               <span className="ovb__fill" style={{ width: `${n * 20}%` }} />
                             </span>
@@ -294,17 +344,51 @@ export default function OverviewPage() {
       </div>
       </div>
 
+      </>
+      )}
+
+      {step === "questions" && (
+        <>
+          <p className="crumb">Between the two tasks</p>
+          <h1 className="title">A few questions about Task 1</h1>
+          <Task1Questions answers={survey1} setAnswers={setSurvey1} />
+        </>
+      )}
+
       {error && (
         <p className="error" role="alert">
           {error}
         </p>
       )}
 
-      <BottomBar text={missing === 0 ? "Everything rated" : `${missing} still missing`}>
-        <button type="button" className="btn" disabled={busy || missing > 0} onClick={submit}>
-          {busy ? "Saving …" : "Continue to Task 2 →"}
-        </button>
-      </BottomBar>
+      {step === "main" ? (
+        <BottomBar text={missing === 0 ? "Everything rated" : `${missing} still missing`}>
+          <button
+            type="button"
+            className="btn"
+            disabled={missing > 0}
+            onClick={() => {
+              setStep("questions");
+              window.scrollTo({ top: 0 });
+            }}
+          >
+            Continue to questions →
+          </button>
+        </BottomBar>
+      ) : (
+        <BottomBar
+          text={task1Complete(survey1) ? "Ready for Task 2" : "Please answer the three questions"}
+          onBack={() => {
+            setStep("main");
+            window.scrollTo({ top: 0 });
+          }}
+          backDisabled={busy}
+        >
+          <button type="button" className="btn" disabled={busy || !task1Complete(survey1)} onClick={submit}>
+            {busy ? "Saving …" : "Continue to Task 2 →"}
+          </button>
+        </BottomBar>
+      )}
     </div>
   );
 }
