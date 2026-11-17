@@ -91,6 +91,7 @@ export default function IntroPage() {
       clientSession.clear();
       clientSession.setSessionId(data.sessionId);
       clientSession.setParticipantCode(code.trim());
+      if (Array.isArray(data.devOrder)) clientSession.setDevOrder(data.devOrder);
       router.push(ownHref(0));
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not start");
@@ -106,56 +107,43 @@ export default function IntroPage() {
       <section className="hero">
         <p className="crumb">Study on assessing skills from public project records</p>
         <h1 className="title title--xl">Read the records. Rate what they show.</h1>
-        <p className="lede">
-          You will look at {BLOCK_COUNT} developers of {projectInfo(project).full} and say,
-          for each of the <CompetenceTerm />, how far their work reaches, based on <LevelTerm text="levels" />. You do not need to know the
-          project or the people.
-        </p>
       </section>
 
-      <div className="flow3">
-        <div className="card flow3__i">
-          <span className="flow3__n">1</span>
-          <h3>Rate on your own</h3>
-          <p>
-            {BLOCK_COUNT} developers, <CompetenceTerm />, based on <LevelTerm text="levels" />.
-            <InfoTip label="More explanations">
-              You see the developers one after the other. For each competence you read what the
-              public records show (changes, reviews, tasks) and pick the level you think fits. An
-              overview then shows all your ratings side by side, and you can still correct them there.
-            </InfoTip>
-          </p>
-        </div>
-        <div className="card flow3__i">
-          <span className="flow3__n">2</span>
-          <h3>Compare with the system</h3>
-          <p>
-            Same developers, same records, now with a proposal.
-            <InfoTip label="More explanations">
-              For every competence the system proposes a level with a short reason and a confidence.
-              You accept it, adjust it or keep your own answer.
-            </InfoTip>
-          </p>
-        </div>
-        <div className="card flow3__i">
-          <span className="flow3__n">3</span>
-          <h3>Summary and questions</h3>
-          <p>
-            What changed, and a few questions.
-            <InfoTip label="More explanations">
-              A summary shows what changed between your answers and the proposals, and which
-              occupations the records match. A few short questions about how it felt close the study.
-            </InfoTip>
-          </p>
-        </div>
-      </div>
-
       <div className="card">
-        <h3>About the project</h3>
-        <p>{projectInfo(project).background}</p>
-        <p className="small muted" style={{ marginBottom: 0 }}>
-          The developers appear under pseudonyms. Judge only what the records show.
+        <h3>The case</h3>
+        <p>
+          A few days ago you took over the lead of a software development team. It works on{" "}
+          {projectInfo(project).label} and has grown over the years, with people joining and
+          leaving. The people are new to you, and so is what each of them is good at.
         </p>
+        <p>
+          In two weeks the first development conversations are due, and the tasks for next quarter
+          have to be handed out. Nobody has written down who can do what. What helps you prepare is
+          what the team left behind in the open: code changes, tickets, reviews and discussions.
+        </p>
+        <div className="casebox">
+          <h4 className="casehead">About the project: {projectInfo(project).label}</h4>
+          <p>{projectInfo(project).background}</p>
+          <ul className="featlist">
+            {projectInfo(project).features.map(([name, text]) => (
+              <li key={name}>
+                <b>{name}.</b> {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <h4 className="casehead">Your task</h4>
+        <p>
+          For one developer of the team, say how far their work reaches in each of the{" "}
+          <CompetenceTerm />, based on <LevelTerm text="levels" />. No knowledge of the project or
+          the people is needed. The developers appear under pseudonyms. Judge only what the records
+          show, and please think aloud while you work. There are no right or wrong answers.
+        </p>
+        <p className="small muted">It runs in two steps. A few questions follow each step, and afterwards we talk briefly about your experience.</p>
+        <div className="flow3">
+          <div className="flow3__i"><span className="flow3__n">1</span><h3>Task 1: Your assessment</h3><p>about 15 minutes, then a few questions</p></div>
+          <div className="flow3__i"><span className="flow3__n">2</span><h3>Task 2: Tool&apos;s proposal</h3><p>about 12 minutes, then a few questions</p></div>
+        </div>
         <details className="about about--flat">
           <summary>
             <span className="about__name">Where the records come from</span>
@@ -177,7 +165,6 @@ export default function IntroPage() {
           </div>
         </details>
       </div>
-
 
       <div className="actions">
         <span />
