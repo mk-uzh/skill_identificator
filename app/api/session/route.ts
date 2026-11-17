@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { getAssessments } from "@/lib/assessments";
-import { readSession, saveSession } from "@/lib/store";
+import { listSessions, readSession, saveSession, readInteractions } from "@/lib/store";
 import { parseProject } from "@/lib/project";
-import { developerOrder } from "@/lib/study-flow";
+import { BLOCK_COUNT, leastFilled, poolFor } from "@/lib/study-flow";
 import { versionFor } from "@/lib/study-script";
 import type { ParticipantProfile, StudySession } from "@/lib/types";
 
@@ -19,6 +19,8 @@ export async function POST(request: Request) {
       terms?: boolean;
       project?: string;
       profile?: ParticipantProfile;
+      /** Moderator override, must be a developer of the pool of the project. */
+      developer?: string;
     };
 
     const participantCode = (body.participantCode ?? "").trim();
@@ -35,6 +37,22 @@ export async function POST(request: Request) {
 
     const project = parseProject(body.project);
     const assessments = getAssessments(project);
+
+    // Balanced assignment: count participants per developer in this project,
+    // completed ones and those still running (started less than two hours ago),
+    // and give the next participant the developer with the fewest.
+    const pool = poolFor(project);
+    const counts: Record<string, number> = Object.fromEntries(pool.map((id) => [id, 0]));
+    const now = Date.now();
+    for (const other of await listSessions()) {
+      if (other.project !== project || other.prototype_skip) continue;
+      const first = other.devOrder?.[0];
+      if (!first || !(first in counts)) continue;
+      const running = !other.task2 && now - Date.parse(other.createdAt) < 2 * 60 * 60 * 1000;
+      if (other.task2 || running) counts[first] += 1;
+    }
+    const manual = body.developer && pool.includes(body.developer) ? body.developer : null;
+    const devOrder = manual ? [manual] : [leastFilled(pool, counts)];
     const session: StudySession = {
       sessionId: randomUUID(),
       participantCode,
@@ -47,7 +65,8 @@ export async function POST(request: Request) {
       project,
       config_hash: assessments.config_hash,
       snapshot_hash: assessments.config_hash,
-      devOrder: developerOrder(participantCode),
+      devOrder: devOrder.slice(0, BLOCK_COUNT),
+      assignment: manual ? "manual" : "least_filled",
       variant: versionFor(participantCode),
     };
 
@@ -75,7 +94,20 @@ export async function GET(request: Request) {
   if (!session) {
     return NextResponse.json({ error: "Session not found" }, { status: 404 });
   }
+  const interactions = await readInteractions(sessionId);
+  const last = new Map<string, { task: number; devId: string; categoryId: string; seconds: number }>();
+  for (const r of interactions) {
+    const ms = Date.parse(r.committed_at) - Date.parse(r.opened_at);
+    if (!Number.isFinite(ms) || ms < 0) continue;
+    last.set(`${r.task}::${r.developer_id}::${r.category_id}`, {
+      task: r.task,
+      devId: r.developer_id,
+      categoryId: r.category_id,
+      seconds: Math.round(ms / 100) / 10,
+    });
+  }
   return NextResponse.json({
+    cellSeconds: Array.from(last.values()),
     sessionId: session.sessionId,
     participantCode: session.participantCode,
     task1Submitted: Boolean(session.task1),

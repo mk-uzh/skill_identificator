@@ -1,5 +1,7 @@
 "use client";
 
+import { Dashboard } from "@/components/Dashboard";
+
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SkillRadar } from "@/components/SkillRadar";
@@ -38,6 +40,8 @@ import {
   SKILL_LEVEL_VALUE,
   type Matrix,
   type SuggestionOutcome,
+  type SurveyAnswers,
+  type Task1Answers,
 } from "@/lib/types";
 
 const DECISION_LABEL: Record<string, string> = {
@@ -68,6 +72,13 @@ export default function SummaryPage() {
   const [show, setShow] = useState<"both" | "before" | "after">("both");
   const [error, setError] = useState<string | null>(null);
   const [shortened, setShortened] = useState(false);
+  const [survey1, setSurvey1] = useState<Task1Answers | null>(null);
+  const [survey2, setSurvey2] = useState<SurveyAnswers | null>(null);
+  const [seconds, setSeconds] = useState<{ task: number; devId: string; categoryId: string; seconds: number }[]>([]);
+  const [showSeconds, setShowSeconds] = useState(false);
+  const [filter, setFilter] = useState<"all" | "accepted_unchanged" | "adjusted" | "rejected">("all");
+  const [sortBy, setSortBy] = useState<"competence" | "t1" | "proposed" | "t2" | "decision" | "s1" | "s2" | null>(null);
+  const [sortAsc, setSortAsc] = useState(true);
 
   useEffect(() => {
     const id = clientSession.getSessionId();
@@ -75,7 +86,15 @@ export default function SummaryPage() {
       router.replace("/");
       return;
     }
-    setOrder(developerOrder(clientSession.getParticipantCode() ?? ""));
+    setOrder(clientSession.getDevOrder() ?? developerOrder(clientSession.getParticipantCode() ?? ""));
+    try {
+      const a = window.sessionStorage.getItem("devskill.survey1");
+      const b = window.sessionStorage.getItem("devskill.survey2");
+      if (a) setSurvey1(JSON.parse(a) as Task1Answers);
+      if (b) setSurvey2(JSON.parse(b) as SurveyAnswers);
+    } catch {
+      /* storage may be blocked */
+    }
 
     void (async () => {
       try {
@@ -92,6 +111,7 @@ export default function SummaryPage() {
           setTask1(t1);
           setTask2(t2);
           setOutcomes((data.outcomes as SuggestionOutcome[]) ?? clientSession.getOutcomes());
+          setSeconds((data.cellSeconds as typeof seconds) ?? []);
           setShortened(Boolean(data.prototypeSkip));
           return;
         }
@@ -110,6 +130,17 @@ export default function SummaryPage() {
     })();
   }, [router]);
 
+  function finish() {
+    try {
+      window.sessionStorage.removeItem("devskill.survey1");
+      window.sessionStorage.removeItem("devskill.survey2");
+    } catch {
+      /* ignore */
+    }
+    clientSession.clear();
+    router.push("/done");
+  }
+
   const { developers } = useProject();
   const people = useMemo(
     () =>
@@ -125,7 +156,10 @@ export default function SummaryPage() {
       (o) => o.initialValue != null && o.initialValue === o.suggested,
     ).length;
     const naFilled = outcomes.filter(
-      (o) => o.initialValue === "not_observable" && o.finalValue !== "not_observable",
+      (o) =>
+        (o.initialValue === "not_observable" || o.initialValue === "cannot_judge") &&
+        o.finalValue !== "not_observable" &&
+        o.finalValue !== "cannot_judge",
     ).length;
     const moved = outcomes
       .map((o) => {
@@ -176,7 +210,8 @@ export default function SummaryPage() {
     );
   }
 
-  const devId = tab === "all" ? null : tab;
+  const single = people.length === 1;
+  const devId = single ? people[0].id : tab === "all" ? null : tab;
   const developer = devId ? developers.find((d) => d.id === devId) ?? null : null;
 
   const fw = devId ? futureWork(task2, devId) : null;
@@ -195,6 +230,7 @@ export default function SummaryPage() {
       <h1 className="title">Summary</h1>
       <p className="lede">What changed once you saw the system's proposals.</p>
 
+      {!single && (
       <div className="seg" role="tablist" aria-label="Person">
         <button
           type="button"
@@ -218,8 +254,9 @@ export default function SummaryPage() {
           </button>
         ))}
       </div>
+      )}
 
-      {tab === "all" && (
+      {(tab === "all" || single) && (
         <>
           <div className="stats">
             <div className="stat">
@@ -247,71 +284,131 @@ export default function SummaryPage() {
           </div>
           <p className="small muted">
             {stats.agreedBefore} proposals already matched your answer. {stats.naFilled} cells you
-            marked n/o now have a level.
+            marked n/o or ? now have a level.
           </p>
-
-          <div className="card">
-            <h3>
-              Closest occupation per person
-              <InfoTip label="How the closest occupation is found" wide>
-                <OccupationInfo />
-              </InfoTip>
-            </h3>
-            <table className="clean">
-              <thead>
-                <tr>
-                  <th>Person</th>
-                  <th>Closest occupation</th>
-                  <th className="n">Demonstrated</th>
-                  <th>Main gap</th>
-                </tr>
-              </thead>
-              <tbody>
-                {people.map((person) => {
-                  const best = roleFits(task2, person.id)[0];
-                  return (
-                    <tr key={person.id}>
-                      <td>
-                        <b>{person.label}</b>
-                      </td>
-                      <td>{best?.role.label ?? "–"}</td>
-                      <td className="n">{best ? `${best.demonstrated} of ${best.measured}` : "–"}</td>
-                      <td className="muted">
-                        {best?.missing.length
-                          ? best.missing.map(labelOf).slice(0, 2).join(", ")
-                          : "nothing missing"}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
         </>
       )}
 
       {developer && devId && fw && (
         <>
+          <h3 className="h3-inline" style={{ marginTop: 0 }}>What you said in the questions</h3>
+          <Dashboard
+            devId={devId}
+            task1={task1}
+            task2={task2}
+            outcomes={outcomes}
+            survey1={survey1}
+            survey2={survey2}
+          />
+
           <div className="cols2">
             <div className="card">
               <h3>What changed for {developer.label}</h3>
+              <div className="ovtools filterbar" role="group" aria-label="Filter by decision" style={{ marginBottom: 8 }}>
+                <span className="small muted">Show</span>
+                {(
+                  [
+                    ["all", "All"],
+                    ["accepted_unchanged", "Accepted"],
+                    ["adjusted", "Adjusted"],
+                    ["rejected", "Rejected"],
+                  ] as const
+                ).map(([id, label]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    className={"btn btn--sm btn--ghost" + (filter === id ? " is-on" : "")}
+                    aria-pressed={filter === id}
+                    onClick={() => setFilter(id)}
+                  >
+                    {label}
+                  </button>
+                ))}
+                <label className="checkbox ovtools__opt" style={{ marginLeft: "auto" }}>
+                  <input type="checkbox" checked={showSeconds} onChange={(e) => setShowSeconds(e.target.checked)} />
+                  <span>Show seconds</span>
+                </label>
+              </div>
               <table className="clean">
                 <thead>
                   <tr>
-                    <th>Competence</th>
-                    <th className="n">Task 1</th>
-                    <th className="n">Proposed</th>
-                    <th className="n">Task 2</th>
-                    <th>Decision</th>
+                    {(
+                      [
+                        ["competence", "Competence", ""],
+                        ["t1", "Task 1", "n"],
+                        ["proposed", "Proposed", "n"],
+                        ["t2", "Task 2", "n"],
+                        ["decision", "Decision", ""],
+                        ...(showSeconds
+                          ? ([
+                              ["s1", "Sec. T1", "n"],
+                              ["s2", "Sec. T2", "n"],
+                            ] as const)
+                          : []),
+                      ] as const
+                    ).map(([key, label, cls]) => (
+                      <th
+                        key={key}
+                        className={cls + " sortable"}
+                        aria-sort={sortBy === key ? (sortAsc ? "ascending" : "descending") : "none"}
+                      >
+                        <button
+                          type="button"
+                          className="sortbtn"
+                          onClick={() => {
+                            if (sortBy === key) setSortAsc(!sortAsc);
+                            else {
+                              setSortBy(key);
+                              setSortAsc(true);
+                            }
+                          }}
+                        >
+                          {label}
+                          <span aria-hidden="true">{sortBy === key ? (sortAsc ? " ▲" : " ▼") : ""}</span>
+                        </button>
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {CATEGORIES.map((category) => {
-                    const outcome = outcomes.find(
-                      (o) => o.devId === devId && o.categoryId === category.id,
-                    );
-                    const d = outcome?.decision ?? "open";
-                    return (
+                  {(() => {
+                    const num = (l: string | null | undefined) =>
+                      l ? SKILL_LEVEL_VALUE[l as keyof typeof SKILL_LEVEL_VALUE] ?? 0 : 0;
+                    const order: Record<string, number> = { accepted_unchanged: 0, adjusted: 1, rejected: 2, open: 3 };
+                    const secOf = (task: number, cat: string): number | null =>
+                      seconds.find((x) => x.task === task && x.devId === devId && x.categoryId === cat)?.seconds ?? null;
+                    const rows = CATEGORIES.map((category) => {
+                      const outcome = outcomes.find((o) => o.devId === devId && o.categoryId === category.id);
+                      return {
+                        category,
+                        outcome,
+                        d: outcome?.decision ?? "open",
+                        t1: num(task1[devId]?.[category.id]),
+                        proposed: num(outcome?.suggested),
+                        t2: num(task2[devId]?.[category.id]),
+                        s1: secOf(1, category.id),
+                        s2: secOf(2, category.id) ?? (outcome?.timeToDecisionMs != null ? outcome.timeToDecisionMs / 1000 : null),
+                      };
+                    }).filter((r) => filter === "all" || r.d === filter);
+                    if (sortBy) {
+                      const dir = sortAsc ? 1 : -1;
+                      rows.sort((x, y) => {
+                        if (sortBy === "competence") return dir * x.category.label.localeCompare(y.category.label);
+                        if (sortBy === "decision") return dir * (order[x.d] - order[y.d]);
+                        if (sortBy === "s1" || sortBy === "s2")
+                          return dir * ((x[sortBy] ?? Number.MAX_SAFE_INTEGER) - (y[sortBy] ?? Number.MAX_SAFE_INTEGER));
+                        return dir * (x[sortBy] - y[sortBy]);
+                      });
+                    }
+                    if (rows.length === 0)
+                      return (
+                        <tr>
+                          <td colSpan={showSeconds ? 7 : 5} className="muted">
+                            No cells with this decision.
+                          </td>
+                        </tr>
+                      );
+                    return rows.map(({ category, outcome, d, s1, s2 }) => (
                       <tr key={category.id}>
                         <td>{category.label}</td>
                         <td className="n">{lvl(task1[devId]?.[category.id])}</td>
@@ -320,13 +417,17 @@ export default function SummaryPage() {
                           <b>{lvl(task2[devId]?.[category.id])}</b>
                         </td>
                         <td>
-                          <span className={"chipd chipd--" + DECISION_CLASS[d]}>
-                            {DECISION_LABEL[d]}
-                          </span>
+                          <span className={"chipd chipd--" + DECISION_CLASS[d]}>{DECISION_LABEL[d]}</span>
                         </td>
+                        {showSeconds && (
+                          <>
+                            <td className="n">{s1 != null ? Math.round(s1) : "–"}</td>
+                            <td className="n">{s2 != null ? Math.round(s2) : "–"}</td>
+                          </>
+                        )}
                       </tr>
-                    );
-                  })}
+                    ));
+                  })()}
                 </tbody>
               </table>
             </div>
@@ -359,53 +460,60 @@ export default function SummaryPage() {
             </div>
           </div>
 
-          <div className="card">
-            <h3>
-              Which occupation do the records match?
-              <InfoTip label="How the occupations are matched" wide>
-                <OccupationInfo />
-              </InfoTip>
-            </h3>
-            <table className="clean">
-              <thead>
-                <tr>
-                  <th>Occupation (ESCO)</th>
-                  <th>Demonstrated</th>
-                  <th>Nothing in the records about</th>
-                </tr>
-              </thead>
-              <tbody>
-                {fits.map((fit, i) => (
-                  <tr key={fit.role.key}>
-                    <td>
-                      <b>{fit.role.label}</b>
-                      {i === 0 && <span className="chipd chipd--ok">closest</span>}
-                    </td>
-                    <td>
-                      {fit.demonstrated} of {fit.measured}
-                      {fit.demonstrated > 0 && (
-                        <span className="small muted" style={{ display: "block" }}>
-                          {fit.role.essential_measured
-                            .filter((id) => !fit.missing.includes(id))
-                            .map(labelOf)
-                            .join(", ")}
-                        </span>
-                      )}
-                    </td>
-                    <td className="muted">
-                      {[...fit.missing.map(labelOf), ...fit.role.essential_not_measured].join(", ")}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <p className="small muted" style={{ marginTop: 12 }}>
-              This shows what the records demonstrate, not what the person is capable of.
-            </p>
-          </div>
 
-          <h3 className="h3-inline">
-            What the levels suggest for future work
+          <div className="cols2">
+            <div className="card">
+              <h3>
+                Which occupations do the records match?
+                <InfoTip label="How the occupations are matched" wide>
+                  <OccupationInfo />
+                </InfoTip>
+              </h3>
+              <p className="small muted" style={{ marginTop: -4 }}>
+                Green: essential competence at level 2 or higher. Grey: not shown (n/o, ? or level 1). Not what the person is capable of.
+              </p>
+              {fits.map((fit, i) => {
+                const missing = new Set(fit.missing);
+                return (
+                  <div className="occ" key={fit.role.key}>
+                    <div className="occ__head">
+                      <b>
+                        {fit.role.label}
+                        {i === 0 && <span className="chipd chipd--ok">closest</span>}
+                      </b>
+                      <span>
+                        {fit.demonstrated} of {fit.measured}
+                      </span>
+                    </div>
+                    <div className="occ__bar" role="img" aria-label={`${fit.demonstrated} of ${fit.measured} essential competences demonstrated`}>
+                      {[...fit.role.essential_measured].sort((x, y) => Number(missing.has(x)) - Number(missing.has(y))).map((id) => (
+                        <i key={id} className={missing.has(id) ? "" : "on"} title={labelOf(id)} />
+                      ))}
+                    </div>
+                    {i === 0 && fit.missing.length > 0 && (
+                      <div className="tags tags--small">
+                        <span className="small muted">Not shown in the records:</span>
+                        {fit.missing.map(labelOf).map((n) => (
+                          <span className="tag tag--grey" key={n}>{n}</span>
+                        ))}
+                      </div>
+                    )}
+                    {i === 0 && fit.role.essential_not_measured.length > 0 && (
+                      <div className="tags tags--small">
+                        <span className="small muted">Also essential, but not covered by the competences of this study:</span>
+                        {fit.role.essential_not_measured.map((n) => (
+                          <span className="tag tag--grey" key={n}>{n}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="card">
+              <h3>
+                What the levels suggest for future work
             <InfoTip label="How the three groups are formed" wide>
               <span className="tipbody">
                 <span className="tipbody__p">
@@ -426,29 +534,38 @@ export default function SummaryPage() {
                 </span>
               </span>
             </InfoTip>
-          </h3>
-          <div className="stats stats--3">
-            <div className="stat stat--text">
-              <span>Ready to take on</span>
-              <b>{fw.ready.length ? fw.ready.join(", ") : "nothing at level 4 or above"}</b>
-            </div>
-            <div className="stat stat--text">
-              <span>Would grow into</span>
-              <b>{fw.grow.length ? fw.grow.join(", ") : "nothing at level 3"}</b>
-            </div>
-            <div className="stat stat--text">
-              <span>Needs a conversation first</span>
-              <b>
-                {fw.conversation.length ? fw.conversation.join(", ") : "the records cover everything"}
-              </b>
+              </h3>
+              {(
+                [
+                  ["Ready to take on", "level 4 or 5", fw.ready, "tag--g1"],
+                  ["Would grow into", "level 3", fw.grow, "tag--g2"],
+                  ["Needs a conversation first", "not in the records", fw.conversation, "tag--grey"],
+                ] as const
+              ).map(([title, hint, list, cls]) => (
+                <div className="fwgroup" key={title}>
+                  <div className="small muted">
+                    <b>{title}</b> · {hint}
+                  </div>
+                  <div className="tags">
+                    {list.length ? (
+                      list.map((n) => (
+                        <span className={"tag " + cls} key={n}>{n}</span>
+                      ))
+                    ) : (
+                      <span className="small muted">none</span>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+
         </>
       )}
 
-      <BottomBar text="Four short questions are left">
-        <button type="button" className="btn" onClick={() => router.push("/done")}>
-          Go to the questions →
+      <BottomBar text="You have seen everything">
+        <button type="button" className="btn" onClick={finish}>
+          Finish
         </button>
       </BottomBar>
     </div>
